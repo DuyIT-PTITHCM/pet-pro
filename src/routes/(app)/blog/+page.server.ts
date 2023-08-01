@@ -1,4 +1,4 @@
-import { title } from '../../store/meta';
+import { title } from '../../../store/meta';
 title.set("blog Page");
 
 
