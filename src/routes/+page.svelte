@@ -12,7 +12,10 @@
         console.log("Clicked outside the component.");
     }
 </script>
-
+<svelte:head>
+  <title>home page</title>
+  <meta name="description" content="anh duy">
+</svelte:head>
 <div>
     <!-- you can use `placeholders` and `modifiers` in your definitions (see docs) -->
     <h2>{ pageName }</h2>
