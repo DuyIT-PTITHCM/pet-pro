@@ -11,12 +11,28 @@ const config = ({
       ).default,
     },
     {
-      locale: 'cs',
+      locale: 'en',
+      key: 'header',
+      routes: ['', '/','/about','/blog'],
+      loader: async () => (
+        await import('./en/header.json')
+      ).default,
+    },
+    {
+      locale: 'vi',
       key: 'common',
       loader: async () => (
-        await import('./cs/common.json')
+        await import('./vi/common.json')
       ).default,
-    }
+    },
+    {
+      locale: 'vi',
+      key: 'header',
+      routes: ['', '/','/about','/blog'],
+      loader: async () => (
+        await import('./vi/header.json')
+      ).default,
+    },
   ],
 });
 
