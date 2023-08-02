@@ -1,8 +1,6 @@
 <script>
     import LanguageSelect from "../LanguageSelect.svelte";
-    import { selectedLanguage } from '../../../store/language'; 
     import { loadTranslations, t } from "$lib/translations";
-    import { onMount } from "svelte";
 
 
   const menu = [
