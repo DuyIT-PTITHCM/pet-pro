@@ -39,7 +39,11 @@
     <h1 class="logo">PET ONE</h1>
   </div>
 </nav>
+<div class="out-header"></div>
 <style>
+  .out-header{
+    margin-bottom: 64px;
+  }
   .navbar input[type="checkbox"],
   .navbar .hamburger-lines {
     display: none;
@@ -59,6 +63,7 @@
     color: #000;
     opacity: 0.85;
     z-index: 100;
+    top: 0;
   }
 
   .navbar-container {
