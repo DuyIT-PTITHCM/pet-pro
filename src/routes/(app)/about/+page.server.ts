@@ -1,5 +1,2 @@
-import { title } from '../../../store/meta';
+import { title } from '$lib/store/meta';
 title.set("About Page");
-
-export const csr = false;
-export const ssr = true;

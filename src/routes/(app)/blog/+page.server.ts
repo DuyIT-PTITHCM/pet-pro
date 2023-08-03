@@ -1,6 +1,2 @@
-import { title } from '../../../store/meta';
+import { title } from '$lib/store/meta';
 title.set("blog Page");
-
-
-export const csr = false;
-export const ssr = true;

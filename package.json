@@ -28,6 +28,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"js-cookie": "^3.0.5",
 		"sveltekit-i18n": "^2.4.2"
 	}
 }
