@@ -1,0 +1,44 @@
+<!-- LanguageSelect.svelte -->
+<script lang="ts">
+    import { enhance } from "$app/forms";
+    import { onMount } from "svelte";
+    import { selectedLanguage } from "$lib/store/language";
+    import { loadTranslations } from "$lib/translations";
+    import {setCookie , removeCookie, getCookie} from "$lib/Utils/cookieUtils";
+    // Danh sách các ngôn ngữ
+    const languages = [
+        { id: "en", name: "English" },
+        { id: "vi", name: "Tiếng Việt" },
+    ];
+
+    selectedLanguage.set(getCookie('lang'));
+    console.log('a',getCookie('lang'));
+    async function handleChange(event) {
+        console.log(event);
+        removeCookie('lang');
+        setCookie('lang', event.target.value);
+
+        // event.target.parentElement.submit();
+    }
+    onMount(() => {
+        const unsubscribe = selectedLanguage.subscribe(async (newLanguage) => {
+            const { pathname } = window.location;
+            await loadTranslations(newLanguage, pathname);
+        });
+
+        return unsubscribe;
+    });
+</script>
+<!-- <form method="POST" action="" use:enhance>
+    <select bind:value={$selectedLanguage} name="lang" on:change={handleChange}>
+        {#each languages as language}
+            <option value={language.id}>{language.name}</option>
+        {/each}
+    </select>
+</form> -->
+
+<select bind:value={$selectedLanguage} on:change={handleChange}>
+    {#each languages as language}
+      <option value={language.id}>{language.name}</option>
+    {/each}
+  </select>
