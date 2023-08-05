@@ -1,7 +1,8 @@
 <script>
     import LanguageSelect from "../LanguageSelect.svelte";
     import { loadTranslations, t } from "$lib/translations";
-
+    import { DarkMode } from 'flowbite-svelte';
+    let btnClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2';
 
   const menu = [
     {
@@ -20,7 +21,8 @@
 
 </script>
 
-<nav class="navbar">
+
+<nav class="navbar bg-white text-gray dark:bg-gray-800 dark:text-white">
   <div class="navbar-container container">
     <input type="checkbox" name="" id="" />
     <div class="hamburger-lines">
@@ -28,12 +30,14 @@
       <span class="line line2" />
       <span class="line line3" />
     </div>
-    <ul class="menu-items">
+    <ul class="menu-items bg-white dark:bg-gray-800">
       {#each menu as item}
         <li><a href={item.url}>{$t("header." + item.name)}</a></li>
       {/each}
       <li><LanguageSelect /></li>
-      
+      <li><div class="darkmode">
+        <DarkMode {btnClass} />
+      </div></li>
 
     </ul>
     <h1 class="logo">PET ONE</h1>
@@ -41,6 +45,13 @@
 </nav>
 <div class="out-header"></div>
 <style>
+  .darkmode{
+    height: 64px;
+    width: 64px;
+    display: flex;
+    justify-content: center;align-items: center;
+    /* position: absolute; */
+  }
   .out-header{
     margin-bottom: 64px;
   }
@@ -59,9 +70,6 @@
     box-shadow: 0px 5px 10px 0px #aaa;
     position: fixed;
     width: 100%;
-    background: #fff;
-    color: #000;
-    opacity: 0.85;
     z-index: 100;
     top: 0;
   }
@@ -90,7 +98,6 @@
   }
 
   .navbar a {
-    color: #444;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease-in-out;
@@ -165,7 +172,6 @@
 
     .navbar .menu-items {
       padding-top: 100px;
-      background: #fff;
       height: 100vh;
       max-width: 300px;
       transform: translate(-150%);
