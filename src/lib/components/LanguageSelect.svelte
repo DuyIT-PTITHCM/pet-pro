@@ -37,7 +37,7 @@
     </select>
 </form> -->
 
-<select bind:value={$selectedLanguage} on:change={handleChange}>
+<select class="dark:bg-slate-800" bind:value={$selectedLanguage} on:change={handleChange}>
     {#each languages as language}
       <option value={language.id}>{language.name}</option>
     {/each}
