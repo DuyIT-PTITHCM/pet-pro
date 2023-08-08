@@ -27,28 +27,26 @@
   width: 100%;
   object-fit: cover;
 }
-
-.dimemay {
-  height: 1000px;
+.dark .navbar{
+  box-shadow: none !important;
 }
 
-.dark .benefit-heading {
-  background: linear-gradient(to right, #30CFD0 0%, #fff 100%) !important;
-  background-clip: text !important;
-  color: transparent !important;
-}
-.dark .ourteam-heading{
-  background: linear-gradient(to right, #32c5ff 0%, #ffffff 50%, #ff5656 100%) !important;
-  background-clip: text !important;
-  color: transparent !important;
-}
 .dark .benefit{
   color: #fff;
 }
 
 @media (max-width: 640px) {
-  .caption-left h1 {
+  .caption-left h1 , .content-heading{
     font-size: 26px !important;
     text-align: center;
+  }
+  .home-content{
+    padding: 10px !important;
+  }
+  .benefit-content, .benefit-content h3{
+    font-size: 14px !important;
+  }
+  .footer-info{
+    margin: 100px 16px;
   }
 }
