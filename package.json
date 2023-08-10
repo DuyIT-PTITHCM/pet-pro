@@ -18,6 +18,8 @@
 		"@types/node": "^20.4.5",
 		"@types/siema": "^1.4.8",
 		"autoprefixer": "^10.4.14",
+		"carbon-components-svelte": "^0.79.0",
+		"carbon-icons-svelte": "^12.1.0",
 		"express": "^4.18.2",
 		"postcss": "^8.4.27",
 		"svelte": "^4.0.5",
