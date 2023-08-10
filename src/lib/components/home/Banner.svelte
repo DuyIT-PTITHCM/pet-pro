@@ -40,7 +40,7 @@
   let showIndicators = false;
   let slideControls = false;
   let slideClass = "div-image";
-  let divClass = "overflow-hidden relative rounded-lg home-slide";
+  let divClass = "overflow-hidden relative home-slide";
 </script>
 
 <div class="w-full home-panner">
@@ -56,7 +56,7 @@
     duration="5000"
   />
   <div class="home-panner_caption dark:bg-black/[.5]">
-    <div class="caption-left md:w-2/4 text-white">
+    <div class="caption-left xl:w-2/4 md:w-4/5 sm:w-full text-white">
       <h1>We love your pets as if they were ours</h1>
       <br />
       <p>
