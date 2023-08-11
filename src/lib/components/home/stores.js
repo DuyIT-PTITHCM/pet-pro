@@ -18,7 +18,6 @@ const getColumns = () => {
 	}
 	return a
 };
-console.log(getColumns() + " " + globalThis.innerWidth)
 let currentColumnCount = getColumns();
 export const time = readable(currentColumnCount, function start(set) {
 	const onResize = () => {
@@ -31,9 +30,9 @@ export const time = readable(currentColumnCount, function start(set) {
 		set(currentColumnCount);
 	};
 
-	window.addEventListener('resize', onResize);
+	// window.addEventListener('resize', onResize);
 
 	return function stop() {
-		window.removeEventListener('resize', onResize);
+		// window.removeEventListener('resize', onResize);
 	};
 });

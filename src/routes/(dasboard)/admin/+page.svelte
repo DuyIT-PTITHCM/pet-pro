@@ -1,1 +1,1 @@
-admin
+<h1 class="bg-red red">admin page</h1>
