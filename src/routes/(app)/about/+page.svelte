@@ -1,6 +1,7 @@
 <script>
-    import { title, description } from "$lib/store/meta";
+    import Database from "$lib/components/data/Database.svelte";
+import { title, description } from "$lib/store/meta";
     title.set("about page");
     description.set('description page');
 </script>
-<h1>hello about</h1>
+<Database/>
