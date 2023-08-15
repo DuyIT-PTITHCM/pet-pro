@@ -6,7 +6,7 @@ services:
     tty: true
     container_name: nginx
     ports:
-      - "88:80"
+      - "80:80"
     volumes:
       - .:/var/www/html/
       - ./docker/nginx/sites/:/etc/nginx/conf.d/
