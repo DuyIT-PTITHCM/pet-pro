@@ -5,6 +5,7 @@
 	"scripts": {
 		"make-env-dev": "cp ./environment/env.dev.js ./environment/environment.js; cp .env.dev .env",
 		"make-env": "cp ./environment/env.prod.js ./environment/environment.js; cp .env.prod .env",
+		"fornt-build": "vite build",
 		"dev": "npm run make-env-dev; npm i ; nodemon server.js",
 		"build": "npm run make-env; vite build",
 		"dev-server": "nodemon server.js",

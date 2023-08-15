@@ -13,7 +13,7 @@ RUN npm install
 # Sao chép toàn bộ mã nguồn ứng dụng vào thư mục làm việc
 COPY . .
 
-RUN npm run build
+RUN npm run fornt-build
 
 RUN npm install -g sequelize-cli
 
