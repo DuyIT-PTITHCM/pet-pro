@@ -1,9 +1,14 @@
 import { Sequelize } from 'sequelize';
 import UserModel from './user.js';
 import dotenv from 'dotenv';
-dotenv.config();
+dotenv.config(); 
+
+console.log(process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+  host: 'mysql',
+  dialect: 'mysql',
+});
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-  host: process.env.DB_HOST,
+  host: "mysql",
   dialect: 'mysql',
 });
 
