@@ -41,6 +41,7 @@
 		"iconify-icon": "^1.0.8",
 		"js-cookie": "^3.0.5",
 		"mysql2": "^3.6.0",
+		"nodemon": "^3.0.1",
 		"sequelize": "^6.32.1",
 		"siema": "^1.5.1",
 		"slick-carousel": "^1.8.1",
