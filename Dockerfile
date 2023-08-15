@@ -13,10 +13,9 @@ RUN npm install
 # Sao chép toàn bộ mã nguồn ứng dụng vào thư mục làm việc
 COPY . .
 
+RUN npm run build
+
 RUN npm install -g sequelize-cli
 
 # Khai báo cổng mà ứng dụng Express sẽ lắng nghe
 EXPOSE 3000
-
-# Khởi chạy ứng dụng khi hình ảnh được chạy trong container
-CMD ["node", "server.js"]

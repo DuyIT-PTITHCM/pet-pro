@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+RED='\033[0;3m'
+PURPLE='\033[0;35m'
+GREEN='\033[0;32m'
+NOCOLOR="\033[0m"
+
+BOLD='\033[1m'
+UNBOLD='\033[0m'
+
+# Create file .development for development env
+DEVELOPMENT=.development
+
+if [  -f "${DEVELOPMENT}" ]; then
+    touch "${DEVELOPMENT}"
+    chmod 777 npm
+    chmod 777 sequelize
+    chmod 777 stop
+fi
+
+
+if ! docker info > /dev/null 2>&1; then
+  echo "\n${RED}This script uses docker, and it isn't running - please start docker and try again!\n"
+  exit 1
+fi
+
+docker-compose up -d
+
+# if [ "$1" == '--build' ]; then
+# fi
+
+echo "\n${RED}-------RUNNING--------\n";

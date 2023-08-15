@@ -1,0 +1,5 @@
+echo "--------stop service docker------\n";
+docker-compose stop
+
+echo "--------down service docker------";
+docker-compose down
