@@ -1,6 +1,6 @@
 // import User from '../models/user.js';
 
-import { models, sequelize } from "../models/index.js";
+import { models} from "../models/index.js";
 
 
 export const getAllUsers = async (req, res) => {
