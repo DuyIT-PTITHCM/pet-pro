@@ -14,9 +14,7 @@ services:
     depends_on:
       - express
     networks:
-      app-network:
-        aliases:
-          - pet-one
+      - app-network
 
   express:
     build:
