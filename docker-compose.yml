@@ -6,7 +6,7 @@ services:
     tty: true
     container_name: nginx
     ports:
-      - "80:80"
+      - "88:80"
     volumes:
       - .:/var/www/html/
       - ./docker/nginx/sites/:/etc/nginx/conf.d/
@@ -30,7 +30,7 @@ services:
       - mysql
     volumes:
       - .:/var/www/html
-    command: npm start
+    command: npm run dev
     networks:
       - app-network
   mysql:
