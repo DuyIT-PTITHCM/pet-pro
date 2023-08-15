@@ -10,7 +10,6 @@ export const isSupportedLocale = (locale: unknown): locale is SupportedLocale =>
 const FIVE_MINUTES_IN_SECONDS = 5 * 60
 
 export const handle: Handle = async ({ event, resolve }) => {
-    console.log(event.cookies.get('lang'));
     const locale = event.cookies.get('lang') ?? defaultLocale;
     if (isSupportedLocale(locale)) {
         event.locals.locale = locale

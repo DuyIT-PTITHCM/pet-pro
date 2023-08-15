@@ -1,14 +1,19 @@
-// server.js
 import express from 'express';
-
 const app = express();
-const port = process.env.PORT || 5100;
-// Your Express routes go here
-app.get('/api/data', (req, res) => {
-  // Handle your API logic here
-  res.json({ message: 'Hello from Express API!' });
-});
+const PORT = process.env.PORT || 3000;
+import { handler } from './build/handler.js';
+import dotenv from 'dotenv';
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+// Load biến môi trường từ tệp .env vào process.env
+dotenv.config();
+
+import usersRouter from './server/routes/api/v1.0/userRoute.js';
+
+// router ViewMode_1.0 
+app.use('/api/v1.0/users', usersRouter);
+
+
+app.use(handler);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });

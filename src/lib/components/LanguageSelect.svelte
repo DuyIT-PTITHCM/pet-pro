@@ -12,9 +12,7 @@
     ];
 
     selectedLanguage.set(getCookie('lang'));
-    console.log('a',getCookie('lang'));
     async function handleChange(event) {
-        console.log(event);
         removeCookie('lang');
         setCookie('lang', event.target.value);
 
