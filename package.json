@@ -34,10 +34,13 @@
 	"dependencies": {
 		"@floating-ui/dom": "^1.5.1",
 		"body-parser": "^1.20.2",
+		"dotenv": "^16.3.1",
 		"flowbite": "^1.8.1",
 		"flowbite-svelte": "^0.40.2",
 		"iconify-icon": "^1.0.8",
 		"js-cookie": "^3.0.5",
+		"mysql2": "^3.6.0",
+		"sequelize": "^6.32.1",
 		"siema": "^1.5.1",
 		"slick-carousel": "^1.8.1",
 		"sveltekit-i18n": "^2.4.2",

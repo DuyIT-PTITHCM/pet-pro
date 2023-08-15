@@ -1,12 +1,17 @@
 import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000;
-import { handler } from './build/handler.js'; 
+import { handler } from './build/handler.js';
+import dotenv from 'dotenv';
 
-// Định nghĩa các API endpoints hoặc các route khác tại đây
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello from Express!' });
-});
+// Load biến môi trường từ tệp .env vào process.env
+dotenv.config();
+
+import usersRouter from './server/routes/api/v1.0/userRoute.js';
+
+// router ViewMode_1.0 
+app.use('/api/v1.0/users', usersRouter);
+
 
 app.use(handler);
 app.listen(PORT, () => {
