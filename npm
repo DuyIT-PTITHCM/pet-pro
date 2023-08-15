@@ -1,0 +1,2 @@
+docker exec express npm $@
+sequelize
