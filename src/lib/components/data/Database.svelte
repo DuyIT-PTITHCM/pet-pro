@@ -2,7 +2,7 @@
 <h1 class="data-heading">about database</h1>
 
 <div class="data-box xl:w-4/5 md:11/12 sm:w-full xl:p-5 md:p-3 sm:p-1 mx-auto">
-    <iframe src='https://dbdiagram.io/embed/64d5a2a402bd1c4a5e9a4908'> </iframe>
+    <iframe src='https://dbdiagram.io/embed/64d5a2a402bd1c4a5e9a4908' title="database diagram"> </iframe>
 </div>
 
 <style>

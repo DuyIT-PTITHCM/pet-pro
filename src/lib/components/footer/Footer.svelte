@@ -133,11 +133,11 @@
                     <p class="footer-address text-white text-md col-span-2">Address: No. 47, Thu Duc District, Ho Chi Minh City, Viet Nam</p>
                     <Button on:click={() => defaultModal = true}>Show Map</Button>
                     <Modal title="Our Address" bind:open={defaultModal} autoclose>
-                        <iframe class="footer-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1647.6182334436364!2d106.7104288413416!3d10.832829612542865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752862ecc20187%3A0x167a5cd7990e165d!2sCaf%C3%A9%20Tony%20Riverside!5e0!3m2!1svi!2s!4v1691516641496!5m2!1svi!2s" width="100" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe class="footer-map" title="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1647.6182334436364!2d106.7104288413416!3d10.832829612542865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752862ecc20187%3A0x167a5cd7990e165d!2sCaf%C3%A9%20Tony%20Riverside!5e0!3m2!1svi!2s!4v1691516641496!5m2!1svi!2s" width="100" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         <svelte:fragment slot='footer'>
                           <Button color="alternative">Ok</Button>
                         </svelte:fragment>
-                      </Modal>
+                    </Modal>
                 </div>
                 <div class="footer-service sm:col-span-1">
                     <ul class="text-white footer-list">

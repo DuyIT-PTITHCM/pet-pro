@@ -39,4 +39,17 @@
     {#each languages as language}
       <option value={language.id}>{language.name}</option>
     {/each}
-  </select>
+</select>
+
+<style>
+    select{
+        outline: none;
+        border: none;
+        padding: 0 24px;
+        cursor: pointer;
+        border-radius: 100px;
+    }
+    select:hover{
+        opacity: .9;
+    }
+</style>
