@@ -11,9 +11,6 @@ import usersRouter from './server/routes/api/v1.0/userRoute.js';
 
 // router ViewMode_1.0 
 app.use('/api/v1.0/users', usersRouter);
-app.use('/', (req, res) => {
-  res.json({ message: "say hello" });
-});
 
 
 app.use(handler);
