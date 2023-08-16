@@ -16,5 +16,6 @@ COPY . .
 
 RUN npm install -g sequelize-cli
 
+CMD npm run dev
 # Khai báo cổng mà ứng dụng Express sẽ lắng nghe
 EXPOSE 3000
