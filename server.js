@@ -1,7 +1,7 @@
 import express from 'express';
 const app = express();
 const PORT = process.env.PORT || 3000;
-// import { handler } from './build/handler.js';
+import { handler } from './build/handler.js';
 import dotenv from 'dotenv';
 
 // Load biến môi trường từ tệp .env vào process.env
@@ -16,7 +16,7 @@ app.use('/', (req, res) => {
 });
 
 
-// app.use(handler);
+app.use(handler);
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
