@@ -6,18 +6,12 @@
     "host": "mysql",
     "dialect": "mysql"
   },
-  "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
-    "host": "mysql",
-    "dialect": "mysql"
-  },
   "production": {
     "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "mysql",
+    "password": "secret",
+    "database": "pet-one",
+    "host": "103.142.26.42",
+    "port":"3309",
     "dialect": "mysql"
   }
 }
