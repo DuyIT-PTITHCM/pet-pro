@@ -1,24 +1,16 @@
 import { coreResponse } from "../lib/coreResponse.js";
 import { models } from "../models/index.js";
+import { getAllUsers } from "../repositories/userRepository.js";
 
-
+const PER_PAGE = 20;
 export const index = async (req, res) => {
     try {
-        const page = req.query.page || 1; 
-        const perPage = 20; 
-
-        const { docs, pages, total } = await models.User.paginate({
-            where: {
-                deletedAt: null, // Chỉ lấy những người dùng chưa bị xóa mềm
-            },
-            page,
-            paginate: perPage,
-            order: [['createdAt', 'DESC']], 
-        });
-
+        const page = req.query.page || 1;
+        const perPage = req.query.perPage || PER_PAGE;
+        const filter = JSON.parse(req.query.filter || '{}');
+        const { docs, pages, total } = await getAllUsers(page, perPage, filter);
         coreResponse(res, 200, "Success", { docs, pages, total });
     } catch (error) {
-        console.error("Error fetching users:", error);
         coreResponse(res, 500, "Error fetching users");
     }
 };
@@ -73,7 +65,7 @@ export const update = async (req, res) => {
         user.phoneConfirm = phoneConfirm;
         user.role = role;
 
-        await user.save(); 
+        await user.save();
 
         coreResponse(res, 200, "User updated successfully", user);
     } catch (error) {
