@@ -1,4 +1,6 @@
 import { Model } from 'sequelize';
+import sequelizePaginate from 'sequelize-paginate';
+
 export default (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -9,7 +11,7 @@ export default (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  }
+  }  
   User.init({
     name: DataTypes.STRING,
     information: DataTypes.STRING,
@@ -33,6 +35,10 @@ export default (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'users',
+    defaultScope: {
+      attributes: { exclude: ['password'] }, // Ẩn trường password mặc định
+    },
   });
+  sequelizePaginate.paginate(User);
   return User;
 };
