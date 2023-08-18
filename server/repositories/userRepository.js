@@ -1,11 +1,10 @@
 import { models } from '../models/index.js';
 
-export const getAllUsers = async (page = 1, perPage, filter = {}) => {
+export const getAllUsers = async (page = 1, perPage, filters = {}) => {
     try {
         const { docs, pages, total } = await models.User.paginate({
             where: {
-                deletedAt: null, // Chỉ lấy những người dùng chưa bị xóa mềm
-                ...filter, // Sử dụng các điều kiện lọc từ đối tượng filter
+                ...filters, 
             },
             page,
             paginate: perPage,
