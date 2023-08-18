@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { models } from '../models/index.js';
 import bcrypt from 'bcryptjs';
 
@@ -26,6 +27,25 @@ export const isUniqueEmail = async (email) => {
     }
     return Promise.resolve();
 };
+export const isUniqueEmailUpdate = async (email, { req }) => {
+    const userId = req.params.id;
+    const user = await models.User.findAll({
+        where: {
+            id: {
+                [Op.ne]: userId
+            },
+            email: {
+                [Op.eq]: email
+            }
+        }
+    });
+    if (user.length > 0) {
+        return Promise.reject("Email already exists");
+    }
+    return Promise.resolve();
+
+};
+
 
 export const isUniquePhone = async (phone) => {
     const user = await models.User.findOne({ where: { phone } });
@@ -60,4 +80,37 @@ export const createUser = async (userData) => {
     } catch (error) {
         throw new Error("Error creating user");
     }
+};
+
+export const checkUserExits = async (id) => {
+    const user = await models.User.findByPk(id);
+    if (!user) {
+        return Promise.reject('User not found');
+    }
+    return Promise.resolve();
+};
+
+export const updateUser = async (req) => {
+    const userId = req.params.id;
+
+    const { name, information, email, phone, birthDate, gender, emailConfirm, phoneConfirm, role } = req.body;
+    try {
+        const user = await models.User.findByPk(userId);
+        user.name = name;
+        user.information = information;
+        user.email = email;
+        user.phone = phone;
+        user.birthDate = birthDate;
+        user.gender = gender;
+        user.emailConfirm = emailConfirm;
+        user.phoneConfirm = phoneConfirm;
+        user.role = role;
+
+        await user.save();
+        return user;
+
+    } catch (error) {
+        throw new Error("Error updating user");
+    }
+
 };

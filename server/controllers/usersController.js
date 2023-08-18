@@ -1,6 +1,6 @@
 import { coreResponse } from "../lib/coreResponse.js";
 import { models } from "../models/index.js";
-import { createUser, getAllUsers } from "../repositories/userRepository.js";
+import { createUser, getAllUsers, updateUser } from "../repositories/userRepository.js";
 import { literal } from 'sequelize';
 import { validationResult } from 'express-validator';
 
@@ -52,29 +52,12 @@ export const store = async (req, res) => {
 
 export const update = async (req, res) => {
     try {
-        const userId = req.params.id;
-
-        const { name, information, email, phone, birthDate, gender, emailConfirm, phoneConfirm, role } = req.body;
-
-        const user = await models.User.findByPk(userId);
-
-        if (!user) {
-            coreResponse(res, 404, "User not found");
-            return;
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty()) {
+            return res.status(400).json({ errors: validationErrors.array() });
         }
-
-        user.name = name;
-        user.information = information;
-        user.email = email;
-        user.phone = phone;
-        user.birthDate = birthDate;
-        user.gender = gender;
-        user.emailConfirm = emailConfirm;
-        user.phoneConfirm = phoneConfirm;
-        user.role = role;
-
-        await user.save();
-        coreResponse(res, 200, "User updated successfully", user);
+        const updatedUser = await updateUser(req);
+        coreResponse(res, 201, "User updated successfully", updatedUser);  
     } catch (error) {
         console.error("Error updating user:", error);
         coreResponse(res, 500, "Error updating user");
