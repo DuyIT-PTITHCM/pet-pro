@@ -1,17 +1,13 @@
 import { Model } from 'sequelize';
 import sequelizePaginate from 'sequelize-paginate';
+import bcrypt from 'bcryptjs';
 
 export default (sequelize, DataTypes) => {
   class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
     }
-  }  
+  }
   User.init({
     name: DataTypes.STRING,
     information: DataTypes.STRING,
@@ -29,16 +25,16 @@ export default (sequelize, DataTypes) => {
     emailConfirm: DataTypes.BOOLEAN,
     phoneConfirm: DataTypes.BOOLEAN,
     role: DataTypes.ENUM('admin', 'employer', 'customer'),
-    createdAt: DataTypes.DATE,    // Change 'created_at' to 'createdAt'
-    updatedAt: DataTypes.DATE,   // Change 'updated_at' to 'updatedAt'
-    deletedAt: DataTypes.DATE     // Change 'updated_at' to 'updatedAt'
+    createdAt: DataTypes.DATE,    
+    updatedAt: DataTypes.DATE, 
+    deletedAt: DataTypes.DATE   
   }, {
     sequelize,
-    modelName: 'users',
-    defaultScope: {
-      attributes: { exclude: ['password'] }, // Ẩn trường password mặc định
-    },
+    modelName: 'users'
   });
   sequelizePaginate.paginate(User);
+  User.prototype.comparePassword = async function (password) {
+    return await bcrypt.compare(password, this.password);
+  };
   return User;
 };

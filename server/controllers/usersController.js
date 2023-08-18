@@ -3,6 +3,7 @@ import { models } from "../models/index.js";
 import { getAllUsers } from "../repositories/userRepository.js";
 import { literal } from 'sequelize';
 import { validationResult } from 'express-validator';
+import bcrypt from 'bcryptjs';
 
 const PER_PAGE = 20;
 export const index = async (req, res) => {
@@ -44,12 +45,14 @@ export const store = async (req, res) => {
             return res.status(400).json({ errors: validationErrors.array() });
         }
         const { name, information, email, phone, password, birthDate, gender, emailConfirm, phoneConfirm, role } = req.body;
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = await models.User.create({
             name,
             information,
             email,
             phone,
-            password,
+            password: hashedPassword,
             birthDate,
             gender,
             emailConfirm,
@@ -98,7 +101,7 @@ export const update = async (req, res) => {
 
 export const softDelete = async (req, res) => {
     try {
-        const userId = req.params.id; // Lấy id của người dùng từ route parameter
+        const userId = req.params.id; 
 
         // Tìm người dùng cần xóa
         const user = await models.User.findByPk(userId);
@@ -121,7 +124,7 @@ export const softDelete = async (req, res) => {
 
 export const forceDeleteUser = async (req, res) => {
     try {
-        const userId = req.params.id; // Lấy id của người dùng từ route parameter
+        const userId = req.params.id; 
 
         const user = await models.User.findByPk(userId);
 

@@ -9,6 +9,7 @@ export const getAllUsers = async (page = 1, perPage, filters = {}) => {
             page,
             paginate: perPage,
             order: [['createdAt', 'DESC']],
+            attributes: { exclude: ['password']}
         });
 
         return { docs, pages, total };

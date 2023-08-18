@@ -1,9 +1,31 @@
-import { models} from "../models/index.js";
-
+import { models } from "../models/index.js";
+import { createJWTToken } from "../lib/jwtCommon.js";
+import { coreResponse } from "../lib/coreResponse.js";
 
 export const login = async (req, res) => {
-    res.json({ message: "login success" });
+    try {
+        const { email, password, rememberMe } = req.body;
+
+        const user = await models.User.findOne({ where: { email } });
+
+        if (!user) {
+            return coreResponse(res, 401, 'Invalid credentials');
+        }
+
+        const isPasswordMatch = await user.comparePassword(password);
+
+        if (!isPasswordMatch) {
+            return coreResponse(res, 401, 'Invalid credentials');
+        }
+
+        const token = createJWTToken(user.id);
+        return coreResponse(res, 200, 'Login successful', { token });
+    } catch (error) {
+        console.error('Error during login:', error);
+        return coreResponse(res, 500, 'Error during login',error);
+    }
 };
+
 
 export const register = async (req, res) => {
     res.json({ message: "register success" });
