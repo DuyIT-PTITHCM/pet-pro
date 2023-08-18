@@ -2,6 +2,7 @@ import { coreResponse } from "../lib/coreResponse.js";
 import { models } from "../models/index.js";
 import { getAllUsers } from "../repositories/userRepository.js";
 import { literal } from 'sequelize';
+import { validationResult } from 'express-validator';
 
 const PER_PAGE = 20;
 export const index = async (req, res) => {
@@ -38,6 +39,10 @@ export const index = async (req, res) => {
 
 export const store = async (req, res) => {
     try {
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty()) {
+            return res.status(400).json({ errors: validationErrors.array() });
+        }
         const { name, information, email, phone, password, birthDate, gender, emailConfirm, phoneConfirm, role } = req.body;
         const newUser = await models.User.create({
             name,
