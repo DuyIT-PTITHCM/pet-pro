@@ -1,9 +1,8 @@
 import { coreResponse } from "../lib/coreResponse.js";
 import { models } from "../models/index.js";
-import { getAllUsers } from "../repositories/userRepository.js";
+import { createUser, getAllUsers } from "../repositories/userRepository.js";
 import { literal } from 'sequelize';
 import { validationResult } from 'express-validator';
-import bcrypt from 'bcryptjs';
 
 const PER_PAGE = 20;
 export const index = async (req, res) => {
@@ -44,24 +43,8 @@ export const store = async (req, res) => {
         if (!validationErrors.isEmpty()) {
             return res.status(400).json({ errors: validationErrors.array() });
         }
-        const { name, information, email, phone, password, birthDate, gender, emailConfirm, phoneConfirm, role } = req.body;
-        const saltRounds = 10;
-        const hashedPassword = await bcrypt.hash(password, saltRounds);
-        const newUser = await models.User.create({
-            name,
-            information,
-            email,
-            phone,
-            password: hashedPassword,
-            birthDate,
-            gender,
-            emailConfirm,
-            phoneConfirm,
-            role,
-        });
-        const { password: passwordToRemove, ...userWithoutPassword } = newUser.dataValues;
-
-        coreResponse(res, 201, "User created successfully", userWithoutPassword);
+        const createdUser = await createUser(req.body);
+        coreResponse(res, 201, "User created successfully", createdUser);
     } catch (error) {
         coreResponse(res, 500, "Error creating user", error);
     }
@@ -91,7 +74,6 @@ export const update = async (req, res) => {
         user.role = role;
 
         await user.save();
-
         coreResponse(res, 200, "User updated successfully", user);
     } catch (error) {
         console.error("Error updating user:", error);
