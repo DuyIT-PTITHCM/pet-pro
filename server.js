@@ -4,10 +4,12 @@ import { handler } from './build/handler.js';
 import usersRouter from './server/routes/api/v1.0/userManagementRoute.js';
 import authRoute from './server/routes/api/v1.0/authRoute.js';
 import verifyToken from './server/middleware/authMiddleware.js'
+import cors from 'cors';
 const V_1_0 = "/api/v1.0";
 
 
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 // Sử dụng body-parser để xử lý dữ liệu trong request body
 app.use(bodyParser.json());
