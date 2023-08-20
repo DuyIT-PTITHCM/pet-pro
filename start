@@ -8,16 +8,24 @@ NOCOLOR="\033[0m"
 BOLD='\033[1m'
 UNBOLD='\033[0m'
 
-# Create file .development for development env
 DEVELOPMENT=.development
+if [ "$1" == '--dev' ]; then
+  touch "${DEVELOPMENT}"
+fi
 
+#development
 if [  -f "${DEVELOPMENT}" ]; then
-    touch "${DEVELOPMENT}"
+    echo "run on development!\n" ;
     chmod 777 npm
     chmod 777 sequelize
     chmod 777 stop
 fi
 
+#production
+if [ ! -f "${DEVELOPMENT}" ]; then
+    echo "run on production!\n" ;
+    chmod 777 deploy-production
+fi
 
 if ! docker info > /dev/null 2>&1; then
   echo "\n${RED}This script uses docker, and it isn't running - please start docker and try again!\n"

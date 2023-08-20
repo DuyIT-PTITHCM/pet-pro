@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+echo ""
+echo "Current working folder:${PWD}"
+echo ""
+
+echo "Start Pull Code"
+git pull origin master
+echo "End Pull Code"
+
+echo ""
+echo "npm install ..."
+./npm install 
+
+echo ""
+echo "Migration ...."
+./sequelize db:migrate
+
+
+# if [ "$1" == '--seeder' ]; then
+#   echo ""
+#   echo "Seeder ..."
+#   php artisan db:seed
+# fi
+
+# echo ""
+# echo "Generating Swagger docs ..."
+
+
+echo ""
+echo "Clear Cache ..."
+
+
+# echo ""
+# echo "Set Permission folder Storage/*"
+# sudo chmod -R 775 storage
+
+echo ""
+echo "Finish."
+echo ""
