@@ -1,6 +1,6 @@
-import { c as create_ssr_component, s as setContext, v as validate_component, m as missing_component } from './chunks/ssr-37951d87.js';
-import { w as writable, r as readable } from './chunks/index2-a395b144.js';
-import './chunks/utils-62dc91f3.js';
+import { c as create_ssr_component, s as setContext, v as validate_component, m as missing_component } from './chunks/ssr-1bb711e0.js';
+import { w as writable, r as readable } from './chunks/index2-b7662a81.js';
+import './chunks/utils-5d10fb30.js';
 
 let base = "";
 let assets = base;
@@ -156,7 +156,7 @@ const options = {
   root: Root,
   service_worker: false,
   templates: {
-    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\n<html class="dark scroll-smooth hover:scroll-auto" lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<meta name="viewport" content="width=device-width" />\n		' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover" class="bg-white dark:bg-gray-800">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
+    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\n<html class="dark scroll-smooth hover:scroll-auto" lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<meta name="viewport" content="width=device-width" />\n		' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover" class="bg-white dark:bg-slate-800">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
     error: ({ status, message }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
 
 		<style>
@@ -218,7 +218,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "jpvqts"
+  version_hash: "11x4bgw"
 };
 function get_hooks() {
   return import('./chunks/hooks.server-7c0cd223.js');

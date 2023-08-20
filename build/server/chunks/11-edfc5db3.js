@@ -1,0 +1,20 @@
+import { t as title } from './meta-8db97ba1.js';
+import './index2-b7662a81.js';
+import './utils-5d10fb30.js';
+
+title.set("blog Page");
+
+var _page_server_ts = /*#__PURE__*/Object.freeze({
+	__proto__: null
+});
+
+const index = 11;
+let component_cache;
+const component = async () => component_cache ??= (await import('./_page.svelte-3986e1fc.js')).default;
+const server_id = "src/routes/(app)/blog/+page.server.ts";
+const imports = ["_app/immutable/nodes/11.84da0a8d.js","_app/immutable/chunks/scheduler.87d5e925.js","_app/immutable/chunks/index.426ab099.js","_app/immutable/chunks/meta.8e3c854e.js","_app/immutable/chunks/index.13e72455.js"];
+const stylesheets = [];
+const fonts = [];
+
+export { component, fonts, imports, index, _page_server_ts as server, server_id, stylesheets };
+//# sourceMappingURL=11-edfc5db3.js.map
