@@ -3,6 +3,7 @@ import { models } from "../models/index.js";
 import { createUser, getAllUsers, updateUser } from "../repositories/userRepository.js";
 import { literal } from 'sequelize';
 import { validationResult } from 'express-validator';
+import { sendEmailService } from "../lib/nodemailerService.js";
 
 const PER_PAGE = 20;
 export const index = async (req, res) => {
@@ -17,7 +18,7 @@ export const index = async (req, res) => {
         };
 
         if (req.query.softDelete === '1') {
-            filters.deletedAt = literal('deletedAt IS NOT NULL'); 
+            filters.deletedAt = literal('deletedAt IS NOT NULL');
         } else {
             filters.deletedAt = null;
         }
@@ -57,7 +58,7 @@ export const update = async (req, res) => {
             return res.status(400).json({ errors: validationErrors.array() });
         }
         const updatedUser = await updateUser(req);
-        coreResponse(res, 201, "User updated successfully", updatedUser);  
+        coreResponse(res, 201, "User updated successfully", updatedUser);
     } catch (error) {
         console.error("Error updating user:", error);
         coreResponse(res, 500, "Error updating user");
@@ -66,7 +67,7 @@ export const update = async (req, res) => {
 
 export const softDelete = async (req, res) => {
     try {
-        const userId = req.params.id; 
+        const userId = req.params.id;
 
         // Tìm người dùng cần xóa
         const user = await models.User.findByPk(userId);
@@ -89,7 +90,7 @@ export const softDelete = async (req, res) => {
 
 export const forceDeleteUser = async (req, res) => {
     try {
-        const userId = req.params.id; 
+        const userId = req.params.id;
 
         const user = await models.User.findByPk(userId);
 
@@ -109,7 +110,7 @@ export const forceDeleteUser = async (req, res) => {
 
 export const restore = async (req, res) => {
     try {
-        const userId = req.params.id; 
+        const userId = req.params.id;
 
         const user = await models.User.findByPk(userId, { paranoid: false });
 
@@ -124,5 +125,15 @@ export const restore = async (req, res) => {
         coreResponse(res, 200, "User restored successfully");
     } catch (error) {
         coreResponse(res, 500, "Error restoring user");
+    }
+};
+
+export const sendEmail = (req, res) => {
+    try {
+        const { to, subject, text } = req.body;
+        sendEmailService(to, subject, text);
+        return coreResponse(res, 200, "Email is sedding ....", {});
+    } catch (error) {
+        return res.status(500).json({ message: 'Error sending email' });
     }
 };
