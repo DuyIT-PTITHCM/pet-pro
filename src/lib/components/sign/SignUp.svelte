@@ -96,7 +96,12 @@
     // Toast
     let toasts = [];
     let toastId = 0;
-
+    function hideToast(toast) {
+        toast.visible = false;
+        setTimeout(() => {
+            toasts = toasts.filter((t) => t !== toast);
+        }, 300);
+    }
     function showToast(message, type) {
         const toast = { id: toastId++, message, type, visible: true };
         toasts = [...toasts, toast];
@@ -226,10 +231,18 @@
 <div class="toast-container">
     {#each toasts as toast (toast.id)}
         {#if toast.visible}
-            <ToastCustom {toasts}/>
+        <div class="toast {toast.type === 0 ? 'success' : 'error'}">
+            <p class="flex items-center"><Icon class="text-3xl" icon="{toast.type === 0 ? 'fluent-emoji:cat-face' : 'fluent-emoji-flat:crying-cat'}" /> 
+                {toast.message}
+            </p>
+            <button on:click={() => hideToast(toast)}
+                ><Icon icon="foundation:x" /></button
+            >
+        </div>
         {/if}
     {/each}
 </div>
+<ToastCustom {toasts}/>
 
 <style>
     .sign-up {
@@ -240,6 +253,9 @@
     }
     .sign-up-form{
         position: relative;
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 20px;
         z-index: 10;
     }
     .back{
@@ -268,7 +284,7 @@
         background-repeat: no-repeat;
         background-size: cover;
         border-radius: 50%;
-        animation: moving 10s linear infinite;
+        animation: moving 10s ease infinite;
     }
     .input-avt {
         display: flex;
@@ -293,26 +309,7 @@
         align-items: flex-end;
     }
 
-    .toast {
-        color: white;
-        padding: 1rem;
-        border-radius: 0.25rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 0.5rem;
-        animation: slide-in 0.5s linear forwards;
-    }
-    .success {
-        background: #a8ff78;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #78ffd6, #a8ff78);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #78ffd6, #a8ff78); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
-    .error {
-        background: #ee0979; /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #ee0979, #ff6a00); /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #ee0979, #ff6a00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    }
+   
     @keyframes slide-in {
         from {
             transform: translateX(100%);
