@@ -1,6 +1,6 @@
 <script>
     import Icon from "@iconify/svelte";
-    export let toasts = [];
+    let toasts = [];
     function hideToast(toast) {
         toast.visible = false;
         setTimeout(() => {
@@ -9,16 +9,33 @@
     }
 </script>
 
-<div class="toast {toast.type === 0 ? 'success' : 'error'}">
-    <p class="flex items-center"><Icon class="text-3xl" icon="{toast.type === 0 ? 'fluent-emoji:cat-face' : 'fluent-emoji-flat:crying-cat'}" /> 
-        {toast.message}
-    </p>
-    <button on:click={() => hideToast(toast)}
-        ><Icon icon="foundation:x" /></button
-    >
-</div>
 
+<div class="toast-container">
+    {#each toasts as toast (toast.id)}
+        {#if toast.visible}
+        <div class="toast {toast.type === 0 ? 'success' : 'error'}">
+            <p class="flex items-center"><Icon class="text-3xl" icon="{toast.type === 0 ? 'fluent-emoji:cat-face' : 'fluent-emoji-flat:crying-cat'}" /> 
+                {toast.message}
+            </p>
+            <button on:click={() => hideToast(toast)}
+                ><Icon icon="foundation:x" /></button
+            >
+        </div>
+        {/if}
+    {/each}
+</div>
 <style>
+    
+     .toast {
+        color: white;
+        padding: 1rem;
+        border-radius: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+        animation: slide-in 0.5s linear forwards;
+    }
     .success {
         background: #a8ff78;  /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #78ffc2, #a8ff78);  /* Chrome 10-25, Safari 5.1-6 */

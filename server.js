@@ -16,11 +16,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // auth ennpoint 
 app.use(V_1_0 + '/auth', authRoute);
 // user management
-app.use(V_1_0 + '/user-management', verifyToken, usersRouter);
+app.use(V_1_0 + '/user-management', usersRouter);
 
 
 app.use(handler);
-
 app.listen(PORT, () => {
   console.log(`Server is running`);
 });
