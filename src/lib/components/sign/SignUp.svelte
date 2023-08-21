@@ -1,6 +1,6 @@
 <script>
-	import { onMount } from 'svelte';
-    import ToastCustom from '../common/ToastCustom.svelte';
+    import { onMount } from "svelte";
+    import ToastCustom from "../common/ToastCustom.svelte";
 
     import {
         Input,
@@ -13,7 +13,9 @@
         DarkMode,
     } from "flowbite-svelte";
     import signUpBg from "$lib/assest/images/signupbg.jpg";
-    import axios from 'axios';
+    import axios from "axios";
+    import { BASE_API } from "$lib/Const";
+    import { createAxiosClient } from "$lib/Utils/axiosServer";
     let admit = false;
 
     let user = {
@@ -42,47 +44,49 @@
     let wastedTimeComponent;
     async function handleUserDetail() {
         if (user.name == "") {
-            onMount(wastedTimeComponent.showToast("Please enter your name", 1))
+            onMount(wastedTimeComponent.showToast("Please enter your name", 1));
         } else if (user.phone == "") {
-            onMount(wastedTimeComponent.showToast("Please enter your phone number", 1));
+            onMount(
+                wastedTimeComponent.showToast(
+                    "Please enter your phone number",
+                    1
+                )
+            );
         } else if (user.email == "" || user.email == null) {
-            onMount(wastedTimeComponent.showToast("Please enter your email", 1));
+            onMount(
+                wastedTimeComponent.showToast("Please enter your email", 1)
+            );
         } else if (user.password.length == 0) {
-            onMount(wastedTimeComponent.showToast("Please enter your Password.", 1));
+            onMount(
+                wastedTimeComponent.showToast("Please enter your Password.", 1)
+            );
         } else if (user.password.length < 8) {
-            onMount(wastedTimeComponent.showToast("Password must have at least 8 characters.", 1));
+            onMount(
+                wastedTimeComponent.showToast(
+                    "Password must have at least 8 characters.",
+                    1
+                )
+            );
         } else if (user.password != user.confirmPassword) {
-            onMount(wastedTimeComponent.showToast("Password and password confirm is mismatch", 1));
+            onMount(
+                wastedTimeComponent.showToast(
+                    "Password and password confirm is mismatch",
+                    1
+                )
+            );
         } else if (!isValidPassword) {
-            onMount(wastedTimeComponent.showToast(
-                "Password must have including an uppercase letter, a lowercase letter, a digit, and a special character.", 1
-            ));
+            onMount(
+                wastedTimeComponent.showToast(
+                    "Password must have including an uppercase letter, a lowercase letter, a digit, and a special character.",
+                    1
+                )
+            );
         } else {
             let result = null;
-            // try {
-            //     const res = await fetch('http://103.142.26.42/api/v1.0/auth/register', {
-            //         method: 'POST',
-            //         body: JSON.stringify({
-            //             name: user.name,
-            //             email: user.email,
-            //             password: user.password,
-            //             confirmPassword: user.confirmPassword
-            //         })
-            //     })
-
-            //     const json = await res.json()
-            //     console.log(json)
-            //     result = JSON.stringify(json)
-
-            // } catch (error) {
-            //     console.log(error)
-            // }
-
-            axios
-                .post('http://103.142.26.42/api/v1.0/auth/register',user)
+            const axiosClient = createAxiosClient();
+            axiosClient.post(`${BASE_API}/auth/register`, user)
                 .then(function (response) {
                     console.log(response);
-                    console.log(response.errors.msg + "hear")
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -95,7 +99,6 @@
         messagePhone = "",
         messageConfirmPass = "",
         messageUsername = "";
-
 </script>
 
 <div
@@ -222,7 +225,7 @@
     </div>
 </div>
 
-<ToastCustom  bind:this={wastedTimeComponent}/>
+<ToastCustom bind:this={wastedTimeComponent} />
 
 <style>
     .sign-up {
