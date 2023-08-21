@@ -226,7 +226,7 @@ let colors = [
 .after-header{
   height: 60px;
   width: 100%;
-  background-color: red;
+  background-color: transparent;
 }
 .active{
   box-shadow: 2px 0px 1px rgb(255, 255, 255);

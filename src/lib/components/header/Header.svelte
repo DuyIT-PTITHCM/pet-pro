@@ -52,7 +52,7 @@
           <DropdownDivider />
           <DropdownItem on:click={() => (popupModal = true)}>Sign out</DropdownItem>
         {:else}
-          <DropdownItem href="/signin">Sign In</DropdownItem>
+          <DropdownItem href="/login">Sign In</DropdownItem>
           <DropdownDivider />
           <DropdownItem href="/signup">Sign Up</DropdownItem>
         {/if}

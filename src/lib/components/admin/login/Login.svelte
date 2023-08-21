@@ -2,7 +2,7 @@
     import { Button, Checkbox, DarkMode, Label, Input, Helper } from "flowbite-svelte";
     import loginbg from "$lib/assest/images/loginbg.jpg"
 </script>
-<div class="darkmode fixed top-2 right-2 rounded-lg">
+<div class="darkmode fixed top-2 right-2 rounded-lg z-50 bg-slate-200 dark:bg-slate-900">
     <DarkMode/>
 </div>
 <div class="loginform flex flex-col items-center justify-center px-6 py-8 mx-auto h-screen lg:py-0">
@@ -27,19 +27,16 @@
                   </div>
                 <div class="flex justify-between">
                     <Checkbox>Remember me</Checkbox>
-                    <a href="/" class="text-primary-600 dark+:text-primary-500 hover:underline font-semiboldd">Forgot password</a>
+                    <a href="/" class="text-primary-600 dark+:text-primary-500 hover:underline font-bold text-sm">Forgot password ?</a>
                 </div>
-                <Button type="submit" class="w-full">Login</Button>
+                <Button type="submit" class="w-full">Log In</Button>
+                <a href="/signup" class="text-primary-600 dark+:text-primary-500 hover:underline font-bold text-sm text-right w-full block">Sign up for Pet One</a>
             </form>
         </div>
     </div>
-    <div class="bgloginform"><img src={loginbg} alt=""></div>
+    <div class="bgloginform dark:brightness-50 transition-all"><img src={loginbg} alt=""></div>
 </div>
 <style>
-    .darkmode{
-        background-color: rgb(0, 0, 0);
-        z-index: 1000;
-    }
     .loginform{
         position: relative;
     }
