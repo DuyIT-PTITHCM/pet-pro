@@ -11,14 +11,13 @@ const V_1_0 = "/api/v1.0";
 const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 3000;
-// Sử dụng body-parser để xử lý dữ liệu trong request body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // auth ennpoint 
 app.use(V_1_0 + '/auth', authRoute);
 // user management
-app.use(V_1_0 + '/user-management', usersRouter);
+app.use(V_1_0 + '/user-management', verifyToken, usersRouter);
 
 
 app.use(handler);
