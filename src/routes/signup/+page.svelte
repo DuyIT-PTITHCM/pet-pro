@@ -4,5 +4,9 @@
     title.set("Sign Up");
     description.set("Sign up page");
 </script>
-
+<svelte:head>
+    <title>
+        Sing Up
+    </title>
+</svelte:head>
 <SignUp />

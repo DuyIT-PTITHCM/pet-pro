@@ -13,7 +13,6 @@
         DarkMode,
     } from "flowbite-svelte";
     import signUpBg from "$lib/assest/images/signupbg.jpg";
-    import axios from "axios";
     import { BASE_API } from "$lib/Const";
     import { createAxiosClient } from "$lib/Utils/axiosServer";
     let admit = false;
@@ -34,64 +33,21 @@
             selectedImage = URL.createObjectURL(file);
         }
     }
-
-    let isValidPassword = function isPasswordValid() {
-        const passwordRegex =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        return passwordRegex.test(user.password);
-    };
     // Toast
     let wastedTimeComponent;
     async function handleUserDetail() {
-        if (user.name == "") {
-            onMount(wastedTimeComponent.showToast("Please enter your name", 1));
-        } else if (user.phone == "") {
-            onMount(
-                wastedTimeComponent.showToast(
-                    "Please enter your phone number",
-                    1
-                )
-            );
-        } else if (user.email == "" || user.email == null) {
-            onMount(
-                wastedTimeComponent.showToast("Please enter your email", 1)
-            );
-        } else if (user.password.length == 0) {
-            onMount(
-                wastedTimeComponent.showToast("Please enter your Password.", 1)
-            );
-        } else if (user.password.length < 8) {
-            onMount(
-                wastedTimeComponent.showToast(
-                    "Password must have at least 8 characters.",
-                    1
-                )
-            );
-        } else if (user.password != user.confirmPassword) {
-            onMount(
-                wastedTimeComponent.showToast(
-                    "Password and password confirm is mismatch",
-                    1
-                )
-            );
-        } else if (!isValidPassword) {
-            onMount(
-                wastedTimeComponent.showToast(
-                    "Password must have including an uppercase letter, a lowercase letter, a digit, and a special character.",
-                    1
-                )
-            );
-        } else {
-            let result = null;
-            const axiosClient = createAxiosClient();
-            axiosClient.post(`${BASE_API}/auth/register`, user)
-                .then(function (response) {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
+        const axiosClient = createAxiosClient();
+        axiosClient
+            .post(`${BASE_API}/auth/register`, user)
+            .then(function (response) {
+                window.location.href = "/login";
+            })
+            .catch(function (error) {
+                const errors = error?.response?.data?.data?.errors;
+                errors.forEach(element => {
+                    onMount(wastedTimeComponent.showToast(element.path + " " + element.msg, 1));
                 });
-        }
+            });
     }
 
     let messageEmail = "",
@@ -106,13 +62,13 @@
 >
     <DarkMode />
 </div>
-<div class="sign-up">
+<div class="flex items-center justify-center min-h-screen relative">
     <form
-        class="sign-up-form 2xl:w-1/4 xl:w-1/4 md:w-2/4 w-11/12 bg-slate-100 dark:bg-slate-900"
+        class="2xl:w-1/4 xl:w-1/4 md:w-2/4 w-11/12 bg-slate-100 dark:bg-slate-900 relative p-[20px] rounded-lg z-10"
     >
-        <div class="input-avt">
+        <div class="flex items-center justify-center text-center flex-col">
             {#if selectedImage}
-                <img class="avt" src={selectedImage} alt="avatar" />
+                <img class="avt rounded-full h-100 w-100 object-cover" src={selectedImage} alt="avatar" />
             {/if}
             <Label class="space-y-2 mb-2 col-span-3">
                 <span>Avatar</span>
@@ -220,48 +176,9 @@
             >
         </div>
     </form>
-    <div class="bgloginform dark:brightness-50 transition-all">
-        <img src={signUpBg} alt="" />
+    <div class="absolute w-full h-full dark:brightness-50 transition-all">
+        <img class="w-full h-full object-cover" src={signUpBg} alt="" />
     </div>
 </div>
 
 <ToastCustom bind:this={wastedTimeComponent} />
-
-<style>
-    .sign-up {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        position: relative;
-    }
-    .sign-up-form {
-        position: relative;
-        padding: 20px;
-        border-radius: 20px;
-        z-index: 10;
-    }
-    .bgloginform {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
-    .bgloginform img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .input-avt {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        flex-direction: column;
-    }
-    .input-avt img {
-        border-radius: 50%;
-        height: 100px;
-        width: 100px;
-        object-fit: cover;
-    }
-</style>
