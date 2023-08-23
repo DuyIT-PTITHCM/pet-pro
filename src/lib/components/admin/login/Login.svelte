@@ -108,7 +108,7 @@
         </div>
     </div>
     <div class="absolute w-full h-full dark:brightness-50 transition-all">
-        <img class="w-full h-full object-cover" src={"/src/public/images/loginbg.jpg"} alt="" />
+        <img class="w-full h-full object-cover" src={"/images/loginbg.jpg"} alt="" />
     </div>
 </div>
 <ToastCustom bind:this={wastedTimeComponent} />

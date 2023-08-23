@@ -176,7 +176,7 @@
         </div>
     </form>
     <div class="absolute w-full h-full dark:brightness-50 transition-all">
-        <img class="w-full h-full object-cover" src="/src/public/images/signupbg.jpg" alt="" />
+        <img class="w-full h-full object-cover" src="/images/signupbg.jpg" alt="" />
     </div>
 </div>
 

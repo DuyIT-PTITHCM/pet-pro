@@ -70,7 +70,7 @@
     
     /* Client say */
     .clientsay-box-content{
-        background-image: url(/src/public/images/homepage/lientsaybg.jpg);
+        background-image: url(/images/homepage/lientsaybg.jpg);
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

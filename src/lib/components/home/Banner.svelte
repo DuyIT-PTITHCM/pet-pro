@@ -5,31 +5,31 @@
     {
       id: 0,
       name: 'Cosmic timetraveler',
-      imgurl: '/src/public/images/home-panner/1.jpg',
+      imgurl: '/images/home-panner/1.jpg',
       attribution: 'cosmic-timetraveler-pYyOZ8q7AII-unsplash.com'
     },
     {
       id: 1,
       name: 'Cristina Gottardi',
-      imgurl: '/src/public/images/home-panner/2.jpg',
+      imgurl: '/images/home-panner/2.jpg',
       attribution: 'cristina-gottardi-CSpjU6hYo_0-unsplash.com'
     },
     {
       id: 2,
       name: 'Johannes Plenio',
-      imgurl: '/src/public/images/home-panner/3.jpg',
+      imgurl: '/images/home-panner/3.jpg',
       attribution: 'johannes-plenio-RwHv7LgeC7s-unsplash.com'
     },
     {
       id: 3,
       name: 'Jonatan Pie',
-      imgurl: '/src/public/images/home-panner/4.jpg',
+      imgurl: '/images/home-panner/4.jpg',
       attribution: 'jonatan-pie-3l3RwQdHRHg-unsplash.com'
     },
     {
       id: 4,
       name: 'Mark Harpur',
-      imgurl: '/src/public/images/home-panner/5.jpg',
+      imgurl: '/images/home-panner/5.jpg',
       attribution: 'mark-harpur-K2s_YE031CA-unsplash'
     },
     {
