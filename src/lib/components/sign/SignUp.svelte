@@ -1,4 +1,7 @@
 <script>
+    import { onMount } from "svelte";
+    import ToastCustom from "../common/ToastCustom.svelte";
+
     import {
         Input,
         Label,
@@ -7,85 +10,44 @@
         Fileupload,
         GradientButton,
         Helper,
+        DarkMode,
     } from "flowbite-svelte";
-    import Icon from "@iconify/svelte";
-    import ToastCustom from "../common/ToastCustom.svelte";
-    let genders = [
-        { id: 1, text: "Male" },
-        { id: 2, text: "Famale" },
-        { id: 3, text: "Orther" },
-    ];
+    import signUpBg from "$lib/assest/images/signupbg.jpg";
+    import { BASE_API } from "$lib/Const";
+    import { createAxiosClient } from "$lib/Utils/axiosServer";
     let admit = false;
 
-    const currentDateTime = new Date();
     let user = {
-        fullname: "",
+        name: "",
         phone: "",
         avatar: "",
         email: "",
         password: "",
-        role: 1,
-        created: currentDateTime.getDate(),
+        confirmPassword: "",
     };
 
-    let selectedImage;
+    let selectedImage = "";
     function handleFileInputChange(event) {
         const file = event.target.files[0];
         if (file) {
             selectedImage = URL.createObjectURL(file);
         }
     }
-    let email = "someone@example.com";
-    let username = "tridz";
-    let isvalidemail = function isEmailValid() {
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-        return emailRegex.test(user.email);
-    };
-
-    let isValidPassword = function isPasswordValid() {
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-        return passwordRegex.test(user.password);
-    };
-    let passwordConfirm = "";
-    
-    function handleUserDetail() {
-        if (user.fullname == '') {
-            showToast("Please enter your fullname", 1);
-        }
-        else if(user.phone == ''){
-            showToast("Please enter your phone number", 1);
-        }
-        else if(user.email == '' || user.email == null){
-            showToast("Please enter your email", 1);
-        }
-        else if (user.email == email || !isvalidemail) {
-            showToast("Email is invalid or already in use", 1);
-        }
-        else if (user.password.length == 0) {
-            showToast(
-                "Please enter your Password.", 1
-            );
-        }
-        else if (user.password.length < 8) {
-            showToast(
-                "Password must have at least 8 characters.", 1
-            );
-        }
-        else if (user.password != passwordConfirm) {
-            showToast("Password and password confirm is mismatch", 1);
-        }
-        else if (!isValidPassword) {
-            showToast(
-                "Password must have including an uppercase letter, a lowercase letter, a digit, and a special character.", 1
-            );
-        }
-        else {
-            showToast(
-                `Sign Up is sucessfull, wellcome ${
-                    user.fullname
-                }`, 0
-            );
-        }
+    // Toast
+    let wastedTimeComponent;
+    async function handleUserDetail() {
+        const axiosClient = createAxiosClient();
+        axiosClient
+            .post(`${BASE_API}/auth/register`, user)
+            .then(function (response) {
+                window.location.href = "/login";
+            })
+            .catch(function (error) {
+                const errors = error?.response?.data?.data?.errors;
+                errors.forEach(element => {
+                    onMount(wastedTimeComponent.showToast(element.path + " " + element.msg, 1));
+                });
+            });
     }
 
     let messageEmail = "",
@@ -93,36 +55,20 @@
         messagePhone = "",
         messageConfirmPass = "",
         messageUsername = "";
-    // Toast
-    let toasts = [];
-    let toastId = 0;
-    function hideToast(toast) {
-        toast.visible = false;
-        setTimeout(() => {
-            toasts = toasts.filter((t) => t !== toast);
-        }, 300);
-    }
-    function showToast(message, type) {
-        const toast = { id: toastId++, message, type, visible: true };
-        toasts = [...toasts, toast];
-        setTimeout(() => {
-            hideToast(toast);
-        }, 5000);
-    }
 </script>
 
-<div class="sign-up">
-    <div class="back 2xl:w-1/4 xl:w-1/4 md:w-2/4 w-11/12">
-        <div class="bg-sign">
-            <div class="bg-sign_animate">
-
-            </div>
-        </div>
-    </div>
-    <form class="sign-up-form 2xl:w-1/4 xl:w-1/4 md:w-2/4 w-11/12">
-        <div class="input-avt">
+<div
+    class="darkmode fixed top-2 right-2 rounded-lg z-50 bg-slate-200 dark:bg-slate-900"
+>
+    <DarkMode />
+</div>
+<div class="flex items-center justify-center min-h-screen relative">
+    <form
+        class="2xl:w-1/4 xl:w-1/4 md:w-2/4 w-11/12 bg-slate-100 dark:bg-slate-900 relative p-[20px] rounded-lg z-10"
+    >
+        <div class="flex items-center justify-center text-center flex-col">
             {#if selectedImage}
-                <img class="avt" src={selectedImage} alt="avatar" />
+                <img class="avt rounded-full h-100 w-100 object-cover" src={selectedImage} alt="avatar" />
             {/if}
             <Label class="space-y-2 mb-2 col-span-3">
                 <span>Avatar</span>
@@ -133,31 +79,32 @@
             </Label>
         </div>
         <div class="grid gap-4 mb-6 md:grid-cols-1">
-           
             <div>
                 <Label for="username" class="mb-2"
-                    >Fullname<span class="text-red-600">*</span></Label
+                    >name<span class="text-red-600">*</span></Label
                 >
                 <Input
                     type="text"
                     id="username"
                     placeholder="Flowbite"
-                    bind:value={user.fullname}
-                    on:blur={() =>
-                        (messageUsername = "Please enter your Fullname")}
+                    bind:value={user.name}
+                    on:blur={() => (messageUsername = "Please enter your name")}
                 />
                 <Helper color="red"
-                    >{#if messageUsername && user.fullname === ""}{messageUsername}{/if}</Helper
+                    >{#if messageUsername && user.name === ""}{messageUsername}{/if}</Helper
                 >
             </div>
             <div>
-                <Label for="phone" class="mb-2">Phone number<span class="text-red-600">*</span></Label>
+                <Label for="phone" class="mb-2"
+                    >Phone number<span class="text-red-600">*</span></Label
+                >
                 <Input
                     type="tel"
                     id="phone"
                     placeholder="1234-567-890"
                     bind:value={user.phone}
-                    on:blur={() => (messagePhone = "Please enter your Phone number")}
+                    on:blur={() =>
+                        (messagePhone = "Please enter your Phone number")}
                 />
                 <Helper color="red"
                     >{#if messagePhone && user.phone === ""}{messagePhone}{/if}</Helper
@@ -203,14 +150,16 @@
                     type="password"
                     id="confirm_password"
                     placeholder="•••••••••"
-                    bind:value={passwordConfirm}
-                    on:blur={() => (messageConfirmPass = "Please enter your Confirm Password")}
+                    bind:value={user.confirmPassword}
+                    on:blur={() =>
+                        (messageConfirmPass =
+                            "Please enter your Confirm Password")}
                 />
                 <Helper color="red"
-                    >{#if messageConfirmPass && passwordConfirm === ""}{messageConfirmPass}{/if}</Helper
+                    >{#if messageConfirmPass && user.confirmPassword === ""}{messageConfirmPass}{/if}</Helper
                 >
             </div>
-            <Checkbox class="mb-6 space-x-1" bind:checked={admit} required>
+            <Checkbox class="space-x-1" bind:checked={admit} required>
                 I agree with the <A
                     href="/"
                     class="text-primary-700 dark:text-primary-600 hover:underline"
@@ -227,105 +176,9 @@
             >
         </div>
     </form>
+    <div class="absolute w-full h-full dark:brightness-50 transition-all">
+        <img class="w-full h-full object-cover" src={signUpBg} alt="" />
+    </div>
 </div>
-<div class="toast-container">
-    {#each toasts as toast (toast.id)}
-        {#if toast.visible}
-        <div class="toast {toast.type === 0 ? 'success' : 'error'}">
-            <p class="flex items-center"><Icon class="text-3xl" icon="{toast.type === 0 ? 'fluent-emoji:cat-face' : 'fluent-emoji-flat:crying-cat'}" /> 
-                {toast.message}
-            </p>
-            <button on:click={() => hideToast(toast)}
-                ><Icon icon="foundation:x" /></button
-            >
-        </div>
-        {/if}
-    {/each}
-</div>
-<ToastCustom {toasts}/>
 
-<style>
-    .sign-up {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-    }
-    .sign-up-form{
-        position: relative;
-        background-color: rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        border-radius: 20px;
-        z-index: 10;
-    }
-    .back{
-        height: 100%;
-        border-radius: 10px;
-        position: absolute;
-        z-index: 1;
-    }
-    .bg-sign{
-        position: relative;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .bg-sign_animate{
-        position: absolute;
-        width: 300px;
-        height: 300px;
-        filter: blur(1px);
-        background: #a8ff78;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #78ffd785, #59ff00);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #01ffb3, #59ff00); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-        background-image: url(https://w.ladicdn.com/s700x850/5fffa60b5f0dcb001234da20/img_2801-20210118045850.jpg);
-        background-repeat: no-repeat;
-        background-size: cover;
-        border-radius: 50%;
-        animation: moving 10s ease infinite;
-    }
-    .input-avt {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        flex-direction: column;
-    }
-    .input-avt img {
-        border-radius: 50%;
-        height: 100px;
-        width: 100px;
-        object-fit: cover;
-    }
-    .toast-container {
-        z-index: 1000;
-        position: fixed;
-        top: 100px;
-        right: 1rem;
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: flex-end;
-    }
-
-   
-    @keyframes slide-in {
-        from {
-            transform: translateX(100%);
-        }
-        to {
-            transform: translateX(0%);
-        }
-    }
-    @keyframes moving {
-        0% {
-            box-shadow: 0 0 10px #01ffb3;
-            rotate: 0deg;
-        }
-        100% {
-            box-shadow: 0 0 10px #ff0101;
-            rotate: 360deg;
-        }
-    }
-</style>
+<ToastCustom bind:this={wastedTimeComponent} />

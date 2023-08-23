@@ -1,38 +1,30 @@
 <script>
     import CreateUser from './CreateUser.svelte';
-    import UserFilter from './UserFilter.svelte';
     import UserList from './UserList.svelte';
-    let users =  [
-        { id: 1, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Toyota", email: "ABC@example.com", phone: 20172017 },
-        { id: 2, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Ford", email: "CDE@example.com", phone: 20172017 },
-        { id: 3, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Volvo", email: "FGH@example.com", phone: 20172017 },
-        { id: 4, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Saab", email: "IJK@example.com", phone: 20172017 },
-        { id: 5, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Toyota", email: "ABC@example.com", phone: 20172017 },
-        { id: 6, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Ford", email: "CDE@example.com", phone: 20172017 },
-        { id: 7, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Volvo", email: "FGH@example.com", phone: 20172017 },
-        { id: 8, avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg", name: "Saab", email: "IJK@example.com", phone: 20172017 },
-    ];
-
+    import { Button } from 'flowbite-svelte';
+    import { RepositoryFactory } from '$lib/ClientService/RepositoryFactory';
+    let isFilter = false
+    const userService = RepositoryFactory.get("userRepository");
+    let data;
+    userService.get().then(res =>{
+        data = res
+    })
+    console.log(data)
 </script>
-<div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl flex items-center justify-between">
-    <h1 class="dark:text-white">User management</h1>
-    <div class="">
-        <UserFilter/>
-        <CreateUser/>
+<div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
+    <div class="flex items-center justify-between">
+        <h1 class="dark:text-white text-4xl font-bold">User management</h1>
+        <div class="">
+            <Button class="mr-2" on:click={() => {isFilter = !isFilter}}>Filter</Button>
+            <CreateUser/>
+        </div>
     </div>
+    <div class="mt-5 bg-white {isFilter ? 'h-52' : 'h-0'} transition-all"></div>
 </div>
-
-<div class="userdata">
-    <UserList items={users}/>
+<div class="w-full">
+    <!-- <UserList items={$users} />
+    {#each $users as user}
+    <li>{user.id} and {user.name} and {user.phone}</li>
+    {/each} -->
 </div>
-<style>
-    .header-manager h1{
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .userdata{
-        width: 100%;
-    }
-
-</style>
 

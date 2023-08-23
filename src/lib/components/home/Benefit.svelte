@@ -1,108 +1,60 @@
-<!-- Benefit -->
-<div class="home-content w-full">
-    <h1 class="content-heading dark:text-white">What do you get from us?</h1>
-    <div class="content-benefit xl:w-4/5 md:w-11/12 grid xl:grid-cols-2 md:grid-cols-1 sm:grid-cols-1 gap-3">
-        <div class="benefit benefit-content">
-            <h3>We love and care for your pet as its own.</h3>
-            <p class="xl:text-base md:text-sm">
-                We make your friend even better - dedicated and professional pet care service. Here, we love and care for your pet as if it were our own. Love and care is the motto we always adhere to in every aspect of our work.
-                <br><br>
-                With a team of passionate and experienced staff, we are committed to ensuring that your pet is cared for with the utmost care and safety. We understand the importance of a loving companion, and as such, we always consider each individual case to best meet each furry baby's needs.
-                <br><br>
-                On site, you can have complete peace of mind and peace of mind when leaving your pet with us. With a comfortable and comfortable environment, we guarantee your pet will have a pleasant and peaceful experience while staying here.
-                <br><br>
-                Let us share our love and passion for your pet, and together create memorable and happy memories for your family. We hope that you will feel secure and satisfied when choosing our service. Come join us today and share the love with your pet!
-            </p>
-        </div>
-        <div class="benefit benefit-image">
-            <div class="grid grid-rows-2 grid-cols-2 gap-4">
-                <div class="benefit-image-left mx-4">
-                    <div>
-                        <img class=""
-                            src="https://img.freepik.com/free-photo/veterinarian-check-ing-puppy-s-health_23-2148728395.jpg"
-                            alt=""
-                            loading="lazy"
-                        />
-                    </div>
-                </div>
-                <div class="benefit-image-right grid grid-rows-2 grid-cols-2 gap-4">
-                    <div  class="">
-                        <img
-                            src="https://img.freepik.com/free-photo/close-up-doctor-checking-cat_23-2149304262.jpg"
-                            alt=""
-                            loading="lazy"
-                        />
-                    </div>
-                    <div>
-                        <img class=""
-                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1Rkcmymt9-a-tYG5M9gFE8l4Qofv2WvV2ew&usqp=CAU"
-                            alt=""
-                            loading="lazy"
-                        />
-                    </div>
-                    <div class="">
-                        <img
-                            src="https://images.squarespace-cdn.com/content/v1/553edb97e4b0edb77339769b/1494344184158-4PJNQ49LHKB35NI2BI1Q/image-asset.jpeg"
-                            alt=""
-                            loading="lazy"
-                        />
-                    </div>
-                    <div>
-                        <img class=""
-                            src="https://img.freepik.com/premium-photo/vet-doctor-examining-dog-cat-animal-clinic_488220-17516.jpg"
-                            alt=""
-                            loading="lazy"
-                        />
-                    </div>
-                </div>
+<script>
+    import { loadTranslations, t } from "$lib/translations";
+</script>
+<div class="relative w-full h-screen">
+    <div class="absolute w-full h-full top-0 z-50 text-center">
+        <div class="flex justify-center items-center flex-col h-full text-black dark:text-white ">
+            <h2 class="2xl:text-6xl xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-bold drop-shadow-lg shadow-black mb-10 brightness-200 uppercase">{$t("homepage.benefit")}</h2>
+            <div class="2xl:w-2/4 xl:w-2/4 md:w-4/5 sm:w-9/12 w-full 2xl:text-xl xl:text-xl md:text-xl sm:text-lg text-lg">
+                <p class="w-full">
+                    {$t("homepage.benefitDesc1")} <br><br> {$t("homepage.benefitDesc2")}
+                </p>
             </div>
         </div>
+        
+    </div>
+    <div class="w-full h-screen flex items-center justify-center relative drop-shadow-xl">
+        <img src="/src/lib/assest/images/homepage/benefit.jpg" alt="benefit" class="benefit-image-1 animate-pulse h-3/4" >
+        <img src="/src/lib/assest/images/homepage/benefit2.jpg" alt="benefit" class="benefit-image-2 animate-pulse h-3/4" >
+        <div class="absolute w-full h-full bg-white dark:bg-black z-10 bg-opacity-30 dark:bg-opacity-40"></div>
     </div>
 </div>
 <style>
-    .home-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 50px;
-        position: relative;
+    .benefit-image-1{
+        animation: moving_1 ease 6s infinite;
+        border-radius: 50%;
     }
-    .content-heading {
-        font-size: 34px;
-        margin-bottom: 20px;
-        font-weight: 600;
+    .benefit-image-2{
+        animation: moving_2 ease 6s infinite;
+        border-radius: 50%;
+        position: absolute;
     }
-    .benefit{
-        padding: 10px;
+    @keyframes moving_1 {
+        0%{
+            transform: rotateY(0deg);
+            z-index: 1;
+        }
+        50%{
+            transform: rotateY(180deg);
+            z-index: 0;
+        }
+        100%{
+            transform: rotateY(0deg);
+            z-index: 1;
+        }
     }
-    .benefit img{
-        border-radius: 8px;
-    }
-    .benefit-content{
-        line-height: 1.8;
-    }
-    .benefit-content h3{
-        font-size: 24px;
-        margin-bottom: 10px;
-    }
-    .benefit-content p{
-        text-align: justify;
-    }
-    .benefit-image>div{
-        display: flex;
-    }
-    .benefit-image-left img{
-        height: 416px;
-        width: 100%;
-        object-fit: cover;
-    }
-    .benefit-image-right{
-        width: 100%;
-    }
-    .benefit-image-right img{
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
+    @keyframes moving_2 {
+        0%{
+            transform: rotateY(0deg);
+            z-index: 0;
+        }
+        50%{
+            transform: rotateY(180deg);
+            z-index: 1;
+        }
+        100%{
+            transform: rotateY(0deg);
+            z-index: 0;
+        }
     }
 </style>

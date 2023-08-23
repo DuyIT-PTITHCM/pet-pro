@@ -1,2 +1,3 @@
-import { title } from '$lib/store/meta';
-title.set("Sign Up");
+import type { PageServerLoad } from './$types';
+export const load: PageServerLoad = async ({ cookies }) => {
+};
