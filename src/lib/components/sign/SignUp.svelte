@@ -12,7 +12,6 @@
         Helper,
         DarkMode,
     } from "flowbite-svelte";
-    import signUpBg from "$lib/assest/images/signupbg.jpg";
     import { BASE_API } from "$lib/Const";
     import { createAxiosClient } from "$lib/Utils/axiosServer";
     let admit = false;
@@ -177,7 +176,7 @@
         </div>
     </form>
     <div class="absolute w-full h-full dark:brightness-50 transition-all">
-        <img class="w-full h-full object-cover" src={signUpBg} alt="" />
+        <img class="w-full h-full object-cover" src="/src/public/images/signupbg.jpg" alt="" />
     </div>
 </div>
 

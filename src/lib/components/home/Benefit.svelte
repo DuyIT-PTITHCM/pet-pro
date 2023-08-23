@@ -14,8 +14,8 @@
         
     </div>
     <div class="w-full h-screen flex items-center justify-center relative drop-shadow-xl">
-        <img src="/src/lib/assest/images/homepage/benefit.jpg" alt="benefit" class="benefit-image-1 animate-pulse h-3/4" >
-        <img src="/src/lib/assest/images/homepage/benefit2.jpg" alt="benefit" class="benefit-image-2 animate-pulse h-3/4" >
+        <img src="/src/public/images/homepage/benefit.jpg" alt="benefit" class="benefit-image-1 animate-pulse h-3/4" >
+        <img src="/src/public/images/homepage/benefit2.jpg" alt="benefit" class="benefit-image-2 animate-pulse h-3/4" >
         <div class="absolute w-full h-full bg-white dark:bg-black z-10 bg-opacity-30 dark:bg-opacity-40"></div>
     </div>
 </div>

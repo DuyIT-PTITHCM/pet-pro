@@ -7,7 +7,6 @@
         Input,
         Helper,
     } from "flowbite-svelte";
-    import loginbg from "$lib/assest/images/loginbg.jpg";
     import { createAxiosClient } from "$lib/Utils/axiosServer";
     import { BASE_API } from "$lib/Const";
     import { onMount } from "svelte";
@@ -109,7 +108,7 @@
         </div>
     </div>
     <div class="absolute w-full h-full dark:brightness-50 transition-all">
-        <img class="w-full h-full object-cover" src={loginbg} alt="" />
+        <img class="w-full h-full object-cover" src={"/src/public/images/loginbg.jpg"} alt="" />
     </div>
 </div>
 <ToastCustom bind:this={wastedTimeComponent} />
