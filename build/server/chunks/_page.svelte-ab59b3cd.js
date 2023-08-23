@@ -8,7 +8,6 @@ import 'js-cookie';
 import './utils-f848b3c2.js';
 import 'tailwind-merge';
 
-const loginbg = "/_app/immutable/assets/loginbg.a77cb2ae.jpg";
 const Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let user = {
     email: "",
@@ -75,7 +74,7 @@ const Login = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       default: () => {
         return `Log In`;
       }
-    })} <a href="/signup" class="text-primary-600 dark+:text-primary-500 hover:underline font-bold text-sm text-right w-full block" data-svelte-h="svelte-1kfjhtd">Sign up for Pet One</a></form></div></div> <div class="absolute w-full h-full dark:brightness-50 transition-all"><img class="w-full h-full object-cover"${add_attribute("src", loginbg, 0)} alt=""></div></div> ${validate_component(ToastCustom, "ToastCustom").$$render(
+    })} <a href="/signup" class="text-primary-600 dark+:text-primary-500 hover:underline font-bold text-sm text-right w-full block" data-svelte-h="svelte-1kfjhtd">Sign up for Pet One</a></form></div></div> <div class="absolute w-full h-full dark:brightness-50 transition-all"><img class="w-full h-full object-cover"${add_attribute("src", "/src/public/images/loginbg.jpg", 0)} alt=""></div></div> ${validate_component(ToastCustom, "ToastCustom").$$render(
       $$result,
       { this: wastedTimeComponent },
       {
@@ -96,4 +95,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-db0abb37.js.map
+//# sourceMappingURL=_page.svelte-ab59b3cd.js.map

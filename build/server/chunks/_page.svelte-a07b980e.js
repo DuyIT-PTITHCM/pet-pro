@@ -203,31 +203,31 @@ const Banner = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     {
       id: 0,
       name: "Cosmic timetraveler",
-      imgurl: "/src/lib/assest/images/home-panner/1.jpg",
+      imgurl: "/src/public/images/home-panner/1.jpg",
       attribution: "cosmic-timetraveler-pYyOZ8q7AII-unsplash.com"
     },
     {
       id: 1,
       name: "Cristina Gottardi",
-      imgurl: "/src/lib/assest/images/home-panner/2.jpg",
+      imgurl: "/src/public/images/home-panner/2.jpg",
       attribution: "cristina-gottardi-CSpjU6hYo_0-unsplash.com"
     },
     {
       id: 2,
       name: "Johannes Plenio",
-      imgurl: "/src/lib/assest/images/home-panner/3.jpg",
+      imgurl: "/src/public/images/home-panner/3.jpg",
       attribution: "johannes-plenio-RwHv7LgeC7s-unsplash.com"
     },
     {
       id: 3,
       name: "Jonatan Pie",
-      imgurl: "/src/lib/assest/images/home-panner/4.jpg",
+      imgurl: "/src/public/images/home-panner/4.jpg",
       attribution: "jonatan-pie-3l3RwQdHRHg-unsplash.com"
     },
     {
       id: 4,
       name: "Mark Harpur",
-      imgurl: "/src/lib/assest/images/home-panner/5.jpg",
+      imgurl: "/src/public/images/home-panner/5.jpg",
       attribution: "mark-harpur-K2s_YE031CA-unsplash"
     },
     {
@@ -380,7 +380,7 @@ const CarouselCustom = create_ssr_component(($$result, $$props, $$bindings, slot
   })}</ul>` : ``} </div>`;
 });
 const css$4 = {
-  code: ".home-content.s-JhldzLS1wePR{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px;position:relative}.content-heading.s-JhldzLS1wePR{font-size:34px;margin-bottom:20px;font-weight:600}.clientsay-box-content.s-JhldzLS1wePR{background-image:url(/src/lib/assest/images/homepage/lientsaybg.jpg);background-position:center;background-repeat:no-repeat;background-size:cover}.clientsay-client.s-JhldzLS1wePR{text-align:center}.client-avatar.s-JhldzLS1wePR{width:140px;height:140px;object-fit:cover;border-radius:50%;box-shadow:0 4px 10px black}.client-message.s-JhldzLS1wePR{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;text-shadow:0 0 10px black}",
+  code: ".home-content.s-JhldzLS1wePR{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px;position:relative}.content-heading.s-JhldzLS1wePR{font-size:34px;margin-bottom:20px;font-weight:600}.clientsay-box-content.s-JhldzLS1wePR{background-image:url(/src/public/images/homepage/lientsaybg.jpg);background-position:center;background-repeat:no-repeat;background-size:cover}.clientsay-client.s-JhldzLS1wePR{text-align:center}.client-avatar.s-JhldzLS1wePR{width:140px;height:140px;object-fit:cover;border-radius:50%;box-shadow:0 4px 10px black}.client-message.s-JhldzLS1wePR{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;overflow:hidden;text-shadow:0 0 10px black}",
   map: null
 };
 const ClientSay = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -440,7 +440,7 @@ const Benefit = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$unsubscribe_t = subscribe(t2, (value) => $t = value);
   $$result.css.add(css$3);
   $$unsubscribe_t();
-  return `<div class="relative w-full h-screen"><div class="absolute w-full h-full top-0 z-50 text-center"><div class="flex justify-center items-center flex-col h-full text-black dark:text-white "><h2 class="2xl:text-6xl xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-bold drop-shadow-lg shadow-black mb-10 brightness-200 uppercase">${escape($t("homepage.benefit"))}</h2> <div class="2xl:w-2/4 xl:w-2/4 md:w-4/5 sm:w-9/12 w-full 2xl:text-xl xl:text-xl md:text-xl sm:text-lg text-lg"><p class="w-full">${escape($t("homepage.benefitDesc1"))} <br><br> ${escape($t("homepage.benefitDesc2"))}</p></div></div></div> <div class="w-full h-screen flex items-center justify-center relative drop-shadow-xl"><img src="/src/lib/assest/images/homepage/benefit.jpg" alt="benefit" class="benefit-image-1 animate-pulse h-3/4 s-bZk3apZuEcA5"> <img src="/src/lib/assest/images/homepage/benefit2.jpg" alt="benefit" class="benefit-image-2 animate-pulse h-3/4 s-bZk3apZuEcA5"> <div class="absolute w-full h-full bg-white dark:bg-black z-10 bg-opacity-30 dark:bg-opacity-40"></div></div> </div>`;
+  return `<div class="relative w-full h-screen"><div class="absolute w-full h-full top-0 z-50 text-center"><div class="flex justify-center items-center flex-col h-full text-black dark:text-white "><h2 class="2xl:text-6xl xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-bold drop-shadow-lg shadow-black mb-10 brightness-200 uppercase">${escape($t("homepage.benefit"))}</h2> <div class="2xl:w-2/4 xl:w-2/4 md:w-4/5 sm:w-9/12 w-full 2xl:text-xl xl:text-xl md:text-xl sm:text-lg text-lg"><p class="w-full">${escape($t("homepage.benefitDesc1"))} <br><br> ${escape($t("homepage.benefitDesc2"))}</p></div></div></div> <div class="w-full h-screen flex items-center justify-center relative drop-shadow-xl"><img src="/src/public/images/homepage/benefit.jpg" alt="benefit" class="benefit-image-1 animate-pulse h-3/4 s-bZk3apZuEcA5"> <img src="/src/public/images/homepage/benefit2.jpg" alt="benefit" class="benefit-image-2 animate-pulse h-3/4 s-bZk3apZuEcA5"> <div class="absolute w-full h-full bg-white dark:bg-black z-10 bg-opacity-30 dark:bg-opacity-40"></div></div> </div>`;
 });
 const Button = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { url = "/" } = $$props;
@@ -673,4 +673,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-cc1de55b.js.map
+//# sourceMappingURL=_page.svelte-a07b980e.js.map

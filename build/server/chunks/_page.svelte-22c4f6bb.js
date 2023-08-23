@@ -1,4 +1,4 @@
-import { c as create_ssr_component, v as validate_component, a as add_attribute, d as spread, h as escape_object, f as escape_attribute_value } from './ssr-0e636c26.js';
+import { c as create_ssr_component, v as validate_component, d as spread, h as escape_object, f as escape_attribute_value } from './ssr-0e636c26.js';
 import { I as Input, H as Helper, T as ToastCustom } from './ToastCustom-aee78253.js';
 import { G as GradientButton } from './GradientButton-e62a559d.js';
 import './Icon-7c5b6750.js';
@@ -54,7 +54,6 @@ const A = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     {}
   )}>${slots.default ? slots.default({}) : ``}</a> `;
 });
-const signUpBg = "/_app/immutable/assets/signupbg.2beadb71.jpg";
 const SignUp = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let admit = false;
   let user = {
@@ -242,7 +241,7 @@ const SignUp = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           return `Submit`;
         }
       }
-    )}</div></form> <div class="absolute w-full h-full dark:brightness-50 transition-all"><img class="w-full h-full object-cover"${add_attribute("src", signUpBg, 0)} alt=""></div></div> ${validate_component(ToastCustom, "ToastCustom").$$render(
+    )}</div></form> <div class="absolute w-full h-full dark:brightness-50 transition-all"><img class="w-full h-full object-cover" src="/src/public/images/signupbg.jpg" alt=""></div></div> ${validate_component(ToastCustom, "ToastCustom").$$render(
       $$result,
       { this: wastedTimeComponent },
       {
@@ -263,4 +262,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-e72b942c.js.map
+//# sourceMappingURL=_page.svelte-22c4f6bb.js.map
