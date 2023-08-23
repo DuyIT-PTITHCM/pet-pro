@@ -1,5 +1,4 @@
 <script>
-    import CarouselCustom from '../carouselcus/CarouselCustom.svelte'
     import Button from '../common/Button.svelte';
     const teammates = [
     {
@@ -28,7 +27,7 @@
 </script>
 
 <!-- Our team -->
-<div class="home-content content-bg w-full">
+<div class="home-content content-bg w-full h-screen">
     <h1 class="content-heading text-white">Our team</h1>
     <p class="content-subheading">We are committed to ensuring that your pet is cared for with the utmost care and safety.</p>
     <div class="ourteam-content">

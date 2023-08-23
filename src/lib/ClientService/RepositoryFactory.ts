@@ -1,4 +1,5 @@
 import AuthRepository from "./repositories/AuthRepository";
+import UserRepository from "./repositories/UserRepository";
 
 interface RepositoryList {
     [key: string]: any;
@@ -6,6 +7,7 @@ interface RepositoryList {
 
 const repositories: RepositoryList = {
     authRepository: AuthRepository,
+    userRepository: UserRepository
 };
 
 export const RepositoryFactory = {

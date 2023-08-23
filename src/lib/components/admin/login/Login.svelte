@@ -19,7 +19,7 @@
         password: "",
         rememberMe: false,
     };
-    let wastedTimeComponent: any;
+    let wastedTimeComponent;
     async function userLogin() {
         try {
             const axiosClient = createAxiosClient();

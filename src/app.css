@@ -8,25 +8,23 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  /* ngoằn ngèo */
+  /* font-family: cursive;  */
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 
 /*  */
-.home-slide {
-  height: 80vh;
-  background-color: aqua;
-}
-
-.div-image {
-  height: 100%;
+.slide{
+  height: 100vh;
   width: 100%;
 }
-
-.div-image img {
-  height: 100%;
+.home-banner img{
   width: 100%;
+  height: 100vh;
   object-fit: cover;
 }
+
 .dark .navbar{
   box-shadow: none !important;
 }

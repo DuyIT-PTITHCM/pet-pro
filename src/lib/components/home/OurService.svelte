@@ -52,7 +52,7 @@
         }
     ]
 </script>
-<div class="home-content w-full">
+<div class="home-content w-full h-screen">
     <h1 class="content-heading dark:text-white">Our Services</h1>
     <p class="mb-4 dark:text-white">Pets bring us joy and happiness, and we have a responsibility to take good care of them.</p>
     <div class="ourservice xl:w-4/5 md:w-11/12 mx-auto grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-5">
@@ -60,8 +60,8 @@
         <div class="ourservice-service">
             <img class="service-image" src={service.image} alt="">
             <div class="service-control">
-                <h3 class="service-name">{service.name}</h3>
-                <p class="service-desc text-note">{service.description}</p>
+                <h3 class="text-2xl drop-shadow-lg shadow-black brightness-200 font-bold px-4 py-2 bg-slate-100 dark:bg-black bg-opacity-50 dark:bg-opacity-40 text-black dark:text-white rounded-full">{service.name}</h3>
+                <p class="service-desc text-note drop-shadow-lg shadow-black brightness-200">{service.description}</p>
                 <Button content='Read more' icon='icon-park-solid:right-two'/>
             </div>
         </div>
@@ -102,15 +102,16 @@
         position: relative;
     }
     .ourservice-service:hover .service-control{
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.6);
         transition: background-color 1s;
     }
     .ourservice-service:hover img{
         filter: blur(4px);
         transition: filter 1s;
     }
-    .service-name{
-        font-size: 26px;
+    .ourservice-service:hover .service-desc{
+        height: 70px;
+        transition: height .4s;
     }
     .service-image{
         width: 100%;
@@ -131,5 +132,6 @@
 
     .service-desc{
         margin: 10px 20px;
+        height: 0;
     }
 </style>

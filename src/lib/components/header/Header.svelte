@@ -92,7 +92,4 @@
   .out-header{
     margin-bottom: 70px;
   }
-  #avatar-menu{
-    background-color: white;
-  }
 </style>
