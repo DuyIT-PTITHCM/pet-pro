@@ -4,7 +4,6 @@
   import LanguageSelect from "../LanguageSelect.svelte";
   import { loadTranslations, t } from "$lib/translations";
   import Icon from '@iconify/svelte';
-  import insignavt from '$lib/assest/images/avt.png'
   let btnClass = 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2';
 
   const menu = [
@@ -39,7 +38,7 @@
       <div class="flex items-center md:order-2">
         <GradientButton color="pinkToOrange"><Icon icon="mdi:cart" class="scale-150" /><span class="ml-3">10</span></GradientButton >
         <DarkMode {btnClass} />
-        <Avatar id="avatar-menu" src={isSignIn ? user.avatar : insignavt}/>
+        <Avatar id="avatar-menu" src={isSignIn ? user.avatar : "/images/avt.png"}/>
         <NavHamburger on:click={toggle} class1="w-full md:flex md:w-auto md:order-1" />
       </div>
       <Dropdown placement="bottom" triggeredBy="#avatar-menu">
