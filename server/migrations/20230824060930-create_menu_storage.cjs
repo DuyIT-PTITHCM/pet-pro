@@ -23,7 +23,7 @@ module.exports = {
       },
       menu_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: 'Menus',
           key: 'id'
