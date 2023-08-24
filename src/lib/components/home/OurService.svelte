@@ -52,7 +52,7 @@
         }
     ]
 </script>
-<div class="home-content w-full h-screen">
+<div class="home-content w-full min-h-screen">
     <h1 class="content-heading dark:text-white">Our Services</h1>
     <p class="mb-4 dark:text-white">Pets bring us joy and happiness, and we have a responsibility to take good care of them.</p>
     <div class="ourservice xl:w-4/5 md:w-11/12 mx-auto grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-5">
