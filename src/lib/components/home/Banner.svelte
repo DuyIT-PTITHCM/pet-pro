@@ -35,14 +35,14 @@
     {
       id: 5,
       name: 'Pietro De Grandi',
-      imgurl: '/src/lib/assest/images/home-panner/6.jpg',
+      imgurl: '/images/home-panner/6.jpg',
       attribution: 'pietro-de-grandi-T7K4aEPoGGk-unsplash'
     }
   ];
 
 </script>
 
-<div class="w-full h-screen home-banner overflow-hidden relative">
+<div class="w-full min-h-screen home-banner overflow-hidden relative">
   <CarouselTransition {images} divClass="slide w-full overflow-hidden relative" loop transitionType="slide" transitionParams={{ duration: 2000 }} showIndicators={false} showCaptions={false} showThumbs={false} slideControls={false} duration={10000} />
   <div class="absolute w-full h-full top-0 flex flex-col items-center justify-center bg-opacity-5 dark:bg-opacity-40 bg-black">
     <div class="text-center 2xl:w-2/4 xl:w-2/4 md:w-3/4 sm:w-4/5 w-full mx-5">

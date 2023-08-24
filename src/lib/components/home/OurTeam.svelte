@@ -27,15 +27,15 @@
 </script>
 
 <!-- Our team -->
-<div class="home-content content-bg w-full h-screen">
-    <h1 class="content-heading text-white">Our team</h1>
-    <p class="content-subheading">We are committed to ensuring that your pet is cared for with the utmost care and safety.</p>
-    <div class="ourteam-content">
+<div class="content-bg bg-black-50 bg-image-center bg-no-repeat bg-cover bg-fixed w-full min-h-screen flex flex-col justify-center items-center p-12 relative">
+    <h1 class="text-34 font-bold mt-20 text-white">Our team</h1>
+    <p class="text-white m-3">We are committed to ensuring that your pet is cared for with the utmost care and safety.</p>
+    <div>
         <div class="grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-2 gap-4">
             {#each teammates as docter}
-            <div class="docter-item max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="relative max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="/">
-                    <img class="docter-image rounded-t-lg" src={docter.image} alt={docter.name} />
+                    <img class="h-64 w-full object-fit-cover rounded-t-lg" src={docter.image} alt={docter.name} />
                 </a>
                 <div class="p-5">
                     <a href="/">
@@ -46,7 +46,7 @@
                     <div style="height: 50px;"></div>
                     
                 </div>
-                <div class="docter-btn">
+                <div class="w-full bottom-5 absolute flex justify-center items-center">
                     <Button content='Read more' icon='icon-park-solid:right-two'/>
                 </div>
             </div>
@@ -55,53 +55,10 @@
     </div>
 </div>
 <style>
-    /* .home-container{
-        display: flex;
-        justify-content: center;
-    } */
-    .home-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 50px;
-        position: relative;
-    }
-    .content-heading {
-        font-size: 34px;
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
-    .content-subheading{
-        color: #fff;
-        margin: 10px;
-    }
-    
     .content-bg {
-        background-color: rgba(0, 0, 0, 0.6);
         background-image: url(https://www.purina.co.uk/sites/default/files/2020-12/Introducing%20Your%20New%20Cat%20to%20Your%20Other%20PetsHERO.jpg);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-attachment: fixed;
     }
-    .docter-item{
-        position: relative;
-    }
-    .docter-image{
-        height: 250px;
-        width: 100%;
-        object-fit: cover;
-    }
-    .docter-btn{
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+
     .docter-note {
         display: -webkit-box;
         -webkit-box-orient: vertical;

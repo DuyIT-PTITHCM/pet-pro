@@ -33,7 +33,7 @@
     let controls = false
 </script>
 <!-- Client say about us -->
-<div class="home-content clientsay-box-content bg-fixed w-full h-screen relative">
+<div class="home-content clientsay-box-content bg-fixed w-full min-h-screen relative">
     <div class="absolute w-full h-full bg-white dark:bg-black z-10 bg-opacity-10 dark:bg-opacity-40"></div>
     <!-- <div class="overlay"></div> -->
     <h1 class="content-heading clientsay-heading text-white z-10">What our clients say about us</h1>

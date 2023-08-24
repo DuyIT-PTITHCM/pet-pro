@@ -5,11 +5,10 @@
     import { RepositoryFactory } from '$lib/ClientService/RepositoryFactory';
     let isFilter = false
     const userService = RepositoryFactory.get("userRepository");
-    let data;
-    userService.get().then(res =>{
-        data = res
-    })
-    console.log(data)
+    async function getUsers() {
+        const res = await userService.get();
+        return res.data.data.docs;
+    }
 </script>
 <div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
     <div class="flex items-center justify-between">
@@ -22,9 +21,13 @@
     <div class="mt-5 bg-white {isFilter ? 'h-52' : 'h-0'} transition-all"></div>
 </div>
 <div class="w-full">
-    <!-- <UserList items={$users} />
-    {#each $users as user}
-    <li>{user.id} and {user.name} and {user.phone}</li>
-    {/each} -->
+    
+    {#await getUsers()}
+        <h1>Loading...</h1>
+    {:then users}
+        <UserList items={users}/>
+    {:catch error}
+        <h1>{error}</h1>
+    {/await}
 </div>
 
