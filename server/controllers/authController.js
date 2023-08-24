@@ -19,8 +19,8 @@ export const login = async (req, res) => {
         if (!isPasswordMatch) {
             return coreResponse(res, 401, 'Invalid credentials');
         }
-
-        const token = createJWTToken(user.id);
+        const expiresIn = rememberMe ? '30d' : '7d';
+        const token = createJWTToken(user.id, expiresIn);
         return coreResponse(res, 200, 'Login successful', { token });
     } catch (error) {
         console.error('Error during login:', error);
