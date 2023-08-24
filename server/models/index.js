@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
 import UserModel from './user.js';
+import MenuModel from './menu.js';
+import StorageModel from './storage.js';
 import dotenv from 'dotenv';
 dotenv.config(); 
 
@@ -11,6 +13,8 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, pr
 
 const models = {
   User: UserModel(sequelize, Sequelize),
+  Menu: MenuModel(sequelize, Sequelize),
+  Storage: StorageModel(sequelize, Sequelize),
   // Thêm các mô hình khác nếu cần
 };
 
