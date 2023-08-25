@@ -32,7 +32,7 @@
   <div class="w-full fixed top-0 z-50">
     <Navbar let:hidden let:toggle>
       <NavBrand href="/">
-        <img src="https://static.vecteezy.com/system/resources/previews/009/551/676/original/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg" class="mr-3 h-6 sm:h-9 rounded-full" alt="PetOne Logo" />
+        <img src="/images/logo.png" class="mr-3 h-7 sm:h-9 shadow rounded-full bg-gray-50 dark:bg-transparent" alt="PetOne Logo" />
         <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">PetOne</span>
       </NavBrand>
       <div class="flex items-center md:order-2">

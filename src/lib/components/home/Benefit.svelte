@@ -4,7 +4,7 @@
 <div class="relative w-full min-h-screen">
     <div class="absolute w-full h-full top-0 z-10 text-center">
         <div class="flex justify-center items-center flex-col h-full text-black dark:text-white ">
-            <h2 class="2xl:text-6xl xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-bold drop-shadow-lg shadow-black mb-10 brightness-200 uppercase">{$t("homepage.benefit")}</h2>
+            <h2 class="2xl:text-6xl xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-bold shadow-black mb-10 brightness-200 uppercase">{$t("homepage.benefit")}</h2>
             <div class="2xl:w-2/4 xl:w-2/4 md:w-4/5 sm:w-9/12 w-full 2xl:text-xl xl:text-xl md:text-xl sm:text-lg text-lg">
                 <p class="w-full">
                     {$t("homepage.benefitDesc1")} <br><br> {$t("homepage.benefitDesc2")}
