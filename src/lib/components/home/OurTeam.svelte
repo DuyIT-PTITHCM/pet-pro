@@ -28,7 +28,7 @@
 
 <!-- Our team -->
 <div class="content-bg bg-black-50 bg-image-center bg-no-repeat bg-cover bg-fixed w-full min-h-screen flex flex-col justify-center items-center p-12 relative">
-    <h1 class="text-34 font-bold mt-20 text-white">Our team</h1>
+    <h1 class="text-3xl font-bold mt-20 text-white">Our team</h1>
     <p class="text-white m-3">We are committed to ensuring that your pet is cared for with the utmost care and safety.</p>
     <div>
         <div class="grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-2 gap-4">
@@ -56,7 +56,7 @@
 </div>
 <style>
     .content-bg {
-        background-image: url(https://www.purina.co.uk/sites/default/files/2020-12/Introducing%20Your%20New%20Cat%20to%20Your%20Other%20PetsHERO.jpg);
+        background-image: url("/images/homepage/ourteam.jpg");
     }
 
     .docter-note {

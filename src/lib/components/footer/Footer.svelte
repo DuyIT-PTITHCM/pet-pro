@@ -120,129 +120,61 @@
     ]
 </script>
 
-<footer class="home-footer w-ful">
-    <div class="footer-background">
-        <div class="footer-content">
+<footer class="bg-cover bg-fixed" style="background-image: url('https://cdn2.vectorstock.com/i/1000x1000/74/91/pets-line-icons-on-black-background-vector-5917491.jpg'); min-height: 400px;">
+    <div  class="bg-black bg-opacity-40" style="background-image: url('https://www.icegif.com/wp-content/uploads/2023/02/icegif-519.gif'); background-position: center; background-repeat: no-repeat; background-size: cover; width: inherit; height: inherit;">
+        <div class="flex items-center justify-center flex-col bg-opacity-30 bg-black relative w-full h-full">
             <div class="footer-info mb-20 mt-10 grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 xl:w-4/5 md:w-4/5 sm:mx-4 gap-4">
-                <div class="footer-logo p-5 xl:col-span-2 md:col-span-3 sm:col-span-1 grid grid-cols-1">
-                    <div class="footer-logo-box">
-                        <img src="https://static.vecteezy.com/system/resources/previews/009/551/676/original/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg" alt="" class="footer-logo">
-                        <p class="footer-name">PetOne™</p>
+                <div class="bg-black bg-opacity-80 w-full rounded-lg p-5 xl:col-span-2 md:col-span-3 sm:col-span-1 grid grid-cols-1">
+                    <div class="flex items-center">
+                        <img src="/images/logo.png" alt="" 
+                        class="2xl:w-32 xl:w-32 lg:w-28 md:w-28 sm:w-20 w-20">
+                        <p class="2xl:text-4xl xl:text-3xl lg:text-3xl md:text-3xl sm:text-2xl text-xl font-bold text-white ml-3">PetOne™</p>
                     </div>
-                    <p class="footer-caption text-white text-md col-span-2">We make your friend even better - dedicated and professional pet care service. Here, we love and care for your pet as if it were our own. Love and care is the motto we always adhere to in every aspect of our work.</p>
-                    <p class="footer-address text-white text-md col-span-2">Address: No. 47, Thu Duc District, Ho Chi Minh City, Viet Nam</p>
+                    <p class="text-justify text-white text-md col-span-2">We make your friend even better - dedicated and professional pet care service. Here, we love and care for your pet as if it were our own. Love and care is the motto we always adhere to in every aspect of our work.</p>
+                    <p class="my-4 text-white text-md col-span-2">Address: No. 47, Thu Duc District, Ho Chi Minh City, Viet Nam</p>
                     <Button on:click={() => defaultModal = true}>Show Map</Button>
                     <Modal title="Our Address" bind:open={defaultModal} autoclose>
-                        <iframe class="footer-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1647.6182334436364!2d106.7104288413416!3d10.832829612542865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752862ecc20187%3A0x167a5cd7990e165d!2sCaf%C3%A9%20Tony%20Riverside!5e0!3m2!1svi!2s!4v1691516641496!5m2!1svi!2s" width="100" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe class="w-full" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1647.6182334436364!2d106.7104288413416!3d10.832829612542865!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752862ecc20187%3A0x167a5cd7990e165d!2sCaf%C3%A9%20Tony%20Riverside!5e0!3m2!1svi!2s!4v1691516641496!5m2!1svi!2s" width="100" height="450" style="border:0;" allowfullscreen loading="lazy" title="maps" referrerpolicy="no-referrer-when-downgrade"></iframe>
                         <svelte:fragment slot='footer'>
                           <Button color="alternative">Ok</Button>
                         </svelte:fragment>
                       </Modal>
                 </div>
-                <div class="footer-service sm:col-span-1">
+                <div class="bg-black bg-opacity-80 w-full rounded-lg sm:col-span-1">
                     <ul class="text-white footer-list">
-                        <ol class="py-2 px-6 uppercase text-xl font-semibold">service</ol>
+                        <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">service</ol>
                         {#each services as item}
                             <li><a href={item.url}>{item.name}</a></li>
                         {/each}
                     </ul>
                 </div>
-                <div class="footer-legal">
+                <div class="bg-black bg-opacity-80 w-full rounded-lg">
                     <ul class="text-white footer-list">
-                        <ol class="py-2 px-6 uppercase text-xl font-semibold">company</ol>
+                        <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">company</ol>
                         {#each legal as item}
                             <li><a href={item.url}>{item .name}</a></li>
                         {/each}
                     </ul>
                 </div>
-                <div class="footer-social">
+                <div class="bg-black bg-opacity-80 w-full rounded-lg">
                     <ul class="text-white footer-list">
-                        <ol class="py-2 px-6 uppercase text-xl font-semibold">social</ol>
+                        <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">social</ol>
                         {#each social as item}
                             <li><a href={item.url}><Icon class="footer-list-icon text-2xl" icon={item.image} /><span class="ml-3">{item .name}</span></a></li>
                         {/each}
                     </ul>
                 </div>
             </div>
-            <div class="footer-nav mx-auto p-4 md:flex md:items-center md:justify-between">
+            <div class="w-full absolute bottom-0 bg-black bg-opacity-50 mx-auto p-4 md:flex md:items-center md:justify-between">
                 <span class="text-sm text-white sm:text-center">© 2023 <a href="https://flowbite.com/" class="hover:underline">PawCat™</a>. All Rights Reserved.
               </span>
-              <ul class="flex flex-wrap items-center mt-3 text-sm font-medium text-whitesm:mt-0">
-                    {#each menu as item}
-                    <li>
-                        <a href={item.url} class="text-white hover:underline md:mr-6 capitalize">{item.name}</a>
-                    </li>
-                    {/each}
-              </ul>
+              
             </div>
         </div>
     </div>
 </footer>
 
 <style>
-    .home-footer{
-        /* background-color: rgba(0, 0, 0, 0.367); */
-        background-image: url(https://cdn2.vectorstock.com/i/1000x1000/74/91/pets-line-icons-on-black-background-vector-5917491.jpg);
-        background-position: center;
-        background-attachment: fixed;
-        min-height: 400px;
-    }
-    .footer-background{
-        background-color: rgba(0, 0, 0, 0.4);
-        background-image: url(https://www.icegif.com/wp-content/uploads/2023/02/icegif-519.gif);
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        width: inherit;
-        height: inherit;
-    }
-    .footer-content{
-        width: inherit;
-        height: inherit;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        background-color: rgba(0, 0, 0, 0.3);
-        position: relative;
-    }
-    .footer-info > div{
-        background-color: rgba(0, 0, 0, 0.8);
-        width: 100%;
-        border-radius: 10px;
-    }
-    .footer-logo img{
-        width: 140px;
-        height: 140px;
-        border-radius: 50%;
-    }
-    .footer-nav{
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-    .footer-logo-box{
-        display: flex;
-        align-items: center;
-    }
-    .footer-info{
-        margin-bottom: 100px;
-        margin-top: 100px;
-    }
-    .footer-name{
-        font-size: 34px;
-        font-weight: bold;
-        color: #fff;
-        padding: 30px;
-    }
-    .footer-caption{
-        text-align: justify;
-    }
-    .footer-list ol{
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        border-radius: 10px;
-    }
     .footer-list a{
         display: block;
         width: 100%;
@@ -256,12 +188,5 @@
         box-shadow: 0 4px 4px rgba(255, 255, 255, 0.3) inset, 0 -4px 4px rgba(255, 255, 255, 0.3) inset;
         transition: box-shadow .6s;
         font-weight: 600;
-    }
-    .footer-map{
-        width: 100%;
-    }
-    .footer-address{
-        font-weight: 600;
-        margin: 10px 0;
     }
 </style>
