@@ -1,2 +1,2 @@
-import { title } from '$lib/store/meta';
-title.set("User Managerment");
+export const ssr = false;
+export const csr = true;

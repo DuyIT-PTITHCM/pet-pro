@@ -33,24 +33,24 @@
     let controls = false
 </script>
 <!-- Client say about us -->
-<div class="home-content clientsay-box-content bg-fixed w-full">
+<div class="home-content clientsay-box-content bg-fixed w-full min-h-screen relative">
+    <div class="absolute w-full h-full bg-white dark:bg-black z-10 bg-opacity-10 dark:bg-opacity-40"></div>
     <!-- <div class="overlay"></div> -->
-    <h1 class="content-heading clientsay-heading text-white">What our clients say about us</h1>
-    <div class="content-clientsay w-full">
-        <CarouselCustom autoplay="10000" {controls} perPage=1>
+    <h1 class="content-heading clientsay-heading text-white z-10">What our clients say about us</h1>
+    <div class="content-clientsa w-full z-10">
+        <CarouselCustom autoplay={10000} {controls} perPage={1}>
             {#each clientsays as clent, index (index)}
               <div class="clientsay-client md:w-2/4 sm:w-full mx-auto">
                 <img class="client-avatar mx-auto" src={clent.avatar} alt={clent.name}>
                 <p class="mb-2 text-2xl font-bold tracking-tight text-white">{clent.name}</p>
                 <p class="mb-2 text-md font-bold tracking-tight text-white">{clent.address}</p>
-                <p class="client-message mb-10 font-normal text-gray-100">{clent.message}</p>
+                <p class="client-message mb-10 font-normal text-gray-100 2xl:text-xl xl:text-xl md:text-xl sm:text-lg text-lg">{clent.message}</p>
               </div>
             {/each}
             <span slot="left-control">Left</span>
             <span slot="right-control">Right</span>
         </CarouselCustom>
     </div>
-    
 </div>
 
 <style>
@@ -70,7 +70,7 @@
     
     /* Client say */
     .clientsay-box-content{
-        background-image: url(https://punkee.com.au/wp-content/uploads/2017/02/lifebuzz-ef3ee93d2d233dc5db54b07536026165-original.gif);
+        background-image: url(/images/homepage/lientsaybg.jpg);
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;

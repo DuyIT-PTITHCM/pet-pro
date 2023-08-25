@@ -3,6 +3,7 @@
   import Icon from '@iconify/svelte';
   import { GradientButton, Avatar, Dropdown, DropdownItem, DropdownHeader, DropdownDivider, Modal, DarkMode, Drawer, Checkbox, Label, CloseButton, Hr } from "flowbite-svelte";
   import { sineIn } from 'svelte/easing';
+  import { title, description } from "$lib/store/meta";
   // show setting dashboard
   let hidden6 = true;
   let transitionParamsRight = {
@@ -49,6 +50,10 @@ let colors = [
   let popupModal = false;
   let sidebarWidth = 0;
 </script>
+<svelte:head>
+    <title>{$title}</title>
+    <meta name="description" content={$description} />
+</svelte:head>
 <div class="admin-header {isFixedHeader ? 'fixheader' : ''} bg-slate-100 dark:bg-slate-900">
   <div class="admin-header-box admin-header__left">
     <div class="logo-dashboard flex px-4" style="min-width:{sidebarWidth}px;">
@@ -226,7 +231,7 @@ let colors = [
 .after-header{
   height: 60px;
   width: 100%;
-  background-color: red;
+  background-color: transparent;
 }
 .active{
   box-shadow: 2px 0px 1px rgb(255, 255, 255);

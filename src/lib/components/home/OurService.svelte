@@ -52,84 +52,35 @@
         }
     ]
 </script>
-<div class="home-content w-full">
-    <h1 class="content-heading dark:text-white">Our Services</h1>
+<div class="flex flex-col justify-center items-center p-10 relative w-full min-h-screen">
+    <h1 class="text-3xl mb-5 font-semibold dark:text-white">Our Services</h1>
     <p class="mb-4 dark:text-white">Pets bring us joy and happiness, and we have a responsibility to take good care of them.</p>
     <div class="ourservice xl:w-4/5 md:w-11/12 mx-auto grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-5">
         {#each services as service}
-        <div class="ourservice-service">
-            <img class="service-image" src={service.image} alt="">
-            <div class="service-control">
-                <h3 class="service-name">{service.name}</h3>
-                <p class="service-desc text-note">{service.description}</p>
+        <div class="ourservice-service h-72 rounded-lg overflow-hidden text-center flex items-center justify-center flex-col relative">
+            <img class="w-full h-72 object-cover" src={service.image} alt="">
+            <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center flex-col text-white">
+                <h3 class="text-2xl drop-shadow-lg shadow-black brightness-200 font-extrabold px-4 py-2 bg-opacity-50 dark:bg-opacity-40 text-white rounded-full">{service.name}</h3>
+                <p class="service-desc my-2 mx-4 h-0 text-note drop-shadow-lg shadow-black brightness-200">{service.description}</p>
                 <Button content='Read more' icon='icon-park-solid:right-two'/>
             </div>
         </div>
         {/each}
-        
     </div>
 </div>
 <style>
-    .home-content {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 50px;
-        position: relative;
-    }
-    .content-heading {
-        font-size: 34px;
-        margin-bottom: 20px;
-        font-weight: 600;
-    }
-
     .text-note {
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3; /* Số dòng tối đa hiển thị */
         overflow: hidden;
     }
-    .ourservice-service{
-        height: 300px;
-        border-radius: 10px;
-        overflow: hidden;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        position: relative;
-    }
-    .ourservice-service:hover .service-control{
-        background-color: rgba(0, 0, 0, 0.3);
-        transition: background-color 1s;
+    .ourservice-service:hover .service-desc{
+        height: 70px;
+        transition: height .4s;
     }
     .ourservice-service:hover img{
-        filter: blur(4px);
-        transition: filter 1s;
-    }
-    .service-name{
-        font-size: 26px;
-    }
-    .service-image{
-        width: 100%;
-        height: 300px;
-        object-fit: cover;
-    }
-    .service-control{
-        position: absolute;
-        color: rgb(255, 255, 255);
-        background-color: rgba(0, 0, 0, 0.2);
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-    }
-
-    .service-desc{
-        margin: 10px 20px;
+        filter: blur(8px);
+        transition: filter ease .4s;
     }
 </style>

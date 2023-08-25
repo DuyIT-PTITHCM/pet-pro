@@ -1,1 +1,1 @@
-docker exec express sequelize $@
+docker exec -it express sh -c "cd server && npx sequelize-cli $@"

@@ -19,6 +19,13 @@ const config = ({
       ).default,
     },
     {
+      locale: 'en',
+      key: 'homepage',
+      loader: async () => (
+        await import('./en/homepage.json')
+      ).default,
+    },
+    {
       locale: 'vi',
       key: 'common',
       loader: async () => (
@@ -31,6 +38,13 @@ const config = ({
       routes: ['', '/','/about','/blog'],
       loader: async () => (
         await import('./vi/header.json')
+      ).default,
+    },
+    {
+      locale: 'vi',
+      key: 'homepage',
+      loader: async () => (
+        await import('./vi/homepage.json')
       ).default,
     },
   ],
