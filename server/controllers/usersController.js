@@ -1,6 +1,6 @@
 import { coreResponse } from "../lib/coreResponse.js";
 import { models } from "../models/index.js";
-import { createUser, getAllUsers, updateUser } from "../repositories/userRepository.js";
+import { createUser, getAllUsers, updateUser, showDetail } from "../repositories/userRepository.js";
 import { literal } from 'sequelize';
 import { validationResult } from 'express-validator';
 import { sendEmailService } from "../lib/nodemailerService.js";
@@ -37,6 +37,14 @@ export const index = async (req, res) => {
     }
 };
 
+export const show = async (req, res) => {
+    try {
+        const user = await showDetail(req);
+        coreResponse(res, 201, "User detail", user);
+    } catch (error) {
+        coreResponse(res, 500, "Error show user");
+    }
+};
 
 export const store = async (req, res) => {
     try {
@@ -99,7 +107,7 @@ export const forceDeleteUser = async (req, res) => {
             return;
         }
 
-        await user.destroy(); // Thực hiện force delete
+        await user.destroy();
 
         coreResponse(res, 200, "User force deleted successfully");
     } catch (error) {

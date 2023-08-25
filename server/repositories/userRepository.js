@@ -114,3 +114,15 @@ export const updateUser = async (req) => {
     }
 
 };
+
+export const showDetail = async (req) => {
+    const userId = req.params.id;
+    try {
+        return await models.User.findByPk(userId, {
+            attributes: { exclude: ['password'] }
+        });
+    } catch (error) {
+        throw new Error("Error showing user");
+    }
+
+};
