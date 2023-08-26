@@ -1,7 +1,7 @@
 import { c as create_ssr_component, v as validate_component, e as escape, b as each, a as add_attribute, s as setContext, d as spread, h as escape_object, f as escape_attribute_value, g as getContext } from './ssr-9152e219.js';
-import { f as is_promise, b as noop, c as compute_rest_props } from './utils-c444a4b3.js';
+import { f as is_promise, b as noop, c as compute_rest_props, a as compute_slots } from './utils-c444a4b3.js';
 import { C as CloseButton, s as sineIn, M as Modal } from './Modal-677f8334.js';
-import { B as Button, v as validate_dynamic_element, a as validate_void_dynamic_element, i as is_void } from './Wrapper-2cae54fd.js';
+import { B as Button, v as validate_dynamic_element, a as validate_void_dynamic_element, i as is_void, W as Wrapper } from './Wrapper-2cae54fd.js';
 import { I as Icon } from './Icon-7dc24f4d.js';
 import { D as Drawer } from './Drawer-cfbb6595.js';
 import { L as Label, C as Checkbox } from './Checkbox-48a9b29a.js';
@@ -10,7 +10,7 @@ import { I as Input, H as Helper, T as ToastCustom } from './ToastCustom-944afe0
 import { twMerge, twJoin } from 'tailwind-merge';
 import { g as getCookie } from './cookieUtils-3c057440.js';
 import axios from 'axios';
-import 'moment';
+import moment from 'moment';
 import { t as title, d as description } from './meta-38b3a52a.js';
 import 'js-cookie';
 import './index2-a5cb6928.js';
@@ -85,6 +85,55 @@ const Select = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   )}>${placeholder ? `<option disabled selected value="">${escape(placeholder)}</option>` : ``}${items.length ? each(items, ({ value: value2, name }) => {
     return `<option${add_attribute("value", value2, 0)}>${escape(name)}</option>`;
   }) : `${slots.default ? slots.default({}) : ``}`}</select> `;
+});
+const Textarea = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let $$restProps = compute_rest_props($$props, ["value", "wrappedClass", "unWrappedClass", "innerWrappedClass"]);
+  let $$slots = compute_slots(slots);
+  const background = getContext("background");
+  let { value = void 0 } = $$props;
+  let { wrappedClass = "block w-full text-sm border-0 px-0 bg-inherit dark:bg-inherit focus:outline-none focus:ring-0" } = $$props;
+  let { unWrappedClass = "p-2.5 text-sm focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500" } = $$props;
+  let { innerWrappedClass = "py-2 px-4 bg-white dark:bg-gray-800" } = $$props;
+  let wrapped;
+  let wrapperClass;
+  let textareaClass;
+  const headerClass = (header) => twMerge(header ? "border-b" : "border-t", "py-2 px-3 border-gray-200 dark:border-gray-600");
+  let innerWrapperClass;
+  if ($$props.value === void 0 && $$bindings.value && value !== void 0)
+    $$bindings.value(value);
+  if ($$props.wrappedClass === void 0 && $$bindings.wrappedClass && wrappedClass !== void 0)
+    $$bindings.wrappedClass(wrappedClass);
+  if ($$props.unWrappedClass === void 0 && $$bindings.unWrappedClass && unWrappedClass !== void 0)
+    $$bindings.unWrappedClass(unWrappedClass);
+  if ($$props.innerWrappedClass === void 0 && $$bindings.innerWrappedClass && innerWrappedClass !== void 0)
+    $$bindings.innerWrappedClass(innerWrappedClass);
+  wrapped = $$slots.header || $$slots.footer;
+  wrapperClass = twMerge(
+    "w-full rounded-lg",
+    background ? "bg-white dark:bg-gray-800" : "bg-gray-50 dark:bg-gray-700",
+    "text-gray-900 dark:placeholder-gray-400 dark:text-white ",
+    "border border-gray-200 dark:border-gray-600",
+    $$props.class
+  );
+  textareaClass = wrapped ? wrappedClass : twMerge(wrapperClass, unWrappedClass);
+  innerWrapperClass = twMerge(innerWrappedClass, $$slots.footer ? "rounded-b-lg" : "", $$slots.header ? "rounded-t-lg" : "");
+  return `${validate_component(Wrapper, "Wrapper").$$render($$result, { show: wrapped, class: wrapperClass }, {}, {
+    default: () => {
+      return `${$$slots.header ? `<div${add_attribute("class", headerClass(true), 0)}>${slots.header ? slots.header({}) : ``}</div>` : ``} ${validate_component(Wrapper, "Wrapper").$$render($$result, { show: wrapped, class: innerWrapperClass }, {}, {
+        default: () => {
+          return `<textarea${spread(
+            [
+              escape_object($$restProps),
+              {
+                class: escape_attribute_value(textareaClass)
+              }
+            ],
+            {}
+          )}>${escape(value || "")}</textarea>`;
+        }
+      })} ${$$slots.footer ? `<div${add_attribute("class", headerClass(false), 0)}>${slots.footer ? slots.footer({}) : ``}</div>` : ``}`;
+    }
+  })} `;
 });
 const Table = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, ["divClass", "striped", "hoverable", "noborder", "shadow", "color", "customeColor"]);
@@ -543,7 +592,7 @@ const DeleteSoftUser = create_ssr_component(($$result, $$props, $$bindings, slot
       {
         outline: true,
         color: "red",
-        class: "text-xl"
+        class: "text-xl rounded-e-lg"
       },
       {},
       {
@@ -595,11 +644,18 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
   let genders = [
     { value: "male", name: "Male" },
     { value: "female", name: "Female" },
-    { value: "orther", name: "Orther" }
+    { value: "other", name: "Other" }
   ];
+  let textareaprops = {
+    id: "message",
+    name: "message",
+    label: "Your message",
+    rows: 4,
+    placeholder: "Leave a comment..."
+  };
   let roles = [
     { value: "customer", name: "Customer" },
-    { value: "employee", name: "Employee" }
+    { value: "employer", name: "Employee" }
   ];
   let editUserForm = true;
   let transitionParamsRight = { x: 320, duration: 200, easing: sineIn };
@@ -662,7 +718,7 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
             },
             {},
             {}
-          )}Edit User ${escape(user.name)}</h5> ${validate_component(CloseButton, "CloseButton").$$render($$result, { class: "mb-4 dark:text-white" }, {}, {})}</div> <div class="flex items-center justify-center relative"><form class="w-full p-[20px] rounded-lg z-10"><div class="flex items-center justify-center text-center flex-col">${``} ${validate_component(Label, "Label").$$render($$result, { class: "space-y-2 mb-2 col-span-3" }, {}, {
+          )}Edit User ${escape(user.name)}</h5> ${validate_component(CloseButton, "CloseButton").$$render($$result, { class: "mb-4 dark:text-white" }, {}, {})}</div> <div class="flex items-center justify-center relative"><form class="w-full p-[20px] rounded-lg z-10"><div class="flex items-center justify-center text-center flex-col">${`<img class="avt rounded-full h-24 w-24 object-cover"${add_attribute("src", "http://103.142.26.42" + user.avatar, 0)} alt="avatar">`} ${validate_component(Label, "Label").$$render($$result, { class: "space-y-2 mb-2 col-span-3" }, {}, {
             default: () => {
               return `<span data-svelte-h="svelte-1fkf9ez">Avatar</span> ${validate_component(Fileupload, "Fileupload").$$render(
                 $$result,
@@ -711,14 +767,9 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
             default: () => {
               return `address<span class="text-red-600" data-svelte-h="svelte-imj58p">*</span>`;
             }
-          })} ${validate_component(Input, "Input").$$render(
+          })} ${validate_component(Textarea, "Textarea").$$render(
             $$result,
-            {
-              type: "text",
-              id: "address",
-              placeholder: "48 Bui Thi Xuan",
-              value: user.information
-            },
+            Object.assign({}, textareaprops, { value: user.information }),
             {
               value: ($$value) => {
                 user.information = $$value;
@@ -814,13 +865,23 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
                 {}
               )}`;
             }
-          })}</div> <div>${validate_component(Input, "Input").$$render(
+          })}</div> <div>${validate_component(Label, "Label").$$render(
             $$result,
             {
+              for: "birthDate",
+              class: "mb-2 capitalize"
+            },
+            {},
+            {
+              default: () => {
+                return `birthDate<span class="text-red-600" data-svelte-h="svelte-imj58p">*</span>`;
+              }
+            }
+          )} ${validate_component(Input, "Input").$$render(
+            $$result,
+            {
+              id: "birthDate",
               type: "date",
-              format: "YYYY-MM-DD",
-              pattern: "^[0-9]4-[0-9]2-[0-9]2$",
-              min: "1900-01-01",
               max: new Date(Date.now()).toISOString().split("T")[0],
               value: user.birthDate
             },
@@ -831,7 +892,7 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
               }
             },
             {}
-          )} <h1>${escape(user.birthDate)}</h1></div></div> <div class="btn-signup grid grid-cols-1">${validate_component(Button, "Button").$$render($$result, { type: "submit" }, {}, {
+          )}</div></div> <div class="btn-signup grid grid-cols-1">${validate_component(Button, "Button").$$render($$result, { type: "submit" }, {}, {
             default: () => {
               return `Submit`;
             }
@@ -851,6 +912,25 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
     )}`;
   } while (!$$settled);
   return $$rendered;
+});
+const Profile = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let { userId = 0 } = $$props;
+  if ($$props.userId === void 0 && $$bindings.userId && userId !== void 0)
+    $$bindings.userId(userId);
+  return `${validate_component(Button, "Button").$$render(
+    $$result,
+    {
+      outline: true,
+      class: "text-xl",
+      color: "green"
+    },
+    {},
+    {
+      default: () => {
+        return `${validate_component(Icon, "Icon").$$render($$result, { icon: "iconamoon:profile-fill" }, {}, {})}`;
+      }
+    }
+  )}`;
 });
 const UserList = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { items } = $$props;
@@ -890,27 +970,43 @@ const UserList = create_ssr_component(($$result, $$props, $$bindings, slots) => 
               default: () => {
                 return `${validate_component(Checkbox, "Checkbox").$$render($$result, { checked: isCheck }, {}, {})}`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, {}, {}, {
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
-                return `ID`;
+                return `Id`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, {}, {}, {
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `Avatar`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, {}, {}, {
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `Name`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, {}, {}, {
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+              default: () => {
+                return `Address`;
+              }
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `Email`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, {}, {}, {
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `Phone`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, {}, {}, {
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+              default: () => {
+                return `Birth Date`;
+              }
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+              default: () => {
+                return `Gender`;
+              }
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+              default: () => {
+                return `Role`;
+              }
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `Action`;
               }
@@ -931,13 +1027,24 @@ const UserList = create_ssr_component(($$result, $$props, $$bindings, slots) => 
                     }
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
-                      return `<img${add_attribute("src", item.avatar == null ? "/images/logo.png" : item.avatar, 0)} class="rounded-full w-12 h-12" alt="">`;
+                      return `<img${add_attribute("src", !item.avatar ? "/images/logo.png" : item.avatar, 0)} class="rounded-full w-12 h-12" alt="">`;
                     }
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(item.name)}`;
                     }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render(
+                    $$result,
+                    {
+                      tdClass: "line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify"
+                    },
+                    {},
+                    {
+                      default: () => {
+                        return `${escape(!item.information ? "-" : item.information)}`;
+                      }
+                    }
+                  )} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(item.email)}`;
                     }
@@ -947,9 +1054,37 @@ const UserList = create_ssr_component(($$result, $$props, $$bindings, slots) => 
                     }
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
+                      return `${escape(!item.birthDate ? moment(new Date(item?.birthDate)).format("DD-MM-YYYY") : "-")}`;
+                    }
+                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                    default: () => {
+                      return `${validate_component(Icon, "Icon").$$render(
+                        $$result,
+                        {
+                          class: "text-3xl",
+                          icon: item.gender == "male" ? "noto:male-sign" : item.gender == "female" ? "noto:female-sign" : "noto:rainbow-flag"
+                        },
+                        {},
+                        {}
+                      )}`;
+                    }
+                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                    default: () => {
+                      return `${validate_component(Icon, "Icon").$$render(
+                        $$result,
+                        {
+                          class: "text-3xl",
+                          icon: item.role == "customer" ? "fluent-emoji:office-worker-light" : "fluent-emoji:factory-worker-light"
+                        },
+                        {},
+                        {}
+                      )}`;
+                    }
+                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                    default: () => {
                       return `${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, {}, {}, {
                         default: () => {
-                          return `${validate_component(EditUser, "EditUser").$$render($$result, { userId: item.id }, {}, {})} ${validate_component(DeleteSoftUser, "DeleteSoftUser").$$render($$result, { userid: item.id }, {}, {})} `;
+                          return `${validate_component(Profile, "Profile").$$render($$result, { userId: item.id }, {}, {})} ${validate_component(EditUser, "EditUser").$$render($$result, { userId: item.id }, {}, {})} ${validate_component(DeleteSoftUser, "DeleteSoftUser").$$render($$result, { userid: item.id }, {}, {})} `;
                         }
                       })} `;
                     }
@@ -989,7 +1124,7 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       return ` <h1 data-svelte-h="svelte-urq4jq">Loading...</h1> `;
     }
     return function(users) {
-      return ` ${validate_component(UserList, "UserList").$$render($$result, { items: users }, {}, {})} <div class="overflow-hidden"></div> `;
+      return ` <div class="overflow-hidden">${validate_component(UserList, "UserList").$$render($$result, { items: users }, {}, {})}</div> `;
     }(__value);
   }(getUsers())}</div>`;
 });
@@ -1000,4 +1135,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-bfac839c.js.map
+//# sourceMappingURL=_page.svelte-367d5f95.js.map
