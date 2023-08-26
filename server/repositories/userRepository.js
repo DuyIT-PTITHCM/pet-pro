@@ -61,7 +61,15 @@ export const createUser = async (userData) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+    let transaction;
     try {
+        transaction = await models.sequelize.transaction();
+        const storage = await models.Storage.findOne({ where: { path: avatar }, transaction });
+        if (storage) {
+            storage.isUse = true;
+            await storage.save({ transaction });
+        }
+
         const newUser = await models.User.create({
             name,
             avatar,
@@ -74,11 +82,16 @@ export const createUser = async (userData) => {
             emailConfirm,
             phoneConfirm,
             role,
-        });
+        }, { transaction });
+
+        await transaction.commit();
         const { password: passwordToRemove, ...userWithoutPassword } = newUser.dataValues;
 
         return userWithoutPassword;
     } catch (error) {
+        if (transaction) {
+            await transaction.rollback();
+        }
         throw new Error("Error creating user");
     }
 };
