@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import { handler } from './build/handler.js';
 import usersRouter from './server/routes/api/v1.0/userManagementRoute.js';
@@ -7,6 +8,10 @@ import menusRouter from './server/routes/api/v1.0/menuRoute.js';
 import uploadFileRoute from './server/routes/api/v1.0/uploadFileRoute.js';
 import verifyToken from './server/middleware/authMiddleware.js'
 import cors from 'cors';
+
+
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
 const V_1_0 = "/api/v1.0";
 
 
