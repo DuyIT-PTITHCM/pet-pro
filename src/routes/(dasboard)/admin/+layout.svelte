@@ -32,7 +32,7 @@ let colors = [
     },
     {
       name: "user managerment",
-      url: "/admin/user-managerment",
+      url: "/admin/user-management",
       icon: "teenyicons:user-solid",
       active: false,
     },
