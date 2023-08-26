@@ -14,7 +14,7 @@ export const updateUserValidation = [
     body('name').notEmpty().isString(),
     body('email').isEmail().custom(isUniqueEmailUpdate),
     body('phone').isMobilePhone('vi-VN').custom(isUniquePhoneUpdate),
-    body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+    // body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
     body('birthDate').isISO8601().toDate().withMessage('Birthdate must be a valid date'),
     body('gender').isIn(['male', 'female', 'other']).withMessage('Invalid gender value'),
 ];
