@@ -15,6 +15,8 @@ app.use(cors());
 const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'static')));
+
 
 // auth ennpoint 
 app.use(V_1_0 + '/auth', authRoute);
