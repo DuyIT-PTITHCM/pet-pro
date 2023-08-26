@@ -14,24 +14,26 @@ const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 const V_1_0 = "/api/v1.0";
 
-
 const app = express();
-app.use(cors());
 const PORT = process.env.PORT || 3000;
+
+// cros server 
+app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
-
-// auth ennpoint 
+// router 
 app.use(V_1_0 + '/auth', authRoute);
-// user management
 app.use(V_1_0 + '/user-management', verifyToken, usersRouter);
 app.use(V_1_0 + '/menu', menusRouter);
 app.use(V_1_0 + '/upload', uploadFileRoute);
 
-
+//adapter front-end sveltekit
 app.use(handler);
+
+//runing server
 app.listen(PORT, () => {
   console.log(`Server is running`);
 });

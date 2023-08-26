@@ -14,6 +14,7 @@
     } from "flowbite-svelte";
     import { BASE_API } from "$lib/Const";
     import { createAxiosClient } from "$lib/Utils/axiosServer";
+    import axios from "axios";
     let admit = false;
 
     let user = {
@@ -26,10 +27,28 @@
     };
 
     let selectedImage = "";
-    function handleFileInputChange(event) {
-        const file = event.target.files[0];
-        if (file) {
-            selectedImage = URL.createObjectURL(file);
+    let file;
+    async function handleFileInputChange(event) {
+        file = await event.target.files[0];
+        selectedImage = URL.createObjectURL(file);
+        const formData = new FormData();
+        formData.append("file", file);
+        try {
+            axios
+                .post("http://103.142.26.42/api/v1.0/upload", formData)
+                .then((response) => {
+                    console.log(response.data.data.path);
+                    user.avatar = response.data.data.path;
+                })
+                .catch((error) => {
+                    onMount(
+                        wastedTimeComponent.showToast("file upload failed",1)
+                    );
+                });
+        } catch (error) {
+            onMount(
+                wastedTimeComponent.showToast("file upload failed",1)
+            );
         }
     }
     // Toast
@@ -43,8 +62,13 @@
             })
             .catch(function (error) {
                 const errors = error?.response?.data?.data?.errors;
-                errors.forEach(element => {
-                    onMount(wastedTimeComponent.showToast(element.path + " " + element.msg, 1));
+                errors.forEach((element) => {
+                    onMount(
+                        wastedTimeComponent.showToast(
+                            element.path + " " + element.msg,
+                            1
+                        )
+                    );
                 });
             });
     }
@@ -67,7 +91,11 @@
     >
         <div class="flex items-center justify-center text-center flex-col">
             {#if selectedImage}
-                <img class="avt rounded-full h-100 w-100 object-cover" src={selectedImage} alt="avatar" />
+                <img
+                    class="avt rounded-full h-100 w-100 object-cover"
+                    src={selectedImage}
+                    alt="avatar"
+                />
             {/if}
             <Label class="space-y-2 mb-2 col-span-3">
                 <span>Avatar</span>
@@ -176,7 +204,11 @@
         </div>
     </form>
     <div class="absolute w-full h-full dark:brightness-50 transition-all">
-        <img class="w-full h-full object-cover" src="/images/signupbg.jpg" alt="" />
+        <img
+            class="w-full h-full object-cover"
+            src="/images/signupbg.jpg"
+            alt=""
+        />
     </div>
 </div>
 

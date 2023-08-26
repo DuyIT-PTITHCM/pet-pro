@@ -1,0 +1,240 @@
+import { s as subscribe, c as compute_rest_props, a as compute_slots } from './utils-83bdc9a3.js';
+import { c as create_ssr_component, e as escape, a as add_attribute, v as validate_component, b as each, d as spread, h as escape_object, f as escape_attribute_value } from './ssr-33dc266f.js';
+import { D as DarkMode } from './Wrapper-dcaf300d.js';
+import { I as Icon } from './Icon-2596fab7.js';
+import { s as sineIn, C as CloseButton } from './CloseButton-0f477096.js';
+import { A as Avatar, D as Dropdown, a as DropdownHeader, b as DropdownItem, c as DropdownDivider, M as Modal } from './Modal-b7ee1433.js';
+import { G as GradientButton } from './GradientButton-6ef4e81f.js';
+import { D as Drawer } from './Drawer-be301cb0.js';
+import { L as Label, C as Checkbox } from './Checkbox-4a4327c1.js';
+import { twMerge } from 'tailwind-merge';
+import { t as title, d as description } from './meta-7f8c71df.js';
+import './Button-bc7f9417.js';
+import '@floating-ui/dom';
+import './index2-afe1f66f.js';
+
+const Hr = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let $$restProps = compute_rest_props($$props, ["icon", "divClass", "hrClass", "iconDivClass", "textSpanClass", "innerDivClass"]);
+  let $$slots = compute_slots(slots);
+  let { icon = false } = $$props;
+  let { divClass = "inline-flex justify-center items-center w-full" } = $$props;
+  let { hrClass = "w-full h-px bg-gray-200 rounded border-0 dark:bg-gray-700" } = $$props;
+  let { iconDivClass = "absolute left-1/2 px-4 bg-white -translate-x-1/2 " } = $$props;
+  let { textSpanClass = "absolute left-1/2 px-3 font-medium text-gray-900 bg-white -translate-x-1/2 dark:text-white " } = $$props;
+  let { innerDivClass = "dark:bg-gray-900" } = $$props;
+  let horizontalCls = twMerge(hrClass, $$props.classHr);
+  let divCls = twMerge(divClass, $$slots && "relative", $$props.classDiv);
+  let innerDivCls = twMerge(innerDivClass, icon ? iconDivClass : textSpanClass, $$props.classInnerDiv);
+  if ($$props.icon === void 0 && $$bindings.icon && icon !== void 0)
+    $$bindings.icon(icon);
+  if ($$props.divClass === void 0 && $$bindings.divClass && divClass !== void 0)
+    $$bindings.divClass(divClass);
+  if ($$props.hrClass === void 0 && $$bindings.hrClass && hrClass !== void 0)
+    $$bindings.hrClass(hrClass);
+  if ($$props.iconDivClass === void 0 && $$bindings.iconDivClass && iconDivClass !== void 0)
+    $$bindings.iconDivClass(iconDivClass);
+  if ($$props.textSpanClass === void 0 && $$bindings.textSpanClass && textSpanClass !== void 0)
+    $$bindings.textSpanClass(textSpanClass);
+  if ($$props.innerDivClass === void 0 && $$bindings.innerDivClass && innerDivClass !== void 0)
+    $$bindings.innerDivClass(innerDivClass);
+  return `${$$slots ? `<div${spread([escape_object($$restProps), { class: escape_attribute_value(divCls) }], {})}><hr${add_attribute("class", horizontalCls, 0)}> <div${add_attribute("class", innerDivCls, 0)}>${slots.default ? slots.default({}) : ``}</div></div>` : `<hr${add_attribute("class", horizontalCls, 0)}>`} `;
+});
+const css = {
+  code: ".admin-header.svelte-ljgr57{width:100%;height:60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgb(190, 190, 190);z-index:1000}.admin-header-box.svelte-ljgr57{height:100%;display:flex;align-items:center}.admin-sidebar.svelte-ljgr57{max-width:300px;min-height:100vh;border-right:1px solid rgb(190, 190, 190);position:relative;top:0}.admin-sidebar__listitem.svelte-ljgr57{list-style:none}.sidebar__listitem-sticky.svelte-ljgr57{position:sticky;top:0}.sidebar__listitem-sticky-fixed.svelte-ljgr57{position:sticky;top:60px}.admin-sidebar__item.svelte-ljgr57{display:flex;align-items:center;text-transform:capitalize;padding:10px 20px;font-weight:600}.admin-sidebar__item.svelte-ljgr57:hover{background-color:gray;color:white;border-radius:10px;transform:scale(.9);box-shadow:0 4px 4px rgb(0, 0, 0);transition:.4s ease}.admin-content-box.svelte-ljgr57{width:100%;background:linear-gradient(var(--deg),var(--gradient-1), var(--gradient-2))\n}.fixheader.svelte-ljgr57{position:fixed;top:0}.after-header.svelte-ljgr57{height:60px;width:100%;background-color:transparent}.active.svelte-ljgr57{box-shadow:2px 0px 1px rgb(255, 255, 255);background-color:rgb(255, 255, 255)}.admin-setbg.svelte-ljgr57{width:100%;height:200px;border-radius:10px;background:linear-gradient(var(--deg),var(--gradient-1), var(--gradient-2))\n}",
+  map: null
+};
+let btnClass = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
+const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let degString;
+  let $title, $$unsubscribe_title;
+  let $description, $$unsubscribe_description;
+  $$unsubscribe_title = subscribe(title, (value) => $title = value);
+  $$unsubscribe_description = subscribe(description, (value) => $description = value);
+  let hidden6 = true;
+  let transitionParamsRight = { x: 320, duration: 200, easing: sineIn };
+  let colors = ["#fff989", "#89d9ff"];
+  let deg = 45;
+  const menu = [
+    {
+      name: "home",
+      url: "/admin",
+      icon: "heroicons:chart-pie-solid",
+      active: false
+    },
+    {
+      name: "user managerment",
+      url: "/admin/user-managerment",
+      icon: "teenyicons:user-solid",
+      active: false
+    },
+    {
+      name: "blog",
+      url: "#",
+      icon: "icon-park-solid:hi",
+      active: false
+    }
+  ];
+  var isHide = false;
+  var isFixedHeader = false;
+  let user = {
+    id: "aabbcc",
+    username: "Rosé BlackPink",
+    email: "cheayoung@example.com",
+    avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg"
+  };
+  let popupModal = false;
+  let sidebarWidth = 0;
+  $$result.css.add(css);
+  let $$settled;
+  let $$rendered;
+  do {
+    $$settled = true;
+    degString = `${deg}deg`;
+    $$rendered = `${$$result.head += `<!-- HEAD_svelte-16u4lqv_START -->${$$result.title = `<title>${escape($title)}</title>`, ""}<meta name="description"${add_attribute("content", $description, 0)}><!-- HEAD_svelte-16u4lqv_END -->`, ""} <div class="${"admin-header " + escape("", true) + " bg-slate-100 dark:bg-slate-900 svelte-ljgr57"}"><div class="admin-header-box admin-header__left svelte-ljgr57"><div class="logo-dashboard flex px-4" style="${"min-width:" + escape(sidebarWidth, true) + "px;"}"><img src="https://static.vecteezy.com/system/resources/previews/009/551/676/original/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg" class="mr-3 h-6 sm:h-9 rounded-full" alt="PetOne Logo"> <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white" data-svelte-h="svelte-17h157z">PetOne</span></div> <div class="${"hide-sidebar cursor-pointer " + escape(btnClass, true) + " svelte-ljgr57"}"><input type="checkbox" class="hidden" name="hidesidebar" id="hidesidebar"${add_attribute("checked", isHide, 1)}> <label for="hidesidebar">${validate_component(Icon, "Icon").$$render(
+      $$result,
+      {
+        icon: "fluent:list-bar-16-filled",
+        class: "text-2xl"
+      },
+      {},
+      {}
+    )}</label></div> ${validate_component(DarkMode, "DarkMode").$$render($$result, { btnClass }, {}, {})}</div> <div class="admin-header-box admin-header__right svelte-ljgr57"><div>${validate_component(Avatar, "Avatar").$$render(
+      $$result,
+      {
+        id: "avatar-menu",
+        src: user.avatar,
+        class: "mr-4 cursor-pointer"
+      },
+      {},
+      {}
+    )} ${validate_component(Dropdown, "Dropdown").$$render(
+      $$result,
+      {
+        placement: "bottom",
+        triggeredBy: "#avatar-menu"
+      },
+      {},
+      {
+        default: () => {
+          return `${validate_component(DropdownHeader, "DropdownHeader").$$render($$result, {}, {}, {
+            default: () => {
+              return `<span class="block text-sm">${escape(user.username)}</span> <span class="block truncate text-sm font-medium">${escape(user.email)}</span>`;
+            }
+          })} ${validate_component(DropdownItem, "DropdownItem").$$render($$result, { href: "/profile?userid=" + user.id }, {}, {
+            default: () => {
+              return `Profile`;
+            }
+          })} ${validate_component(DropdownDivider, "DropdownDivider").$$render($$result, {}, {}, {})} ${validate_component(DropdownItem, "DropdownItem").$$render($$result, {}, {}, {
+            default: () => {
+              return `Sign out`;
+            }
+          })}`;
+        }
+      }
+    )} ${validate_component(Modal, "Modal").$$render(
+      $$result,
+      {
+        size: "xs",
+        autoclose: true,
+        open: popupModal
+      },
+      {
+        open: ($$value) => {
+          popupModal = $$value;
+          $$settled = false;
+        }
+      },
+      {
+        default: () => {
+          return `<div class="text-center">${validate_component(Icon, "Icon").$$render(
+            $$result,
+            {
+              icon: "line-md:alert",
+              class: "mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+            },
+            {},
+            {}
+          )} <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400" data-svelte-h="svelte-bxyf3v">Are you sure you want to Sign Out?</h3> ${validate_component(GradientButton, "GradientButton").$$render($$result, { color: "red", class: "mr-2" }, {}, {
+            default: () => {
+              return `Yes, I&#39;m sure`;
+            }
+          })} ${validate_component(GradientButton, "GradientButton").$$render($$result, { color: "teal" }, {}, {
+            default: () => {
+              return `No, cancel`;
+            }
+          })}</div>`;
+        }
+      }
+    )}</div> <div><button class="p-2 m-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer">${validate_component(Icon, "Icon").$$render(
+      $$result,
+      {
+        icon: "ant-design:setting-filled",
+        class: "text-2xl"
+      },
+      {},
+      {}
+    )}</button> ${validate_component(Drawer, "Drawer").$$render(
+      $$result,
+      {
+        placement: "right",
+        transitionType: "fly",
+        transitionParams: transitionParamsRight,
+        id: "sidebar6",
+        hidden: hidden6
+      },
+      {
+        hidden: ($$value) => {
+          hidden6 = $$value;
+          $$settled = false;
+        }
+      },
+      {
+        default: () => {
+          return `<div class="flex items-center"><h5 id="drawer-label" class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400">${validate_component(Icon, "Icon").$$render(
+            $$result,
+            {
+              icon: "ant-design:setting-filled",
+              class: "w-4 h-4 mr-2.5"
+            },
+            {},
+            {}
+          )}Setting</h5> ${validate_component(CloseButton, "CloseButton").$$render($$result, { class: "mb-4 dark:text-white" }, {}, {})}</div> <div class="admin-setting"><div class="setting-fixed_header mb-4">${validate_component(Label, "Label").$$render(
+            $$result,
+            {
+              class: "mt-4 flex items-center font-bold dark:text-white"
+            },
+            {},
+            {
+              default: () => {
+                return `${validate_component(Checkbox, "Checkbox").$$render($$result, { class: "mr-2", checked: isFixedHeader }, {}, {})} Fixed your header`;
+              }
+            }
+          )}</div> ${validate_component(Hr, "Hr").$$render($$result, { classHr: "my-8 w-64 h-1", icon: true }, {}, {
+            default: () => {
+              return `${validate_component(Icon, "Icon").$$render(
+                $$result,
+                {
+                  icon: "icon-park-outline:setting-one",
+                  class: "w-4 h-4 text-gray-700 dark:text-gray-300"
+                },
+                {},
+                {}
+              )}`;
+            }
+          })} <div class="setting-background font-bold dark:text-white"><p data-svelte-h="svelte-1bphs83">Change your background</p> <div style="${"--deg: " + escape(degString, true) + "; --gradient-1:" + escape(colors[0], true) + "; --gradient-2:" + escape(colors[1], true) + ";"}" class="admin-setbg my-2 svelte-ljgr57"></div> <label for="degrees">Degrees: ${escape(deg)}</label> <input name="degrees" type="range" min="0" max="360"${add_attribute("value", deg, 0)}> <div class="flex justify-around"><label for="color-1" data-svelte-h="svelte-1flvgo5">Color 1</label> <input name="color-1" type="color"${add_attribute("value", colors[0], 0)}> <label for="color-2" data-svelte-h="svelte-1e7n9or">Color 2</label> <input name="color-2" type="color"${add_attribute("value", colors[1], 0)}></div></div></div>`;
+        }
+      }
+    )}</div></div></div> ${``} <div class="admin-content flex"><div class="admin-sidebar bg-slate-100 dark:bg-slate-900 dark:text-slate-300 svelte-ljgr57"><ul class="${"admin-sidebar__listitem " + escape(
+      "sidebar__listitem-sticky",
+      true
+    ) + " svelte-ljgr57"}">${`${each(menu, (item) => {
+      return `<li><a class="${"admin-sidebar__item min-w-max " + escape(item.active == true ? "active" : "", true) + " svelte-ljgr57"}"${add_attribute("href", item.url, 0)}>${validate_component(Icon, "Icon").$$render($$result, { class: "text-3xl  mr-2", icon: item.icon }, {}, {})}${escape(item.name)}</a> </li>`;
+    })}`}</ul></div> <div class="admin-content-box svelte-ljgr57" style="${"--deg: " + escape(degString, true) + "; --gradient-1:" + escape(colors[0], true) + "; --gradient-2:" + escape(colors[1], true) + ";"}"><div class="m-4">${slots.default ? slots.default({}) : ``}</div></div> </div>`;
+  } while (!$$settled);
+  $$unsubscribe_title();
+  $$unsubscribe_description();
+  return $$rendered;
+});
+
+export { Layout as default };
+//# sourceMappingURL=_layout.svelte-162c1133.js.map
