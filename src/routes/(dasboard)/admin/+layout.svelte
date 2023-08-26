@@ -43,7 +43,7 @@ let colors = [
       active: false,
     },
   ];
-  var isHide = false;
+  var isHide = true;
   var isFixedHeader = false;
   // 
   let user = { id:'aabbcc', username: 'Rosé BlackPink', email:'cheayoung@example.com', avatar:'https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg' }
@@ -56,7 +56,7 @@ let colors = [
 </svelte:head>
 <div class="admin-header {isFixedHeader ? 'fixheader' : ''} bg-slate-100 dark:bg-slate-900">
   <div class="admin-header-box admin-header__left">
-    <div class="logo-dashboard flex px-4" style="min-width:{sidebarWidth}px;">
+    <div class="logo-dashboard flex px-4">
       <img src="https://static.vecteezy.com/system/resources/previews/009/551/676/original/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg" class="mr-3 h-6 sm:h-9 rounded-full" alt="PetOne Logo" />
       <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">PetOne</span>
     </div>
@@ -133,12 +133,13 @@ let colors = [
   {#if isFixedHeader}
     <div class="after-header"></div>
   {/if}
+  <!-- side bar -->
 <div class="admin-content flex">
   <div class="admin-sidebar bg-slate-100 dark:bg-slate-900 dark:text-slate-300" bind:clientWidth={sidebarWidth}>
     <ul class="admin-sidebar__listitem  {isFixedHeader == true ? 'sidebar__listitem-sticky-fixed' : 'sidebar__listitem-sticky'}">
       {#if isHide}
         {#each menu as item}
-        <li>
+        <li class="2xl:block xl:block lg:block md:block sm:block hidden">
           <a
           class="admin-sidebar__item {item.active == true ? 'active' : ''}"
             href={item.url}
@@ -164,7 +165,7 @@ let colors = [
       
     </ul>
   </div>
-  <div class="admin-content-box" style="--deg: {degString}; --gradient-1:{colors[0]}; --gradient-2:{colors[1]};">
+  <div class="admin-content-box flex-auto" style="--deg: {degString}; --gradient-1:{colors[0]}; --gradient-2:{colors[1]};">
     <div class="m-4">
       <slot />
     </div>
@@ -237,6 +238,7 @@ let colors = [
   box-shadow: 2px 0px 1px rgb(255, 255, 255);
   background-color: rgb(255, 255, 255);
 }
+
 /* set bg */
 .admin-setbg{
   width: 100%;
