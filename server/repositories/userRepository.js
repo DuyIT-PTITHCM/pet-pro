@@ -55,6 +55,24 @@ export const isUniquePhone = async (phone) => {
     return Promise.resolve();
 };
 
+export const isUniquePhoneUpdate = async (phone,{req}) => {
+    const userId = req.params.id;
+    const user = await models.User.findAll({
+        where: {
+            id: {
+                [Op.ne]: userId
+            },
+            phone: {
+                [Op.eq]: phone
+            }
+        }
+    });
+    if (user.length > 0) {
+        return Promise.reject("Phone already exists");
+    }
+    return Promise.resolve();
+};
+
 export const createUser = async (userData) => {
     const { name, avatar, information, email, phone, password, birthDate, gender, emailConfirm, phoneConfirm, role } = userData;
 
