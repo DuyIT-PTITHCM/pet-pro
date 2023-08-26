@@ -20,7 +20,7 @@ export const index = async (req, res) => {
         if (req.query.softDelete === '1') {
             filters.deletedAt = literal('deletedAt IS NOT NULL');
         } else {
-            filters.deletedAt = null;
+            filters.deletedAt = literal('deletedAt IS NULL')
         }
 
         filters = Object.entries(filters).reduce((acc, [key, value]) => {
