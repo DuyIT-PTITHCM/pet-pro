@@ -12,7 +12,7 @@
 
         try {
             axios
-                .post("http://localhost/api/v1.0/upload", formData)
+                .post("http://103.142.26.42/api/v1.0/upload", formData)
                 .then((response) => {
                     console.log(response);
                 })
