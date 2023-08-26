@@ -108,7 +108,16 @@ export const updateUser = async (req) => {
     const userId = req.params.id;
 
     const { name, information, email, phone, birthDate, gender, emailConfirm, phoneConfirm, role, avatar } = req.body;
+    let transaction;
     try {
+        transaction = await models.sequelize.transaction();
+
+        const storage = await models.Storage.findOne({ where: { path: avatar }, transaction });
+        if (storage) {
+            storage.isUse = true;
+            await storage.save({ transaction });
+        }
+
         const user = await models.User.findByPk(userId);
         user.name = name;
         user.avatar = avatar;
@@ -121,10 +130,15 @@ export const updateUser = async (req) => {
         user.phoneConfirm = phoneConfirm;
         user.role = role;
 
-        await user.save();
+        await user.save({transaction});
+
+        await transaction.commit();
         return user;
 
     } catch (error) {
+        if (transaction) {
+            await transaction.rollback();
+        }
         throw new Error("Error updating user");
     }
 
