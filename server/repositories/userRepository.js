@@ -56,7 +56,7 @@ export const isUniquePhone = async (phone) => {
 };
 
 export const createUser = async (userData) => {
-    const { name, information, email, phone, password, birthDate, gender, emailConfirm, phoneConfirm, role } = userData;
+    const { name, avatar, information, email, phone, password, birthDate, gender, emailConfirm, phoneConfirm, role } = userData;
 
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
@@ -64,6 +64,7 @@ export const createUser = async (userData) => {
     try {
         const newUser = await models.User.create({
             name,
+            avatar,
             information,
             email,
             phone,
@@ -93,10 +94,11 @@ export const checkUserExits = async (id) => {
 export const updateUser = async (req) => {
     const userId = req.params.id;
 
-    const { name, information, email, phone, birthDate, gender, emailConfirm, phoneConfirm, role } = req.body;
+    const { name, information, email, phone, birthDate, gender, emailConfirm, phoneConfirm, role, avatar } = req.body;
     try {
         const user = await models.User.findByPk(userId);
         user.name = name;
+        user.avatar = avatar;
         user.information = information;
         user.email = email;
         user.phone = phone;

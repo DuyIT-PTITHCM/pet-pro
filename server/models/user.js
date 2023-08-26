@@ -15,6 +15,9 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
+    avatar: {
+      type: DataTypes.STRING
+    },
     phone: {
       type: DataTypes.STRING,
       unique: true

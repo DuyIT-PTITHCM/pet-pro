@@ -31,7 +31,7 @@ export const uploadFileAndSaveToDatabase = [
     async (req, res) => {
         try {
             const { filename, originalname, mimetype, size } = req.file;
-            const filePath = path.join('static/images', req.file.filename);
+            const filePath = path.join('/images', req.file.filename);
             const newFile = await models.Storage.create({
                 name: filename,
                 description: originalname,

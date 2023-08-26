@@ -17,9 +17,10 @@ export default (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true
         },
-        menu_id: {
-            type: DataTypes.INTEGER,
-            allowNull: true
+        isUse: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         },
         type: {
             type: DataTypes.ENUM('file', 'image'),

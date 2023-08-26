@@ -3,11 +3,12 @@ import { models } from '../models/index.js';
 
 export const rigisterUser = async (userData) => {
     try {
-        const { name, email, phone, password } = userData;
+        const { name, email, phone, password , avatar } = userData;
         const saltRounds = 10;
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         const newUser = await models.User.create({
             name,
+            avatar,
             email,
             phone,
             password: hashedPassword,
