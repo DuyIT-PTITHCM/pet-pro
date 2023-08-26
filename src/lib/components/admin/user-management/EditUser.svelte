@@ -6,7 +6,7 @@
         Label,
         Fileupload,
         Input,
-        Helper, Select
+        Helper, Select, Textarea
     } from "flowbite-svelte";
     import { onMount } from "svelte";
     import { sineIn } from "svelte/easing";
@@ -14,14 +14,22 @@
     import ToastCustom from "../../common/ToastCustom.svelte";
     import { RepositoryFactory } from '$lib/ClientService/RepositoryFactory';
     import moment from 'moment'
+    import axios from "axios";
     let genders = [
         { value: 'male', name: 'Male' },
         { value: 'female', name: 'Female' },
-        { value: 'orther', name: 'Orther' }
+        { value: 'other', name: 'Other' }
     ];
+    let textareaprops = {
+        id: 'message',
+        name: 'message',
+        label: 'Your message',
+        rows: 4,
+        placeholder: 'Leave a comment...'
+  };
     let roles = [
         { value: 'customer', name: 'Customer' },
-        { value: 'employee', name: 'Employee' }
+        { value: 'employer', name: 'Employee' }
     ];
     let editUserForm = true;
     let transitionParamsRight = {
@@ -45,10 +53,28 @@
     let messageEmail = "",
         messagePhone = "", messageAddress = "",
         messageUsername = "", selectedImage = "";
-    function handleFileInputChange(event) {
-        const file = event.target.files[0];
-        if (file) {
-            selectedImage = URL.createObjectURL(file);
+    let file
+    async function handleFileInputChange(event) {
+        file = await event.target.files[0];
+        selectedImage = URL.createObjectURL(file);
+        const formData = new FormData();
+        formData.append("file", file);
+        try {
+            axios
+                .post("http://103.142.26.42/api/v1.0/upload", formData)
+                .then((response) => {
+                    console.log(response.data.data.path);
+                    user.avatar = response.data.data.path;
+                })
+                .catch((error) => {
+                    onMount(
+                        wastedTimeComponent.showToast("file upload failed",1)
+                    );
+                });
+        } catch (error) {
+            onMount(
+                wastedTimeComponent.showToast("file upload failed",1)
+            );
         }
     }
     let wastedTimeComponent;
@@ -57,7 +83,7 @@
         const userService = RepositoryFactory.get("userRepository");
         const userdata = userService.getUser(uid).then(function (response) {
             user = response.data.data
-            user.birthDate =  moment(new Date(user.birthDate)).format('MM/DD/YYYY');
+            user.birthDate =  moment(new Date(user.birthDate)).format('yyyy-MM-DD');
             console.log(user)
         })
         .catch(function (error) {
@@ -68,11 +94,10 @@
     async function editUser() {
         const userService = RepositoryFactory.get("userRepository");
         userService.put(userId ,user).then(function (response) {
-            console.log(response);
+            editUserForm = true;
             onMount(wastedTimeComponent.showToast(response.data.message, 0));
         })
         .catch(function (error) {
-            console.log(error)
             const errors = error?.response?.data?.errors;
                 errors.forEach(element => {
                     onMount(wastedTimeComponent.showToast(element.msg, 1));
@@ -113,6 +138,12 @@
                         src={selectedImage}
                         alt="avatar"
                     />
+                {:else}
+                <img
+                        class="avt rounded-full h-24 w-24 object-cover"
+                        src={"http://103.142.26.42"+user.avatar}
+                        alt="avatar"
+                    />
                 {/if}
                 <Label class="space-y-2 mb-2 col-span-3">
                     <span>Avatar</span>
@@ -143,14 +174,8 @@
                     <Label for="address" class="mb-2 capitalize"
                         >address<span class="text-red-600">*</span></Label
                     >
-                    <Input
-                        type="text"
-                        id="address"
-                        placeholder="48 Bui Thi Xuan"
-                        bind:value={user.information}
-                        on:blur={() =>
-                            (messageAddress = "Please enter your Phone number")}
-                    />
+                    <Textarea {...textareaprops} bind:value={user.information} on:blur={() =>
+                        (messageAddress = "Please enter address")} />
                     <Helper color="red"
                         >{#if messageAddress && user.information === ""}{messageAddress}{/if}</Helper
                     >
@@ -200,8 +225,9 @@
                       </Label>
                 </div>
                 <div>
-                    <Input type="date" format="YYYY-MM-DD" pattern="^[0-9]{4}-[0-9]{2}-[0-9]{2}$" min="1900-01-01" max={ new Date(Date.now()).toISOString().split('T')[0]} bind:value={user.birthDate}/>
-                    <h1>{user.birthDate}</h1>
+                    <Label for="birthDate" class="mb-2 capitalize"
+                    >birthDate<span class="text-red-600">*</span></Label>
+                    <Input id="birthDate" type="date" max={ new Date(Date.now()).toISOString().split('T')[0]} bind:value={user.birthDate}/>
                 </div>
               
             </div>

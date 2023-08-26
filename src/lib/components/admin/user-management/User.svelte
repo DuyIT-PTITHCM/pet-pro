@@ -28,8 +28,9 @@
     {#await getUsers()}
         <h1>Loading...</h1>
     {:then users}
-        <UserList items={users}/>
-        <div class="overflow-hidden"></div>
+        <div class="overflow-hidden">
+            <UserList items={users}/>
+        </div>
     {:catch error}
         <h1>{error}</h1>
     {/await}

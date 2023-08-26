@@ -20,7 +20,7 @@
     let wastedTimeComponent: ToastCustom;
 </script>
 
-<Button outline color="red" on:click={() => (popupModal = true)} class="text-xl"><Icon icon="fluent:delete-20-filled" /></Button>
+<Button outline color="red" on:click={() => (popupModal = true)} class="text-xl rounded-e-lg"><Icon icon="fluent:delete-20-filled" /></Button>
 <Modal bind:open={popupModal} size="xs" autoclose>
     <div class="text-center">
         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
