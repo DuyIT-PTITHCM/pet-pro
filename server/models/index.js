@@ -15,7 +15,7 @@ const models = {
   User: UserModel(sequelize, Sequelize),
   Menu: MenuModel(sequelize, Sequelize),
   Storage: StorageModel(sequelize, Sequelize),
-  // Thêm các mô hình khác nếu cần
+  sequelize
 };
 
 Object.values(models)

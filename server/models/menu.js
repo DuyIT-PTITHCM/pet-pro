@@ -7,10 +7,6 @@ export default (sequelize, DataTypes) => {
                 foreignKey: 'parent_id',
                 as: 'subMenus',
             });
-            Menu.hasMany(models.Storage, {
-                foreignKey: 'menu_id',
-                as: 'fileAttach',
-            });
         }
     }
 
