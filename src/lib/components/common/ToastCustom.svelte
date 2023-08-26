@@ -31,11 +31,11 @@
         }, 5000);
     }
 </script>
-<div class="toast-container">
+<div class="z-50 fixed top-20 right-4 flex flex-col-reverse items-end">
     {#each toasts as toast (toast.id)}
         {#if toast.visible}
-        <div class="toast {messageType}">
-            <p class="flex items-center"><Icon class="text-3xl" icon={toast.type === 0 ? 'fluent-emoji:cat-face' : 'fluent-emoji-flat:crying-cat'}/> 
+        <div class="toast text-white p-2 rounded-md flex items-center gap-4 mb-2 {messageType}">
+            <p class="flex items-center 2xl:text-base xl:text-base lg:text-base md:text-base sm:text-xs text-xs"><Icon class="text-3xl" icon={toast.type === 0 ? 'fluent-emoji:cat-face' : 'fluent-emoji-flat:crying-cat'}/> 
                 {toast.message}
             </p>
             <button on:click={() => hideToast(toast)}
@@ -47,24 +47,8 @@
 </div>
 
 <style>
-    .toast-container {
-        z-index: 1000;
-        position: fixed;
-        top: 100px;
-        right: 1rem;
-        display: flex;
-        flex-direction: column-reverse;
-        align-items: flex-end;
-    }
 
     .toast {
-       color: white;
-       padding: 1rem;
-       border-radius: 0.25rem;
-       display: flex;
-       align-items: center;
-       gap: 1rem;
-       margin-bottom: 0.5rem;
        animation: slide-in 0.5s linear forwards;
    }
    .success {

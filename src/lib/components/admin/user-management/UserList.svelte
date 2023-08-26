@@ -6,8 +6,11 @@
         TableBodyRow,
         TableHead,
         TableHeadCell,
-        Checkbox
+        Checkbox,ButtonGroup, Button
     } from "flowbite-svelte";
+    import DeleteSoftUser from "./DeleteSoftUser.svelte";
+    import EditUser from "./EditUser.svelte";
+    import Profile from "./Profile.svelte";
     export let items;
 
     let sortBy = '';
@@ -42,25 +45,34 @@
     let isCheck = false
 </script>
 
-<Table hoverable={true} divClass={"rounded-xl overflow-hidden"}>
+<Table hoverable={true} divClass="rounded-xl overflow-x-scroll">
     <TableHead>
         <TableHeadCell><Checkbox  checked={isCheck} on:change={() => (isCheck = !isCheck)}/></TableHeadCell>
         <TableHeadCell on:click={() => toggleSort("id")}>ID</TableHeadCell>
-        <!-- <TableHeadCell>Avatar</TableHeadCell> -->
+        <TableHeadCell>Avatar</TableHeadCell>
         <TableHeadCell on:click={() => toggleSort("name")}>Name</TableHeadCell>
         <TableHeadCell on:click={() => toggleSort("email")}>Email</TableHeadCell>
         <TableHeadCell on:click={() => toggleSort("phone")}>Phone</TableHeadCell>
+        <TableHeadCell>Action</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each sortedUsers as item}
             <TableBodyRow>
                 <TableBodyCell tdClass="w-3"><div class="flex justify-center"><Checkbox checked={isCheck} value={item.id}/></div></TableBodyCell>
                 <TableBodyCell>{item.id}</TableBodyCell>
-                <!-- <TableBodyCell><img src={item.avatar} class="rounded-full w-12 h-12" alt=""></TableBodyCell> -->
+                <TableBodyCell><img src={item.avatar == null ? "/images/logo.png" : item.avatar} class="rounded-full w-12 h-12" alt=""></TableBodyCell>
                 <TableBodyCell>{item.name}</TableBodyCell>
                 <TableBodyCell>{item.email}</TableBodyCell>
                 <TableBodyCell>{item.phone}</TableBodyCell>
+                <TableBodyCell>
+                    <ButtonGroup>
+                        <EditUser userId={item.id}/>
+                        <DeleteSoftUser userid={item.id}/>
+                      </ButtonGroup>
+                </TableBodyCell>
             </TableBodyRow>
         {/each}
     </TableBody>
 </Table>
+<style>
+</style>
