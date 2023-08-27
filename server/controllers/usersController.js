@@ -9,7 +9,7 @@ const PER_PAGE = 10;
 export const index = async (req, res) => {
     try {
         const page = req.query.page || 1;
-        const perPage = req.query.perPage || PER_PAGE;
+        const size = req.query.size || PER_PAGE;
 
         let filters = {
             gender: req.query.gender,
@@ -30,7 +30,7 @@ export const index = async (req, res) => {
             return acc;
         }, {});
 
-        const { docs, pages, total } = await getAllUsers(page, perPage, filters);
+        const { docs, pages, total } = await getAllUsers(page, size, filters);
         coreResponse(res, 200, "Success", { docs, pages, total });
     } catch (error) {
         coreResponse(res, 500, "Error fetching users");
