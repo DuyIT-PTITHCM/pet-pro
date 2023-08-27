@@ -1,23 +1,29 @@
 <script lang="ts">
     import { RepositoryFactory } from '$lib/ClientService/RepositoryFactory';
-    import ToastCustom from '$lib/components/common/ToastCustom.svelte';
     import { Button, Modal } from "flowbite-svelte";
-    import { onMount } from "svelte";
     import Icon from '@iconify/svelte';
+    import { toastErr } from '$lib/store/toastError';
     export let userid = 0;
     const userService = RepositoryFactory.get("userRepository");
-    async function deleteUser(uid) {
+    async function deleteUser(uid = 0) {
         try {
             const response = await userService.delete(uid);
-            onMount(
-                wastedTimeComponent.showToast(response.data.message, 0)
-            );
+            toastErr.set([
+                {
+                    message: response.data.message,
+                    type: "success"
+                }
+            ]);
         } catch (error) {
-            wastedTimeComponent.showToast("Error deleting user:", error)
+            toastErr.set([
+                {
+                    message: "Error deleting user:" + error,
+                    type: "error"
+                }
+            ]);
         }
     }
     let popupModal = false;
-    let wastedTimeComponent: ToastCustom;
 </script>
 
 <Button outline color="red" on:click={() => (popupModal = true)} class="text-xl rounded-e-lg"><Icon icon="fluent:delete-20-filled" /></Button>
@@ -30,4 +36,3 @@
         <Button color="alternative">No, cancel</Button>
     </div>
 </Modal>
-<ToastCustom bind:this={wastedTimeComponent} />

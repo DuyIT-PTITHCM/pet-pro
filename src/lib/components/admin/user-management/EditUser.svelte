@@ -6,30 +6,26 @@
         Label,
         Fileupload,
         Input,
-        Helper, Select, Textarea
+        Helper,
+        Select,
     } from "flowbite-svelte";
-    import { onMount } from "svelte";
     import { sineIn } from "svelte/easing";
     import Icon from "@iconify/svelte";
-    import ToastCustom from "../../common/ToastCustom.svelte";
-    import { RepositoryFactory } from '$lib/ClientService/RepositoryFactory';
-    import moment from 'moment'
+    import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
+    import moment from "moment";
     import axios from "axios";
+    import { isUserEdited } from "$lib/store/userManagement";
+    import { toastErr } from "$lib/store/toastError";
+
     let genders = [
-        { value: 'male', name: 'Male' },
-        { value: 'female', name: 'Female' },
-        { value: 'other', name: 'Other' }
+        { value: "male", name: "Male" },
+        { value: "female", name: "Female" },
+        { value: "other", name: "Other" },
     ];
-    let textareaprops = {
-        id: 'message',
-        name: 'message',
-        label: 'Your message',
-        rows: 4,
-        placeholder: 'Leave a comment...'
-  };
+
     let roles = [
-        { value: 'customer', name: 'Customer' },
-        { value: 'employer', name: 'Employee' }
+        { value: "customer", name: "Customer" },
+        { value: "employer", name: "Employee" },
     ];
     let editUserForm = true;
     let transitionParamsRight = {
@@ -47,13 +43,15 @@
         password: "yourpassword",
         birthDate: "1990-01-01",
         gender: "male",
-        role: "customer"
-    }
+        role: "customer",
+    };
 
     let messageEmail = "",
-        messagePhone = "", messageAddress = "",
-        messageUsername = "", selectedImage = "";
-    let file
+        messagePhone = "",
+        messageAddress = "",
+        messageUsername = "",
+        selectedImage = "";
+    let file;
     async function handleFileInputChange(event) {
         file = await event.target.files[0];
         selectedImage = URL.createObjectURL(file);
@@ -67,47 +65,68 @@
                     user.avatar = response.data.data.path;
                 })
                 .catch((error) => {
-                    onMount(
-                        wastedTimeComponent.showToast("file upload failed",1)
-                    );
+                    toastErr.set([
+                    {
+                        message: "File upload failed",
+                        type: "error"
+                    }
+            ]);
                 });
         } catch (error) {
-            onMount(
-                wastedTimeComponent.showToast("file upload failed",1)
-            );
+            toastErr.set([
+                {
+                    message: "File upload failed",
+                    type: "error"
+                }
+            ]);
         }
     }
-    let wastedTimeComponent;
     async function getUser(uid = 0) {
         editUserForm = false;
         const userService = RepositoryFactory.get("userRepository");
-        const userdata = userService.getUser(uid).then(function (response) {
-            user = response.data.data
-            user.birthDate =  moment(new Date(user.birthDate)).format('yyyy-MM-DD');
-            console.log(user)
-        })
-        .catch(function (error) {
-            error
-        });
-        return userdata
+        const userdata = userService
+            .getUser(uid)
+            .then(function (response) {
+                user = response.data.data;
+                user.birthDate = moment(new Date(user.birthDate)).format(
+                    "yyyy-MM-DD"
+                );
+                console.log(user);
+            })
+            .catch(function (error) {
+                error;
+            });
+        return userdata;
     }
     async function editUser() {
         const userService = RepositoryFactory.get("userRepository");
-        userService.put(userId ,user).then(function (response) {
+        try {
+            const res = await userService.put(userId, user);
+            toastErr.set([
+                {
+                    message: res.data.message,
+                    type: "success"
+                }
+            ]);
+            isUserEdited.set(true);
             editUserForm = true;
-            onMount(wastedTimeComponent.showToast(response.data.message, 0));
-        })
-        .catch(function (error) {
+        } catch (error) {
             const errors = error?.response?.data?.errors;
-                errors.forEach(element => {
-                    onMount(wastedTimeComponent.showToast(element.msg, 1));
-                });
-        });
+            var toasts = errors?.map(element => {
+                return {
+                    message : element.msg,
+                    type : "error"
+                }
+            });
+            toastErr.set(toasts);
+        }
     }
-    let maxDate = new Date().toISOString().split('T')[0]; 
+    let maxDate = new Date().toISOString().split("T")[0];
 </script>
 
-<Button outline color="blue" class="text-xl" on:click={() => (getUser(userId))}><Icon icon="iconamoon:edit-fill" /></Button>
+<Button outline color="blue" class="text-xl" on:click={() => getUser(userId)}
+    ><Icon icon="iconamoon:edit-fill" /></Button
+>
 <Drawer
     placement="right"
     width={"2xl:w-1/4 xl:w-1/4 lg:w-2/4 sm:w-2/4 w-full"}
@@ -116,7 +135,6 @@
     bind:hidden={editUserForm}
     id="createUserForm"
 >
-
     <div class="flex items-center">
         <h5
             id="drawer-label"
@@ -139,9 +157,9 @@
                         alt="avatar"
                     />
                 {:else}
-                <img
+                    <img
                         class="avt rounded-full h-24 w-24 object-cover"
-                        src={"http://103.142.26.42"+user.avatar}
+                        src={"http://103.142.26.42" + user.avatar}
                         alt="avatar"
                     />
                 {/if}
@@ -174,8 +192,11 @@
                     <Label for="address" class="mb-2 capitalize"
                         >address<span class="text-red-600">*</span></Label
                     >
-                    <Textarea {...textareaprops} bind:value={user.information} on:blur={() =>
-                        (messageAddress = "Please enter address")} />
+                    <textarea class="w-full rounded-lg bg-slate-50 border-slate-300"
+                        bind:value={user.information}
+                        on:blur={() =>
+                            (messageAddress = "Please enter address")}
+                    />
                     <Helper color="red"
                         >{#if messageAddress && user.information === ""}{messageAddress}{/if}</Helper
                     >
@@ -215,28 +236,39 @@
                 <div>
                     <Label>
                         Role
-                        <Select class="mt-2" items={roles} bind:value={user.role} />
-                      </Label>
+                        <Select
+                            class="mt-2"
+                            items={roles}
+                            bind:value={user.role}
+                        />
+                    </Label>
                 </div>
                 <div>
                     <Label>
                         Gender
-                        <Select class="mt-2" items={genders} bind:value={user.gender} />
-                      </Label>
+                        <Select
+                            class="mt-2"
+                            items={genders}
+                            bind:value={user.gender}
+                        />
+                    </Label>
                 </div>
                 <div>
                     <Label for="birthDate" class="mb-2 capitalize"
-                    >birthDate<span class="text-red-600">*</span></Label>
-                    <Input id="birthDate" type="date" max={ new Date(Date.now()).toISOString().split('T')[0]} bind:value={user.birthDate}/>
+                        >birthDate<span class="text-red-600">*</span></Label
+                    >
+                    <Input
+                        id="birthDate"
+                        type="date"
+                        max={new Date(Date.now()).toISOString().split("T")[0]}
+                        bind:value={user.birthDate}
+                    />
                 </div>
-              
             </div>
             <div class="btn-signup grid grid-cols-1">
-                <Button type="submit" on:click={editUser}>Submit</Button
-                >
+                <Button type="submit" on:click={editUser}>Submit</Button>
             </div>
         </form>
     </div>
-    
 </Drawer>
-<ToastCustom bind:this={wastedTimeComponent} />
+

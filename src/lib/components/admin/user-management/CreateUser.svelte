@@ -8,12 +8,11 @@
     Input,
     Helper,
   } from "flowbite-svelte";
-  import { onMount } from "svelte";
   import { sineIn } from "svelte/easing";
   import { BASE_API } from "$lib/Const";
   import { createAxiosClient } from "$lib/Utils/axiosServer";
   import Icon from "@iconify/svelte";
-  import ToastCustom from "../../common/ToastCustom.svelte";
+  import { toastErr } from "$lib/store/toastError";
   let createUserFrom = true;
   let transitionParamsRight = {
     x: 320,
@@ -40,21 +39,29 @@
       selectedImage = URL.createObjectURL(file);
     }
   }
-  let wastedTimeComponent;
-    async function handleUserDetail() {
-        const axiosClient = createAxiosClient();
-        axiosClient
-            .post(`${BASE_API}/auth/register`, user)
-            .then(function (response) {
-              onMount(wastedTimeComponent.showToast("Create user successfull", 0));
-            })
-            .catch(function (error) {
-                const errors = error?.response?.data?.data?.errors;
-                errors.forEach(element => {
-                    onMount(wastedTimeComponent.showToast(element.path + " " + element.msg, 1));
-                });
-            });
-    }
+  async function handleUserDetail() {
+    const axiosClient = createAxiosClient();
+    axiosClient
+      .post(`${BASE_API}/auth/register`, user)
+      .then(function (response) {
+        toastErr.set([
+          {
+            message: "Create user successfull",
+            type: "success",
+          },
+        ]);
+      })
+      .catch(function (error) {
+        const errors = error?.response?.data?.data?.errors;
+        var toasts = errors?.map((element) => {
+          return {
+            message: element.msg,
+            type: "error",
+          };
+        });
+        toastErr.set(toasts);
+      });
+  }
 </script>
 
 <Button on:click={() => (createUserFrom = false)}>Create New User</Button>
@@ -79,9 +86,7 @@
     />
   </div>
   <div class="flex items-center justify-center relative">
-    <form
-      class="w-full p-[20px] rounded-lg z-10"
-    >
+    <form class="w-full p-[20px] rounded-lg z-10">
       <div class="flex items-center justify-center text-center flex-col">
         {#if selectedImage}
           <img
@@ -183,4 +188,3 @@
     </form>
   </div>
 </Drawer>
-<ToastCustom bind:this={wastedTimeComponent} />

@@ -1,7 +1,4 @@
 <script>
-    import { onMount } from "svelte";
-    import ToastCustom from "../common/ToastCustom.svelte";
-
     import {
         Input,
         Label,
@@ -15,6 +12,7 @@
     import { BASE_API } from "$lib/Const";
     import { createAxiosClient } from "$lib/Utils/axiosServer";
     import axios from "axios";
+    import { toastErr } from "$lib/store/toastError";
     let admit = false;
 
     let user = {
@@ -41,14 +39,20 @@
                     user.avatar = response.data.data.path;
                 })
                 .catch((error) => {
-                    onMount(
-                        wastedTimeComponent.showToast("file upload failed",1)
-                    );
+                    toastErr.set([
+                        {
+                            message: "File upload failed",
+                            type: "error",
+                        },
+                    ]);
                 });
         } catch (error) {
-            onMount(
-                wastedTimeComponent.showToast("file upload failed",1)
-            );
+            toastErr.set([
+                {
+                    message: "File upload failed",
+                    type: "error",
+                },
+            ]);
         }
     }
     // Toast
@@ -62,14 +66,13 @@
             })
             .catch(function (error) {
                 const errors = error?.response?.data?.data?.errors;
-                errors.forEach((element) => {
-                    onMount(
-                        wastedTimeComponent.showToast(
-                            element.path + " " + element.msg,
-                            1
-                        )
-                    );
+                var toasts = errors?.map((element) => {
+                    return {
+                        message: element.msg,
+                        type: "error",
+                    };
                 });
+                toastErr.set(toasts);
             });
     }
 
@@ -211,5 +214,3 @@
         />
     </div>
 </div>
-
-<ToastCustom bind:this={wastedTimeComponent} />
