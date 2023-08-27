@@ -9,16 +9,46 @@
     } from "flowbite-svelte";
     import { createAxiosClient } from "$lib/Utils/axiosServer";
     import { BASE_API } from "$lib/Const";
-    import { onMount } from "svelte";
-    import ToastCustom from "$lib/components/common/ToastCustom.svelte";
     import { setCookie } from "$lib/Utils/cookieUtils";
+    import { toastErr } from "$lib/store/toastError";
 
     let user = {
         email: "",
         password: "",
         rememberMe: false,
     };
-    let wastedTimeComponent;
+    function validateEmail(email = "") {
+        // A basic email pattern matching
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
+
+    // Validate Password
+    function validatePassword(password = "") {
+        // Password should be at least 8 characters long and contain at least one digit and one special character
+        const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+        return passwordPattern.test(password);
+    }
+    async function handleSubmitLogin() {
+        if (!validateEmail(user.email)) {
+            toastErr.set([
+                {
+                    message: "Email is not valid",
+                    type: "error",
+                },
+            ]);
+        }else if (!validatePassword(user.password)) {
+            toastErr.set([
+                {
+                    message: "Password is not valid",
+                    type: "error",
+                },
+            ]);
+        }
+        else{
+            userLogin();
+        }
+    }
     async function userLogin() {
         try {
             const axiosClient = createAxiosClient();
@@ -30,14 +60,14 @@
             setCookie("access_token", response?.data?.data?.token, {
                 expires: expiresIn,
             });
-            window.location.href = "/"
+            window.location.href = "/";
         } catch (error) {
-            onMount(
-                wastedTimeComponent.showToast(
-                    "Login failed!!! Email or password not correct",
-                    1
-                )
-            );
+            toastErr.set([
+                {
+                    message: "Login fail! Email or password incorrect",
+                    type: "error",
+                },
+            ]);
         }
     }
 </script>
@@ -78,7 +108,7 @@
                     <Helper class="mt-2" />
                 </div>
                 <div class="mb-6">
-                    <Label for="password" class="block mb-2">Password</Label>
+                    <Label for="password" class="block mb-2" title="Password should be at least 8 characters long and contain at least one digit and one special character">Password</Label>
                     <Input
                         bind:value={user.password}
                         type="password"
@@ -96,7 +126,7 @@
                         >Forgot password ?</a
                     >
                 </div>
-                <Button on:click={userLogin} type="submit" class="w-full"
+                <Button on:click={handleSubmitLogin} type="submit" class="w-full"
                     >Log In</Button
                 >
                 <a
@@ -108,7 +138,10 @@
         </div>
     </div>
     <div class="absolute w-full h-full dark:brightness-50 transition-all">
-        <img class="w-full h-full object-cover" src={"/images/loginbg.jpg"} alt="" />
+        <img
+            class="w-full h-full object-cover"
+            src={"/images/loginbg.jpg"}
+            alt=""
+        />
     </div>
 </div>
-<ToastCustom bind:this={wastedTimeComponent} />

@@ -4,6 +4,8 @@
   import { GradientButton, Avatar, Dropdown, DropdownItem, DropdownHeader, DropdownDivider, Modal, DarkMode, Drawer, Checkbox, Label, CloseButton, Hr } from "flowbite-svelte";
   import { sineIn } from 'svelte/easing';
   import { title, description } from "$lib/store/meta";
+  import ToastError from "$lib/components/common/ToastError.svelte";
+  
   // show setting dashboard
   let hidden6 = true;
   let transitionParamsRight = {
@@ -32,7 +34,7 @@ let colors = [
     },
     {
       name: "user managerment",
-      url: "/admin/user-managerment",
+      url: "/admin/user-management",
       icon: "teenyicons:user-solid",
       active: false,
     },
@@ -171,6 +173,7 @@ let colors = [
     </div>
   </div>
 </div>
+<ToastError />
 <style>
 .admin-header {
   width: 100%;
