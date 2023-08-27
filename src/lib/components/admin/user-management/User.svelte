@@ -1,4 +1,5 @@
 <script>
+	import { loadingState } from './../../../store/loading.ts';
     import CreateUser from "./CreateUser.svelte";
     import UserList from "./UserList.svelte";
     import { Button } from "flowbite-svelte";
@@ -8,12 +9,13 @@
     import { onMount } from "svelte";
     let isFilter = false;
     const userService = RepositoryFactory.get("userRepository");
-    let users,
-        loading = true;
+    let users;
+    loadingState.set(true);
 
     async function getUsers() {
+        loadingState.set(true);
         const res = await userService.get();
-        loading = false;
+        loadingState.set(false);
         users = res.data.data.docs;
     }
 
@@ -55,11 +57,9 @@
     </div>
 </div>
 <div>
-    {#if loading}
-        <h1>loading...</h1>
-    {:else if !users}
+    {#if !users &&  !$loadingState}
         <h1>nodata</h1>
-    {:else}
+    {:else if !$loadingState}
         <div class="overflow-hidden">
             <UserList items={users} />
         </div>

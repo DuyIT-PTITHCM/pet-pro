@@ -1,4 +1,5 @@
 <script>
+	import { loadingState } from './../../store/loading';
     import {
         Input,
         Label,
@@ -23,7 +24,6 @@
         password: "",
         confirmPassword: "",
     };
-
     let selectedImage = "";
     let file;
     async function handleFileInputChange(event) {
@@ -35,7 +35,6 @@
             axios
                 .post("http://103.142.26.42/api/v1.0/upload", formData)
                 .then((response) => {
-                    console.log(response.data.data.path);
                     user.avatar = response.data.data.path;
                 })
                 .catch((error) => {
@@ -56,15 +55,17 @@
         }
     }
     // Toast
-    let wastedTimeComponent;
     async function handleUserDetail() {
+        loadingState.set(true);
         const axiosClient = createAxiosClient();
         axiosClient
             .post(`${BASE_API}/auth/register`, user)
             .then(function (response) {
+                loadingState.set(false);
                 window.location.href = "/login";
             })
             .catch(function (error) {
+                loadingState.set(false);
                 const errors = error?.response?.data?.data?.errors;
                 var toasts = errors?.map((element) => {
                     return {

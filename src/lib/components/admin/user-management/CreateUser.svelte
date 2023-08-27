@@ -13,6 +13,7 @@
   import { createAxiosClient } from "$lib/Utils/axiosServer";
   import Icon from "@iconify/svelte";
   import { toastErr } from "$lib/store/toastError";
+    import { loadingState } from "$lib/store/loading";
   let createUserFrom = true;
   let transitionParamsRight = {
     x: 320,
@@ -41,9 +42,11 @@
   }
   async function handleUserDetail() {
     const axiosClient = createAxiosClient();
+    loadingState.set(true);
     axiosClient
       .post(`${BASE_API}/auth/register`, user)
       .then(function (response) {
+      loadingState.set(false);
         toastErr.set([
           {
             message: "Create user successfull",
@@ -52,6 +55,7 @@
         ]);
       })
       .catch(function (error) {
+        loadingState.set(false);
         const errors = error?.response?.data?.data?.errors;
         var toasts = errors?.map((element) => {
           return {

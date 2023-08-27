@@ -5,6 +5,7 @@
   import { sineIn } from 'svelte/easing';
   import { title, description } from "$lib/store/meta";
   import ToastError from "$lib/components/common/ToastError.svelte";
+    import Loading from "$lib/components/common/Loading.svelte";
   
   // show setting dashboard
   let hidden6 = true;
@@ -174,6 +175,7 @@ let colors = [
   </div>
 </div>
 <ToastError />
+<Loading />
 <style>
 .admin-header {
   width: 100%;

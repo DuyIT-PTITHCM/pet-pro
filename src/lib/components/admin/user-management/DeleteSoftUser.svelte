@@ -3,11 +3,14 @@
     import { Button, Modal } from "flowbite-svelte";
     import Icon from '@iconify/svelte';
     import { toastErr } from '$lib/store/toastError';
+    import { loadingState } from '$lib/store/loading';
     export let userid = 0;
     const userService = RepositoryFactory.get("userRepository");
     async function deleteUser(uid = 0) {
         try {
+            loadingState.set(true);
             const response = await userService.delete(uid);
+            loadingState.set(false);
             toastErr.set([
                 {
                     message: response.data.message,
