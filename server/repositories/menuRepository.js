@@ -8,18 +8,8 @@ export const getAllMenus = async () => {
                 {
                     model: models.Menu,
                     as: 'subMenus',
-                    attributes: ['id', 'name', 'description', 'view', 'tags', 'url'],
-                    include: [
-                        {
-                            model: models.Storage,
-                            as: 'fileAttach'
-                        }
-                    ]
-                },
-                {
-                    model: models.Storage,
-                    as: 'fileAttach'
-                },
+                    attributes: ['id', 'name', 'description', 'view', 'tags', 'url']
+                }
             ],
             where: {
                 parent_id: null
@@ -44,6 +34,7 @@ export const createMenu = async (menuData) => {
         });
         return newmenu;
     } catch (error) {
+        console.log(error);
         throw new Error("Error creating menu");
     }
 };
