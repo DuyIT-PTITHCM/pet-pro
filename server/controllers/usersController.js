@@ -5,7 +5,7 @@ import { literal } from 'sequelize';
 import { validationResult } from 'express-validator';
 import { sendEmailService } from "../lib/nodemailerService.js";
 
-const PER_PAGE = 20;
+const PER_PAGE = 10;
 export const index = async (req, res) => {
     try {
         const page = req.query.page || 1;
