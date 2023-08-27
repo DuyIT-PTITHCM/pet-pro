@@ -11,6 +11,7 @@
     import { BASE_API } from "$lib/Const";
     import { setCookie } from "$lib/Utils/cookieUtils";
     import { toastErr } from "$lib/store/toastError";
+    import { loadingState } from "$lib/store/loading";
 
     let user = {
         email: "",
@@ -51,6 +52,7 @@
     }
     async function userLogin() {
         try {
+            loadingState.set(true);
             const axiosClient = createAxiosClient();
             const response = await axiosClient.post(
                 `${BASE_API}/auth/login`,
@@ -60,8 +62,10 @@
             setCookie("access_token", response?.data?.data?.token, {
                 expires: expiresIn,
             });
+            loadingState.set(false);
             window.location.href = "/";
         } catch (error) {
+            loadingState.set(false);
             toastErr.set([
                 {
                     message: "Login fail! Email or password incorrect",
