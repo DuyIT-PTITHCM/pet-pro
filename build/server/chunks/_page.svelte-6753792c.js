@@ -1,4 +1,4 @@
-import { c as create_ssr_component, v as validate_component, e as escape, b as each, a as add_attribute, s as setContext, d as spread, h as escape_object, f as escape_attribute_value, g as getContext } from './ssr-8dc8d8d7.js';
+import { c as create_ssr_component, v as validate_component, e as escape, s as setContext, d as spread, h as escape_object, f as escape_attribute_value, b as each, a as add_attribute, g as getContext } from './ssr-8dc8d8d7.js';
 import { v as validate_store, s as subscribe, c as compute_rest_props } from './utils-f848b3c2.js';
 import { l as loadingState } from './loading2-83ba27d3.js';
 import { C as CloseButton, s as sineIn, M as Modal } from './Modal-e4e8d0fd.js';
@@ -498,8 +498,11 @@ const AuthRepository = {
 };
 const prefix = "user-management";
 const UserRepository = {
-  async get() {
-    return await axiosClient.get(`${prefix}`);
+  async get(queryParams) {
+    const response = await axiosClient.get(`${prefix}`, {
+      params: queryParams
+    });
+    return response;
   },
   async getUser(userId) {
     return axiosClient.get(`${prefix}/${userId}`);
@@ -1012,15 +1015,24 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   validate_store(loadingState, "loadingState");
   $$unsubscribe_loadingState = subscribe(loadingState, (value) => $loadingState = value);
   const userService = RepositoryFactory.get("userRepository");
+  let helper = { currentPage: 1, pages: 10, total: 100 };
+  let queryParams = {
+    page: helper.currentPage
+    // Example query parameter
+  };
   let users;
   loadingState.set(true);
   async function getUsers() {
     loadingState.set(true);
-    const res = await userService.get();
+    const res = await userService.get(queryParams);
     loadingState.set(false);
     users = res.data.data.docs;
+    helper.total = res.data.data.total;
+    helper.pages = res.data.data.pages;
   }
   getUsers();
+  let isPrev = true;
+  let isNext = false;
   $$unsubscribe_loadingState();
   return `<div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl"><div class="flex items-center justify-between"><h1 class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold" data-svelte-h="svelte-dosubm">User management</h1> <div class="">${validate_component(Button, "Button").$$render($$result, { class: "mr-2" }, {}, {
     default: () => {
@@ -1029,7 +1041,68 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   })} ${validate_component(CreateUser, "CreateUser").$$render($$result, {}, {}, {})}</div></div> <div class="${"bg-transparent " + escape(
     "h-0 opacity-0",
     true
-  ) + " transition-all"}">${validate_component(UserFilter, "UserFilter").$$render($$result, {}, {}, {})}</div></div> <div>${!users && !$loadingState ? `<h1 data-svelte-h="svelte-i5gzyz">nodata</h1>` : `${!$loadingState ? `<div class="overflow-hidden">${validate_component(UserList, "UserList").$$render($$result, { items: users }, {}, {})}</div>` : ``}`}</div>`;
+  ) + " transition-all"}">${validate_component(UserFilter, "UserFilter").$$render($$result, {}, {}, {})}</div></div> <div>${!users && !$loadingState ? `<h1 data-svelte-h="svelte-i5gzyz">nodata</h1>` : `${!$loadingState ? `<div class="overflow-hidden">${validate_component(UserList, "UserList").$$render($$result, { items: users }, {}, {})} <div class="flex flex-col items-center justify-center gap-2"><div class="text-sm text-gray-700 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.currentPage)}</span>
+                    of
+                    <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.pages)}</span>
+                    pages and
+                    <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.total)}</span>
+                    Entries</div> <div class="flex">${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, {}, {}, {
+    default: () => {
+      return `${validate_component(Button, "Button").$$render(
+        $$result,
+        {
+          class: "py-1 px-4",
+          color: "blue",
+          disabled: isPrev
+        },
+        {},
+        {
+          default: () => {
+            return `${validate_component(Icon, "Icon").$$render(
+              $$result,
+              {
+                class: "text-xl mr-1",
+                icon: "emojione:baby-chick"
+              },
+              {},
+              {}
+            )}${validate_component(Icon, "Icon").$$render($$result, { class: "text-3xl", icon: "twemoji:dog" }, {}, {})}`;
+          }
+        }
+      )} ${validate_component(Button, "Button").$$render(
+        $$result,
+        {
+          class: "py-1 px-4",
+          color: "primary",
+          disabled: isNext
+        },
+        {},
+        {
+          default: () => {
+            return `${validate_component(Icon, "Icon").$$render(
+              $$result,
+              {
+                class: "text-3xl",
+                icon: "twemoji:cat",
+                hFlip: true
+              },
+              {},
+              {}
+            )}${validate_component(Icon, "Icon").$$render(
+              $$result,
+              {
+                class: "text-xl ml-1",
+                icon: "noto:fish",
+                hFlip: true
+              },
+              {},
+              {}
+            )}`;
+          }
+        }
+      )}`;
+    }
+  })}</div></div></div>` : ``}`}</div>`;
 });
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   title.set("User Management");
@@ -1038,4 +1111,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-c80a2ce5.js.map
+//# sourceMappingURL=_page.svelte-6753792c.js.map
