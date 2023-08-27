@@ -71,7 +71,7 @@
                 <TableBodyCell tdClass="line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify">{!item.information ? '-' : item.information}</TableBodyCell>
                 <TableBodyCell>{item.email}</TableBodyCell>
                 <TableBodyCell>{item.phone}</TableBodyCell>
-                <TableBodyCell>{!item.birthDate? moment(new Date(item?.birthDate)).format('DD-MM-YYYY') : '-'}</TableBodyCell>
+                <TableBodyCell>{!item.birthDate != null ? moment(new Date(item?.birthDate)).format('DD-MM-YYYY') : '-'}</TableBodyCell>
                 <TableBodyCell><Icon class="text-3xl" icon={item.gender == "male" ? "noto:male-sign" : item.gender == "female" ? "noto:female-sign" : "noto:rainbow-flag" }/></TableBodyCell>
                 <TableBodyCell><Icon class="text-3xl" icon="{item.role == "customer" ? "fluent-emoji:office-worker-light" : "fluent-emoji:factory-worker-light"}"/></TableBodyCell>
                 <TableBodyCell>

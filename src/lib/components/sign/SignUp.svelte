@@ -54,7 +54,42 @@
             ]);
         }
     }
-    // Toast
+
+    function validateEmail(email = "") {
+        // A basic email pattern matching
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
+
+    // Validate Password
+    function validatePassword(password = "") {
+        // Password should be at least 8 characters long and contain at least one digit and one special character
+        const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
+        return passwordPattern.test(password);
+    }
+    async function handleSubmitRegister() {
+        if(!user.name){
+            messageUsername = "Name is required";
+        } 
+        if(!user.phone){
+            messagePhone = "Phone is required";
+        } 
+        if (!validateEmail(user.email)) {
+            messageEmail = "Email is not valid";
+        } 
+        if (!validatePassword(user.password)) {
+            validPassword = "Password should be at least 8 characters long and contain at least one digit and one special character";
+        } 
+        if(user.password != user.confirmPassword){
+            messageConfirmPass = "Password confirm and Password is mismatch";
+        }
+        if(1 < 2){
+            return;
+        }
+        else{
+            handleUserDetail();
+        }
+    }
     async function handleUserDetail() {
         loadingState.set(true);
         const axiosClient = createAxiosClient();
@@ -81,7 +116,8 @@
         messagePassword = "",
         messagePhone = "",
         messageConfirmPass = "",
-        messageUsername = "";
+        messageUsername = "",
+        validPassword = "";
 </script>
 
 <div
@@ -112,7 +148,7 @@
         <div class="grid gap-4 mb-6 md:grid-cols-1">
             <div>
                 <Label for="username" class="mb-2"
-                    >name<span class="text-red-600">*</span></Label
+                    >Name<span class="text-red-600">*</span></Label
                 >
                 <Input
                     type="text"
@@ -169,7 +205,7 @@
                         (messagePassword = "Please enter your Password")}
                 />
                 <Helper color="red"
-                    >{#if messagePassword && user.password === ""}{messagePassword}{/if}</Helper
+                    >{#if messagePassword && user.password === ""}{messagePassword}{:else}{validPassword}{/if}</Helper
                 >
             </div>
 
@@ -203,7 +239,7 @@
                 color="pinkToOrange"
                 type="submit"
                 disabled={!admit}
-                on:click={handleUserDetail}>Submit</GradientButton
+                on:click={handleSubmitRegister}>Submit</GradientButton
             >
         </div>
     </form>
