@@ -3,8 +3,11 @@ import axiosClient from "../index";
 const prefix = "user-management";
 
 export default {
-    async get(){
-        return await axiosClient.get(`${prefix}`);
+    async get(queryParams : any){
+        const response = await axiosClient.get(`${prefix}`, {
+            params: queryParams,
+          });
+        return response;
     },
     async getUser(userId: any){
         return axiosClient.get(`${prefix}/${userId}`);
