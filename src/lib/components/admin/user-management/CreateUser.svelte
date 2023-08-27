@@ -15,6 +15,7 @@
   import { toastErr } from "$lib/store/toastError";
   import { loadingState } from "$lib/store/loading";
   import { isUserEdited } from "$lib/store/userManagement";
+    import axios from "axios";
   let createUserFrom = true;
   let transitionParamsRight = {
     x: 320,
@@ -35,12 +36,36 @@
     messageConfirmPass = "",
     messageUsername = "";
   let selectedImage = "";
-  function handleFileInputChange(event) {
-    const file = event.target.files[0];
-    if (file) {
-      selectedImage = URL.createObjectURL(file);
+  let file;
+  async function handleFileInputChange(event) {
+        file = await event.target.files[0];
+        selectedImage = URL.createObjectURL(file);
+        const formData = new FormData();
+        formData.append("file", file);
+        try {
+            axios
+                .post("http://103.142.26.42/api/v1.0/upload", formData)
+                .then((response) => {
+                    console.log(response.data.data.path);
+                    user.avatar = response.data.data.path;
+                })
+                .catch((error) => {
+                    toastErr.set([
+                    {
+                        message: "File upload failed",
+                        type: "error"
+                    }
+            ]);
+                });
+        } catch (error) {
+            toastErr.set([
+                {
+                    message: "File upload failed",
+                    type: "error"
+                }
+            ]);
+        }
     }
-  }
   async function handleUserDetail() {
     const axiosClient = createAxiosClient();
     loadingState.set(true);

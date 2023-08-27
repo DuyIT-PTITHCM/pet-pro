@@ -192,7 +192,7 @@
                     <Label for="address" class="mb-2 capitalize"
                         >address<span class="text-red-600">*</span></Label
                     >
-                    <textarea class="w-full rounded-lg bg-slate-50 border-slate-300"
+                    <textarea class="w-full rounded-lg bg-gray-50 dark:bg-gray-700 border-slate-300"
                         bind:value={user.information}
                         on:blur={() =>
                             (messageAddress = "Please enter address")}
@@ -266,7 +266,7 @@
                 </div>
             </div>
             <div class="btn-signup grid grid-cols-1">
-                <Button type="submit" on:click={editUser}>Submit</Button>
+                <Button color={"yellow"} type="submit" on:click={editUser}>Submit</Button>
             </div>
         </form>
     </div>
