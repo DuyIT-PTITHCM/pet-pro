@@ -4,7 +4,9 @@
     import Icon from '@iconify/svelte';
     import { toastErr } from '$lib/store/toastError';
     import { loadingState } from '$lib/store/loading';
+    import { isUserEdited } from '$lib/store/userManagement';
     export let userid = 0;
+    let popupModal = false;
     const userService = RepositoryFactory.get("userRepository");
     async function deleteUser(uid = 0) {
         try {
@@ -17,6 +19,7 @@
                     type: "success"
                 }
             ]);
+            isUserEdited.set(true);
         } catch (error) {
             toastErr.set([
                 {
@@ -26,7 +29,7 @@
             ]);
         }
     }
-    let popupModal = false;
+    
 </script>
 
 <Button outline color="red" on:click={() => (popupModal = true)} class="text-xl rounded-e-lg"><Icon icon="fluent:delete-20-filled" /></Button>
