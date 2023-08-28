@@ -233,7 +233,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       true
     ) + " s-i2ZroYsgAmjD"}">${`${each(menu, (item) => {
       return `<li class="2xl:block xl:block lg:block md:block sm:block hidden"><a class="${"admin-sidebar__item " + escape(item.active == true ? "active" : "", true) + " s-i2ZroYsgAmjD"}"${add_attribute("href", item.url, 0)}>${validate_component(Icon, "Icon").$$render($$result, { class: "text-3xl", icon: item.icon }, {}, {})}</a> </li>`;
-    })}`}</ul></div> <div class="admin-content-box flex-auto s-i2ZroYsgAmjD" style="${"--deg: " + escape(degString, true) + "; --gradient-1:" + escape(colors[0], true) + "; --gradient-2:" + escape(colors[1], true) + ";"}"><div class="m-4">${slots.default ? slots.default({}) : ``}</div></div></div> ${validate_component(ToastError, "ToastError").$$render($$result, {}, {}, {})} ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}`;
+    })}`}</ul></div> <div class="admin-content-box flex-auto s-i2ZroYsgAmjD" style="${"--deg: " + escape(degString, true) + "; --gradient-1:" + escape(colors[0], true) + "; --gradient-2:" + escape(colors[1], true) + ";"}"><div class="2xl:m-4 xl:m-4 lg:m-4 md:m-4 sm:m-2 ">${slots.default ? slots.default({}) : ``}</div></div></div> ${validate_component(ToastError, "ToastError").$$render($$result, {}, {}, {})} ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}`;
   } while (!$$settled);
   $$unsubscribe_title();
   $$unsubscribe_description();
@@ -241,4 +241,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-96d32da7.js.map
+//# sourceMappingURL=_layout.svelte-381c853f.js.map

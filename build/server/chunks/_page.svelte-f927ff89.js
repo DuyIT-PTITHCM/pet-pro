@@ -692,7 +692,7 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
             default: () => {
               return `address<span class="text-red-600" data-svelte-h="svelte-imj58p">*</span>`;
             }
-          })} <textarea class="w-full rounded-lg bg-slate-50 border-slate-300">${escape(user.information)}</textarea> ${validate_component(Helper, "Helper").$$render($$result, { color: "red" }, {}, {
+          })} <textarea class="w-full rounded-lg bg-gray-50 dark:bg-gray-700 border-slate-300">${escape(user.information)}</textarea> ${validate_component(Helper, "Helper").$$render($$result, { color: "red" }, {}, {
             default: () => {
               return `${``}`;
             }
@@ -807,7 +807,7 @@ const EditUser = create_ssr_component(($$result, $$props, $$bindings, slots) => 
               }
             },
             {}
-          )}</div></div> <div class="btn-signup grid grid-cols-1">${validate_component(Button, "Button").$$render($$result, { type: "submit" }, {}, {
+          )}</div></div> <div class="btn-signup grid grid-cols-1">${validate_component(Button, "Button").$$render($$result, { color: "yellow", type: "submit" }, {}, {
             default: () => {
               return `Submit`;
             }
@@ -941,7 +941,7 @@ const UserList = create_ssr_component(($$result, $$props, $$bindings, slots) => 
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render(
                     $$result,
                     {
-                      tdClass: "line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify"
+                      tdClass: "line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"
                     },
                     {},
                     {
@@ -967,7 +967,7 @@ const UserList = create_ssr_component(($$result, $$props, $$bindings, slots) => 
                         $$result,
                         {
                           class: "text-3xl",
-                          icon: item.gender == "male" ? "noto:male-sign" : item.gender == "female" ? "noto:female-sign" : "noto:rainbow-flag"
+                          icon: item.gender == "male" ? "noto:male-sign" : item.gender == "female" ? "noto:female-sign" : item.gender == "other" ? "noto:rainbow-flag" : "fluent-emoji:red-question-mark"
                         },
                         {},
                         {}
@@ -1004,11 +1004,120 @@ const UserList = create_ssr_component(($$result, $$props, $$bindings, slots) => 
   )}`;
 });
 const UserFilter = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  return `${validate_component(Button, "Button").$$render($$result, { class: "mr-2" }, {}, {
-    default: () => {
-      return `Filter`;
+  let genders = [
+    { value: "male", name: "Male" },
+    { value: "female", name: "Female" },
+    { value: "other", name: "Other" },
+    { value: "", name: "All" }
+  ];
+  let paramFilter = {
+    gender: null,
+    email: null,
+    phone: null,
+    name: null
+  };
+  let { parentValue } = $$props;
+  if ($$props.parentValue === void 0 && $$bindings.parentValue && parentValue !== void 0)
+    $$bindings.parentValue(parentValue);
+  let $$settled;
+  let $$rendered;
+  do {
+    $$settled = true;
+    {
+      if (paramFilter.gender === "") {
+        paramFilter.gender = null;
+      } else if (paramFilter.email === "") {
+        paramFilter.email = null;
+      } else if (paramFilter.phone === "") {
+        paramFilter.phone = null;
+      } else if (paramFilter.name === "") {
+        paramFilter.name = null;
+      }
     }
-  })}`;
+    {
+      {
+        parentValue = paramFilter;
+      }
+    }
+    $$rendered = `<div class="w-full">${validate_component(Label, "Label").$$render($$result, { for: "name", class: "mb-2 capitalize" }, {}, {
+      default: () => {
+        return `Name`;
+      }
+    })} ${validate_component(Input, "Input").$$render(
+      $$result,
+      {
+        type: "text",
+        id: "name",
+        placeholder: "john.doe@company.com",
+        value: paramFilter.name
+      },
+      {
+        value: ($$value) => {
+          paramFilter.name = $$value;
+          $$settled = false;
+        }
+      },
+      {}
+    )}</div> <div class="w-full">${validate_component(Label, "Label").$$render($$result, { for: "email", class: "mb-2 capitalize" }, {}, {
+      default: () => {
+        return `Email address`;
+      }
+    })} ${validate_component(Input, "Input").$$render(
+      $$result,
+      {
+        type: "email",
+        id: "email",
+        placeholder: "john.doe@company.com",
+        value: paramFilter.email
+      },
+      {
+        value: ($$value) => {
+          paramFilter.email = $$value;
+          $$settled = false;
+        }
+      },
+      {}
+    )}</div> <div class="w-full">${validate_component(Label, "Label").$$render($$result, { for: "phone", class: "mb-2 capitalize" }, {}, {
+      default: () => {
+        return `Phone`;
+      }
+    })} ${validate_component(Input, "Input").$$render(
+      $$result,
+      {
+        type: "tel",
+        id: "phone",
+        placeholder: "0908070605",
+        value: paramFilter.phone
+      },
+      {
+        value: ($$value) => {
+          paramFilter.phone = $$value;
+          $$settled = false;
+        }
+      },
+      {}
+    )}</div> <div class="w-full">${validate_component(Label, "Label").$$render($$result, {}, {}, {
+      default: () => {
+        return `Gender
+        ${validate_component(Select, "Select").$$render(
+          $$result,
+          {
+            class: "mt-2",
+            items: genders,
+            value: paramFilter.gender
+          },
+          {
+            value: ($$value) => {
+              paramFilter.gender = $$value;
+              $$settled = false;
+            }
+          },
+          {}
+        )}`;
+      }
+    })}</div>`;
+  } while (!$$settled);
+  return $$rendered;
 });
 const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $loadingState, $$unsubscribe_loadingState;
@@ -1017,8 +1126,12 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   const userService = RepositoryFactory.get("userRepository");
   let helper = { currentPage: 1, pages: 10, total: 100 };
   let queryParams = {
-    page: helper.currentPage
+    page: helper.currentPage,
     // Example query parameter
+    email: null,
+    gender: null,
+    phone: null,
+    name: null
   };
   let users;
   loadingState.set(true);
@@ -1033,76 +1146,96 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   getUsers();
   let isPrev = true;
   let isNext = false;
+  let $$settled;
+  let $$rendered;
+  do {
+    $$settled = true;
+    $$rendered = `<div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl"><div class="flex items-center justify-between"><h1 class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold" data-svelte-h="svelte-dosubm">User management</h1> <div class="flex">${validate_component(Button, "Button").$$render($$result, { class: "mr-2" }, {}, {
+      default: () => {
+        return `Filter`;
+      }
+    })} ${validate_component(CreateUser, "CreateUser").$$render($$result, {}, {}, {})}</div></div> <div class="${"bg-transparent " + escape(
+      "hidden",
+      true
+    ) + " transition-all"}"><div class="grid 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2">${validate_component(UserFilter, "UserFilter").$$render(
+      $$result,
+      { parentValue: queryParams },
+      {
+        parentValue: ($$value) => {
+          queryParams = $$value;
+          $$settled = false;
+        }
+      },
+      {}
+    )} <div>${validate_component(Button, "Button").$$render($$result, { class: "mt-4 w-full", color: "blue" }, {}, {
+      default: () => {
+        return `OKE`;
+      }
+    })}</div></div></div></div> <div>${!users && !$loadingState ? `<h1 data-svelte-h="svelte-i5gzyz">nodata</h1>` : `${!$loadingState ? `<div class="overflow-hidden">${validate_component(UserList, "UserList").$$render($$result, { items: users }, {}, {})}</div>` : ``}`} ${helper.pages > 1 ? `<div class="flex flex-col items-center justify-center gap-2"><div class="text-sm text-gray-700 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.currentPage)}</span>
+                of
+                <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.pages)}</span>
+                pages and
+                <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.total)}</span>
+                Entries</div> <div class="flex">${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, {}, {}, {
+      default: () => {
+        return `${validate_component(Button, "Button").$$render(
+          $$result,
+          {
+            class: "py-1 px-4",
+            color: "blue",
+            disabled: isPrev
+          },
+          {},
+          {
+            default: () => {
+              return `${validate_component(Icon, "Icon").$$render(
+                $$result,
+                {
+                  class: "text-xl mr-1",
+                  icon: "emojione:baby-chick"
+                },
+                {},
+                {}
+              )}${validate_component(Icon, "Icon").$$render($$result, { class: "text-3xl", icon: "twemoji:dog" }, {}, {})}`;
+            }
+          }
+        )} ${validate_component(Button, "Button").$$render(
+          $$result,
+          {
+            class: "py-1 px-4",
+            color: "primary",
+            disabled: isNext
+          },
+          {},
+          {
+            default: () => {
+              return `${validate_component(Icon, "Icon").$$render(
+                $$result,
+                {
+                  class: "text-3xl",
+                  icon: "twemoji:cat",
+                  hFlip: true
+                },
+                {},
+                {}
+              )}${validate_component(Icon, "Icon").$$render(
+                $$result,
+                {
+                  class: "text-xl ml-1",
+                  icon: "noto:fish",
+                  hFlip: true
+                },
+                {},
+                {}
+              )}`;
+            }
+          }
+        )}`;
+      }
+    })}</div></div>` : ``}</div>`;
+  } while (!$$settled);
   $$unsubscribe_loadingState();
-  return `<div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl"><div class="flex items-center justify-between"><h1 class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold" data-svelte-h="svelte-dosubm">User management</h1> <div class="">${validate_component(Button, "Button").$$render($$result, { class: "mr-2" }, {}, {
-    default: () => {
-      return `Filter`;
-    }
-  })} ${validate_component(CreateUser, "CreateUser").$$render($$result, {}, {}, {})}</div></div> <div class="${"bg-transparent " + escape(
-    "h-0 opacity-0",
-    true
-  ) + " transition-all"}">${validate_component(UserFilter, "UserFilter").$$render($$result, {}, {}, {})}</div></div> <div>${!users && !$loadingState ? `<h1 data-svelte-h="svelte-i5gzyz">nodata</h1>` : `${!$loadingState ? `<div class="overflow-hidden">${validate_component(UserList, "UserList").$$render($$result, { items: users }, {}, {})} <div class="flex flex-col items-center justify-center gap-2"><div class="text-sm text-gray-700 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.currentPage)}</span>
-                    of
-                    <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.pages)}</span>
-                    pages and
-                    <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.total)}</span>
-                    Entries</div> <div class="flex">${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, {}, {}, {
-    default: () => {
-      return `${validate_component(Button, "Button").$$render(
-        $$result,
-        {
-          class: "py-1 px-4",
-          color: "blue",
-          disabled: isPrev
-        },
-        {},
-        {
-          default: () => {
-            return `${validate_component(Icon, "Icon").$$render(
-              $$result,
-              {
-                class: "text-xl mr-1",
-                icon: "emojione:baby-chick"
-              },
-              {},
-              {}
-            )}${validate_component(Icon, "Icon").$$render($$result, { class: "text-3xl", icon: "twemoji:dog" }, {}, {})}`;
-          }
-        }
-      )} ${validate_component(Button, "Button").$$render(
-        $$result,
-        {
-          class: "py-1 px-4",
-          color: "primary",
-          disabled: isNext
-        },
-        {},
-        {
-          default: () => {
-            return `${validate_component(Icon, "Icon").$$render(
-              $$result,
-              {
-                class: "text-3xl",
-                icon: "twemoji:cat",
-                hFlip: true
-              },
-              {},
-              {}
-            )}${validate_component(Icon, "Icon").$$render(
-              $$result,
-              {
-                class: "text-xl ml-1",
-                icon: "noto:fish",
-                hFlip: true
-              },
-              {},
-              {}
-            )}`;
-          }
-        }
-      )}`;
-    }
-  })}</div></div></div>` : ``}`}</div>`;
+  return $$rendered;
 });
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   title.set("User Management");
@@ -1111,4 +1244,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-6753792c.js.map
+//# sourceMappingURL=_page.svelte-f927ff89.js.map
