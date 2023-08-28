@@ -15,6 +15,10 @@
     let helper = { currentPage: 1, pages: 10, total: 100 };
     let queryParams = {
         page: helper.currentPage, // Example query parameter
+        email: null,
+        gender: null,
+        phone: null,
+        name: null,
     };
 
     let users;
@@ -52,7 +56,7 @@
     const next = () => {
         helper.currentPage = Math.min(helper.currentPage + 1, helper.pages);
         queryParams.page = helper.currentPage;
-        isNext = helper.currentPage == helper.pages ? true : false
+        isNext = helper.currentPage == helper.pages ? true : false;
         isPrev = false;
         getUsers();
     };
@@ -65,7 +69,7 @@
         >
             User management
         </h1>
-        <div class="">
+        <div class="flex">
             <Button
                 class="mr-2"
                 on:click={() => {
@@ -77,10 +81,21 @@
     </div>
     <div
         class="bg-transparent {isFilter
-            ? 'h-52 mt-5 rounded-xl overflow-hidden'
-            : 'h-0 opacity-0'} transition-all"
+            ? 'h-fit mt-5 rounded-xl overflow-hidden'
+            : 'hidden'} transition-all"
     >
-        <UserFilter />
+        <div
+            class="grid 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2"
+        >
+            <UserFilter bind:parentValue={queryParams} />
+            <div>
+                <Button
+                class="mt-4 w-full"
+                color={"blue"}
+                on:click={getUsers}>OKE</Button
+                >
+            </div>
+        </div>
     </div>
 </div>
 <div>
@@ -89,28 +104,53 @@
     {:else if !$loadingState}
         <div class="overflow-hidden">
             <UserList items={users} />
-            <div class="flex flex-col items-center justify-center gap-2">
-                <div class="text-sm text-gray-700 dark:text-gray-400">
-                    Showing <span
-                        class="font-semibold text-gray-900 dark:text-white"
-                        >{helper.currentPage}</span
+        </div>
+    {/if}
+    {#if helper.pages > 1}
+        <div class="flex flex-col items-center justify-center gap-2">
+            <div class="text-sm text-gray-700 dark:text-gray-400">
+                Showing <span
+                    class="font-semibold text-gray-900 dark:text-white"
+                    >{helper.currentPage}</span
+                >
+                of
+                <span class="font-semibold text-gray-900 dark:text-white"
+                    >{helper.pages}</span
+                >
+                pages and
+                <span class="font-semibold text-gray-900 dark:text-white"
+                    >{helper.total}</span
+                >
+                Entries
+            </div>
+            <div class="flex">
+                <ButtonGroup>
+                    <Button
+                        class="py-1 px-4"
+                        color={"blue"}
+                        on:click={previous}
+                        disabled={isPrev}
+                        ><Icon
+                            class="text-xl mr-1"
+                            icon="emojione:baby-chick"
+                        /><Icon class="text-3xl" icon="twemoji:dog" /></Button
                     >
-                    of
-                    <span class="font-semibold text-gray-900 dark:text-white"
-                        >{helper.pages}</span
+                    <Button
+                        class="py-1 px-4"
+                        color={"primary"}
+                        on:click={next}
+                        disabled={isNext}
+                        ><Icon
+                            class="text-3xl"
+                            icon="twemoji:cat"
+                            hFlip={true}
+                        /><Icon
+                            class="text-xl ml-1"
+                            icon="noto:fish"
+                            hFlip={true}
+                        /></Button
                     >
-                    pages and
-                    <span class="font-semibold text-gray-900 dark:text-white"
-                        >{helper.total}</span
-                    >
-                    Entries
-                </div>
-                <div class="flex">
-                    <ButtonGroup>
-                        <Button class="py-1 px-4" color={"blue"} on:click={previous} disabled={isPrev}><Icon class="text-xl mr-1" icon="emojione:baby-chick" /><Icon class="text-3xl" icon="twemoji:dog"/></Button>
-                        <Button class="py-1 px-4" color={"primary"} on:click={next} disabled={isNext}><Icon class="text-3xl" icon="twemoji:cat" hFlip={true} /><Icon class="text-xl ml-1" icon="noto:fish" hFlip={true} /></Button>
-                    </ButtonGroup>
-                </div>
+                </ButtonGroup>
             </div>
         </div>
     {/if}
