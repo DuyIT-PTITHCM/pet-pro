@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize';
 import UserModel from './user.js';
 import MenuModel from './menu.js';
+import PostModel from './post.js';
 import StorageModel from './storage.js';
 import dotenv from 'dotenv';
 dotenv.config(); 
@@ -15,6 +16,7 @@ const models = {
   User: UserModel(sequelize, Sequelize),
   Menu: MenuModel(sequelize, Sequelize),
   Storage: StorageModel(sequelize, Sequelize),
+  Post: PostModel(sequelize, Sequelize),
   sequelize
 };
 
