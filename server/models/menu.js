@@ -22,16 +22,8 @@ export default (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            description: {
-                type: DataTypes.STRING,
-                allowNull: true,
-            },
             url: {
                 type: DataTypes.STRING,
-                allowNull: true,
-            },
-            view: {
-                type: DataTypes.INTEGER,
                 allowNull: true,
             },
             parent_id: {
@@ -43,10 +35,6 @@ export default (sequelize, DataTypes) => {
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
-            },
-            tags: {
-                type: DataTypes.STRING,
-                allowNull: true,
             },
             createdAt: DataTypes.DATE,    
             updatedAt: DataTypes.DATE, 

@@ -8,7 +8,7 @@ export const getAllMenus = async () => {
                 {
                     model: models.Menu,
                     as: 'subMenus',
-                    attributes: ['id', 'name', 'description', 'view', 'tags', 'url']
+                    attributes: ['id', 'name', 'url']
                 }
             ],
             where: {
@@ -22,25 +22,22 @@ export const getAllMenus = async () => {
     }
 };
 export const createMenu = async (menuData) => {
-    const { name, description, tags, url, parent_id } = menuData;
+    const { name, url, parent_id } = menuData;
 
     try {
         const newmenu = await models.Menu.create({
             name,
-            description,
-            tags,
             url,
             parent_id
         });
         return newmenu;
     } catch (error) {
-        console.log(error);
         throw new Error("Error creating menu");
     }
 };
 export const updateMenu = async (req) => {
     const menuId = req.params.id;
-    const { name, description, tags, url, parent_id } = req.body;
+    const { name, url, parent_id } = req.body;
     try {
         const menu = await models.Menu.findByPk(menuId);
 
@@ -49,8 +46,6 @@ export const updateMenu = async (req) => {
         }
 
         menu.name = name;
-        menu.description = description;
-        menu.tags = tags;
         menu.url = url;
         menu.parent_id = parent_id;
 
