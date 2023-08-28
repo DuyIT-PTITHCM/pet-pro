@@ -1205,7 +1205,7 @@ const UserFilter = create_ssr_component(($$result, $$props, $$bindings, slots) =
       $$result,
       {
         outline: true,
-        class: "mt-4 ml-4 float-right"
+        class: "mt-4 ml-4 float-right mr-[3px]"
       },
       {},
       {
@@ -1342,4 +1342,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-756a0338.js.map
+//# sourceMappingURL=_page.svelte-6c532eb0.js.map
