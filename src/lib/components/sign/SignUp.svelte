@@ -1,5 +1,5 @@
 <script>
-	import { loadingState } from './../../store/loading';
+    import { loadingState } from "./../../store/loading";
     import {
         Input,
         Label,
@@ -68,26 +68,32 @@
         return passwordPattern.test(password);
     }
     async function handleSubmitRegister() {
-        if(!user.name){
+        if (!user.name) {
             messageUsername = "Name is required";
-        } 
-        if(!user.phone){
+        }
+        if (!user.phone) {
             messagePhone = "Phone is required";
-        } 
+        }
         if (!validateEmail(user.email)) {
             messageEmail = "Email is not valid";
-        } 
+        }
         if (!validatePassword(user.password)) {
-            validPassword = "Password should be at least 8 characters long and contain at least one digit and one special character";
-        } 
-        if(user.password != user.confirmPassword){
+            validPassword =
+                "Password should be at least 8 characters long and contain at least one digit and one special character";
+        }
+        if (user.password != user.confirmPassword) {
             messageConfirmPass = "Password confirm and Password is mismatch";
         }
-        if(1 < 2){
-            return;
-        }
-        else{
+        if (
+            user.name &&
+            user.phone &&
+            validateEmail(user.email) &&
+            validatePassword(user.password) &&
+            user.password == user.confirmPassword
+        ) {
             handleUserDetail();
+        } else {
+            return;
         }
     }
     async function handleUserDetail() {

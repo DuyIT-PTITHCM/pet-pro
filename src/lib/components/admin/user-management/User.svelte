@@ -31,7 +31,6 @@
         helper.total = res.data.data.total;
         helper.pages = res.data.data.pages;
     }
-
     onMount(() => {
         const unSubscribe = isUserEdited.subscribe((edited) => {
             edited && getUsers();
@@ -84,18 +83,8 @@
             ? 'h-fit mt-5 rounded-xl overflow-hidden'
             : 'hidden'} transition-all"
     >
-        <div
-            class="grid 2xl:grid-cols-5 xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-2"
-        >
-            <UserFilter bind:parentValue={queryParams} />
-            <div>
-                <Button
-                class="mt-4 w-full"
-                color={"blue"}
-                on:click={getUsers}>OKE</Button
-                >
-            </div>
-        </div>
+        <UserFilter bind:parentValue={queryParams} />
+        <Button class="float-right mt-4" outline on:click={getUsers}>OKE</Button>
     </div>
 </div>
 <div>

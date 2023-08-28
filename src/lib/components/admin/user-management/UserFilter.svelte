@@ -1,5 +1,5 @@
 <script>
-    import { Input, Label, Select } from "flowbite-svelte";
+import { Button, Input, Label, Select } from "flowbite-svelte";
     let genders = [
         { value: "male", name: "Male" },
         { value: "female", name: "Female" },
@@ -12,8 +12,14 @@
         phone: null,
         name: null,
     };
-
+    function reset(){
+        paramFilter.email = null;
+        paramFilter.gender = null;
+        paramFilter.name = null;
+        paramFilter.phone = null;
+    }
     export let parentValue;
+    
     $: {
         parentValue = paramFilter;
     }
@@ -28,36 +34,39 @@
     }
 </script>
 
-<div class="w-full">
-    <Label for="name" class="mb-2 capitalize">Name</Label>
-    <Input
-        type="text"
-        id="name"
-        placeholder="john.doe@company.com"
-        bind:value={paramFilter.name}
-    />
+<div class="grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
+    <div class="w-full">
+        <Label for="name" class="mb-2 capitalize">Name</Label>
+        <Input
+            type="text"
+            id="name"
+            placeholder="john.doe@company.com"
+            bind:value={paramFilter.name}
+        />
+    </div>
+    <div class="w-full">
+        <Label for="email" class="mb-2 capitalize">Email address</Label>
+        <Input
+            type="email"
+            id="email"
+            placeholder="john.doe@company.com"
+            bind:value={paramFilter.email}
+        />
+    </div>
+    <div class="w-full">
+        <Label for="phone" class="mb-2 capitalize">Phone</Label>
+        <Input
+            type="tel"
+            id="phone"
+            placeholder="0908070605"
+            bind:value={paramFilter.phone}
+        />
+    </div>
+    <div class="w-full">
+        <Label>
+            Gender
+            <Select class="gender-select mt-2" items={genders} bind:value={paramFilter.gender} />
+        </Label>
+    </div>
 </div>
-<div class="w-full">
-    <Label for="email" class="mb-2 capitalize">Email address</Label>
-    <Input
-        type="email"
-        id="email"
-        placeholder="john.doe@company.com"
-        bind:value={paramFilter.email}
-    />
-</div>
-<div class="w-full">
-    <Label for="phone" class="mb-2 capitalize">Phone</Label>
-    <Input
-        type="tel"
-        id="phone"
-        placeholder="0908070605"
-        bind:value={paramFilter.phone}
-    />
-</div>
-<div class="w-full">
-    <Label>
-        Gender
-        <Select class="mt-2" items={genders} bind:value={paramFilter.gender} />
-    </Label>
-</div>
+<Button outline class="mt-4 ml-4 float-right" on:click={reset}>RESET</Button>

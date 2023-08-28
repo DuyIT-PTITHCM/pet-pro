@@ -40,7 +40,6 @@
         information: "thonn onn18",
         email: "duynait1112@gmail.com",
         phone: "12345678910",
-        password: "yourpassword",
         birthDate: "1990-01-01",
         gender: "male",
         role: "customer",
