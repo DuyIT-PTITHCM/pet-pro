@@ -8,6 +8,7 @@
     import { isUserEdited } from "$lib/store/userManagement";
     import { onMount } from "svelte";
     import Icon from "@iconify/svelte";
+    import { getAllQueryParams, queryParamsToObject, updateQueryParams } from "$lib/Utils/queryParams";
 
     let isFilter = false;
     const userService = RepositoryFactory.get("userRepository");
@@ -23,13 +24,15 @@
 
     let users;
     loadingState.set(true);
-    async function getUsers() {
-        loadingState.set(true);
+    async function getUsers() {   
+        loadingState.set(true);    
+        let queryFilter = getAllQueryParams();
+        queryParams = queryParamsToObject(queryFilter);
         const res = await userService.get(queryParams);
-        loadingState.set(false);
         users = res.data.data.docs;
         helper.total = res.data.data.total;
         helper.pages = res.data.data.pages;
+        loadingState.set(false);
     }
     onMount(() => {
         const unSubscribe = isUserEdited.subscribe((edited) => {
@@ -40,6 +43,11 @@
         return unSubscribe;
     });
     getUsers();
+
+    async function filter (){
+        await  updateQueryParams(queryParams);
+        await getUsers();
+    }
 
     // pagination
     let isPrev = true;
@@ -84,7 +92,7 @@
             : 'hidden'} transition-all"
     >
         <UserFilter bind:parentValue={queryParams} />
-        <Button class="float-right mt-4" outline on:click={getUsers}>OKE</Button>
+        <Button class="float-right mt-4" outline on:click={filter}>OKE</Button>
     </div>
 </div>
 <div>
