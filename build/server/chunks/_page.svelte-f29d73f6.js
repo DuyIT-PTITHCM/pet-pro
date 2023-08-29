@@ -1205,7 +1205,7 @@ const UserFilter = create_ssr_component(($$result, $$props, $$bindings, slots) =
       $$result,
       {
         outline: true,
-        class: "mt-4 ml-4 float-right mr-[3px]"
+        class: "mt-4 ml-4 float-right"
       },
       {},
       {
@@ -1217,6 +1217,24 @@ const UserFilter = create_ssr_component(($$result, $$props, $$bindings, slots) =
   } while (!$$settled);
   return $$rendered;
 });
+function getAllQueryParams() {
+  const searchParams = new URLSearchParams(location.search);
+  const queryParams = {};
+  for (const [param, value] of searchParams.entries()) {
+    queryParams[param] = value;
+  }
+  return queryParams;
+}
+function queryParamsToObject(queryParams) {
+  const paramFilter = {};
+  for (const key in queryParams) {
+    const value = queryParams[key];
+    if (value !== null && value !== void 0) {
+      paramFilter[key] = value;
+    }
+  }
+  return paramFilter;
+}
 const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $loadingState, $$unsubscribe_loadingState;
   validate_store(loadingState, "loadingState");
@@ -1235,11 +1253,13 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   loadingState.set(true);
   async function getUsers() {
     loadingState.set(true);
+    let queryFilter = getAllQueryParams();
+    queryParams = queryParamsToObject(queryFilter);
     const res = await userService.get(queryParams);
-    loadingState.set(false);
     users = res.data.data.docs;
     helper.total = res.data.data.total;
     helper.pages = res.data.data.pages;
+    loadingState.set(false);
   }
   getUsers();
   let isPrev = true;
@@ -1342,4 +1362,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-6c532eb0.js.map
+//# sourceMappingURL=_page.svelte-f29d73f6.js.map
