@@ -6,6 +6,8 @@ import usersRouter from './server/routes/api/v1.0/userManagementRoute.js';
 import authRoute from './server/routes/api/v1.0/authRoute.js';
 import menusRouter from './server/routes/api/v1.0/menuRoute.js';
 import postRouter from './server/routes/api/v1.0/postRoute.js';
+import categoriesRoute from './server/routes/api/v1.0/categoriesRoute.js';
+import productsRoute from './server/routes/api/v1.0/productsRoute.js';
 import uploadFileRoute from './server/routes/api/v1.0/uploadFileRoute.js';
 import verifyToken from './server/middleware/authMiddleware.js'
 import cors from 'cors';
@@ -27,10 +29,12 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 // router 
 app.use(V_1_0 + '/auth', authRoute);
-app.use(V_1_0 + '/user-management', verifyToken, usersRouter);
+app.use(V_1_0 + '/user-management', usersRouter);
 app.use(V_1_0 + '/menu', verifyToken, menusRouter);
 app.use(V_1_0 + '/upload', uploadFileRoute);
-app.use(V_1_0 + '/posts', verifyToken, postRouter);
+app.use(V_1_0 + '/posts', postRouter);
+app.use(V_1_0 + '/categories', categoriesRoute);
+app.use(V_1_0 + '/products', productsRoute);
 
 //adapter front-end sveltekit
 app.use(handler);
