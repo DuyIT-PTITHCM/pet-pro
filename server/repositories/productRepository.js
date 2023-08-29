@@ -32,6 +32,7 @@ export const createProduct = async (productData) => {
         const newProduct = await models.Product.create(productData);
         return newProduct;
     } catch (error) {
+        console.log(error);
         throw new Error("Error creating product");
     }
 };
