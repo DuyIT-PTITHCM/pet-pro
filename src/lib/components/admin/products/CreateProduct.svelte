@@ -82,7 +82,7 @@
 </script>
 
 <div
-  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-screen"
+  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-full"
 >
   <h1 class="text-[34px] py-[10px] uppercase text-center font-bold">{title}</h1>
   <div class="-mx-3 md:flex mb-6">
