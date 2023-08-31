@@ -13,7 +13,9 @@
   let categories: any[] = [],
     files: any[] = [],
     file;
-
+  let queryParams = {
+    type: 'product'
+  };
   const categoryService = RepositoryFactory.get("categoryRepository");
   const productService = RepositoryFactory.get("productRepository");
 
@@ -58,7 +60,7 @@
   }
   async function getCategories() {
     loadingState.set(true);
-    const res = await categoryService.get();
+    const res = await categoryService.get(queryParams);
     categories = res.data.data;
     loadingState.set(false);
   }
