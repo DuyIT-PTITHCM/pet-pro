@@ -1,10 +1,11 @@
 import express from 'express';
 import { forceDeletePost, index, store, update } from '../../../controllers/postController.js';
 import { createPostValidation, updatePostValidation } from '../../../validations/postValidation.js';
+import { referenceValidation } from '../../../validations/reference.js';
 const router = express.Router();
 
 router.get('/', index);
-router.post('/', createPostValidation, store);
+router.post('/', createPostValidation , referenceValidation , store);
 router.put('/:id', updatePostValidation, update);
 router.delete('/:id', forceDeletePost);
 

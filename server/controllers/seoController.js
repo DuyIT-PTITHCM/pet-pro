@@ -13,6 +13,10 @@ export const index = async (req, res) => {
 
 export const store = async (req, res) => {
     try {
+        const validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty()) {
+            return res.status(400).json({ errors: validationErrors.array() });
+        }
         const seoCreated = await createSeo(req.body);
         coreResponse(res, 201, "SEO created successfully", seoCreated);
     } catch (error) {
