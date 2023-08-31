@@ -1,6 +1,7 @@
 <script lang="ts">
   import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
   import { BASE_API } from "$lib/Const";
+  import { formatCurrency } from "$lib/Utils/accounting";
   import { loadingState } from "$lib/store/loading";
   import { toastErr } from "$lib/store/toastError";
   import axios from "axios";
@@ -132,6 +133,9 @@
         type="number"
         placeholder="Input Original Price"
       />
+      <p class="text-[blue] text-xs italic">
+        Original Price : {formatCurrency(products.originalPrice)}
+      </p>
     </div>
     <div class="md:w-1/2 px-3">
       <label
@@ -142,11 +146,14 @@
       </label>
       <input
         bind:value={products.price}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
         id="grid-last-name"
         type="number"
         placeholder="Input Price"
       />
+      <p class="text-[blue] text-xs italic">
+        Price : {formatCurrency(products.price)}
+      </p>
     </div>
   </div>
   <div class="-mx-3 md:flex mb-6">
@@ -155,14 +162,14 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
-        Stock Quantity
+        Quantity In Stock
       </label>
       <input
         bind:value={products.stockQuantity}
         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
         id="grid-first-name"
         type="number"
-        placeholder="Input Stock Quantity"
+        placeholder="Input quantity in stock"
       />
     </div>
     <div class="md:w-1/2 px-3">
@@ -170,14 +177,14 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
-        Origin
+        The Origin
       </label>
       <input
         bind:value={products.origin}
         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
         id="grid-last-name"
         type="text"
-        placeholder="Input Origin"
+        placeholder="Input The Origin"
       />
     </div>
   </div>
@@ -188,30 +195,36 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
-        Stock Discount
+        % Discount
       </label>
       <input
         bind:value={products.discount}
         class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
         id="grid-first-name"
         type="number"
-        placeholder="Input Stock Discount"
+        placeholder="Input % Discount"
       />
+      <p class="text-[blue] text-xs italic">
+        Example : 10 = 10%
+      </p>
     </div>
     <div class="md:w-1/2 px-3">
       <label
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
-        Slug
+        URL Product
       </label>
       <input
         bind:value={products.slug}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
         id="grid-last-name"
         type="text"
-        placeholder="Input Slug"
+        placeholder="con-cho-co"
       />
+      <p class="text-[blue] text-xs italic">
+        Example : http://pet-pro/con-cho-co
+      </p>
     </div>
   </div>
   <div class="-mx-3 md:flex mb-6">
