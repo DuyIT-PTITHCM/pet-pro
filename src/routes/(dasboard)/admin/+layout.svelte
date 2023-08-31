@@ -45,6 +45,12 @@ let colors = [
       icon: "icon-park-solid:hi",
       active: false,
     },
+    {
+      name: "products",
+      url: "/admin/products",
+      icon: "emojione-v1:cat",
+      active: false,
+    },
   ];
   var isHide = true;
   var isFixedHeader = false;
@@ -169,7 +175,7 @@ let colors = [
     </ul>
   </div>
   <div class="admin-content-box flex-auto" style="--deg: {degString}; --gradient-1:{colors[0]}; --gradient-2:{colors[1]};">
-    <div class="2xl:m-4 xl:m-4 lg:m-4 md:m-4 sm:m-2 ">
+    <div class="2xl:m-4 xl:m-4 lg:m-4 md:m-4 sm:m-2">
       <slot />
     </div>
   </div>

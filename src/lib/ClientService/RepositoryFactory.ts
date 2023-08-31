@@ -1,5 +1,7 @@
 import AuthRepository from "./repositories/AuthRepository";
+import CategoryRepository from "./repositories/CategoryRepository";
 import UserRepository from "./repositories/UserRepository";
+import ProductRepository from "./repositories/ProductRepository";
 
 interface RepositoryList {
     [key: string]: any;
@@ -7,7 +9,9 @@ interface RepositoryList {
 
 const repositories: RepositoryList = {
     authRepository: AuthRepository,
-    userRepository: UserRepository
+    userRepository: UserRepository,
+    categoryRepository: CategoryRepository,
+    productRepository: ProductRepository,
 };
 
 export const RepositoryFactory = {
