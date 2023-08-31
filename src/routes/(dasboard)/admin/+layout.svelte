@@ -40,6 +40,12 @@ let colors = [
       active: false,
     },
     {
+      name: "menu managerment",
+      url: "/admin/menu-management",
+      icon: "eva:menu-2-outline",
+      active: false,
+    },
+    {
       name: "blog",
       url: "#",
       icon: "icon-park-solid:hi",

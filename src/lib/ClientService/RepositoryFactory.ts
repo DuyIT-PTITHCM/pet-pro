@@ -1,5 +1,6 @@
 import AuthRepository from "./repositories/AuthRepository";
 import CategoryRepository from "./repositories/CategoryRepository";
+import MenuRepository from "./repositories/MenuRepository";
 import UserRepository from "./repositories/UserRepository";
 import ProductRepository from "./repositories/ProductRepository";
 
@@ -12,6 +13,7 @@ const repositories: RepositoryList = {
     userRepository: UserRepository,
     categoryRepository: CategoryRepository,
     productRepository: ProductRepository,
+    menuRepository: MenuRepository
 };
 
 export const RepositoryFactory = {
