@@ -14,7 +14,7 @@
     files: any[] = [],
     file;
   let queryParams = {
-    type: 'product'
+    type: "product",
   };
   const categoryService = RepositoryFactory.get("categoryRepository");
   const productService = RepositoryFactory.get("productRepository");
@@ -47,16 +47,7 @@
   //create products
   async function handleSubmitCreateProduct() {
     products.images = JSON.stringify(files);
-    try {
-      return productService.post(products);
-    } catch (error) {
-      toastErr.set([
-        {
-          message: "Create Product Fail Please Input Field And Slug Is Unique",
-          type: "error",
-        },
-      ]);
-    }
+    return productService.post(products);
   }
   async function getCategories() {
     loadingState.set(true);
@@ -69,17 +60,21 @@
     if (mode == "create") {
       //call action create
       loadingState.set(true);
-      await handleSubmitCreateProduct();
-      toastErr.set([
-        {
-          message: "Create Product Success",
-          type: "success",
-        },
-      ]);
-      loadingState.set(false);
-      window.location.href = "/admin/products";
+      try {
+        await handleSubmitCreateProduct();
+        window.location.href = "/admin/products";
+      } catch (error) {
+        loadingState.set(false);
+        const errors = error?.response?.data?.errors;
+        var toasts = errors?.map((element: any) => {
+          return {
+            message: element.path + "-" + element.msg,
+            type: "error",
+          };
+        });
+        toastErr.set(toasts);
+      }
     } else if (mode == "modify") {
-      //call action update
     }
   }
 
@@ -89,11 +84,11 @@
 <div
   class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-screen"
 >
-  <h1 class="py-[10px] text-[34px]">{title}</h1>
+  <h1 class="text-[34px] py-[10px] uppercase text-center font-bold">{title}</h1>
   <div class="-mx-3 md:flex mb-6">
     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
         Product Name
@@ -108,7 +103,7 @@
     </div>
     <div class="md:w-1/2 px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
         Product Description
@@ -125,7 +120,7 @@
   <div class="-mx-3 md:flex mb-6">
     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
         Original Price
@@ -140,7 +135,7 @@
     </div>
     <div class="md:w-1/2 px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
         Price
@@ -157,7 +152,7 @@
   <div class="-mx-3 md:flex mb-6">
     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
         Stock Quantity
@@ -172,7 +167,7 @@
     </div>
     <div class="md:w-1/2 px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
         Origin
@@ -190,7 +185,7 @@
   <div class="-mx-3 md:flex mb-6">
     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
         Stock Discount
@@ -205,7 +200,7 @@
     </div>
     <div class="md:w-1/2 px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
         Slug
@@ -222,7 +217,7 @@
   <div class="-mx-3 md:flex mb-6">
     <div class="md:w-full px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-password"
       >
         Note
@@ -239,7 +234,7 @@
   <div class="-mx-3 md:flex mb-2">
     <div class="md:w-1/2 px-3 mb-6 md:mb-0">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-state"
       >
         Status
@@ -258,7 +253,7 @@
     </div>
     <div class="md:w-1/2 px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-state"
       >
         Type
@@ -277,7 +272,7 @@
     </div>
     <div class="md:w-1/2 px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-zip"
       >
         Category Products
@@ -296,7 +291,7 @@
     </div>
     <div class="md:w-1/2 px-3">
       <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-zip"
       >
         Expiration Date
@@ -306,7 +301,6 @@
           id="birthDate"
           type="date"
           class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
-          max={new Date(Date.now()).toISOString().split("T")[0]}
           bind:value={products.expirationDate}
         />
       </div>
@@ -314,7 +308,7 @@
   </div>
   <div>
     <label
-      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
       for="grid-zip"
     >
       Images Products
@@ -336,7 +330,7 @@
   <div class="flex justify-center items-center relative bottom-0">
     <div class="btn-signup w-fit">
       <button
-        class=" bg-black font-semibold text-white border border-black-500 hover:border-transparent rounded px-[80px] py-[10px]"
+        class=" bg-black text-white border border-black-500 hover:border-transparent rounded px-[80px] py-[10px]"
         on:click={handleSubmit}>Submit</button
       >
     </div>

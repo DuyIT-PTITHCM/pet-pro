@@ -9,6 +9,9 @@ export default {
           });
         return response;
     },
+    async show(productId : any){
+        return await axiosClient.get(`${prefix}/${productId}`);
+    },
     async getUser(productId: any){
         return axiosClient.get(`${prefix}/${productId}`);
     },
