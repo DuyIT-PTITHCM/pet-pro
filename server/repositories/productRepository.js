@@ -27,6 +27,30 @@ export const getAllProducts = async () => {
     }
 };
 
+export const showProduct = async (id) => {
+    try {
+        return await models.Product.findByPk(id, {
+            include: [
+                {
+                    model: models.Seo,
+                    as: 'seo',
+                },
+                {
+                    model: models.Post,
+                    as: 'post',
+                },
+                {
+                    model: models.Categories,
+                    as: 'category',
+                },
+            ],
+        });
+    } catch (error) {
+        throw new Error("Error showing product");
+    }
+
+};
+
 export const createProduct = async (productData) => {
     try {
         const newProduct = await models.Product.create(productData);

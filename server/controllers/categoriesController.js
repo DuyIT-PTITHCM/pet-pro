@@ -8,8 +8,9 @@ import {
 } from "../repositories/categoriesRepository.js";
 
 export const index = async (req, res) => {
+    let type = req.query?.type? req.query?.type: 'article';
     try {
-        const data = await getAllCategories();
+        const data = await getAllCategories(type);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching categories from controller", error);

@@ -6,6 +6,7 @@ import {
 import {
     forceDeleteProduct,
     index,
+    show,
     store,
     update,
 } from '../../../controllers/productController.js';
@@ -13,6 +14,7 @@ import {
 const router = express.Router();
 
 router.get('/', index);
+router.get('/:id', show);
 router.post('/', createProductValidation, store);
 router.put('/:id', updateProductValidation, update);
 router.delete('/:id', forceDeleteProduct);
