@@ -1,5 +1,5 @@
 import { c as create_ssr_component, v as validate_component, e as escape, a as add_attribute, b as each } from './ssr-8dc8d8d7.js';
-import { R as RepositoryFactory } from './RepositoryFactory-8144373c.js';
+import { R as RepositoryFactory } from './RepositoryFactory-9fafbf3a.js';
 import { l as loadingState } from './loading-83ba27d3.js';
 import { F as Fileupload } from './Fileupload-3e3c4c71.js';
 import { I as Input } from './Input-584a3dec.js';
@@ -17,10 +17,11 @@ const CreateProduct = create_ssr_component(($$result, $$props, $$bindings, slots
   let { title } = $$props;
   let { mode } = $$props;
   let categories = [], files = [];
+  let queryParams = { type: "product" };
   const categoryService = RepositoryFactory.get("categoryRepository");
   async function getCategories() {
     loadingState.set(true);
-    const res = await categoryService.get();
+    const res = await categoryService.get(queryParams);
     categories = res.data.data;
     loadingState.set(false);
   }
@@ -84,4 +85,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-71985e2b.js.map
+//# sourceMappingURL=_page.svelte-bea87d63.js.map

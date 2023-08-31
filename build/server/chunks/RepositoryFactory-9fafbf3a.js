@@ -16,8 +16,11 @@ const AuthRepository = {
 };
 const prefix$2 = "categories";
 const CategoryRepository = {
-  async get() {
-    return await axiosClient.get(`${prefix$2}`);
+  async get(queryParams) {
+    const response = await axiosClient.get(`${prefix$2}`, {
+      params: queryParams
+    });
+    return response;
   }
 };
 const prefix$1 = "user-management";
@@ -70,4 +73,4 @@ const RepositoryFactory = {
 };
 
 export { RepositoryFactory as R };
-//# sourceMappingURL=RepositoryFactory-8144373c.js.map
+//# sourceMappingURL=RepositoryFactory-9fafbf3a.js.map
