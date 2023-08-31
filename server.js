@@ -9,6 +9,7 @@ import postRouter from './server/routes/api/v1.0/postRoute.js';
 import categoriesRoute from './server/routes/api/v1.0/categoriesRoute.js';
 import productsRoute from './server/routes/api/v1.0/productsRoute.js';
 import uploadFileRoute from './server/routes/api/v1.0/uploadFileRoute.js';
+import seoRoute from './server/routes/api/v1.0/seoRoute.js';
 import verifyToken from './server/middleware/authMiddleware.js'
 import cors from 'cors';
 
@@ -35,6 +36,7 @@ app.use(V_1_0 + '/upload', uploadFileRoute);
 app.use(V_1_0 + '/posts', verifyToken, postRouter);
 app.use(V_1_0 + '/categories', verifyToken, categoriesRoute);
 app.use(V_1_0 + '/products', verifyToken, productsRoute);
+app.use(V_1_0 + '/seo', verifyToken, seoRoute);
 
 //adapter front-end sveltekit
 app.use(handler);
