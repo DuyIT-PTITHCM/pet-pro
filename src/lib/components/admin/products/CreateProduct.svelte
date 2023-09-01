@@ -83,7 +83,7 @@
 </script>
 
 <div
-  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-full"
+  class="bg-white dark:bg-slate-800 dark:text-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-full"
 >
   <h1 class="text-[34px] py-[10px] uppercase text-center font-bold">{title}</h1>
   <div class="-mx-3 md:flex mb-6">
@@ -96,7 +96,7 @@
       </label>
       <input
         bind:value={products.productName}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
         id="grid-first-name"
         type="text"
         placeholder="Cat Indo"
@@ -111,7 +111,7 @@
       </label>
       <input
         bind:value={products.description}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
         id="grid-last-name"
         type="text"
         placeholder="Description for product"
@@ -128,12 +128,13 @@
       </label>
       <input
         bind:value={products.originalPrice}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
         id="grid-first-name"
         type="number"
+        min="10000"
         placeholder="Input Original Price"
       />
-      <p class="text-[blue] text-xs italic">
+      <p class="text-[blue] dark:text-white   text-xs italic">
         Original Price : {formatCurrency(products.originalPrice)}
       </p>
     </div>
@@ -146,12 +147,13 @@
       </label>
       <input
         bind:value={products.price}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
         id="grid-last-name"
         type="number"
+        min="10000"
         placeholder="Input Price"
       />
-      <p class="text-[blue] text-xs italic">
+      <p class="text-[blue] dark:text-white   text-xs italic">
         Price : {formatCurrency(products.price)}
       </p>
     </div>
@@ -166,9 +168,10 @@
       </label>
       <input
         bind:value={products.stockQuantity}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
         id="grid-first-name"
         type="number"
+        min="10000"
         placeholder="Input quantity in stock"
       />
     </div>
@@ -181,7 +184,7 @@
       </label>
       <input
         bind:value={products.origin}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
         id="grid-last-name"
         type="text"
         placeholder="Input The Origin"
@@ -199,12 +202,13 @@
       </label>
       <input
         bind:value={products.discount}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
         id="grid-first-name"
         type="number"
+        min="10000"
         placeholder="Input % Discount"
       />
-      <p class="text-[blue] text-xs italic">
+      <p class="text-[blue] dark:text-white   text-xs italic">
         Example : 10 = 10%
       </p>
     </div>
@@ -217,12 +221,12 @@
       </label>
       <input
         bind:value={products.slug}
-        class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
+        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
         id="grid-last-name"
         type="text"
         placeholder="con-cho-co"
       />
-      <p class="text-[blue] text-xs italic">
+      <p class="text-[blue] dark:text-white   text-xs italic">
         Example : http://pet-pro/con-cho-co
       </p>
     </div>
@@ -254,7 +258,7 @@
       </label>
       <div class="relative">
         <select
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
+          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
           id="grid-state"
           bind:value={products.status}
         >
@@ -273,7 +277,7 @@
       </label>
       <div class="relative">
         <select
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
+          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
           id="grid-state"
           bind:value={products.type}
         >
@@ -292,7 +296,7 @@
       </label>
       <div class="relative">
         <select
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
+          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
           id="grid-state"
           bind:value={products.categoryId}
         >
@@ -313,7 +317,7 @@
         <Input
           id="birthDate"
           type="date"
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded"
+          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
           bind:value={products.expirationDate}
         />
       </div>
