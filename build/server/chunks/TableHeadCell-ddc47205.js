@@ -1,28 +1,8 @@
 import { c as compute_rest_props } from './utils-5762d6f4.js';
-import { c as create_ssr_component, s as setContext, d as spread, h as escape_object, f as escape_attribute_value, a as add_attribute, g as getContext } from './ssr-4b2a575b.js';
-import { twMerge, twJoin } from 'tailwind-merge';
+import { c as create_ssr_component, s as setContext, a as add_attribute, d as spread, h as escape_object, f as escape_attribute_value, g as getContext } from './ssr-4b2a575b.js';
+import { twJoin, twMerge } from 'tailwind-merge';
 import { v as validate_dynamic_element, a as validate_void_dynamic_element, i as is_void } from './dev-1873bb41.js';
 
-const ButtonGroup = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["size", "divClass"]);
-  let { size = "md" } = $$props;
-  let { divClass = "inline-flex rounded-lg shadow-sm" } = $$props;
-  setContext("group", { size });
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.divClass === void 0 && $$bindings.divClass && divClass !== void 0)
-    $$bindings.divClass(divClass);
-  return `<div${spread(
-    [
-      escape_object($$restProps),
-      {
-        class: escape_attribute_value(twMerge(divClass, $$props.class))
-      },
-      { role: "group" }
-    ],
-    {}
-  )}>${slots.default ? slots.default({}) : ``}</div> `;
-});
 const Table = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, ["divClass", "striped", "hoverable", "noborder", "shadow", "color", "customeColor"]);
   let { divClass = "relative overflow-x-auto" } = $$props;
@@ -211,5 +191,5 @@ const TableHeadCell = create_ssr_component(($$result, $$props, $$bindings, slots
   )}>${slots.default ? slots.default({}) : ``}</th> `;
 });
 
-export { ButtonGroup as B, Table as T, TableHead as a, TableHeadCell as b, TableBody as c, TableBodyRow as d, TableBodyCell as e };
-//# sourceMappingURL=TableHeadCell-5bc3991f.js.map
+export { Table as T, TableHead as a, TableHeadCell as b, TableBody as c, TableBodyRow as d, TableBodyCell as e };
+//# sourceMappingURL=TableHeadCell-ddc47205.js.map

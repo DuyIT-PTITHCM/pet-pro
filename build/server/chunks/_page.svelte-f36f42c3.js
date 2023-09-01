@@ -2,8 +2,8 @@ import { c as create_ssr_component, v as validate_component, b as each, e as esc
 import { l as loadingState } from './loading-77099a3c.js';
 import { R as RepositoryFactory } from './RepositoryFactory-21209de9.js';
 import { t as title, d as description } from './meta-9b043ecf.js';
-import { T as Table, a as TableHead, b as TableHeadCell, c as TableBody, d as TableBodyRow, e as TableBodyCell, B as ButtonGroup } from './TableHeadCell-5bc3991f.js';
 import { C as Checkbox } from './Checkbox-bf9dfd31.js';
+import { T as Table, a as TableHead, b as TableHeadCell, c as TableBody, d as TableBodyRow, e as TableBodyCell } from './TableHeadCell-ddc47205.js';
 import moment from 'moment';
 import './utils-5762d6f4.js';
 import './index3-f06f6a44.js';
@@ -70,11 +70,15 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               }
             })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
-                return `PRODUCT NAME`;
+                return `NAME`;
               }
             })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
-                return `PRODUCT DESCRIPTION`;
+                return `IMAGES`;
+              }
+            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+              default: () => {
+                return `DESCRIPTION`;
               }
             })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
@@ -118,22 +122,14 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               }
             })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
-                return `CATEGORY PRODUCTS`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `IMAGES PRODUCTS`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `Action`;
+                return `CATEGORY`;
               }
             })}`;
           }
         })} ${validate_component(TableBody, "TableBody").$$render($$result, {}, {}, {
           default: () => {
             return `${each(sortedProducts, (item) => {
-              return `${validate_component(TableBodyRow, "TableBodyRow").$$render($$result, {}, {}, {
+              return `${validate_component(TableBodyRow, "TableBodyRow").$$render($$result, { class: "cursor-pointer" }, {}, {
                 default: () => {
                   return `${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, { tdClass: "w-3" }, {}, {
                     default: () => {
@@ -146,6 +142,12 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(item.productName)}`;
+                    }
+                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, { tdClass: "min-w-[180px]" }, {}, {
+                    default: () => {
+                      return `<div class="grid grid-cols-3 gap-1">${each(convertImageJsonToArray(item.images), (path, i) => {
+                        return `<div class="w-14 h-14 overflow-hidden bg-black rounded-full"><img${add_attribute("src", !path ? "/images/logo.png" : `${host}/` + path, 0)} class="w-full h-full rounded-full"${add_attribute("alt", item.name, 0)}> </div>`;
+                      })}</div> `;
                     }
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
@@ -202,20 +204,6 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                     default: () => {
                       return `${escape(item.category.categoryName)}`;
                     }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `${each(convertImageJsonToArray(item.images), (path, i) => {
-                        return `<img${add_attribute("src", !path ? "/images/logo.png" : `${host}/` + path, 0)} class="rounded-full w-12 h-12" alt="">`;
-                      })} `;
-                    }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, {}, {}, {
-                        default: () => {
-                          return `//action`;
-                        }
-                      })} `;
-                    }
                   })} `;
                 }
               })}`;
@@ -228,4 +216,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-a4516537.js.map
+//# sourceMappingURL=_page.svelte-f36f42c3.js.map
