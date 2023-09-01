@@ -43,6 +43,9 @@
     function convertImageJsonToArray(json) {
         return JSON.parse(json);
     }
+    function gotoDetail(id: Number) {
+        window.location.href="/admin/products/"+id
+    }
     $: {
         sortedProducts = [...dataProductFromApi].sort((a, b) => {
             let aValue = a[sortBy];
@@ -153,7 +156,7 @@
     </TableHead>
     <TableBody>
         {#each sortedProducts as item}
-            <TableBodyRow>
+            <TableBodyRow on:click={gotoDetail(item.id)}>
                 <TableBodyCell tdClass="w-3"
                     ><div class="flex justify-center">
                         <Checkbox checked={isCheck} value={item.id} />
