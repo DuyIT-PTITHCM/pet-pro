@@ -105,12 +105,13 @@
         <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("productName")}
-            >PRODUCT NAME</TableHeadCell
+            >NAME</TableHeadCell
         >
+        <TableHeadCell class="text-center">IMAGES</TableHeadCell>
         <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("description")}
-            >PRODUCT DESCRIPTION</TableHeadCell
+            >DESCRIPTION</TableHeadCell
         >
         <TableHeadCell
             class="text-center"
@@ -150,13 +151,11 @@
             on:click={() => toggleSort("expirationDate")}
             >EXPIRATION DATE
         </TableHeadCell>
-        <TableHeadCell class="text-center">CATEGORY PRODUCTS</TableHeadCell>
-        <TableHeadCell class="text-center">IMAGES PRODUCTS</TableHeadCell>
-        <TableHeadCell class="text-center">Action</TableHeadCell>
+        <TableHeadCell class="text-center">CATEGORY</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each sortedProducts as item}
-            <TableBodyRow on:click={gotoDetail(item.id)}>
+            <TableBodyRow class="cursor-pointer" on:click={gotoDetail(item.id)}>
                 <TableBodyCell tdClass="w-3"
                     ><div class="flex justify-center">
                         <Checkbox checked={isCheck} value={item.id} />
@@ -164,6 +163,21 @@
                 >
                 <TableBodyCell>{item.id}</TableBodyCell>
                 <TableBodyCell>{item.productName}</TableBodyCell>
+                <TableBodyCell tdClass="min-w-[180px]">
+                    <div class="grid grid-cols-3 gap-1">
+                        {#each convertImageJsonToArray(item.images) as path, i}
+                        <div class="w-14 h-14 overflow-hidden bg-black rounded-full">
+                            <img
+                            src={!path
+                                ? "/images/logo.png"
+                                : `${host}` + "/" + path}
+                            class="w-full h-full rounded-full"
+                            alt={item.name}/>
+                        </div>
+                        
+                        {/each}
+                    </div>
+                </TableBodyCell>
                 <TableBodyCell>{item.description}</TableBodyCell>
                 <TableBodyCell>{item.originalPrice}</TableBodyCell>
                 <TableBodyCell>{item.price}</TableBodyCell>
@@ -185,20 +199,6 @@
                         : "-"}</TableBodyCell
                 >
                 <TableBodyCell>{item.category.categoryName}</TableBodyCell>
-                <TableBodyCell>
-                    {#each convertImageJsonToArray(item.images) as path, i}
-                        <img
-                            src={!path
-                                ? "/images/logo.png"
-                                : `${host}` + "/" + path}
-                            class="rounded-full w-12 h-12"
-                            alt=""
-                        />
-                    {/each}
-                </TableBodyCell>
-                <TableBodyCell>
-                    <ButtonGroup>//action</ButtonGroup>
-                </TableBodyCell>
             </TableBodyRow>
         {/each}
     </TableBody>
