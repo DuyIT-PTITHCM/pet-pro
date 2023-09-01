@@ -8,9 +8,13 @@ import {
     showProduct
 } from "../repositories/productRepository.js";
 
+const PER_PAGE = 10;
+
 export const index = async (req, res) => {
+    const page = req.query?.page || 1;
+    const size = req.query?.size || PER_PAGE;
     try {
-        const data = await getAllProducts();
+        const data = await getAllProducts(page,size,{});
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching products from controller", error);

@@ -1,9 +1,9 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (page = 1, perPage = 10, filters = {}) => {
     try {
-        const data = await models.Product.findAll({
+        const data = await models.Product.paginate({
             include: [
                 {
                     model: models.Seo,
@@ -18,6 +18,9 @@ export const getAllProducts = async () => {
                     as: 'category',
                 },
             ],
+            page,
+            paginate: perPage,
+            order: [['createdAt', 'DESC']],
         });
 
         return data;
