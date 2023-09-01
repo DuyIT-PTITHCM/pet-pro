@@ -36,7 +36,7 @@
     async function getProduct() {
         loadingState.set(true);
         products = await productService.get();
-        dataProductFromApi = products.data.data;
+        dataProductFromApi = products.data.data.docs;
         loadingState.set(false);
     }
 
