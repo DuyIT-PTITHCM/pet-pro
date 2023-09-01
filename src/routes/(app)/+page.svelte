@@ -1,5 +1,4 @@
 <script>
-    import { title, description } from "$lib/store/meta";
     import Banner from "$lib/components/home/Banner.svelte";
     import ClientSay from "$lib/components/home/ClientSay.svelte";
     import Benefit from "$lib/components/home/Benefit.svelte";

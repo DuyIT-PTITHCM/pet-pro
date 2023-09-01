@@ -1,4 +1,5 @@
 <script>
+	import Loading  from '$lib/components/common/Loading.svelte';
     import "../../app.css";
     import { title, description } from "$lib/store/meta";
     import Header from "$lib/components/header/Header.svelte";
@@ -13,3 +14,4 @@
     <slot />
 </main>
 <Footer/>
+<Loading />
