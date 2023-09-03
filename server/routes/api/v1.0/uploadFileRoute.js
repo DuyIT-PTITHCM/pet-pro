@@ -1,6 +1,7 @@
 import express from 'express';
-import { uploadFileAndSaveToDatabase } from '../../../controllers/uploadController.js';
+import { deleteFile, uploadFileAndSaveToDatabase } from '../../../controllers/uploadController.js';
 const router = express.Router();
 
 router.post('/', uploadFileAndSaveToDatabase);
+router.post('/delete', deleteFile);
 export default router;
