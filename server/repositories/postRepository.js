@@ -21,7 +21,7 @@ export const getAllPosts = async () => {
 };
 
 export const createPost = async (postData) => {
-    const { title, content, author, published_at, tags, category, views, imageUrl, menuId, referenceId, reference } = postData;
+    const { title, content, author, published_at, tags, category, views, imageUrl, referenceId, reference } = postData;
 
     let transaction;
     try {
@@ -34,8 +34,7 @@ export const createPost = async (postData) => {
             tags,
             category,
             views,
-            imageUrl,
-            menuId
+            imageUrl
         },{transaction});
 
         switch (reference) {
@@ -76,7 +75,7 @@ export const createPost = async (postData) => {
 };
 
 export const updatePost = async (postId, postData) => {
-    const { title, content, author, published_at, tags, category, views, imageUrl, menuId } = postData;
+    const { title, content, author, published_at, tags, category, views, imageUrl } = postData;
 
     try {
         const post = await models.Post.findByPk(postId);
@@ -93,8 +92,6 @@ export const updatePost = async (postId, postData) => {
         post.category = category;
         post.views = views;
         post.imageUrl = imageUrl;
-        post.menuId = menuId;
-
         await post.save();
 
         return post;

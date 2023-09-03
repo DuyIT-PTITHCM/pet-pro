@@ -32,9 +32,7 @@
 
   loadingState.set(true);
   axios.get(`${BASE_API}/front/menu`).then((res) => {
-    console.log(res);
     menu = menu.concat(res.data.data);
-    console.log(menu);
     loadingState.set(false);
   });
   let user = {

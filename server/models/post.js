@@ -3,10 +3,6 @@ import { Model } from 'sequelize';
 export default (sequelize, DataTypes) => {
     class Post extends Model {
         static associate(models) {
-            Post.belongsTo(models.Menu, {
-                foreignKey: 'menuId',
-                as: 'menu',
-            });
         }
     }
 

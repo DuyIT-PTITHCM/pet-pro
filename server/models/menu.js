@@ -7,6 +7,10 @@ export default (sequelize, DataTypes) => {
                 foreignKey: 'parent_id',
                 as: 'subMenus',
             });
+            Menu.hasMany(models.Categories, {
+                foreignKey: 'menuId',
+                as: 'categories',
+            });
         }
     }
 
@@ -26,6 +30,23 @@ export default (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
+            description: {
+                type: DataTypes.STRING,
+                allowNull: true,
+            },
+            isShowDescription: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
+            active: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
+            type: {
+                type: DataTypes.ENUM('product', 'service', 'article'),
+                defaultValue: 'product',
+                allowNull: false,
+            },
             parent_id: {
                 type: DataTypes.INTEGER,
                 allowNull: true,
@@ -36,8 +57,8 @@ export default (sequelize, DataTypes) => {
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
             },
-            createdAt: DataTypes.DATE,    
-            updatedAt: DataTypes.DATE, 
+            createdAt: DataTypes.DATE,
+            updatedAt: DataTypes.DATE,
         },
         {
             sequelize,

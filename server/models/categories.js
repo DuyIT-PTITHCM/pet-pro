@@ -30,7 +30,7 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       type: {
-        type: DataTypes.ENUM('product', 'article'),
+        type: DataTypes.ENUM('product', 'service','article'),
         allowNull: false,
       },
       seoId: {

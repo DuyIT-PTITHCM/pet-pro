@@ -1,9 +1,10 @@
 import express from 'express';
-import { index } from '../../../controllers/menusController.js';
+import { index , show} from '../../../controllers/menusController.js';
 
 
 const router = express.Router();
 
 router.get('/menu', index);
+router.get('/menu-detail/:url', show);
 
 export default router;

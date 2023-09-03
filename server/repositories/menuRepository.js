@@ -1,4 +1,4 @@
-import { Op } from 'sequelize';
+import { Op, Sequelize } from 'sequelize';
 import { models } from '../models/index.js';
 
 export const getAllMenus = async () => {
@@ -8,7 +8,16 @@ export const getAllMenus = async () => {
                 {
                     model: models.Menu,
                     as: 'subMenus',
-                    attributes: ['id', 'name', 'url']
+                    include: [
+                        {
+                            model: models.Categories,
+                            as: 'categories'
+                        }
+                    ]
+                },
+                {
+                    model: models.Categories,
+                    as: 'categories'
                 }
             ],
             where: {
@@ -21,6 +30,58 @@ export const getAllMenus = async () => {
         throw new Error("Error fetching menus");
     }
 };
+
+export const getDetailMenu = async (req) => {
+    try {
+        const url = req.params?.url;
+
+        let data = await models.Menu.findOne({
+            include: [
+                {
+                    model: models.Menu,
+                    as: 'subMenus',
+                    include: [
+                        {
+                            model: models.Categories,
+                            as: 'categories',
+                            include: [
+                                {
+                                    model: models.Product,
+                                    as: 'products'
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    model: models.Categories,
+                    as: 'categories',
+                    include: [
+                        {
+                            model: models.Product,
+                            as: 'products'
+                        }
+                    ]
+                }
+            ],
+            where: {
+                url: url
+            }
+        });
+        let menuReferent = [];
+        if (data && data.parent_id) {
+            menuReferent = await models.Menu.findAll({
+                where: {
+                    parent_id: data.parent_id
+                }
+            });
+        }
+        return { ...data.toJSON(), menuReferent };
+    } catch (error) {
+        throw new Error("Error fetching menus");
+    }
+};
+
 export const createMenu = async (menuData) => {
     const { name, url, parent_id } = menuData;
 
@@ -84,7 +145,7 @@ export const isUniqueName = async (name) => {
     }
     return Promise.resolve();
 };
-export const isUniqueNameUpdate = async (name,{ req }) => {
+export const isUniqueNameUpdate = async (name, { req }) => {
     const menuId = req.params.id;
     const menu = await models.Menu.findAll({
         where: {
@@ -101,7 +162,7 @@ export const isUniqueNameUpdate = async (name,{ req }) => {
     }
     return Promise.resolve();
 };
-export const isUniqueUrlUpdate = async (url,{ req }) => {
+export const isUniqueUrlUpdate = async (url, { req }) => {
     const menuId = req.params.id;
     const menu = await models.Menu.findAll({
         where: {

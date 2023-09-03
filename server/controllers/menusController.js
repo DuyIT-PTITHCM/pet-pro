@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import { coreResponse } from "../lib/coreResponse.js";
-import { createMenu, getAllMenus, updateMenu, deleteMenu } from "../repositories/menuRepository.js";
+import { createMenu, getAllMenus, updateMenu, deleteMenu, getDetailMenu } from "../repositories/menuRepository.js";
 
 export const index = async (req, res) => {
     try {
@@ -10,6 +10,18 @@ export const index = async (req, res) => {
         coreResponse(res, 500, "Error fetching menus from controller", error);
     }
 };
+
+export const show = async (req, res) => {
+    
+    try {
+        const data = await getDetailMenu(req);
+        coreResponse(res, 200, "Success", data);
+    } catch (error) {
+        console.log(error);
+        coreResponse(res, 500, "Error fetching menus from controller", error);
+    }
+};
+
 export const store = async (req, res) => {
     try {
         const validationErrors = validationResult(req);
