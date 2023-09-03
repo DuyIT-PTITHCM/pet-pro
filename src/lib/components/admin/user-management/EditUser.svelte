@@ -90,7 +90,6 @@
                 user.birthDate = moment(new Date(user.birthDate)).format(
                     "yyyy-MM-DD"
                 );
-                console.log(user);
             })
             .catch(function (error) {
                 error;

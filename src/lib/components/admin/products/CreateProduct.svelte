@@ -4,8 +4,10 @@
   import { formatCurrency } from "$lib/Utils/accounting";
   import { loadingState } from "$lib/store/loading";
   import { toastErr } from "$lib/store/toastError";
+  import Icon from "@iconify/svelte";
   import axios from "axios";
   import { Fileupload, Input } from "flowbite-svelte";
+  import moment from "moment";
 
   export let products: any;
   export let title: string;
@@ -19,6 +21,13 @@
   };
   const categoryService = RepositoryFactory.get("categoryRepository");
   const productService = RepositoryFactory.get("productRepository");
+
+  if (mode == "modify") {
+    files = JSON.parse(products.images);
+    products.expirationDate = moment(new Date(products.expirationDate)).format(
+      "yyyy-MM-DD"
+    );
+  }
 
   // upload images
   async function handleFileInputChange(event: any) {
@@ -50,6 +59,10 @@
     products.images = JSON.stringify(files);
     return productService.post(products);
   }
+  async function handleSubmitUpdateProduct() {
+    products.images = JSON.stringify(files);
+    return productService.put(products.id, products);
+  }
   async function getCategories() {
     loadingState.set(true);
     const res = await categoryService.get(queryParams);
@@ -57,15 +70,40 @@
     loadingState.set(false);
   }
 
+  async function handleDeleteFile(path: String) {
+    try {
+      await axios.post(
+        `${BASE_API}/upload/delete`,
+        {
+          path: path,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+          },
+        }
+      );
+      files = files.filter((item) => item !== path);
+      if (mode == "modify") {
+        await handleSubmitUpdateProduct();
+      }
+    } catch (error) {
+      toastErr.set([
+        {
+          message: "File deleting failed",
+          type: "error",
+        },
+      ]);
+    }
+  }
+
   async function handleSubmit() {
+    loadingState.set(true);
     if (mode == "create") {
-      //call action create
-      loadingState.set(true);
       try {
         await handleSubmitCreateProduct();
         window.location.href = "/admin/products";
       } catch (error) {
-        loadingState.set(false);
         const errors = error?.response?.data?.errors;
         var toasts = errors?.map((element: any) => {
           return {
@@ -76,7 +114,14 @@
         toastErr.set(toasts);
       }
     } else if (mode == "modify") {
+      try {
+        const res = await handleSubmitUpdateProduct();
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
     }
+    loadingState.set(false);
   }
 
   getCategories();
@@ -134,7 +179,7 @@
         min="10000"
         placeholder="Input Original Price"
       />
-      <p class="text-[blue] dark:text-white   text-xs italic">
+      <p class="text-[blue] dark:text-white text-xs italic">
         Original Price : {formatCurrency(products.originalPrice)}
       </p>
     </div>
@@ -153,7 +198,7 @@
         min="10000"
         placeholder="Input Price"
       />
-      <p class="text-[blue] dark:text-white   text-xs italic">
+      <p class="text-[blue] dark:text-white text-xs italic">
         Price : {formatCurrency(products.price)}
       </p>
     </div>
@@ -208,7 +253,7 @@
         min="10000"
         placeholder="Input % Discount"
       />
-      <p class="text-[blue] dark:text-white   text-xs italic">
+      <p class="text-[blue] dark:text-white text-xs italic">
         Example : 10 = 10%
       </p>
     </div>
@@ -226,7 +271,7 @@
         type="text"
         placeholder="con-cho-co"
       />
-      <p class="text-[blue] dark:text-white   text-xs italic">
+      <p class="text-[blue] dark:text-white text-xs italic">
         Example : http://pet-pro/con-cho-co
       </p>
     </div>
@@ -315,9 +360,9 @@
       </label>
       <div class="relative">
         <Input
-          id="birthDate"
           type="date"
           class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+          min={new Date(Date.now()).toISOString().split("T")[0]}
           bind:value={products.expirationDate}
         />
       </div>
@@ -336,11 +381,19 @@
     />
     <div class="grid grid-cols-4 gap-[10px]">
       {#each files as path}
-        <img
-          class="object-contain w-full h-[400px] rounded-sm"
-          src={`http://103.142.26.42${path}`}
-          alt="avatar"
-        />
+        <div class="relative">
+          <img
+            class="object-cover w-full h-[300px] rounded"
+            src={`http://103.142.26.42${path}`}
+            alt="avatar"
+          />
+          <div
+            class="absolute top-0 right-0 cursor-pointer bg-white rounded text-red-500"
+            on:click={handleDeleteFile(path)}
+          >
+            <Icon icon="iwwa:delete" width="30" />
+          </div>
+        </div>
       {/each}
     </div>
   </div>
