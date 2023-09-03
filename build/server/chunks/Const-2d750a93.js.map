@@ -1,0 +1,1 @@
+{"version":3,"file":"Const-2d750a93.js","sources":["../../../.svelte-kit/adapter-node/chunks/Const.js"],"sourcesContent":["const BASE_API = \"http://103.142.26.42/api/v1.0\";\nexport {\n  BASE_API as B\n};\n"],"names":[],"mappings":"AAAK,MAAC,QAAQ,GAAG;;;;"}
