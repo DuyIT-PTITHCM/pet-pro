@@ -40,7 +40,7 @@
 		"dotenv": "^16.3.1",
 		"express-validator": "^7.0.1",
 		"flowbite": "^1.8.1",
-		"flowbite-svelte": "^0.40.2",
+		"flowbite-svelte": "^0.44.5",
 		"iconify-icon": "^1.0.8",
 		"js-cookie": "^3.0.5",
 		"jsonwebtoken": "^9.0.1",
