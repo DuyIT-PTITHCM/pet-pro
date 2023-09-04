@@ -148,7 +148,7 @@ const CreateProduct = create_ssr_component(($$result, $$props, $$bindings, slots
   let queryParams = { type: "product" };
   let conf = {
     plugins: "image",
-    toolbar1: "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+    toolbar1: "newdocument fullpage | blocks fontfamily fontsize  | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | heading",
     toolbar2: "image | media | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor code | insertdatetime preview | forecolor backcolor",
     toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
     menubar: false,
@@ -268,4 +268,4 @@ const CreateProduct = create_ssr_component(($$result, $$props, $$bindings, slots
 });
 
 export { CreateProduct as C, Tabs as T, TabItem as a };
-//# sourceMappingURL=CreateProduct-6b690afb.js.map
+//# sourceMappingURL=CreateProduct-feb4de4e.js.map
