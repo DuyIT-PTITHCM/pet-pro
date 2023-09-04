@@ -211,8 +211,11 @@ contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                     </div>
                 </div>
                 <!-- content show here  -->
-                <div class="py-[20px] flex justify-center">
-                    {product?.post?.content}
+                <div class="py-[20px] justify-center">
+                    <h3> Content Posts</h3><br>
+                    <div>
+                        {@html product?.post?.content}
+                    </div>
                 </div>
             </TabItem>
         </Tabs>
