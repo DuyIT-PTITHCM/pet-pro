@@ -30,7 +30,7 @@
     toolbar3:
       "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
     menubar: false,
-    images_upload_url: "/upload/editor",
+    images_upload_url: "/api/v1.0/upload/editor",
 
   };
   let text = "";
