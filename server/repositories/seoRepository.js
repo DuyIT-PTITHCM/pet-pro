@@ -87,6 +87,7 @@ export const updateSeo = async (seoId, seoData) => {
         seo.sitemapLastModified = sitemapLastModified;
 
         await seo.save();
+        return seo;
 
     } catch (error) {
         throw new Error("Error updating SEO");
