@@ -13,6 +13,7 @@
         TableHeadCell,
     } from "flowbite-svelte";
     import moment from "moment";
+    import { formatCurrency } from "$lib/Utils/accounting";
     title.set("Producs Management");
     description.set("Producs Management System");
 
@@ -179,11 +180,11 @@
                     </div>
                 </TableBodyCell>
                 <TableBodyCell>{item.description}</TableBodyCell>
-                <TableBodyCell>{item.originalPrice}</TableBodyCell>
-                <TableBodyCell>{item.price}</TableBodyCell>
+                <TableBodyCell>{formatCurrency(item.originalPrice)}</TableBodyCell>
+                <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
                 <TableBodyCell>{item.stockQuantity}</TableBodyCell>
                 <TableBodyCell>{item.origin}</TableBodyCell>
-                <TableBodyCell>{item.discount}</TableBodyCell>
+                <TableBodyCell>{item.discount +' %'}</TableBodyCell>
                 <TableBodyCell>{item.slug}</TableBodyCell>
                 <TableBodyCell
                     tdClass="line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"

@@ -1,0 +1,192 @@
+<script lang="ts">
+    import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
+    import { loadingState } from "$lib/store/loading";
+    import { toastErr } from "$lib/store/toastError";
+
+    export let seoData: any;
+
+    let seo = seoData.seo;
+
+    const seoService = RepositoryFactory.get("seoRepository");
+    async function handleSubmitCreateSeo() { 
+        const res = await seoService.post(seo);
+        seo = res.data.data;
+        seoData.seoId = seo.id;
+        seoData.seo = seo;
+        console.log(res.data.data);
+        console.log(seoData);
+        return res;
+    }
+    async function handleSubmitUpdateSeo() {
+        return seoService.put(seo.id, seo);
+    }
+
+    async function handleSubmit() {
+        loadingState.set(true);
+        if (!seo.id) {
+            try {
+                await handleSubmitCreateSeo();
+            } catch (error) {
+                const errors = error?.response?.data?.errors;
+                var toasts = errors?.map((element: any) => {
+                    return {
+                        message: element.path + "-" + element.msg,
+                        type: "error",
+                    };
+                });
+                toastErr.set(toasts);
+            }
+        } else {
+            try {
+                const res = await handleSubmitUpdateSeo();
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        loadingState.set(false);
+    }
+</script>
+
+<div
+    class="bg-white dark:bg-slate-800 dark:text-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-full"
+>
+    <h1 class="text-[34px] py-[10px] uppercase text-center font-bold">
+        seo edit
+    </h1>
+    <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-first-name"
+            >
+                Meta Title
+            </label>
+            <input
+                bind:value={seo.metaTitle}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                id="grid-first-name"
+                type="text"
+                placeholder="Input Meta Description"
+            />
+        </div>
+        <div class="md:w-1/2 px-3">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-last-name"
+            >
+                Meta Description
+            </label>
+            <input
+                bind:value={seo.metaDescription}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                id="grid-last-name"
+                type="text"
+                placeholder="Meta Description "
+            />
+        </div>
+    </div>
+    <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-first-name"
+            >
+                Keywords
+            </label>
+            <input
+                bind:value={seo.keywords}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                id="grid-first-name"
+                type="text"
+                placeholder="Input Meta keywords"
+            />
+        </div>
+        <div class="md:w-1/2 px-3">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-last-name"
+            >
+                Canonical Url
+            </label>
+            <input
+                bind:value={seo.canonicalUrl}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                id="grid-last-name"
+                type="text"
+                placeholder="Innput Canonical Url "
+            />
+        </div>
+    </div>
+    <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-first-name"
+            >
+                Robot MetaTags
+            </label>
+            <input
+                bind:value={seo.robotMetaTags}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                id="grid-first-name"
+                type="text"
+                placeholder="Input Meta Robot MetaTags"
+            />
+        </div>
+        <div class="md:w-1/2 px-3">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-last-name"
+            >
+                Open GraphTags
+            </label>
+            <input
+                bind:value={seo.openGraphTags}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                id="grid-last-name"
+                type="text"
+                placeholder="Innput Open GraphTags "
+            />
+        </div>
+    </div>
+    <div class="-mx-3 md:flex mb-6">
+        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-first-name"
+            >
+                Structured Data
+            </label>
+            <input
+                bind:value={seo.structuredData}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                id="grid-first-name"
+                type="text"
+                placeholder="Input Meta Structured Data"
+            />
+        </div>
+        <div class="md:w-1/2 px-3">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-last-name"
+            >
+                Sitemap Frequency
+            </label>
+            <input
+                bind:value={seo.sitemapFrequency}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                id="grid-last-name"
+                type="text"
+                placeholder="Innput Sitemap Frequency "
+            />
+        </div>
+    </div>
+    <div class="flex justify-center items-center relative bottom-0">
+        <div class="btn-signup w-fit">
+            <button
+                class=" bg-black text-white border border-black-500 hover:border-transparent rounded px-[80px] py-[10px]"
+                on:click={handleSubmit}>Submit</button
+            >
+        </div>
+    </div>
+</div>

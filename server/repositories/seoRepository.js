@@ -68,16 +68,27 @@ export const createSeo = async (seoData) => {
 
 export const updateSeo = async (seoId, seoData) => {
     try {
-        const [updatedRowsCount, [updatedSeo]] = await models.Seo.update(seoData, {
-            where: { id: seoId },
-            returning: true,
-        });
+        const { metaTitle, metaDescription, keywords, canonicalUrl, robotMetaTags, openGraphTags, structuredData, sitemapPriority, sitemapFrequency, sitemapLastModified } = seoData;
+        const seo = await models.Seo.findByPk(seoId);
 
-        if (updatedRowsCount === 0) {
+        if (!seo) {
             throw new Error('SEO not found');
         }
 
-        return updatedSeo;
+        seo.metaTitle = metaTitle;
+        seo.metaDescription = metaDescription;
+        seo.keywords = keywords;
+        seo.canonicalUrl = canonicalUrl;
+        seo.robotMetaTags = robotMetaTags;
+        seo.openGraphTags = openGraphTags;
+        seo.structuredData = structuredData;
+        seo.sitemapPriority = sitemapPriority;
+        seo.sitemapFrequency = sitemapFrequency;
+        seo.sitemapLastModified = sitemapLastModified;
+
+        await seo.save();
+        return seo;
+
     } catch (error) {
         throw new Error("Error updating SEO");
     }

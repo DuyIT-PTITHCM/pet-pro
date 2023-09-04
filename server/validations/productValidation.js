@@ -37,7 +37,5 @@ export const updateProductValidation = [
     body('expirationDate').optional().isDate(),
     body('slug').notEmpty().isString().custom(isUniqueSlugUpdate),
     body('editedBy').notEmpty().isInt(),
-    body('seoId').optional().isInt(),
-    body('postId').optional().isInt(),
     body('categoryId').notEmpty().isInt()
 ];

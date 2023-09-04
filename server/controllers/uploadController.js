@@ -5,6 +5,8 @@ import multer from 'multer';
 import { models } from '../models/index.js';
 import { coreResponse } from '../lib/coreResponse.js';
 
+const folder = 'static';
+
 const storage = multer.diskStorage({
     destination: async (req, file, cb) => {
         const uploadDir = 'static/images/';
@@ -40,9 +42,27 @@ export const uploadFileAndSaveToDatabase = [
                 path: filePath
             });
 
-            return coreResponse(res,200,"File uploaded and saved successfully",newFile);
+            return coreResponse(res, 200, "File uploaded and saved successfully", newFile);
         } catch (error) {
-            return coreResponse(res,200,"Error uploading file",error);
+            return coreResponse(res, 200, "Error uploading file", error);
         }
     }
 ];
+
+export const deleteFile = async (req, res) => {
+    const { path } = req.body;
+    try {
+        await fs.access(folder + path);
+
+        await fs.unlink(folder + path);
+
+        await models.Storage.destroy({
+            where: { path: path }
+        })
+        return coreResponse(res, 200, "File deleted and saved successfully", path);
+    } catch (error) {
+        return coreResponse(res, 200, "Error deleting file", error);
+    }
+}
+
+

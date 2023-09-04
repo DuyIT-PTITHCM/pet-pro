@@ -3,16 +3,37 @@
     import { loadingState } from "./../../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { Tabs, TabItem } from "flowbite-svelte";
+    import CreateProduct from "$lib/components/admin/products/CreateProduct.svelte";
 
     const productService = RepositoryFactory.get("productRepository");
     let product: any;
     let host = "http://103.142.26.42/";
+    const mode = "modify";
+    let products = {
+        productName: null,
+        description: null,
+        price: null,
+        originalPrice: null,
+        stockQuantity: null,
+        origin: null,
+        notes: null,
+        type: null,
+        status: null,
+        discount: null,
+        slug: null,
+        createdBy: 1,
+        editedBy: 1,
+        categoryId: null,
+        images: "",
+        expirationDate: null,
+    };
     export let data;
 
     async function productDetail() {
         loadingState.set(true);
         product = await productService.show(data?.id);
         product = product.data.data;
+        products = product;
         loadingState.set(false);
     }
     function convertImageJsonToArray(json) {
@@ -198,11 +219,7 @@ contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
     </div>
     </TabItem>
     <TabItem title="Edit {product?.productName}">
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-            <b>Settings:</b>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <CreateProduct mode={mode} products={products} title="Edit Products"/>
     </TabItem>
 </Tabs>
 <style>
