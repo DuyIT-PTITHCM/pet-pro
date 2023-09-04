@@ -24,7 +24,7 @@
   let conf = {
     plugins: "image",
     toolbar1:
-      "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+      "newdocument fullpage | blocks fontfamily fontsize  | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | heading",
     toolbar2:
       "image | media | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor code | insertdatetime preview | forecolor backcolor",
     toolbar3:
