@@ -9,6 +9,7 @@
   import { Fileupload, Input, TabItem, Tabs } from "flowbite-svelte";
   import moment from "moment";
   import CreateSeo from "../seo/CreateSeo.svelte";
+  import Editor from "@tinymce/tinymce-svelte";
 
   export let products: any;
   export let title: string;
@@ -20,6 +21,19 @@
   let queryParams = {
     type: "product",
   };
+  let conf = {
+    plugins: "image",
+    toolbar1:
+      "newdocument fullpage | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+    toolbar2:
+      "image | media | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor code | insertdatetime preview | forecolor backcolor",
+    toolbar3:
+      "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+    menubar: false,
+    images_upload_url: "/upload/editor",
+
+  };
+  let text = "";
   let seo = {
     id: null,
     metaTitle: null,
@@ -44,8 +58,7 @@
     products.expirationDate = moment(new Date(products.expirationDate)).format(
       "yyyy-MM-DD"
     );
-    products.seo =  products.seo ? products.seo : seo;
-    console.log(seo);
+    products.seo = products.seo ? products.seo : seo;
   }
 
   // upload images
@@ -437,11 +450,19 @@
       </TabItem>
       <TabItem title="Posts">
         <div
-          class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5"
+          class="grid 2xl:grid-cols-1 xl:grid-cols-1 lg:grid-cols-1 md:grid-cols-1 sm:grid-cols-1 grid-cols-1 gap-5"
         >
-          <div class=" text-gray-500 dark:text-gray-300">
-            <b class="block my-[10px]">Posts Edit</b><br />
-          </div>
+          <Editor
+            apiKey="4zwho6iauuup5m7zl61gs294kuht6k9pzbwz87v7hnpkhh10"
+            id="uuid"
+            inline="false"
+            disabled="false"
+            {conf}
+            modelEvents="input change undo redo"
+            bind:value={text}
+            text="readonly-text-output"
+          />
+          <h1>{@html text}</h1>
         </div></TabItem
       >
     </Tabs>
