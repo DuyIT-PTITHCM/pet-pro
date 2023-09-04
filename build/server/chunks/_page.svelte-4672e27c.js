@@ -1,5 +1,5 @@
 import { c as create_ssr_component, v as validate_component } from './ssr-4b2a575b.js';
-import { C as CreateProduct } from './CreateProduct-65abad5f.js';
+import { C as CreateProduct } from './CreateProduct-6b690afb.js';
 import './utils-5762d6f4.js';
 import './RepositoryFactory-7d37287f.js';
 import './cookieUtils-3c057440.js';
@@ -42,4 +42,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-1b46e6ca.js.map
+//# sourceMappingURL=_page.svelte-4672e27c.js.map

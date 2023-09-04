@@ -2,7 +2,7 @@ import { c as create_ssr_component, v as validate_component, e as escape, b as e
 import { f as formatCurrency } from './accounting-d72f8257.js';
 import { l as loadingState } from './loading-c8f33dc7.js';
 import { R as RepositoryFactory } from './RepositoryFactory-7d37287f.js';
-import { T as Tabs, a as TabItem, C as CreateProduct } from './CreateProduct-65abad5f.js';
+import { T as Tabs, a as TabItem, C as CreateProduct } from './CreateProduct-6b690afb.js';
 import './utils-5762d6f4.js';
 import 'accounting';
 import './index-f06f6a44.js';
@@ -121,4 +121,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-26a8b52d.js.map
+//# sourceMappingURL=_page.svelte-9ab96a39.js.map

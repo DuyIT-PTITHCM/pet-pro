@@ -152,7 +152,7 @@ const CreateProduct = create_ssr_component(($$result, $$props, $$bindings, slots
     toolbar2: "image | media | cut copy paste | searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor code | insertdatetime preview | forecolor backcolor",
     toolbar3: "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
     menubar: false,
-    images_upload_url: "/upload/editor"
+    images_upload_url: "/api/v1.0/upload/editor"
   };
   let text = "";
   let seo = {
@@ -268,4 +268,4 @@ const CreateProduct = create_ssr_component(($$result, $$props, $$bindings, slots
 });
 
 export { CreateProduct as C, Tabs as T, TabItem as a };
-//# sourceMappingURL=CreateProduct-65abad5f.js.map
+//# sourceMappingURL=CreateProduct-6b690afb.js.map
