@@ -38,7 +38,7 @@ inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gra
 contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
     <TabItem open title="{product?.productName}">
         <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
-            <div class="grid md:grid-cols-2 grid-cols-1 text-gray-500 dark:text-gray-300 items-center text-lg">
+            <div class="grid md:grid-cols-2 grid-cols-1 text-gray-500 dark:text-gray-300 text-lg">
                 <div>
                     <p class="border-b p-2 m-4">
                         Product Name : {product?.productName}
