@@ -6,8 +6,9 @@
   import { toastErr } from "$lib/store/toastError";
   import Icon from "@iconify/svelte";
   import axios from "axios";
-  import { Fileupload, Input } from "flowbite-svelte";
+  import { Fileupload, Input, TabItem, Tabs } from "flowbite-svelte";
   import moment from "moment";
+  import CreateSeo from "../seo/CreateSeo.svelte";
 
   export let products: any;
   export let title: string;
@@ -19,6 +20,22 @@
   let queryParams = {
     type: "product",
   };
+  let seo = {
+    id: null,
+    metaTitle: null,
+    metaDescription: null,
+    keywords: null,
+    canonicalUrl: null,
+    robotMetaTags: null,
+    openGraphTags: null,
+    structuredData: null,
+    sitemapPriority: null,
+    sitemapFrequency: null,
+    sitemapLastModified: null,
+    referenceId: mode == "modify" ? products.id : null,
+    reference: "product",
+  };
+  let dataSeo = products;
   const categoryService = RepositoryFactory.get("categoryRepository");
   const productService = RepositoryFactory.get("productRepository");
 
@@ -27,6 +44,8 @@
     products.expirationDate = moment(new Date(products.expirationDate)).format(
       "yyyy-MM-DD"
     );
+    products.seo =  products.seo ? products.seo : seo;
+    console.log(seo);
   }
 
   // upload images
@@ -379,7 +398,7 @@
       on:change={handleFileInputChange}
       class="w-24 py-[10px] bg-white"
     />
-    <div class="grid grid-cols-4 gap-[10px]">
+    <div class="grid grid-cols-1 xl:grid-cols-4 gap-[10px] py-[20px]">
       {#each files as path}
         <div class="relative">
           <img
@@ -405,4 +424,26 @@
       >
     </div>
   </div>
+  {#if mode == "modify"}
+    <Tabs
+      contentClass="p-4 bg-gray-50 dark:bg-slate-900 rounded-b-lg"
+      activeClasses="p-2 text-primary-500 bg-gray-100 rounded-t-lg dark:bg-slate-900 dark:text-primary-500"
+      inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+    >
+      <TabItem open title="Seo">
+        <div class="grid grid-cols-1 gap-5">
+          <CreateSeo bind:seoData={products} />
+        </div>
+      </TabItem>
+      <TabItem title="Posts">
+        <div
+          class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5"
+        >
+          <div class=" text-gray-500 dark:text-gray-300">
+            <b class="block my-[10px]">Posts Edit</b><br />
+          </div>
+        </div></TabItem
+      >
+    </Tabs>
+  {/if}
 </div>
