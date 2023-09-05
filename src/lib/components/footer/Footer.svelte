@@ -120,8 +120,12 @@
     ]
 </script>
 
-<footer class="bg-cover bg-fixed" style="background-image: url('https://cdn2.vectorstock.com/i/1000x1000/74/91/pets-line-icons-on-black-background-vector-5917491.jpg'); min-height: 400px;">
-    <div  class="bg-black bg-opacity-40" style="background-image: url('https://www.icegif.com/wp-content/uploads/2023/02/icegif-519.gif'); background-position: center; background-repeat: no-repeat; background-size: cover; width: inherit; height: inherit;">
+
+<footer class="bg-fixed relative overflow-x-hidden" style="background-image: url('/images/homepage/bgne.jpg'); min-height: 400px;">
+    <div class="absolute w-full h-full animate-marquee bg-fixed bg-contain" style="background-image: url('/images/homepage/bgne.jpg');"></div>
+    <div class="absolute w-full h-full animate-marquee2 bg-fixed bg-contain" style="background-image: url('/images/homepage/bgne.jpg');"></div>
+    <!-- https://www.icegif.com/wp-content/uploads/2023/02/icegif-519.gif -->
+    <div  class="z-10 relative bg-black bg-opacity-40" style="background-image: url('https://media.tenor.com/oBgN468I5QcAAAAi/scared-run.gif'); background-position: center; background-repeat: repeat; background-size: contain; width: inherit; height: inherit;">
         <div class="flex items-center justify-center flex-col bg-opacity-30 bg-black relative w-full h-full">
             <div class="footer-info mb-20 mt-10 grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 xl:w-4/5 md:w-4/5 sm:mx-4 gap-4">
                 <div class="bg-black bg-opacity-80 w-full rounded-lg p-5 xl:col-span-2 md:col-span-3 sm:col-span-1 grid grid-cols-1">
