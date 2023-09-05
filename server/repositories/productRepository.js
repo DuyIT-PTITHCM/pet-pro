@@ -30,9 +30,13 @@ export const getAllProducts = async (page = 1, perPage = 10, filters = {}) => {
     }
 };
 
-export const showProduct = async (id) => {
+export const showProduct = async (req) => {
+    const id = req.params.id;
+    const slug = req.params.slug;
+    
     try {
-        return await models.Product.findByPk(id, {
+        const product = await models.Product.findOne({
+            where: id ? { id } : { slug },
             include: [
                 {
                     model: models.Seo,
@@ -48,11 +52,17 @@ export const showProduct = async (id) => {
                 },
             ],
         });
+        
+        if (!product) {
+            throw new Error("Product not found");
+        }
+
+        return product;
     } catch (error) {
         throw new Error("Error showing product");
     }
-
 };
+
 
 export const createProduct = async (productData) => {
     try {
