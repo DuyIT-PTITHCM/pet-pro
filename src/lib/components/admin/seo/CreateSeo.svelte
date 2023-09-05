@@ -6,9 +6,42 @@
     export let seoData: any;
 
     let seo = seoData.seo;
+    let host = "http://103.142.26.42";
+    function convertImageJsonToArray(json) {
+        if (json) {
+            return JSON.parse(json);
+        }
+        return [];
+    }
 
+    let images = convertImageJsonToArray(seoData.images);
+    let image = images ? images[0] : "";
+
+    // Chèn dữ liệu động
     const seoService = RepositoryFactory.get("seoRepository");
-    async function handleSubmitCreateSeo() { 
+    async function handleSubmitCreateSeo() {
+        seo.structuredData = {
+            "@context": `${host}`,
+            "@type": "sản phẩm ",
+            name: `${seoData.name}`,
+            description: `${seo.metaDescription}`,
+            image: `${image}`,
+            brand: {
+                "@type": "Thương Hiệu",
+                name: "Pet One",
+            },
+            offers: {
+                "@type": "Offer",
+                price: `${seoData.price}`,
+                priceCurrency: "VNĐ",
+                availability: "http://103.142.26.42",
+                seller: {
+                    "@type": "Organization",
+                    name: "Pet One",
+                },
+            },
+        };
+        console.log(seo);
         const res = await seoService.post(seo);
         seo = res.data.data;
         seoData.seoId = seo.id;
@@ -18,6 +51,29 @@
         return res;
     }
     async function handleSubmitUpdateSeo() {
+        let structuredData = {
+            "@context": `${host}`,
+            "@type": "sản phẩm ",
+            name: `${seoData.name}`,
+            description: `${seo.metaDescription}`,
+            image: `${image}`,
+            brand: {
+                "@type": "Thương Hiệu",
+                name: "Pet One",
+            },
+            offers: {
+                "@type": "Offer",
+                price: `${seoData.price}`,
+                priceCurrency: "VNĐ",
+                availability: "http://103.142.26.42",
+                seller: {
+                    "@type": "Organization",
+                    name: "Pet One",
+                },
+            },
+        };
+        seo.structuredData = JSON.stringify(structuredData);
+        console.log(seo);
         return seoService.put(seo.id, seo);
     }
 
@@ -150,21 +206,6 @@
         </div>
     </div>
     <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-first-name"
-            >
-                Structured Data
-            </label>
-            <input
-                bind:value={seo.structuredData}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                id="grid-first-name"
-                type="text"
-                placeholder="Input Meta Structured Data"
-            />
-        </div>
         <div class="md:w-1/2 px-3">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
