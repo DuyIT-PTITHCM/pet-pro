@@ -2,7 +2,7 @@
     import { formatCurrency } from "$lib/Utils/accounting";
     import { loadingState } from "./../../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { Tabs, TabItem } from "flowbite-svelte";
+    import { Tabs, TabItem, DeviceMockup } from "flowbite-svelte";
     import CreateProduct from "$lib/components/admin/products/CreateProduct.svelte";
 
     const productService = RepositoryFactory.get("productRepository");
@@ -173,7 +173,10 @@ contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                             >Preview</b
                         ><br />
 
-                        developing....
+                        <DeviceMockup device="ios">
+                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-light.png" class="dark:hidden w-[272px] h-[572px]" alt="ios example 1" />
+                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-dark.png" class="hidden dark:block w-[272px] h-[572px]" alt="ios example 2" />
+                        </DeviceMockup>
                     </div>
                 </div>
             </TabItem>

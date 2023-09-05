@@ -3,6 +3,7 @@
     import { Badge, Button, Card, Carousel, Rating } from 'flowbite-svelte';
     import { BASE_API } from "$lib/Const";
     import Icon from '@iconify/svelte';
+    import Products from "$lib/components/admin/products/Products.svelte";
     export let data;
     let host = "http://103.142.26.42";
 
@@ -72,34 +73,7 @@
                         {#each data?.data?.categories as category}
                         <h3 id="{category.id}" class="dark:text-white uppercase text-xl font-bold flex items-center p-3">category {category.categoryName}</h3>
                         <div class="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-                            {#each category.products as product}
-                                <div class="relative">
-                                    {#if product.discount > 0}
-                                        <div class="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 rounded-tr-md rounded-bl-2xl border-l-8 border-t-4 border-red-600 -ml-2 transform z-10 animate-bounce">
-                                            {product.discount}% discount
-                                        </div>
-                                    {/if}
-                                    <Card class="min-w-full" padding="none">
-                                        <Carousel class="w-full" images={getProductImage(convertImageJsonToArray(product?.images))} slideClass="w-full" imgClass="w-full" showCaptions={false} showThumbs={false}/>
-                                        <div class="px-5 pb-5">
-                                            <a href="{BASE_API + "/products/" + product.id}">
-                                                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4">{product?.productName}</h5>
-                                                <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px]">{product.description}</p>
-                                            </a>
-                                            <Rating rating={4} size={24} class="mt-2.5 mb-5">
-                                                <Badge slot="text" class="ml-3">4</Badge>
-                                            </Rating>
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(product?.price)}</span>
-                                                <div class="flex">
-                                                    <Button class="mr-1" href="/">Buy now</Button>
-                                                    <Button href="/">Add cart</Button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                </div>
-                            {/each}
+                            <Products products={category.products}/>
                             </div>
                         {/each}
                     </div>
@@ -116,32 +90,7 @@
                         {#each submenu?.categories as category}
                         <h3 id="{category.id}" class="dark:text-white uppercase text-xl font-bold flex items-center p-3">category {category.categoryName}</h3>
                             <div class="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
-                                {#each category.products as product}
-                                <div class="relative">
-                                    {#if product.discount > 0}
-                                        <div class="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 rounded-tr-md rounded-bl-2xl border-l-8 border-t-4 border-red-600 -ml-2 transform z-10 animate-bounce">
-                                            {product.discount}% discount
-                                        </div>
-                                    {/if}
-                                    <Card class="min-w-full" padding="none">
-                                        <Carousel class="w-full" images={getProductImage(convertImageJsonToArray(product?.images))} slideClass="w-full" imgClass="w-full" showCaptions={false} showThumbs={false}/>
-                                        <div class="px-5 pb-5">
-                                            <a href="{BASE_API + "/products/" + product.id}">
-                                                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4">{product?.productName}</h5>
-                                                <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px]">{product.description}</p>
-                                            </a>
-                                            <Rating rating={4} size={24} class="mt-2.5 mb-5"/>
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(product?.price)}</span>
-                                                <div class="flex">
-                                                    <Button class="mr-1" href="/">Buy now</Button>
-                                                    <Button href="/">Add cart</Button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                </div>
-                                {/each}
+                                <Products products={category.products}/>
                             </div>
                         {/each}
                     </div>
