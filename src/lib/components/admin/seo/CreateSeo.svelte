@@ -41,20 +41,17 @@
                 },
             },
         };
-        console.log(seo);
         const res = await seoService.post(seo);
         seo = res.data.data;
         seoData.seoId = seo.id;
         seoData.seo = seo;
-        console.log(res.data.data);
-        console.log(seoData);
         return res;
     }
     async function handleSubmitUpdateSeo() {
         let structuredData = {
             "@context": `${host}`,
             "@type": "sản phẩm ",
-            name: `${seoData.name}`,
+            name: `${seoData.productName}`,
             description: `${seo.metaDescription}`,
             image: `${image}`,
             brand: {
@@ -73,7 +70,6 @@
             },
         };
         seo.structuredData = JSON.stringify(structuredData);
-        console.log(seo);
         return seoService.put(seo.id, seo);
     }
 
