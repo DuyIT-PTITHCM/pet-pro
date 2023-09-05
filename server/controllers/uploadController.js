@@ -65,4 +65,22 @@ export const deleteFile = async (req, res) => {
     }
 }
 
-
+export const uploadFileEditor = [
+    upload.single('file'),
+    async (req, res) => {
+        try {
+            const { filename, originalname, mimetype, size } = req.file;
+            const filePath = path.join('/images', req.file.filename);
+            await models.Storage.create({
+                name: filename,
+                description: originalname,
+                type: mimetype,
+                size: size,
+                path: filePath
+            });
+            return res.status(200).json({location: filePath});
+        } catch (error) {
+            return coreResponse(res, 200, "Error uploading file", error);
+        }
+    }
+];

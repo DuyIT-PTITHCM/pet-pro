@@ -10,24 +10,25 @@ return {
 	assets: new Set(["favicon.ico","favicon.png","images/avt.png","images/home-panner/1.jpg","images/home-panner/2.jpg","images/home-panner/3.jpg","images/home-panner/4.jpg","images/home-panner/5.jpg","images/home-panner/6.jpg","images/homepage/benefit.jpg","images/homepage/benefit2.jpg","images/homepage/lientsaybg.jpg","images/homepage/ourteam.jpg","images/loginbg.jpg","images/logo.png","images/signupbg.jpg"]),
 	mimeTypes: {".ico":"image/vnd.microsoft.icon",".png":"image/png",".jpg":"image/jpeg"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.e69cb2b5.js","app":"_app/immutable/entry/app.8fbb496c.js","imports":["_app/immutable/entry/start.e69cb2b5.js","_app/immutable/chunks/scheduler.45014ca4.js","_app/immutable/chunks/singletons.4c44ee49.js","_app/immutable/chunks/index.b0656eab.js","_app/immutable/chunks/parse.bee59afc.js","_app/immutable/entry/app.8fbb496c.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.45014ca4.js","_app/immutable/chunks/index.f7d6e5c4.js"],"stylesheets":[],"fonts":[]},
+		client: {"start":"_app/immutable/entry/start.44d52ece.js","app":"_app/immutable/entry/app.9e25eb85.js","imports":["_app/immutable/entry/start.44d52ece.js","_app/immutable/chunks/scheduler.aa61743c.js","_app/immutable/chunks/singletons.37a6b0d2.js","_app/immutable/chunks/index.138245f1.js","_app/immutable/chunks/parse.bee59afc.js","_app/immutable/entry/app.9e25eb85.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.aa61743c.js","_app/immutable/chunks/index.8779bb2d.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
-			__memo(() => import('./chunks/0-cd8db9d4.js')),
-			__memo(() => import('./chunks/1-6621e741.js')),
-			__memo(() => import('./chunks/2-14ea27a0.js')),
-			__memo(() => import('./chunks/3-74683a9e.js')),
-			__memo(() => import('./chunks/4-66235154.js')),
-			__memo(() => import('./chunks/5-9cc11c50.js')),
-			__memo(() => import('./chunks/6-64320197.js')),
-			__memo(() => import('./chunks/7-307b4d83.js')),
-			__memo(() => import('./chunks/8-67c93bdb.js')),
-			__memo(() => import('./chunks/9-17d216a7.js')),
-			__memo(() => import('./chunks/10-8f787924.js')),
-			__memo(() => import('./chunks/11-ecb9fcf9.js')),
-			__memo(() => import('./chunks/12-faea2dc5.js')),
-			__memo(() => import('./chunks/13-6a216f55.js')),
-			__memo(() => import('./chunks/14-707518e5.js')),
-			__memo(() => import('./chunks/15-a655b6ae.js'))
+			__memo(() => import('./chunks/0-e8df7f7e.js')),
+			__memo(() => import('./chunks/1-a9b2467a.js')),
+			__memo(() => import('./chunks/2-b684d7a4.js')),
+			__memo(() => import('./chunks/3-c6e277dd.js')),
+			__memo(() => import('./chunks/4-ec9cda58.js')),
+			__memo(() => import('./chunks/5-81ca9666.js')),
+			__memo(() => import('./chunks/6-a015a327.js')),
+			__memo(() => import('./chunks/7-56aa44ae.js')),
+			__memo(() => import('./chunks/8-f1d94bf4.js')),
+			__memo(() => import('./chunks/9-75c1d7e8.js')),
+			__memo(() => import('./chunks/10-82f464f6.js')),
+			__memo(() => import('./chunks/11-8ed9230b.js')),
+			__memo(() => import('./chunks/12-897d2423.js')),
+			__memo(() => import('./chunks/13-97976c82.js')),
+			__memo(() => import('./chunks/14-6b47bbf2.js')),
+			__memo(() => import('./chunks/15-58783bfa.js')),
+			__memo(() => import('./chunks/16-0e7171b2.js'))
 		],
 		routes: [
 			{
@@ -41,63 +42,70 @@ return {
 				id: "/(dasboard)/admin",
 				pattern: /^\/admin\/?$/,
 				params: [],
-				page: { layouts: [0,3,], errors: [1,,], leaf: 7 },
+				page: { layouts: [0,3,], errors: [1,,], leaf: 8 },
 				endpoint: null
 			},
 			{
 				id: "/(dasboard)/admin/menu-management",
 				pattern: /^\/admin\/menu-management\/?$/,
 				params: [],
-				page: { layouts: [0,3,], errors: [1,,], leaf: 8 },
+				page: { layouts: [0,3,], errors: [1,,], leaf: 9 },
 				endpoint: null
 			},
 			{
 				id: "/(dasboard)/admin/products",
 				pattern: /^\/admin\/products\/?$/,
 				params: [],
-				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 9 },
+				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 10 },
 				endpoint: null
 			},
 			{
 				id: "/(dasboard)/admin/products/create",
 				pattern: /^\/admin\/products\/create\/?$/,
 				params: [],
-				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 11 },
+				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 12 },
 				endpoint: null
 			},
 			{
 				id: "/(dasboard)/admin/products/[id]",
 				pattern: /^\/admin\/products\/([^/]+?)\/?$/,
 				params: [{"name":"id","optional":false,"rest":false,"chained":false}],
-				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 10 },
+				page: { layouts: [0,3,4,], errors: [1,,,], leaf: 11 },
 				endpoint: null
 			},
 			{
 				id: "/(dasboard)/admin/user-management",
 				pattern: /^\/admin\/user-management\/?$/,
 				params: [],
-				page: { layouts: [0,3,], errors: [1,,], leaf: 12 },
+				page: { layouts: [0,3,], errors: [1,,], leaf: 13 },
 				endpoint: null
 			},
 			{
 				id: "/login",
 				pattern: /^\/login\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 13 },
+				page: { layouts: [0,], errors: [1,], leaf: 14 },
+				endpoint: null
+			},
+			{
+				id: "/(app)/san-pham/[slug]",
+				pattern: /^\/san-pham\/([^/]+?)\/?$/,
+				params: [{"name":"slug","optional":false,"rest":false,"chained":false}],
+				page: { layouts: [0,2,], errors: [1,,], leaf: 7 },
 				endpoint: null
 			},
 			{
 				id: "/signup",
 				pattern: /^\/signup\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 14 },
+				page: { layouts: [0,], errors: [1,], leaf: 15 },
 				endpoint: null
 			},
 			{
 				id: "/upload",
 				pattern: /^\/upload\/?$/,
 				params: [],
-				page: { layouts: [0,], errors: [1,], leaf: 15 },
+				page: { layouts: [0,], errors: [1,], leaf: 16 },
 				endpoint: null
 			},
 			{

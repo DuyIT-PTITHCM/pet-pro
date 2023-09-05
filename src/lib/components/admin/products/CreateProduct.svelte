@@ -9,6 +9,7 @@
   import { Fileupload, Input, TabItem, Tabs } from "flowbite-svelte";
   import moment from "moment";
   import CreateSeo from "../seo/CreateSeo.svelte";
+    import CreatePost from "../posts/CreatePost.svelte";
 
   export let products: any;
   export let title: string;
@@ -20,6 +21,7 @@
   let queryParams = {
     type: "product",
   };
+  let text = "";
   let seo = {
     id: null,
     metaTitle: null,
@@ -35,7 +37,14 @@
     referenceId: mode == "modify" ? products.id : null,
     reference: "product",
   };
-  let dataSeo = products;
+  let post = {
+    id: null,
+    title: "",
+    content: "",
+    author: "Admin Duy Dep Trai",
+    referenceId: mode == "modify" ? products.id : null,
+    reference: "product",
+  };
   const categoryService = RepositoryFactory.get("categoryRepository");
   const productService = RepositoryFactory.get("productRepository");
 
@@ -44,8 +53,8 @@
     products.expirationDate = moment(new Date(products.expirationDate)).format(
       "yyyy-MM-DD"
     );
-    products.seo =  products.seo ? products.seo : seo;
-    console.log(seo);
+    products.seo = products.seo ? products.seo : seo;
+    products.post = products.post ? products.post : post;
   }
 
   // upload images
@@ -436,13 +445,10 @@
         </div>
       </TabItem>
       <TabItem title="Posts">
-        <div
-          class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5"
-        >
-          <div class=" text-gray-500 dark:text-gray-300">
-            <b class="block my-[10px]">Posts Edit</b><br />
-          </div>
-        </div></TabItem
+        <div class="grid grid-cols-1 gap-5">
+          <CreatePost bind:postData={products} />
+        </div>
+        </TabItem
       >
     </Tabs>
   {/if}

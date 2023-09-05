@@ -23,7 +23,7 @@ export const index = async (req, res) => {
 
 export const show = async (req, res) => {
     try {
-        const data = await showProduct(req.params?.id);
+        const data = await showProduct(req);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching products from controller", error);

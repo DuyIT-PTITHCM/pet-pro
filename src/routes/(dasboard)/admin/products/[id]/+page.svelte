@@ -95,7 +95,7 @@ contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                     </p>
                     {#if product?.type != 'pet'}    
                     <p class="border-b p-2 m-4">
-                        Product Expiration Date : {product?.expirationDate}
+                        Product Expiration Date : {formatDate(product?.expirationDate)}
                     </p>
                     {/if}
                     <p class="border-b p-2 m-4">
@@ -158,7 +158,7 @@ contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                                     ?.sitemapFrequency}
                             </p>
                             <p class="border-b p-2 m-4">
-                                Structured Data : {product?.seo?.structuredData}
+                                Structured Data : {JSON.parse(product?.seo?.structuredData)}
                             </p>
                             <p class="border-b p-2 m-4">
                                 Created At : {formatDate(product?.seo?.createdAt)}
@@ -214,8 +214,11 @@ contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                     </div>
                 </div>
                 <!-- content show here  -->
-                <div class="py-[20px] flex justify-center">
-                    {product?.post?.content}
+                <div class="py-[20px] justify-center">
+                    <h3> Content Posts</h3><br>
+                    <div>
+                        {@html product?.post?.content}
+                    </div>
                 </div>
             </TabItem>
         </Tabs>
