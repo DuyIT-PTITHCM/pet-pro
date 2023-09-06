@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { loadingState } from "./../../store/loading.ts";
+  import { loadingState } from "./../../store/loading";
   import {
     Navbar,
     NavBrand,
@@ -14,20 +14,22 @@
     DropdownDivider,
     Modal,
     DarkMode,
+    Button,
   } from "flowbite-svelte";
   import LanguageSelect from "../LanguageSelect.svelte";
   import { loadTranslations, t } from "$lib/translations";
   import Icon from "@iconify/svelte";
   import axios from "axios";
   import { BASE_API } from "$lib/Const";
+  import { goto } from "$app/navigation";
   let btnClass =
     "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
 
   let menu: any[] = [
     {
-      name : 'Trang Chủ',
-      url: '/'
-    }
+      name: "Trang Chủ",
+      url: "/",
+    },
   ];
 
   loadingState.set(true);
@@ -96,11 +98,12 @@
       <NavUl {hidden}>
         {#each menu as item}
           <NavLi
-            href={item.url}
             active={item.active}
             on:click={() => {
               item.active = true;
               menu.filter((i) => i !== item).forEach((i) => (i.active = false));
+              const baseUrl = window.location.origin;
+              goto(`${baseUrl}/` + item.url);
             }}>{$t(item.name)}</NavLi
           >
         {/each}
