@@ -10,11 +10,11 @@ return {
 	assets: new Set(["favicon.ico","favicon.png","images/avt.png","images/home-panner/1.jpg","images/home-panner/2.jpg","images/home-panner/3.jpg","images/home-panner/4.jpg","images/home-panner/5.jpg","images/home-panner/6.jpg","images/homepage/benefit.jpg","images/homepage/benefit2.jpg","images/homepage/bgne.jpg","images/homepage/lientsaybg.jpg","images/homepage/ourteam.jpg","images/loginbg.jpg","images/logo.png","images/signupbg.jpg"]),
 	mimeTypes: {".ico":"image/vnd.microsoft.icon",".png":"image/png",".jpg":"image/jpeg"},
 	_: {
-		client: {"start":"_app/immutable/entry/start.c6dc0fae.js","app":"_app/immutable/entry/app.54a0d4ea.js","imports":["_app/immutable/entry/start.c6dc0fae.js","_app/immutable/chunks/scheduler.aa61743c.js","_app/immutable/chunks/singletons.938e15e8.js","_app/immutable/chunks/index.138245f1.js","_app/immutable/chunks/parse.bee59afc.js","_app/immutable/entry/app.54a0d4ea.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.aa61743c.js","_app/immutable/chunks/index.8779bb2d.js"],"stylesheets":[],"fonts":[]},
+		client: {"start":"_app/immutable/entry/start.29722b77.js","app":"_app/immutable/entry/app.be41a004.js","imports":["_app/immutable/entry/start.29722b77.js","_app/immutable/chunks/scheduler.aa61743c.js","_app/immutable/chunks/singletons.b0830564.js","_app/immutable/chunks/index.138245f1.js","_app/immutable/chunks/parse.bee59afc.js","_app/immutable/entry/app.be41a004.js","_app/immutable/chunks/preload-helper.a4192956.js","_app/immutable/chunks/scheduler.aa61743c.js","_app/immutable/chunks/index.8779bb2d.js"],"stylesheets":[],"fonts":[]},
 		nodes: [
 			__memo(() => import('./chunks/0-e8df7f7e.js')),
-			__memo(() => import('./chunks/1-23edadfa.js')),
-			__memo(() => import('./chunks/2-6e0df630.js')),
+			__memo(() => import('./chunks/1-5bed4e1d.js')),
+			__memo(() => import('./chunks/2-181bc1f1.js')),
 			__memo(() => import('./chunks/3-2ab2fabf.js')),
 			__memo(() => import('./chunks/4-ec9cda58.js')),
 			__memo(() => import('./chunks/5-81ca9666.js')),

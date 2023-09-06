@@ -355,7 +355,7 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         )} ${validate_component(NavUl, "NavUl").$$render($$result, { hidden }, {}, {
           default: () => {
             return `${each(menu, (item) => {
-              return `${validate_component(NavLi, "NavLi").$$render($$result, { href: item.url, active: item.active }, {}, {
+              return `${validate_component(NavLi, "NavLi").$$render($$result, { active: item.active }, {}, {
                 default: () => {
                   return `${escape($t(item.name))}`;
                 }
@@ -599,4 +599,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-182b8392.js.map
+//# sourceMappingURL=_layout.svelte-38f9eef8.js.map
