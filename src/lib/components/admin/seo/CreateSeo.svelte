@@ -20,7 +20,7 @@
     // Chèn dữ liệu động
     const seoService = RepositoryFactory.get("seoRepository");
     async function handleSubmitCreateSeo() {
-        seo.structuredData = {
+        let structuredData = {
             "@context": `${host}`,
             "@type": "sản phẩm ",
             name: `${seoData.name}`,
@@ -41,6 +41,7 @@
                 },
             },
         };
+        seo.structuredData = JSON.stringify(structuredData);
         const res = await seoService.post(seo);
         seo = res.data.data;
         seoData.seoId = seo.id;
