@@ -123,7 +123,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                     }
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, { tdClass: "min-w-[180px]" }, {}, {
                     default: () => {
-                      return `<div class="grid grid-cols-4 gap-y-2 py-[2px]">${each(convertImageJsonToArray(item.images), (path, i) => {
+                      return `<div class="grid grid-cols-4 gap-y-[4px] py-[2px]">${each(convertImageJsonToArray(item.images), (path, i) => {
                         return `<div class="w-14 h-14 overflow-hidden bg-black rounded-[8px]"><img${add_attribute("src", !path ? "/images/logo.png" : `${host}/` + path, 0)} class="w-full h-full"${add_attribute("alt", item.name, 0)}> </div>`;
                       })}</div> `;
                     }
@@ -163,4 +163,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-eb82508c.js.map
+//# sourceMappingURL=_page.svelte-5c8a994c.js.map
