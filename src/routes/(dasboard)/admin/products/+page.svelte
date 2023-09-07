@@ -100,7 +100,7 @@
                 on:change={() => (isCheck = !isCheck)}
             /></TableHeadCell
         >
-        <TableHeadCell class="text-center" on:click={() => toggleSort("id")}
+        <TableHeadCell  class="text-center" on:click={() => toggleSort("id")}
             >Id</TableHeadCell
         >
         <TableHeadCell
@@ -109,11 +109,11 @@
             >NAME</TableHeadCell
         >
         <TableHeadCell class="text-center">IMAGES</TableHeadCell>
-        <TableHeadCell
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("description")}
             >DESCRIPTION</TableHeadCell
-        >
+        > -->
         <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("originalPrice")}
@@ -122,36 +122,36 @@
         <TableHeadCell class="text-center" on:click={() => toggleSort("price")}
             >PRICE</TableHeadCell
         >
-        <TableHeadCell
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("stockQuantity")}
             >STOCK QUANTITY
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("origin")}
             >ORIGIN</TableHeadCell
         >
-        <TableHeadCell
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("discount")}
             >STOCK DISCOUNT
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("slug")}
             >SLUG
         </TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("notes")}
+        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("notes")}
             >NOTE
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("status")}
             >STATUS
         </TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("type")}
+        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("type")}
             >TYPE
-        </TableHeadCell>
-        <TableHeadCell
+        </TableHeadCell> -->
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("expirationDate")}
             >EXPIRATION DATE
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center">CATEGORY</TableHeadCell>
     </TableHead>
     <TableBody>
@@ -165,40 +165,40 @@
                 <TableBodyCell>{item.id}</TableBodyCell>
                 <TableBodyCell>{item.productName}</TableBodyCell>
                 <TableBodyCell tdClass="min-w-[180px]">
-                    <div class="grid grid-cols-3 gap-1">
+                    <div class="grid grid-cols-4 gap-y-2 py-[2px]">
                         {#each convertImageJsonToArray(item.images) as path, i}
-                        <div class="w-14 h-14 overflow-hidden bg-black rounded-full">
+                        <div class="w-14 h-14 overflow-hidden bg-black rounded-[8px]">
                             <img
                             src={!path
                                 ? "/images/logo.png"
                                 : `${host}` + "/" + path}
-                            class="w-full h-full rounded-full"
+                            class="w-full h-full"
                             alt={item.name}/>
                         </div>
                         
                         {/each}
                     </div>
                 </TableBodyCell>
-                <TableBodyCell>{item.description}</TableBodyCell>
+                <!-- <TableBodyCell>{item.description}</TableBodyCell> -->
                 <TableBodyCell>{formatCurrency(item.originalPrice)}</TableBodyCell>
                 <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
-                <TableBodyCell>{item.stockQuantity}</TableBodyCell>
+                <!-- <TableBodyCell>{item.stockQuantity}</TableBodyCell> -->
                 <TableBodyCell>{item.origin}</TableBodyCell>
-                <TableBodyCell>{item.discount +' %'}</TableBodyCell>
+                <!-- <TableBodyCell>{item.discount +' %'}</TableBodyCell> -->
                 <TableBodyCell>{item.slug}</TableBodyCell>
-                <TableBodyCell
+                <!-- <TableBodyCell
                     tdClass="line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"
                     >{!item.notes ? "-" : item.notes}</TableBodyCell
-                >
+                > -->
                 <TableBodyCell>{item.status}</TableBodyCell>
-                <TableBodyCell>{item.type}</TableBodyCell>
-                <TableBodyCell
+                <!-- <TableBodyCell>{item.type}</TableBodyCell> -->
+                <!-- <TableBodyCell
                     >{!item.expirationDate != null
                         ? moment(new Date(item?.expirationDate)).format(
                               "DD-MM-YYYY"
                           )
                         : "-"}</TableBodyCell
-                >
+                > -->
                 <TableBodyCell>{item.category.categoryName}</TableBodyCell>
             </TableBodyRow>
         {/each}

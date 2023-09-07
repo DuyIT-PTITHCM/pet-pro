@@ -28,7 +28,7 @@
   let menu: any[] = [
     {
       name: "Trang Chủ",
-      url: "/",
+      url: "",
     },
   ];
 
