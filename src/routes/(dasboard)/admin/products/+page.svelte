@@ -165,7 +165,7 @@
                 <TableBodyCell>{item.id}</TableBodyCell>
                 <TableBodyCell>{item.productName}</TableBodyCell>
                 <TableBodyCell tdClass="min-w-[180px]">
-                    <div class="grid grid-cols-4 gap-y-2 py-[2px]">
+                    <div class="grid grid-cols-4 gap-y-[4px] py-[2px]">
                         {#each convertImageJsonToArray(item.images) as path, i}
                         <div class="w-14 h-14 overflow-hidden bg-black rounded-[8px]">
                             <img
