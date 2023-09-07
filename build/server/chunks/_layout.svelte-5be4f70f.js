@@ -286,7 +286,7 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   validate_store(t2, "t");
   $$unsubscribe_t = subscribe(t2, (value) => $t = value);
   let btnClass = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
-  let menu = [{ name: "Trang Chủ", url: "/" }];
+  let menu = [{ name: "Trang Chủ", url: "" }];
   loadingState.set(true);
   axios.get(`${BASE_API}/front/menu`).then((res) => {
     menu = menu.concat(res.data.data);
@@ -599,4 +599,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-38f9eef8.js.map
+//# sourceMappingURL=_layout.svelte-5be4f70f.js.map

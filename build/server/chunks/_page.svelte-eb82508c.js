@@ -4,7 +4,7 @@ import { R as RepositoryFactory } from './RepositoryFactory-7d37287f.js';
 import { t as title, d as description } from './meta-cb2f3202.js';
 import { C as Checkbox } from './Checkbox-04615450.js';
 import { T as Table, a as TableHead, b as TableHeadCell, c as TableBody, d as TableBodyRow, e as TableBodyCell } from './TableHeadCell-ddc47205.js';
-import moment from 'moment';
+import 'moment';
 import { f as formatCurrency } from './accounting-d72f8257.js';
 import './utils-5762d6f4.js';
 import './index-f06f6a44.js';
@@ -78,11 +78,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               default: () => {
                 return `IMAGES`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `DESCRIPTION`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+            })}  ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `ORIGINAL PRICE`;
               }
@@ -90,39 +86,19 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               default: () => {
                 return `PRICE`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `STOCK QUANTITY`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+            })}  ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `ORIGIN`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `STOCK DISCOUNT`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+            })}  ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `SLUG`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `NOTE`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+            })}  ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `STATUS`;
               }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `TYPE`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
-              default: () => {
-                return `EXPIRATION DATE`;
-              }
-            })} ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
+            })}   ${validate_component(TableHeadCell, "TableHeadCell").$$render($$result, { class: "text-center" }, {}, {
               default: () => {
                 return `CATEGORY`;
               }
@@ -147,15 +123,11 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                     }
                   })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, { tdClass: "min-w-[180px]" }, {}, {
                     default: () => {
-                      return `<div class="grid grid-cols-3 gap-1">${each(convertImageJsonToArray(item.images), (path, i) => {
-                        return `<div class="w-14 h-14 overflow-hidden bg-black rounded-full"><img${add_attribute("src", !path ? "/images/logo.png" : `${host}/` + path, 0)} class="w-full h-full rounded-full"${add_attribute("alt", item.name, 0)}> </div>`;
+                      return `<div class="grid grid-cols-4 gap-y-2 py-[2px]">${each(convertImageJsonToArray(item.images), (path, i) => {
+                        return `<div class="w-14 h-14 overflow-hidden bg-black rounded-[8px]"><img${add_attribute("src", !path ? "/images/logo.png" : `${host}/` + path, 0)} class="w-full h-full"${add_attribute("alt", item.name, 0)}> </div>`;
                       })}</div> `;
                     }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `${escape(item.description)}`;
-                    }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                  })}  ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(formatCurrency(item.originalPrice))}`;
                     }
@@ -163,46 +135,19 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
                     default: () => {
                       return `${escape(formatCurrency(item.price))}`;
                     }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `${escape(item.stockQuantity)}`;
-                    }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                  })}  ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(item.origin)}`;
                     }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `${escape(item.discount + " %")}`;
-                    }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                  })}  ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(item.slug)}`;
                     }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render(
-                    $$result,
-                    {
-                      tdClass: "line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"
-                    },
-                    {},
-                    {
-                      default: () => {
-                        return `${escape(!item.notes ? "-" : item.notes)}`;
-                      }
-                    }
-                  )} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                  })}  ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(item.status)}`;
                     }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `${escape(item.type)}`;
-                    }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `${escape(!item.expirationDate != null ? moment(new Date(item?.expirationDate)).format("DD-MM-YYYY") : "-")}`;
-                    }
-                  })} ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
+                  })}   ${validate_component(TableBodyCell, "TableBodyCell").$$render($$result, {}, {}, {
                     default: () => {
                       return `${escape(item.category.categoryName)}`;
                     }
@@ -218,4 +163,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-cbeb17f7.js.map
+//# sourceMappingURL=_page.svelte-eb82508c.js.map
