@@ -15,6 +15,7 @@
     Modal,
     DarkMode,
     Button,
+    Indicator,
   } from "flowbite-svelte";
   import LanguageSelect from "../LanguageSelect.svelte";
   import { loadTranslations, t } from "$lib/translations";
@@ -29,6 +30,7 @@
     {
       name: "Trang Chủ",
       url: "",
+      active: true
     },
   ];
 
@@ -64,10 +66,10 @@
         >
       </NavBrand>
       <div class="flex items-center md:order-2">
-        <GradientButton color="pinkToOrange"
-          ><Icon icon="mdi:cart" class="scale-150" /><span class="ml-3">10</span
-          ></GradientButton
-        >
+        <div class="relative p-4">
+          <Icon icon="mdi:cart" class="scale-150" />
+          <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2">10</span>
+        </div>
         <DarkMode {btnClass} />
         <Avatar
           id="avatar-menu"
@@ -95,17 +97,37 @@
           <DropdownItem href="/signup">Sign Up</DropdownItem>
         {/if}
       </Dropdown>
-      <NavUl {hidden}>
+      <NavUl divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium">
         {#each menu as item}
-          <NavLi
-            active={item.active}
-            on:click={() => {
-              item.active = true;
-              menu.filter((i) => i !== item).forEach((i) => (i.active = false));
-              const baseUrl = window.location.origin;
-              goto(`${baseUrl}/` + item.url);
-            }}>{$t(item.name)}</NavLi
-          >
+          <NavLi nonActiveClass="">
+            <div class="parent-menu relative w-full">
+              <button class="cursor-pointer w-full h-full p-4 { item.active == false?  'dark:text-white text-primary-600' : 'text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}" 
+              on:click={() => {
+                item.active = false;
+                menu.filter((i) => i !== item).forEach((i) => (i.active = true));
+                const baseUrl = window.location.origin;
+                goto(`${baseUrl}/` + item.url);
+              }}
+              >
+                {$t(item.name)}
+              </button>
+              {#if item?.subMenus && item?.subMenus?.length > 0}
+                <div class="child-menu absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white h-0 hidden overflow-hidden bg-white dark:bg-slate-900 rounded-lg">
+                  {#each item?.subMenus as sub}
+                    <button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white"
+                      on:click={() => {
+                        item.active = false;
+                        menu.filter((i) => i !== item).forEach((i) => (i.active = true));
+                        const baseUrl = window.location.origin;
+                        goto(`${baseUrl}/` + sub.url);
+                      }}>
+                      {sub.name}
+                    </button>
+                  {/each}
+                </div>
+              {/if}
+            </div>
+          </NavLi>
         {/each}
         <LanguageSelect />
       </NavUl>
@@ -126,11 +148,7 @@
           >PetOne</span
         >
       </NavBrand>
-      <div class="flex items-center md:order-2">
-        <GradientButton color="pinkToOrange"
-          ><Icon icon="mdi:cart" class="scale-150" /><span class="ml-3">10</span
-          ></GradientButton
-        >
+   
         <Avatar
           id="avatar-menu"
           src={true ? "/images/avt.png" : "/images/avt.png"}
@@ -139,7 +157,6 @@
           on:click={toggle}
           class1="w-full md:flex md:w-auto md:order-1"
         />
-      </div>
       <NavUl {hidden}>
         {#each menu as item}
           <NavLi>hi</NavLi>
@@ -164,3 +181,20 @@
     <GradientButton color="teal">No, cancel</GradientButton>
   </div>
 </Modal>
+<style>
+  .parent-menu:hover .child-menu{
+    display: block;
+    height: auto;
+    animation: movedown linear .4s;
+  }
+  @keyframes movedown {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    100%{
+      transform: translateY(0%);
+      opacity: 1;
+    }
+  }
+</style>
