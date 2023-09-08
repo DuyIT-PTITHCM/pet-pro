@@ -265,7 +265,7 @@ const NavUl = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   )}><ul${add_attribute("class", _ulClass, 0)}>${slots.default ? slots.default({}) : ``}</ul></div>`} `;
 });
 const selectedLanguage = writable(getCookie("lang") ?? "en");
-const css$1 = {
+const css$2 = {
   code: "select.s-stFEWcntJTPy{outline:none;border:none;padding:0 24px;cursor:pointer;border-radius:100px}select.s-stFEWcntJTPy:hover{opacity:.9}",
   map: null
 };
@@ -275,18 +275,28 @@ const LanguageSelect = create_ssr_component(($$result, $$props, $$bindings, slot
   $$unsubscribe_selectedLanguage = subscribe(selectedLanguage, (value) => value);
   const languages = [{ id: "en", name: "English" }, { id: "vi", name: "Tiếng Việt" }];
   selectedLanguage.set(getCookie("lang"));
-  $$result.css.add(css$1);
+  $$result.css.add(css$2);
   $$unsubscribe_selectedLanguage();
   return `   <select class="dark:bg-slate-800 s-stFEWcntJTPy">${each(languages, (language) => {
     return `<option${add_attribute("value", language.id, 0)}>${escape(language.name)}</option>`;
   })}</select>`;
 });
+const css$1 = {
+  code: ".parent-menu.s-f_PBzT5OICzS:hover .child-menu.s-f_PBzT5OICzS{display:block;height:auto;animation:s-f_PBzT5OICzS-movedown linear .4s}@keyframes s-f_PBzT5OICzS-movedown{0%{transform:translateY(-20px);opacity:0}100%{transform:translateY(0%);opacity:1}}",
+  map: null
+};
 const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $t, $$unsubscribe_t;
   validate_store(t2, "t");
   $$unsubscribe_t = subscribe(t2, (value) => $t = value);
   let btnClass = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
-  let menu = [{ name: "Trang Chủ", url: "" }];
+  let menu = [
+    {
+      name: "Trang Chủ",
+      url: "",
+      active: true
+    }
+  ];
   loadingState.set(true);
   axios.get(`${BASE_API}/front/menu`).then((res) => {
     menu = menu.concat(res.data.data);
@@ -299,6 +309,7 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg"
   };
   let popupModal = false;
+  $$result.css.add(css$1);
   let $$settled;
   let $$rendered;
   do {
@@ -309,11 +320,7 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           default: () => {
             return `<img src="/images/logo.png" class="mr-3 h-7 sm:h-9 shadow rounded-full bg-gray-50 dark:bg-transparent" alt="PetOne Logo"> <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white" data-svelte-h="svelte-1e8c94l">PetOne</span>`;
           }
-        })} <div class="flex items-center md:order-2">${validate_component(GradientButton, "GradientButton").$$render($$result, { color: "pinkToOrange" }, {}, {
-          default: () => {
-            return `${validate_component(Icon, "Icon").$$render($$result, { icon: "mdi:cart", class: "scale-150" }, {}, {})}<span class="ml-3" data-svelte-h="svelte-1s9g9vh">10</span>`;
-          }
-        })} ${validate_component(DarkMode, "DarkMode").$$render($$result, { btnClass }, {}, {})} ${validate_component(Avatar, "Avatar").$$render(
+        })} <div class="flex items-center md:order-2"><div class="relative p-4">${validate_component(Icon, "Icon").$$render($$result, { icon: "mdi:cart", class: "scale-150" }, {}, {})} <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2" data-svelte-h="svelte-w7calf">10</span></div> ${validate_component(DarkMode, "DarkMode").$$render($$result, { btnClass }, {}, {})} ${validate_component(Avatar, "Avatar").$$render(
           $$result,
           {
             id: "avatar-menu",
@@ -352,27 +359,36 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               })}`}`;
             }
           }
-        )} ${validate_component(NavUl, "NavUl").$$render($$result, { hidden }, {}, {
-          default: () => {
-            return `${each(menu, (item) => {
-              return `${validate_component(NavLi, "NavLi").$$render($$result, { active: item.active }, {}, {
-                default: () => {
-                  return `${escape($t(item.name))}`;
-                }
-              })}`;
-            })} ${validate_component(LanguageSelect, "LanguageSelect").$$render($$result, {}, {}, {})}`;
+        )} ${validate_component(NavUl, "NavUl").$$render(
+          $$result,
+          {
+            divClass: "w-full md:block md:w-auto",
+            ulClass: "flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium"
+          },
+          {},
+          {
+            default: () => {
+              return `${each(menu, (item) => {
+                return `${validate_component(NavLi, "NavLi").$$render($$result, { nonActiveClass: "" }, {}, {
+                  default: () => {
+                    return `<div class="parent-menu relative w-full s-f_PBzT5OICzS"><button class="${"cursor-pointer w-full h-full p-4 " + escape(
+                      item.active == false ? "dark:text-white text-primary-600" : "text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent",
+                      true
+                    )}">${escape($t(item.name))}</button> ${item?.subMenus && item?.subMenus?.length > 0 ? `<div class="child-menu absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white h-0 hidden overflow-hidden bg-white dark:bg-slate-900 rounded-lg s-f_PBzT5OICzS">${each(item?.subMenus, (sub) => {
+                      return `<button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white">${escape(sub.name)} </button>`;
+                    })} </div>` : ``}</div> `;
+                  }
+                })}`;
+              })} ${validate_component(LanguageSelect, "LanguageSelect").$$render($$result, {}, {}, {})}`;
+            }
           }
-        })}`;
+        )}`;
       }
     })}</div></div> <div class="w-full relative h-auto opacity-0"><div class="w-full">${validate_component(Navbar, "Navbar").$$render($$result, {}, {}, {
       default: ({ hidden, toggle }) => {
         return `${validate_component(NavBrand, "NavBrand").$$render($$result, { href: "/" }, {}, {
           default: () => {
             return `<img src="https://static.vecteezy.com/system/resources/previews/009/551/676/original/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg" class="mr-3 h-6 sm:h-9 rounded-full" alt="PetOne Logo"> <span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white" data-svelte-h="svelte-1e8c94l">PetOne</span>`;
-          }
-        })} <div class="flex items-center md:order-2">${validate_component(GradientButton, "GradientButton").$$render($$result, { color: "pinkToOrange" }, {}, {
-          default: () => {
-            return `${validate_component(Icon, "Icon").$$render($$result, { icon: "mdi:cart", class: "scale-150" }, {}, {})}<span class="ml-3" data-svelte-h="svelte-1s9g9vh">10</span>`;
           }
         })} ${validate_component(Avatar, "Avatar").$$render(
           $$result,
@@ -389,7 +405,7 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           },
           {},
           {}
-        )}</div> ${validate_component(NavUl, "NavUl").$$render($$result, { hidden }, {}, {
+        )} ${validate_component(NavUl, "NavUl").$$render($$result, { hidden }, {}, {
           default: () => {
             return `${each(menu, (item) => {
               return `${validate_component(NavLi, "NavLi").$$render($$result, {}, {}, {
@@ -599,4 +615,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-5be4f70f.js.map
+//# sourceMappingURL=_layout.svelte-79f2d76c.js.map
