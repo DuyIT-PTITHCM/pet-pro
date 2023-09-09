@@ -1,0 +1,1 @@
+{"version":3,"file":"Const-3b06302f.js","sources":["../../../.svelte-kit/adapter-node/chunks/Const.js"],"sourcesContent":["const BASE_API = \"http://103.142.26.42/api/v1.0\";\nconst HOST = \"http://103.142.26.42\";\nexport {\n  BASE_API as B,\n  HOST as H\n};\n"],"names":[],"mappings":"AAAK,MAAC,QAAQ,GAAG,gCAAgC;AAC5C,MAAC,IAAI,GAAG;;;;"}
