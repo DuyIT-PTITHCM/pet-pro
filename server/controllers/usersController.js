@@ -29,9 +29,10 @@ export const index = async (req, res) => {
             }
             return acc;
         }, {});
+        const currentPage = parseInt(page);
 
         const { docs, pages, total } = await getAllUsers(page, size, filters);
-        coreResponse(res, 200, "Success", { docs, pages, total });
+        coreResponse(res, 200, "Success", { docs, pages, total, currentPage });
     } catch (error) {
         coreResponse(res, 500, "Error fetching users");
     }
