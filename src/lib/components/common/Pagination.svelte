@@ -1,10 +1,8 @@
-<!-- Pagination.svelte -->
 <script lang="ts">
     export let currentPage = 1;
     export let totalPages = 1;
     export let onPageChange;
 
-    // Function to handle page change
     function changePage(page) {
         if (page >= 1 && page <= totalPages) {
             currentPage = page;
@@ -12,9 +10,8 @@
         }
     }
 
-    // Function to calculate the range of pages to display
     function getDisplayRange() {
-        const displayRange = 2; // Number of pages to display on each side of the current page
+        const displayRange = 2;
         const start = Math.max(1, currentPage - displayRange);
         const end = Math.min(totalPages, currentPage + displayRange);
 
@@ -22,9 +19,10 @@
     }
 </script>
 
-<div class="pagination">
+<div class="pagination flex justify-center items-center mt-20">
     <button
         on:click={() => changePage(currentPage - 1)}
+        class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white"
         disabled={currentPage === 1}
     >
         Previous
@@ -34,6 +32,7 @@
         <button
             class:selected={currentPage === page}
             on:click={() => changePage(page)}
+            class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer {currentPage === page ? 'bg-blue-500 text-white' : 'bg-white dark:bg-gray-800 dark:text-white'}"
         >
             {page}
         </button>
@@ -41,35 +40,9 @@
 
     <button
         on:click={() => changePage(currentPage + 1)}
+        class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white"
         disabled={currentPage === totalPages}
     >
         Next
     </button>
 </div>
-
-<style>
-    .pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
-
-    button {
-        margin: 5px;
-        padding: 5px 10px;
-        cursor: pointer;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        background-color: #fff;
-    }
-
-    button.selected {
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    button[disabled] {
-        cursor: not-allowed;
-    }
-</style>
