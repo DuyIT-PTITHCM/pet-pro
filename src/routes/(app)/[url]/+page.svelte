@@ -1,25 +1,8 @@
 <script lang="ts">
-    import { formatCurrency } from "$lib/Utils/accounting";
-    import { Badge, Button, Card, Carousel, Rating } from 'flowbite-svelte';
-    import { BASE_API } from "$lib/Const";
     import Icon from '@iconify/svelte';
-    import Products from "$lib/components/admin/products/Products.svelte";
+    import Products from "$lib/components/products/Products.svelte";
     export let data;
     let host = "http://103.142.26.42";
-
-    function convertImageJsonToArray(json) {
-        if (json) {
-            return JSON.parse(json);
-        }
-        return [];
-    }
-    function getProductImage(images: any) {
-        const productList = images.map((path: string, index: number) => ({
-        id: index + 1,
-        imgurl: !path ? "/images/logo.png" : `${host}`+ path,
-        }));
-        return productList;
-  }
 </script>
 
 <div class="flex relative gap-4 m-4 clear-both mb-10">
