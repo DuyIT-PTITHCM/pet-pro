@@ -14,17 +14,33 @@
     } from "flowbite-svelte";
     import moment from "moment";
     import { formatCurrency } from "$lib/Utils/accounting";
+    import Pagination from "$lib/components/common/Pagination.svelte";
+    import {
+        getAllQueryParams,
+        queryParamsToObject,
+        updateQueryParams,
+    } from "$lib/Utils/queryParams";
     title.set("Producs Management");
     description.set("Producs Management System");
 
     const productService = RepositoryFactory.get("productRepository");
     let isCheck = false;
-    let products;
+    let products = null;
     let sortedProducts: any[] = [];
     let sortBy = "";
     let sortDirection = 1;
     let dataProductFromApi: any[] = [];
     let host = "http://103.142.26.42/";
+    let queryParams = {
+        page: 1
+    };
+
+    // Function to handle page change
+    async function handlePageChange(page) {
+        queryParams.page = page;
+        updateQueryParams(queryParams);
+        await getProduct();
+    }
 
     function toggleSort(column = "") {
         if (sortBy === column) {
@@ -36,7 +52,10 @@
     }
     async function getProduct() {
         loadingState.set(true);
-        products = await productService.get();
+        let queryFilter = getAllQueryParams();
+        queryParams = queryParamsToObject(queryFilter);
+        products = await productService.get(queryParams);
+
         dataProductFromApi = products.data.data.docs;
         loadingState.set(false);
     }
@@ -45,7 +64,7 @@
         return JSON.parse(json);
     }
     function gotoDetail(id: Number) {
-        window.location.href="/admin/products/"+id
+        window.location.href = "/admin/products/" + id;
     }
     $: {
         sortedProducts = [...dataProductFromApi].sort((a, b) => {
@@ -100,13 +119,12 @@
                 on:change={() => (isCheck = !isCheck)}
             /></TableHeadCell
         >
-        <TableHeadCell  class="text-center" on:click={() => toggleSort("id")}
+        <TableHeadCell class="text-center" on:click={() => toggleSort("id")}
             >Id</TableHeadCell
         >
         <TableHeadCell
             class="text-center"
-            on:click={() => toggleSort("productName")}
-            >NAME</TableHeadCell
+            on:click={() => toggleSort("productName")}>NAME</TableHeadCell
         >
         <TableHeadCell class="text-center">IMAGES</TableHeadCell>
         <!-- <TableHeadCell
@@ -167,20 +185,24 @@
                 <TableBodyCell tdClass="min-w-[180px]">
                     <div class="grid grid-cols-4 gap-y-[4px] py-[2px]">
                         {#each convertImageJsonToArray(item.images) as path, i}
-                        <div class="w-14 h-14 overflow-hidden bg-black rounded-[8px]">
-                            <img
-                            src={!path
-                                ? "/images/logo.png"
-                                : `${host}` + "/" + path}
-                            class="w-full h-full"
-                            alt={item.name}/>
-                        </div>
-                        
+                            <div
+                                class="w-14 h-14 overflow-hidden bg-black rounded-[8px]"
+                            >
+                                <img
+                                    src={!path
+                                        ? "/images/logo.png"
+                                        : `${host}` + "/" + path}
+                                    class="w-full h-full"
+                                    alt={item.name}
+                                />
+                            </div>
                         {/each}
                     </div>
                 </TableBodyCell>
                 <!-- <TableBodyCell>{item.description}</TableBodyCell> -->
-                <TableBodyCell>{formatCurrency(item.originalPrice)}</TableBodyCell>
+                <TableBodyCell
+                    >{formatCurrency(item.originalPrice)}</TableBodyCell
+                >
                 <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
                 <!-- <TableBodyCell>{item.stockQuantity}</TableBodyCell> -->
                 <TableBodyCell>{item.origin}</TableBodyCell>
@@ -204,3 +226,10 @@
         {/each}
     </TableBody>
 </Table>
+{#if products}
+    <Pagination
+        currentPage={products?.data?.data.currentPage}
+        totalPages={products?.data?.data.pages}
+        onPageChange={handlePageChange}
+    />
+{/if}
