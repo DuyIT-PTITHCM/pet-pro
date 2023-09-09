@@ -128,7 +128,7 @@
                     <Icon icon="icon-park-solid:up-one" class="text-xl"/>
                   </div>
                   {#each item.subMenus as sub}
-                    <button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white { sub.active == false ?  'dark:text-white text-primary-600' : ''}"
+                    <button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white dark:text-slate-300 { sub.active == false ?  'dark:text-white text-primary-600' : ''}"
                       on:click={() => {
                         item.active = false;
                         menu.filter((i) => i !== item).forEach((i) => (i.active = true));

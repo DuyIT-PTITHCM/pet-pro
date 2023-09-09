@@ -2,7 +2,6 @@
     import Icon from '@iconify/svelte';
     import Products from "$lib/components/products/Products.svelte";
     export let data;
-    let host = "http://103.142.26.42";
 </script>
 
 <div class="flex relative gap-4 m-4 clear-both mb-10">
