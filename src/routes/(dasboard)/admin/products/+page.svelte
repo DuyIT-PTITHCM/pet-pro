@@ -20,6 +20,7 @@
         queryParamsToObject,
         updateQueryParams,
     } from "$lib/Utils/queryParams";
+    import Icon from "@iconify/svelte";
     title.set("Producs Management");
     description.set("Producs Management System");
 
@@ -32,7 +33,7 @@
     let dataProductFromApi: any[] = [];
     let host = "http://103.142.26.42/";
     let queryParams = {
-        page: 1
+        page: 1,
     };
 
     // Function to handle page change
@@ -146,7 +147,7 @@
             >STOCK QUANTITY
         </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("origin")}
-            >ORIGIN</TableHeadCell
+            >POST</TableHeadCell
         >
         <!-- <TableHeadCell
             class="text-center"
@@ -160,7 +161,7 @@
             >NOTE
         </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("status")}
-            >STATUS
+            >SEO
         </TableHeadCell>
         <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("type")}
             >TYPE
@@ -205,14 +206,46 @@
                 >
                 <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
                 <!-- <TableBodyCell>{item.stockQuantity}</TableBodyCell> -->
-                <TableBodyCell>{item.origin}</TableBodyCell>
+                <TableBodyCell>
+                    {#if item.post}
+                        <Icon
+                            icon="material-symbols:done-rounded"
+                            color="green"
+                            width="40"
+                            height="40"
+                        />
+                    {:else}
+                        <Icon
+                            icon="ic:outline-warning"
+                            color="red"
+                            width="40"
+                            height="40"
+                        />
+                    {/if}
+                </TableBodyCell>
                 <!-- <TableBodyCell>{item.discount +' %'}</TableBodyCell> -->
                 <TableBodyCell>{item.slug}</TableBodyCell>
                 <!-- <TableBodyCell
                     tdClass="line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"
                     >{!item.notes ? "-" : item.notes}</TableBodyCell
                 > -->
-                <TableBodyCell>{item.status}</TableBodyCell>
+                <TableBodyCell>
+                    {#if item.seo}
+                        <Icon
+                            icon="material-symbols:done-rounded"
+                            color="green"
+                            width="40"
+                            height="40"
+                        />
+                    {:else}
+                        <Icon
+                            icon="ic:outline-warning"
+                            color="red"
+                            width="40"
+                            height="40"
+                        />
+                    {/if}
+                </TableBodyCell>
                 <!-- <TableBodyCell>{item.type}</TableBodyCell> -->
                 <!-- <TableBodyCell
                     >{!item.expirationDate != null
