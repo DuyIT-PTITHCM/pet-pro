@@ -15,8 +15,8 @@ export const index = async (req, res) => {
     const size = req.query?.size || PER_PAGE;
     try {
         const { docs, pages, total }  = await getAllProducts(page, size, {});
-        const parsedPage = parseInt(page); // Parse 'page' as an integer
-        coreResponse(res, 200, "Success", { docs, pages, total, parsedPage });
+        const currentPage = parseInt(page); // Parse 'page' as an integer
+        coreResponse(res, 200, "Success", { docs, pages, total, currentPage });
     } catch (error) {
         coreResponse(res, 500, "Error fetching products from controller", error);
     }
