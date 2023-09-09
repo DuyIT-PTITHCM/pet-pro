@@ -2,6 +2,7 @@
     import { Button, Card, Carousel, Rating } from "flowbite-svelte";
     import { formatCurrency } from "$lib/Utils/accounting";
     import Icon from "@iconify/svelte";
+    import CarouselCustom from "../carouselcus/CarouselCustom.svelte";
 
     export let products: any;
     let host = "http://103.142.26.42";
@@ -29,14 +30,18 @@
         </div>
     {/if}
     <Card class="min-w-full" padding="none">
-        <Carousel class="w-full" images={getProductImage(convertImageJsonToArray(product?.images))} slideClass="w-full" imgClass="w-full h-[400px] object-cover" showCaptions={false} showThumbs={false}/>
+        <!-- <Carousel class="w-full" images={getProductImage(convertImageJsonToArray(product?.images))} slideClass="w-full" imgClass="w-full h-[400px] object-cover" showCaptions={false} showThumbs={false}/> -->
+        <CarouselCustom perPage={1} autoplay={4000} duration={400}>
+            {#each convertImageJsonToArray(product?.images) as path, i}
+                <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded-xl w-full mb-4 h-[400px] object-cover" alt="{product?.name}" />
+            {/each}
+        </CarouselCustom>
         <div class="px-5 pb-5">
             <a href="/san-pham/{product.slug}">
                 <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4">{product?.productName}</h5>
                 <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px]">{product.description}</p>
             </a>
             <div class="flex justify-between items-center">
-                <Rating rating={4} size={24} class="mt-2.5 mb-5"/>
                 <span class="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(product?.price)}</span>
             </div>
             <div class="flex float-right">

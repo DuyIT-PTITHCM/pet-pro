@@ -117,8 +117,8 @@
                   {$t(item.name)}
                 </button>
                 {#if item?.subMenus && item?.subMenus?.length > 0}
-                <button class="ml-2 px-1" on:click={ ()=> showSubmenu(index)}>
-                  <Icon icon="icon-park-solid:down-one" class="text-xl cursor-pointer"/>
+                <button class="ml-2 px-1 hover:rounded dark:hover:bg-slate-700 hover:bg-slate-200" on:click={ ()=> showSubmenu(index)}>
+                  <Icon icon="icon-park-solid:{numACtiveMenu == index ? 'up' : 'down'}-one" class="text-xl cursor-pointer"/>
                 </button>
                 {/if}
               </div>
@@ -127,13 +127,13 @@
                   <div class="flex justify-center w-full -mt-[14px] absolute text-center">
                     <Icon icon="icon-park-solid:up-one" class="text-xl"/>
                   </div>
-                  {#each item?.subMenus as sub}
+                  {#each item.subMenus as sub}
                     <button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white { sub.active == false ?  'dark:text-white text-primary-600' : ''}"
                       on:click={() => {
                         item.active = false;
                         menu.filter((i) => i !== item).forEach((i) => (i.active = true));
                         sub.active = false;
-                        item.subMenus.filter((i) => i !== item).forEach((i) => (i.active = true));
+                        item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
                         const baseUrl = window.location.origin;
                         goto(`${baseUrl}/` + sub.url);
                       }}>
