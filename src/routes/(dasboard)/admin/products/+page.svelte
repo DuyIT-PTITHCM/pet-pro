@@ -14,17 +14,33 @@
     } from "flowbite-svelte";
     import moment from "moment";
     import { formatCurrency } from "$lib/Utils/accounting";
+    import Pagination from "$lib/components/common/Pagination.svelte";
+    import {
+        getAllQueryParams,
+        queryParamsToObject,
+        updateQueryParams,
+    } from "$lib/Utils/queryParams";
     title.set("Producs Management");
     description.set("Producs Management System");
 
     const productService = RepositoryFactory.get("productRepository");
     let isCheck = false;
-    let products;
+    let products = null;
     let sortedProducts: any[] = [];
     let sortBy = "";
     let sortDirection = 1;
     let dataProductFromApi: any[] = [];
     let host = "http://103.142.26.42/";
+    let queryParams = {
+        page: 1
+    };
+
+    // Function to handle page change
+    async function handlePageChange(page) {
+        queryParams.page = page;
+        updateQueryParams(queryParams);
+        await getProduct();
+    }
 
     function toggleSort(column = "") {
         if (sortBy === column) {
@@ -36,7 +52,10 @@
     }
     async function getProduct() {
         loadingState.set(true);
-        products = await productService.get();
+        let queryFilter = getAllQueryParams();
+        queryParams = queryParamsToObject(queryFilter);
+        products = await productService.get(queryParams);
+
         dataProductFromApi = products.data.data.docs;
         loadingState.set(false);
     }
@@ -45,7 +64,7 @@
         return JSON.parse(json);
     }
     function gotoDetail(id: Number) {
-        window.location.href="/admin/products/"+id
+        window.location.href = "/admin/products/" + id;
     }
     $: {
         sortedProducts = [...dataProductFromApi].sort((a, b) => {
@@ -105,15 +124,14 @@
         >
         <TableHeadCell
             class="text-center"
-            on:click={() => toggleSort("productName")}
-            >NAME</TableHeadCell
+            on:click={() => toggleSort("productName")}>NAME</TableHeadCell
         >
         <TableHeadCell class="text-center">IMAGES</TableHeadCell>
-        <TableHeadCell
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("description")}
             >DESCRIPTION</TableHeadCell
-        >
+        > -->
         <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("originalPrice")}
@@ -122,36 +140,36 @@
         <TableHeadCell class="text-center" on:click={() => toggleSort("price")}
             >PRICE</TableHeadCell
         >
-        <TableHeadCell
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("stockQuantity")}
             >STOCK QUANTITY
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("origin")}
             >ORIGIN</TableHeadCell
         >
-        <TableHeadCell
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("discount")}
             >STOCK DISCOUNT
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("slug")}
             >SLUG
         </TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("notes")}
+        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("notes")}
             >NOTE
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("status")}
             >STATUS
         </TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("type")}
+        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("type")}
             >TYPE
-        </TableHeadCell>
-        <TableHeadCell
+        </TableHeadCell> -->
+        <!-- <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("expirationDate")}
             >EXPIRATION DATE
-        </TableHeadCell>
+        </TableHeadCell> -->
         <TableHeadCell class="text-center">CATEGORY</TableHeadCell>
     </TableHead>
     <TableBody>
@@ -165,42 +183,53 @@
                 <TableBodyCell>{item.id}</TableBodyCell>
                 <TableBodyCell>{item.productName}</TableBodyCell>
                 <TableBodyCell tdClass="min-w-[180px]">
-                    <div class="grid grid-cols-3 gap-1">
+                    <div class="grid grid-cols-4 gap-y-[4px] py-[2px]">
                         {#each convertImageJsonToArray(item.images) as path, i}
-                        <div class="w-14 h-14 overflow-hidden bg-black rounded-full">
-                            <img
-                            src={!path
-                                ? "/images/logo.png"
-                                : `${host}` + "/" + path}
-                            class="w-full h-full rounded-full"
-                            alt={item.name}/>
-                        </div>
-                        
+                            <div
+                                class="w-14 h-14 overflow-hidden bg-black rounded-[8px]"
+                            >
+                                <img
+                                    src={!path
+                                        ? "/images/logo.png"
+                                        : `${host}` + "/" + path}
+                                    class="w-full h-full"
+                                    alt={item.name}
+                                />
+                            </div>
                         {/each}
                     </div>
                 </TableBodyCell>
-                <TableBodyCell>{item.description}</TableBodyCell>
-                <TableBodyCell>{formatCurrency(item.originalPrice)}</TableBodyCell>
-                <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
-                <TableBodyCell>{item.stockQuantity}</TableBodyCell>
-                <TableBodyCell>{item.origin}</TableBodyCell>
-                <TableBodyCell>{item.discount +' %'}</TableBodyCell>
-                <TableBodyCell>{item.slug}</TableBodyCell>
+                <!-- <TableBodyCell>{item.description}</TableBodyCell> -->
                 <TableBodyCell
+                    >{formatCurrency(item.originalPrice)}</TableBodyCell
+                >
+                <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
+                <!-- <TableBodyCell>{item.stockQuantity}</TableBodyCell> -->
+                <TableBodyCell>{item.origin}</TableBodyCell>
+                <!-- <TableBodyCell>{item.discount +' %'}</TableBodyCell> -->
+                <TableBodyCell>{item.slug}</TableBodyCell>
+                <!-- <TableBodyCell
                     tdClass="line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"
                     >{!item.notes ? "-" : item.notes}</TableBodyCell
-                >
+                > -->
                 <TableBodyCell>{item.status}</TableBodyCell>
-                <TableBodyCell>{item.type}</TableBodyCell>
-                <TableBodyCell
+                <!-- <TableBodyCell>{item.type}</TableBodyCell> -->
+                <!-- <TableBodyCell
                     >{!item.expirationDate != null
                         ? moment(new Date(item?.expirationDate)).format(
                               "DD-MM-YYYY"
                           )
                         : "-"}</TableBodyCell
-                >
+                > -->
                 <TableBodyCell>{item.category.categoryName}</TableBodyCell>
             </TableBodyRow>
         {/each}
     </TableBody>
 </Table>
+{#if products}
+    <Pagination
+        currentPage={products?.data?.data.currentPage}
+        totalPages={products?.data?.data.pages}
+        onPageChange={handlePageChange}
+    />
+{/if}

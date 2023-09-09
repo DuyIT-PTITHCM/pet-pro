@@ -19,7 +19,7 @@ export const getAllProducts = async (page = 1, perPage = 10, filters = {}) => {
                 },
             ],
             page,
-            paginate: 30,
+            paginate: perPage,
             order: [['createdAt', 'DESC']],
         });
 
