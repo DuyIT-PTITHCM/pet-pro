@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Siema from "siema";
 	import { onMount, createEventDispatcher } from "svelte";
 	import { time } from "../home/stores.js";
@@ -18,9 +18,9 @@
 	export let multiple = 0;
 	let currentIndex = startIndex;
 
-	let siema;
-	let controller;
-	let timer;
+	let siema : any;
+	let controller: any;
+	let timer : any;
 	const dispatch = createEventDispatcher();
 
 	$: pips = controller ? controller.innerElements : [];
@@ -58,7 +58,7 @@
 		};
 	});
 
-	export function isDotActive(currentIndex, dotIndex) {
+	export function isDotActive(currentIndex: any, dotIndex : any) {
 		if (currentIndex < 0) currentIndex = pips.length + currentIndex;
 		return (
 			currentIndex >= dotIndex * currentPerPage &&
@@ -74,7 +74,7 @@
 		controller.next();
 	}
 
-	export function go(index) {
+	export function go(index: number) {
 		controller.goTo(index);
 	}
 
@@ -88,7 +88,7 @@
 		}
 	}
 
-	function handleChange(event) {
+	function handleChange() {
 		currentIndex = controller.currentSlide;
 		dispatch("change", {
 			currentSlide: controller.currentSlide,
@@ -96,8 +96,8 @@
 		});
 	}
 
-	function resetInterval(node, condition) {
-		function handleReset(event) {
+	function resetInterval(node: any, condition: any) {
+		function handleReset() {
 			pause();
 			resume();
 		}
@@ -139,10 +139,7 @@
 	{#if dots}
 		<ul>
 			{#each { length: totalDots } as _, i}
-				<li
-					on:click={() => go(i * currentPerPage)}
-					class={isDotActive(currentIndex, i) ? "active" : ""}
-				/>
+				<li on:click={() => go(i * currentPerPage)} class={isDotActive(currentIndex, i) ? "active" : ""} />
 			{/each}
 		</ul>
 	{/if}
