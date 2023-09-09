@@ -1,16 +1,18 @@
-<script>
+<script lang="ts">
     import { loadingState } from "../../../store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { Input } from "flowbite-svelte";
+    import { Button, Checkbox, Input, Popover, Textarea } from "flowbite-svelte";
     import Icon from "@iconify/svelte";
     import { toastErr } from "$lib/store/toastError";
     import MenuItem from "./MenuItem.svelte";
     import { isUserEdited } from "$lib/store/userManagement";
     import { onMount } from "svelte";
+    import Category from "./Category.svelte";
 
     const menuService = RepositoryFactory.get("menuRepository");
     let parentAdd = false;
     let isAction = false;
+    let categories: any;
     let menus = [
         {
             id: 0,
@@ -47,7 +49,9 @@
         id: null,
         name: null,
         url: null,
-        parent_id: null
+        parent_id: null,
+        description: null,
+        isShowDescription: 0,
     }
     async function addMenu() {
         try {
@@ -99,15 +103,30 @@
                     <hr class="w-4 h-[4px] bg-cyan-700">
                     <Input defaultClass="max-w-[300px]" placeholder="Input address..." required bind:value={newMenu.url}/>
                     <hr class="w-4 h-[4px] bg-cyan-700">
+                    <Button color="dark" outline id="addsubmenu" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
+                    <Popover class="w-64 text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
+                        <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/>
+                        <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:value={newMenu.isShowDescription}>Show Description</Checkbox>
+                    </Popover>
+                    <hr class="w-4 h-[4px] bg-cyan-700">
                     <button on:click={addMenu}>
                         <Icon icon="ep:success-filled" class="hover:opacity-80 text-[40px] p-2.5 bg-gray-300 text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
                     </button>
                 </form>
             </div>
         </div>
-        {#each menus as menu (menu.id)}
-        <MenuItem menu={menu} isAction={isAction}/>
-        {/each}
+        <div class="grid md:grid-cols-2 grid-cols-1">
+            <div>
+                {#each menus as menu (menu.id)}
+                <MenuItem menu={menu} isAction={isAction} bind:categories={categories}/>
+                {/each}
+            </div>
+            <div>
+                {#if categories}
+                    <Category categories={categories}/>
+                {/if}
+            </div>
+        </div>
     {/if}
     </div>
 </div>
