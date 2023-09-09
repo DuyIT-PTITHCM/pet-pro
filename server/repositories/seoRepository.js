@@ -11,7 +11,7 @@ export const getAllSeos = async () => {
 };
 
 export const createSeo = async (seoData) => {
-    const { metaTitle, metaDescription, keywords, canonicalUrl, robotMetaTags, openGraphTags, structuredData, sitemapPriority, sitemapFrequency, sitemapLastModified, referenceId, reference } = seoData;
+    const { metaTitle, metaDescription, keywords, canonicalUrl, robotMetaTags, openGraphTags, structuredData, sitemapPriority, sitemapFrequency, sitemapLastModified, referenceId, reference, image } = seoData;
 
     let transaction;
     try {
@@ -27,7 +27,8 @@ export const createSeo = async (seoData) => {
             structuredData,
             sitemapPriority,
             sitemapFrequency,
-            sitemapLastModified
+            sitemapLastModified,
+            image
         }, { transaction });
         switch (reference) {
             case 'product':
@@ -68,7 +69,7 @@ export const createSeo = async (seoData) => {
 
 export const updateSeo = async (seoId, seoData) => {
     try {
-        const { metaTitle, metaDescription, keywords, canonicalUrl, robotMetaTags, openGraphTags, structuredData, sitemapPriority, sitemapFrequency, sitemapLastModified } = seoData;
+        const { metaTitle, metaDescription, keywords, canonicalUrl, robotMetaTags, openGraphTags, structuredData, sitemapPriority, sitemapFrequency, sitemapLastModified, image } = seoData;
         const seo = await models.Seo.findByPk(seoId);
 
         if (!seo) {
@@ -79,6 +80,7 @@ export const updateSeo = async (seoId, seoData) => {
         seo.metaDescription = metaDescription;
         seo.keywords = keywords;
         seo.canonicalUrl = canonicalUrl;
+        seo.image = image;
         seo.robotMetaTags = robotMetaTags;
         seo.openGraphTags = openGraphTags;
         seo.structuredData = structuredData;

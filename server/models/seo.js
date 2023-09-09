@@ -22,6 +22,10 @@ export default (sequelize, DataTypes) => {
       keywords: {
         type: DataTypes.STRING,
       },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       canonicalUrl: {
         type: DataTypes.STRING,
       },
