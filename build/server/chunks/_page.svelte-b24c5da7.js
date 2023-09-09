@@ -109,22 +109,13 @@ const Products = create_ssr_component(($$result, $$props, $$bindings, slots) => 
         return ` <div class="relative">${product.discount > 0 ? `<div class="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 rounded-tr-md rounded-bl-2xl border-l-8 border-t-4 border-red-600 -ml-2 transform z-10 animate-bounce">${escape(product.discount)}% discount
         </div>` : ``} ${validate_component(Card, "Card").$$render($$result, { class: "min-w-full", padding: "none" }, {}, {
           default: () => {
-            return `${validate_component(CarouselCustom, "CarouselCustom").$$render(
-              $$result,
-              {
-                perPage: 1,
-                autoplay: 4e3,
-                duration: 400
-              },
-              {},
-              {
-                default: () => {
-                  return `${each(res, (path, i) => {
-                    return `<img${add_attribute("src", !path ? "/images/logo.png" : `${host}/` + path, 0)} class="rounded-xl w-full mb-4 h-[400px] object-cover"${add_attribute("alt", product?.name, 0)}>`;
-                  })} `;
-                }
+            return `${validate_component(CarouselCustom, "CarouselCustom").$$render($$result, { perPage: 1, duration: 400 }, {}, {
+              default: () => {
+                return `${each(res, (path, i) => {
+                  return `<img${add_attribute("src", !path ? "/images/logo.png" : `${host}/` + path, 0)} class="rounded-xl w-full mb-4 h-[400px] object-cover"${add_attribute("alt", product?.name, 0)}>`;
+                })} `;
               }
-            )} <div class="px-5 pb-5"><a href="${"/san-pham/" + escape(product.slug, true)}"><h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4">${escape(product?.productName)}</h5> <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px]">${escape(product.description)}</p></a> <div class="flex justify-between items-center"><span class="text-xl font-bold text-gray-900 dark:text-white">${escape(formatCurrency(product?.price))}</span></div> <div class="flex float-right">${validate_component(Button, "Button").$$render($$result, { class: "mr-1 text-2xl", href: "/" }, {}, {
+            })} <div class="px-5 pb-5"><a href="${"/san-pham/" + escape(product.slug, true)}"><h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4">${escape(product?.productName)}</h5> <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px]">${escape(product.description)}</p></a> <div class="flex justify-between items-center"><span class="text-xl font-bold text-gray-900 dark:text-white">${escape(formatCurrency(product?.price))}</span></div> <div class="flex float-right">${validate_component(Button, "Button").$$render($$result, { class: "mr-1 text-2xl", href: "/" }, {}, {
               default: () => {
                 return `${validate_component(Icon, "Icon").$$render($$result, { icon: "solar:cart-3-bold" }, {}, {})}`;
               }
@@ -217,4 +208,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-9ef3ecba.js.map
+//# sourceMappingURL=_page.svelte-b24c5da7.js.map
