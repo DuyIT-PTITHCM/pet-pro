@@ -15,10 +15,6 @@ import 'tailwind-merge';
 import './dev-1873bb41.js';
 import 'accounting';
 
-const css = {
-  code: ".pagination.s-YE3VNHBKXqP4{display:flex;justify-content:center;align-items:center;margin-top:20px}button.s-YE3VNHBKXqP4{margin:5px;padding:5px 10px;cursor:pointer;border:1px solid #ccc;border-radius:5px;background-color:#fff}button.selected.s-YE3VNHBKXqP4{background-color:#007bff;color:#fff}button[disabled].s-YE3VNHBKXqP4{cursor:not-allowed}",
-  map: null
-};
 const Pagination = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { currentPage = 1 } = $$props;
   let { totalPages = 1 } = $$props;
@@ -35,10 +31,15 @@ const Pagination = create_ssr_component(($$result, $$props, $$bindings, slots) =
     $$bindings.totalPages(totalPages);
   if ($$props.onPageChange === void 0 && $$bindings.onPageChange && onPageChange !== void 0)
     $$bindings.onPageChange(onPageChange);
-  $$result.css.add(css);
-  return `  <div class="pagination s-YE3VNHBKXqP4"><button ${currentPage === 1 ? "disabled" : ""} class="s-YE3VNHBKXqP4">Previous</button> ${each(getDisplayRange(), (page) => {
-    return `<button class="${["s-YE3VNHBKXqP4", currentPage === page ? "selected" : ""].join(" ").trim()}">${escape(page)} </button>`;
-  })} <button ${currentPage === totalPages ? "disabled" : ""} class="s-YE3VNHBKXqP4">Next</button> </div>`;
+  return `<div class="pagination flex justify-center items-center mt-20"><button class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white" ${currentPage === 1 ? "disabled" : ""}>Previous</button> ${each(getDisplayRange(), (page) => {
+    return `<button class="${[
+      "mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer " + escape(
+        currentPage === page ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-800 dark:text-white",
+        true
+      ),
+      currentPage === page ? "selected" : ""
+    ].join(" ").trim()}">${escape(page)} </button>`;
+  })} <button class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white" ${currentPage === totalPages ? "disabled" : ""}>Next</button></div>`;
 });
 function convertImageJsonToArray(json) {
   return JSON.parse(json);
@@ -205,4 +206,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-64abcb90.js.map
+//# sourceMappingURL=_page.svelte-7e1d3f22.js.map
