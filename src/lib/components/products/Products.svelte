@@ -34,7 +34,7 @@
         </div>
     {/if}
     <Card class="min-w-full" padding="none">
-        <CarouselCustom perPage={1} autoplay={4000} duration={400}>
+        <CarouselCustom perPage={1}  duration={400}>
             {#each res as path, i}
                 <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded-xl w-full mb-4 h-[400px] object-cover" alt="{product?.name}" />
             {/each}
