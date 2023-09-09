@@ -3,14 +3,6 @@ import { Model } from 'sequelize';
 export default (sequelize, DataTypes) => {
   class Categories extends Model {
     static associate(models) {
-      Categories.belongsTo(models.Seo, {
-        foreignKey: 'seoId',
-        as: 'seo',
-      });
-      Categories.belongsTo(models.Post, {
-        foreignKey: 'postId',
-        as: 'post',
-      });
       Categories.hasMany(models.Product, {
         foreignKey: 'categoryId',
         as: 'products',
@@ -33,19 +25,11 @@ export default (sequelize, DataTypes) => {
         type: DataTypes.ENUM('product', 'service','article'),
         allowNull: false,
       },
-      seoId: {
+      menuId: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
-          model: 'Seos',
-          key: 'id',
-        },
-      },
-      postId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'Posts',
+          model: 'Menus',
           key: 'id',
         },
       },

@@ -8,14 +8,6 @@ export const getAllCategories = async (type) => {
                 {
                     model: models.Product,
                     as: 'products'
-                },
-                {
-                    model: models.Post,
-                    as: 'post'
-                },
-                {
-                    model: models.Seo,
-                    as: 'seo'
                 }
             ],
             where: {
@@ -32,14 +24,13 @@ export const getAllCategories = async (type) => {
 };
 
 export const createCategory = async (categoryData) => {
-    const { categoryName, type, seoId, postId } = categoryData;
+    const { categoryName, type, menuId } = categoryData;
 
     try {
         const newCategory = await models.Categories.create({
             categoryName,
             type,
-            seoId,
-            postId
+            menuId
         });
         return newCategory;
     } catch (error) {
@@ -49,7 +40,7 @@ export const createCategory = async (categoryData) => {
 
 export const updateCategory = async (req) => {
     const categoryId = req.params.id;
-    const { categoryName, type, seoId, postId } = req.body;
+    const { categoryName, type, menuId } = req.body;
 
     try {
         const category = await models.Categories.findByPk(categoryId);
@@ -60,8 +51,7 @@ export const updateCategory = async (req) => {
 
         category.categoryName = categoryName;
         category.type = type;
-        category.seoId = seoId;
-        category.postId = postId;
+        category.menuId = menuId;
 
         await category.save();
 

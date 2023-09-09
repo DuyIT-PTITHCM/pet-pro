@@ -1,10 +1,19 @@
 import { validationResult } from "express-validator";
 import { coreResponse } from "../lib/coreResponse.js";
-import { createMenu, getAllMenus, updateMenu, deleteMenu, getDetailMenu } from "../repositories/menuRepository.js";
+import { createMenu, getAllMenus, updateMenu, deleteMenu, getDetailMenu, getAllMenusForFront } from "../repositories/menuRepository.js";
 
 export const index = async (req, res) => {
     try {
         const data = await getAllMenus();
+        coreResponse(res, 200, "Success", data);
+    } catch (error) {
+        coreResponse(res, 500, "Error fetching menus from controller", error);
+    }
+};
+
+export const indexFront = async (req, res) => {
+    try {
+        const data = await getAllMenusForFront();
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching menus from controller", error);
@@ -17,7 +26,6 @@ export const show = async (req, res) => {
         const data = await getDetailMenu(req);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
-        console.log(error);
         coreResponse(res, 500, "Error fetching menus from controller", error);
     }
 };
@@ -31,7 +39,7 @@ export const store = async (req, res) => {
         const menuCeated = await createMenu(req.body);
         coreResponse(res, 201, "Menu created successfully", menuCeated);
     } catch (error) {
-        coreResponse(res, 500, "Error creating menu", error);
+        coreResponse(res, 500, "Error creating menu ", error);
     }
 };
 

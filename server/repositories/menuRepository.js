@@ -27,6 +27,39 @@ export const getAllMenus = async () => {
 
         return data;
     } catch (error) {
+        process.stdout.write('Error fetching menu: ' + error + '\n');
+        process.stdout.flush();
+        throw new Error("Error fetching menus");
+    }
+};
+
+export const getAllMenusForFront = async () => {
+    try {
+        const data = await models.Menu.findAll({
+            include: [
+                {
+                    model: models.Menu,
+                    as: 'subMenus',
+                    include: [
+                        {
+                            model: models.Categories,
+                            as: 'categories'
+                        }
+                    ]
+                },
+                {
+                    model: models.Categories,
+                    as: 'categories'
+                }
+            ],
+            where: {
+                parent_id: null,
+                active: true
+            }
+        });
+
+        return data;
+    } catch (error) {
         throw new Error("Error fetching menus");
     }
 };
@@ -83,16 +116,22 @@ export const getDetailMenu = async (req) => {
 };
 
 export const createMenu = async (menuData) => {
-    const { name, url, parent_id } = menuData;
+    const { name, url, parent_id, isShowDescription, description, active } = menuData;
 
     try {
         const newmenu = await models.Menu.create({
             name,
             url,
-            parent_id
+            parent_id,
+            isShowDescription,
+            description,
+            active
         });
         return newmenu;
     } catch (error) {
+        process.stdout.write('Error creating menu: ' + error + '\n');
+        process.stdout.flush();
+
         throw new Error("Error creating menu");
     }
 };
