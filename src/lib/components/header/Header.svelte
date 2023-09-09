@@ -49,6 +49,10 @@
   let popupModal = false;
   let isSignIn = true;
   let heightHeader = 0;
+  let numACtiveMenu = 0;
+  function showSubmenu (id: number){
+    numACtiveMenu == id ? numACtiveMenu = 0 : numACtiveMenu = id;
+  }
 </script>
 
 <div class="w-full relative h-auto" bind:clientHeight={heightHeader}>
@@ -66,10 +70,10 @@
         >
       </NavBrand>
       <div class="flex items-center md:order-2">
-        <div class="relative p-4">
+        <button class="relative p-4">
           <Icon icon="mdi:cart" class="scale-150" />
           <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2">10</span>
-        </div>
+        </button>
         <DarkMode {btnClass} />
         <Avatar
           id="avatar-menu"
@@ -97,27 +101,39 @@
           <DropdownItem href="/signup">Sign Up</DropdownItem>
         {/if}
       </Dropdown>
-      <NavUl divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium">
-        {#each menu as item}
+      <NavUl {hidden} divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium">
+        {#each menu as item, index}
           <NavLi nonActiveClass="">
             <div class="parent-menu relative w-full">
-              <button class="cursor-pointer w-full h-full p-4 { item.active == false?  'dark:text-white text-primary-600' : 'text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}" 
-              on:click={() => {
-                item.active = false;
-                menu.filter((i) => i !== item).forEach((i) => (i.active = true));
-                const baseUrl = window.location.origin;
-                goto(`${baseUrl}/` + item.url);
-              }}
-              >
-                {$t(item.name)}
-              </button>
+              <div class="flex items-center p-3">
+                  <button class="cursor-pointer w-full h-full { item.active == false?  'dark:text-white text-primary-600' : 'text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}" 
+                  on:click={() => {
+                    item.active = false;
+                    menu.filter((i) => i !== item).forEach((i) => (i.active = true));
+                    const baseUrl = window.location.origin;
+                    goto(`${baseUrl}/` + item.url);
+                  }}
+                  >
+                  {$t(item.name)}
+                </button>
+                {#if item?.subMenus && item?.subMenus?.length > 0}
+                <button class="ml-2 px-1" on:click={ ()=> showSubmenu(index)}>
+                  <Icon icon="icon-park-solid:down-one" class="text-xl cursor-pointer"/>
+                </button>
+                {/if}
+              </div>
               {#if item?.subMenus && item?.subMenus?.length > 0}
-                <div class="child-menu absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white h-0 hidden overflow-hidden bg-white dark:bg-slate-900 rounded-lg">
+                <div class="{numACtiveMenu == index ? 'active-child-menu' : 'h-0 hidden'} md:absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white bg-white dark:bg-slate-900 rounded-lg z-20">
+                  <div class="flex justify-center w-full -mt-[14px] absolute text-center">
+                    <Icon icon="icon-park-solid:up-one" class="text-xl"/>
+                  </div>
                   {#each item?.subMenus as sub}
-                    <button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white"
+                    <button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white { sub.active == false ?  'dark:text-white text-primary-600' : ''}"
                       on:click={() => {
                         item.active = false;
                         menu.filter((i) => i !== item).forEach((i) => (i.active = true));
+                        sub.active = false;
+                        item.subMenus.filter((i) => i !== item).forEach((i) => (i.active = true));
                         const baseUrl = window.location.origin;
                         goto(`${baseUrl}/` + sub.url);
                       }}>
@@ -136,7 +152,7 @@
 </div>
 <div class="w-full relative h-auto opacity-0">
   <div class="w-full">
-    <Navbar let:hidden let:toggle>
+    <Navbar>
       <NavBrand href="/">
         <img
           src="https://static.vecteezy.com/system/resources/previews/009/551/676/original/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg"
@@ -153,11 +169,8 @@
           id="avatar-menu"
           src={true ? "/images/avt.png" : "/images/avt.png"}
         />
-        <NavHamburger
-          on:click={toggle}
-          class1="w-full md:flex md:w-auto md:order-1"
-        />
-      <NavUl {hidden}>
+
+      <NavUl>
         {#each menu as item}
           <NavLi>hi</NavLi>
         {/each}
@@ -182,7 +195,7 @@
   </div>
 </Modal>
 <style>
-  .parent-menu:hover .child-menu{
+  .active-child-menu{
     display: block;
     height: auto;
     animation: movedown linear .4s;
