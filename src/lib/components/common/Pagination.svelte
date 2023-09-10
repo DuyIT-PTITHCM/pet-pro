@@ -22,7 +22,7 @@
 <div class="pagination flex justify-center items-center mt-20">
     <button
         on:click={() => changePage(currentPage - 1)}
-        class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white"
+        class="mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white {currentPage === 1 ? 'cursor-not-allowed' : 'cursor-pointer'}"
         disabled={currentPage === 1}
     >
         Previous
@@ -40,7 +40,7 @@
 
     <button
         on:click={() => changePage(currentPage + 1)}
-        class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white"
+        class="mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white {currentPage === totalPages ? 'cursor-not-allowed' : 'cursor-pointer'}"
         disabled={currentPage === totalPages}
     >
         Next

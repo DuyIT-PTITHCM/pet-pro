@@ -32,7 +32,10 @@ const Pagination = create_ssr_component(($$result, $$props, $$bindings, slots) =
     $$bindings.totalPages(totalPages);
   if ($$props.onPageChange === void 0 && $$bindings.onPageChange && onPageChange !== void 0)
     $$bindings.onPageChange(onPageChange);
-  return `<div class="pagination flex justify-center items-center mt-20"><button class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white" ${currentPage === 1 ? "disabled" : ""}>Previous</button> ${each(getDisplayRange(), (page) => {
+  return `<div class="pagination flex justify-center items-center mt-20"><button class="${"mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white " + escape(
+    currentPage === 1 ? "cursor-not-allowed" : "cursor-pointer",
+    true
+  )}" ${currentPage === 1 ? "disabled" : ""}>Previous</button> ${each(getDisplayRange(), (page) => {
     return `<button class="${[
       "mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer " + escape(
         currentPage === page ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-800 dark:text-white",
@@ -40,7 +43,10 @@ const Pagination = create_ssr_component(($$result, $$props, $$bindings, slots) =
       ),
       currentPage === page ? "selected" : ""
     ].join(" ").trim()}">${escape(page)} </button>`;
-  })} <button class="mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer bg-white dark:bg-gray-800 dark:text-white" ${currentPage === totalPages ? "disabled" : ""}>Next</button></div>`;
+  })} <button class="${"mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white " + escape(
+    currentPage === totalPages ? "cursor-not-allowed" : "cursor-pointer",
+    true
+  )}" ${currentPage === totalPages ? "disabled" : ""}>Next</button></div>`;
 });
 function convertImageJsonToArray(json) {
   return JSON.parse(json);
@@ -247,4 +253,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-41d8b0ff.js.map
+//# sourceMappingURL=_page.svelte-5e1459b9.js.map
