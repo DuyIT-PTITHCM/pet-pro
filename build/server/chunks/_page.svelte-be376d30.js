@@ -6,14 +6,33 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let host = "http://103.142.26.42";
   let product = data.data;
   let images = JSON.parse(product?.images);
-  console.log(images);
   let imageSeo = "";
   if (images.length > 0) {
     imageSeo = host + images[0] ? host + images[0] : "";
   }
   if ($$props.data === void 0 && $$bindings.data && data !== void 0)
     $$bindings.data(data);
-  return `${$$result.head += `<!-- HEAD_svelte-rfd8rq_START -->${$$result.title = `<title>${escape(product?.seo?.metaTitle ? product.productName : "")}</title>`, ""}<meta name="description"${add_attribute("content", product?.seo?.metaDescription, 0)}><meta name="keywords"${add_attribute("content", product?.seo?.keywords, 0)}><link rel="canonical"${add_attribute("href", product?.seo?.canonicalUrl, 0)}><meta property="og:title"${add_attribute("content", product?.seo?.openGraphTags, 0)}><!-- HTML_TAG_START -->${'<script type="application/ld+json">' + product?.seo?.structuredData + "<\/script>"}<!-- HTML_TAG_END --><meta name="sitemap_priority"${add_attribute("content", product?.seo?.sitemapPriority, 0)}><meta name="sitemap_frequency"${add_attribute("content", product?.seo?.sitemapFrequency, 0)}><meta property="og:image"${add_attribute("content", imageSeo, 0)}><meta name="twitter:image"${add_attribute("content", imageSeo, 0)}><!-- HEAD_svelte-rfd8rq_END -->`, ""} <h1 class="text-3xl font-bold text-center">${escape(product.productName)}</h1> <div class="flex justify-center"><div class="sm:m-10 m-1 container"><div class="${"w-full " + escape(
+  return `${$$result.head += `<!-- HEAD_svelte-7wwze_START -->${$$result.title = `<title>${escape(product?.seo?.metaTitle ? product?.seo?.metaTitle : product.productName)}</title>`, ""}<meta name="description"${add_attribute(
+    "content",
+    product?.seo?.metaDescription ? product?.seo?.metaDescription : product.productName,
+    0
+  )}><meta name="keywords"${add_attribute(
+    "content",
+    product?.seo?.keywords ? product?.seo?.keywords : product.productName,
+    0
+  )}><link rel="canonical"${add_attribute(
+    "href",
+    product?.seo?.canonicalUrl ? product?.seo?.canonicalUrl : host + product.slug,
+    0
+  )}><meta property="og:title"${add_attribute("content", product?.seo?.openGraphTags, 0)}><!-- HTML_TAG_START -->${'<script type="application/ld+json">' + product?.seo?.structuredData + "<\/script>"}<!-- HTML_TAG_END --><meta name="sitemap_priority"${add_attribute(
+    "content",
+    product?.seo?.sitemapPriority ? product?.seo?.sitemapPriority : "",
+    0
+  )}><meta name="sitemap_frequency"${add_attribute(
+    "content",
+    product?.seo?.sitemapFrequency ? product?.seo?.sitemapFrequency : "always",
+    0
+  )}><meta property="og:image"${add_attribute("content", imageSeo, 0)}><meta name="twitter:image"${add_attribute("content", imageSeo, 0)}><!-- HEAD_svelte-7wwze_END -->`, ""} <h1 class="text-3xl font-bold text-center">${escape(product.productName)}</h1> <div class="flex justify-center"><div class="sm:m-10 m-1 container"><div class="${"w-full " + escape(
     images.length < 3 ? "grid md:grid-cols-2 grid-cols-1" : "flex justify-center flex-col items-center",
     true
   )}"><div class="${"gap-4 " + escape(
@@ -28,4 +47,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-aea6b631.js.map
+//# sourceMappingURL=_page.svelte-be376d30.js.map
