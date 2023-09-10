@@ -1,4 +1,4 @@
-import { c as create_ssr_component, v as validate_component, e as escape, s as setContext, d as spread, h as escape_object, f as escape_attribute_value, b as each, a as add_attribute } from './ssr-14a856f3.js';
+import { c as create_ssr_component, v as validate_component, e as escape, b as each, a as add_attribute, s as setContext, d as spread, h as escape_object, f as escape_attribute_value } from './ssr-14a856f3.js';
 import { v as validate_store, s as subscribe, c as compute_rest_props } from './utils-9f8bdf1a.js';
 import { l as loadingState } from './loading-01041b6e.js';
 import { s as sineIn } from './index3-e15cc75f.js';
@@ -11,7 +11,7 @@ import { F as Fileupload } from './Fileupload-5c378f6e.js';
 import { H as Helper } from './Helper-f37d8c75.js';
 import { I as Input } from './Input-a84ee897.js';
 import { twMerge } from 'tailwind-merge';
-import { T as Table, a as TableHead, b as TableHeadCell, c as TableBody, d as TableBodyRow, e as TableBodyCell, g as getAllQueryParams, q as queryParamsToObject } from './queryParams-fb26ae7e.js';
+import { T as Table, a as TableHead, b as TableHeadCell, c as TableBody, d as TableBodyRow, e as TableBodyCell, g as getAllQueryParams, q as queryParamsToObject, P as Pagination, u as updateQueryParams } from './queryParams-1948c4a3.js';
 import { R as RepositoryFactory } from './RepositoryFactory-7d37287f.js';
 import moment from 'moment';
 import { t as title, d as description } from './meta-fbb8b016.js';
@@ -1004,9 +1004,8 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   validate_store(loadingState, "loadingState");
   $$unsubscribe_loadingState = subscribe(loadingState, (value) => $loadingState = value);
   const userService = RepositoryFactory.get("userRepository");
-  let helper = { currentPage: 1, pages: 10, total: 100 };
   let queryParams = {
-    page: helper.currentPage,
+    page: 1,
     // Example query parameter
     email: null,
     gender: null,
@@ -1020,14 +1019,15 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     let queryFilter = getAllQueryParams();
     queryParams = queryParamsToObject(queryFilter);
     const res = await userService.get(queryParams);
-    users = res.data.data.docs;
-    helper.total = res.data.data.total;
-    helper.pages = res.data.data.pages;
+    users = res.data.data;
     loadingState.set(false);
   }
   getUsers();
-  let isPrev = true;
-  let isNext = false;
+  async function handlePageChange(page) {
+    queryParams.page = page;
+    updateQueryParams(queryParams);
+    await getUsers();
+  }
   let $$settled;
   let $$rendered;
   do {
@@ -1053,68 +1053,16 @@ const User = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       default: () => {
         return `OKE`;
       }
-    })}</div></div> <div>${!users && !$loadingState ? `<h1 data-svelte-h="svelte-i5gzyz">nodata</h1>` : `${!$loadingState ? `<div class="overflow-hidden">${validate_component(UserList, "UserList").$$render($$result, { items: users }, {}, {})}</div>` : ``}`} ${helper.pages > 1 ? `<div class="flex flex-col items-center justify-center gap-2"><div class="text-sm text-gray-700 dark:text-gray-400">Showing <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.currentPage)}</span>
-                of
-                <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.pages)}</span>
-                pages and
-                <span class="font-semibold text-gray-900 dark:text-white">${escape(helper.total)}</span>
-                Entries</div> <div class="flex">${validate_component(ButtonGroup, "ButtonGroup").$$render($$result, {}, {}, {
-      default: () => {
-        return `${validate_component(Button, "Button").$$render(
-          $$result,
-          {
-            class: "py-1 px-4",
-            color: "blue",
-            disabled: isPrev
-          },
-          {},
-          {
-            default: () => {
-              return `${validate_component(Icon, "Icon").$$render(
-                $$result,
-                {
-                  class: "text-xl mr-1",
-                  icon: "emojione:baby-chick"
-                },
-                {},
-                {}
-              )}${validate_component(Icon, "Icon").$$render($$result, { class: "text-3xl", icon: "twemoji:dog" }, {}, {})}`;
-            }
-          }
-        )} ${validate_component(Button, "Button").$$render(
-          $$result,
-          {
-            class: "py-1 px-4",
-            color: "primary",
-            disabled: isNext
-          },
-          {},
-          {
-            default: () => {
-              return `${validate_component(Icon, "Icon").$$render(
-                $$result,
-                {
-                  class: "text-3xl",
-                  icon: "twemoji:cat",
-                  hFlip: true
-                },
-                {},
-                {}
-              )}${validate_component(Icon, "Icon").$$render(
-                $$result,
-                {
-                  class: "text-xl ml-1",
-                  icon: "noto:fish",
-                  hFlip: true
-                },
-                {},
-                {}
-              )}`;
-            }
-          }
-        )}`;
-      }
-    })}</div></div>` : ``}</div>`;
+    })}</div></div> <div>${!users && !$loadingState ? `<h1 data-svelte-h="svelte-i5gzyz">nodata</h1>` : `${!$loadingState ? `<div class="overflow-hidden">${validate_component(UserList, "UserList").$$render($$result, { items: users.docs }, {}, {})}</div>` : ``}`} ${users?.pages ? `${validate_component(Pagination, "Pagination").$$render(
+      $$result,
+      {
+        currentPage: users.currentPage,
+        totalPages: users.pages,
+        onPageChange: handlePageChange
+      },
+      {},
+      {}
+    )}` : ``}</div>`;
   } while (!$$settled);
   $$unsubscribe_loadingState();
   return $$rendered;
@@ -1126,4 +1074,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-2784b69a.js.map
+//# sourceMappingURL=_page.svelte-3c38996a.js.map

@@ -1,5 +1,5 @@
 import { c as compute_rest_props } from './utils-9f8bdf1a.js';
-import { c as create_ssr_component, s as setContext, a as add_attribute, d as spread, h as escape_object, f as escape_attribute_value, g as getContext } from './ssr-14a856f3.js';
+import { c as create_ssr_component, s as setContext, a as add_attribute, d as spread, h as escape_object, f as escape_attribute_value, g as getContext, e as escape, b as each } from './ssr-14a856f3.js';
 import { twJoin, twMerge } from 'tailwind-merge';
 import { v as validate_dynamic_element, a as validate_void_dynamic_element, i as is_void } from './dev-1873bb41.js';
 
@@ -190,6 +190,38 @@ const TableHeadCell = create_ssr_component(($$result, $$props, $$bindings, slots
     {}
   )}>${slots.default ? slots.default({}) : ``}</th> `;
 });
+const Pagination = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let { currentPage = 1 } = $$props;
+  let { totalPages = 1 } = $$props;
+  let { onPageChange } = $$props;
+  function getDisplayRange() {
+    const displayRange = 2;
+    const start = Math.max(1, currentPage - displayRange);
+    const end = Math.min(totalPages, currentPage + displayRange);
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }
+  if ($$props.currentPage === void 0 && $$bindings.currentPage && currentPage !== void 0)
+    $$bindings.currentPage(currentPage);
+  if ($$props.totalPages === void 0 && $$bindings.totalPages && totalPages !== void 0)
+    $$bindings.totalPages(totalPages);
+  if ($$props.onPageChange === void 0 && $$bindings.onPageChange && onPageChange !== void 0)
+    $$bindings.onPageChange(onPageChange);
+  return `<div class="pagination flex justify-center items-center mt-20"><button class="${"mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white " + escape(
+    currentPage === 1 ? "cursor-not-allowed" : "cursor-pointer",
+    true
+  )}" ${currentPage === 1 ? "disabled" : ""}>Previous</button> ${each(getDisplayRange(), (page) => {
+    return `<button class="${[
+      "mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer " + escape(
+        currentPage === page ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-800 dark:text-white",
+        true
+      ),
+      currentPage === page ? "selected" : ""
+    ].join(" ").trim()}">${escape(page)} </button>`;
+  })} <button class="${"mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white " + escape(
+    currentPage === totalPages ? "cursor-not-allowed" : "cursor-pointer",
+    true
+  )}" ${currentPage === totalPages ? "disabled" : ""}>Next</button></div>`;
+});
 function getAllQueryParams() {
   const searchParams = new URLSearchParams(location.search);
   const queryParams = {};
@@ -219,5 +251,5 @@ function queryParamsToObject(queryParams) {
   return paramFilter;
 }
 
-export { Table as T, TableHead as a, TableHeadCell as b, TableBody as c, TableBodyRow as d, TableBodyCell as e, getAllQueryParams as g, queryParamsToObject as q, updateQueryParams as u };
-//# sourceMappingURL=queryParams-fb26ae7e.js.map
+export { Pagination as P, Table as T, TableHead as a, TableHeadCell as b, TableBody as c, TableBodyRow as d, TableBodyCell as e, getAllQueryParams as g, queryParamsToObject as q, updateQueryParams as u };
+//# sourceMappingURL=queryParams-1948c4a3.js.map

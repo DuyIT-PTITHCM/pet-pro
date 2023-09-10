@@ -4,7 +4,7 @@ import { R as RepositoryFactory } from './RepositoryFactory-7d37287f.js';
 import { t as title, d as description } from './meta-fbb8b016.js';
 import { I as Icon } from './Indicator.svelte_svelte_type_style_lang-e4e9e84a.js';
 import { C as Checkbox } from './Checkbox-5d9c25d5.js';
-import { g as getAllQueryParams, q as queryParamsToObject, T as Table, a as TableHead, b as TableHeadCell, c as TableBody, d as TableBodyRow, e as TableBodyCell, u as updateQueryParams } from './queryParams-fb26ae7e.js';
+import { g as getAllQueryParams, q as queryParamsToObject, T as Table, a as TableHead, b as TableHeadCell, c as TableBody, d as TableBodyRow, e as TableBodyCell, P as Pagination, u as updateQueryParams } from './queryParams-1948c4a3.js';
 import 'moment';
 import { f as formatCurrency } from './accounting-d72f8257.js';
 import './utils-9f8bdf1a.js';
@@ -16,38 +16,6 @@ import 'tailwind-merge';
 import './dev-1873bb41.js';
 import 'accounting';
 
-const Pagination = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let { currentPage = 1 } = $$props;
-  let { totalPages = 1 } = $$props;
-  let { onPageChange } = $$props;
-  function getDisplayRange() {
-    const displayRange = 2;
-    const start = Math.max(1, currentPage - displayRange);
-    const end = Math.min(totalPages, currentPage + displayRange);
-    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
-  }
-  if ($$props.currentPage === void 0 && $$bindings.currentPage && currentPage !== void 0)
-    $$bindings.currentPage(currentPage);
-  if ($$props.totalPages === void 0 && $$bindings.totalPages && totalPages !== void 0)
-    $$bindings.totalPages(totalPages);
-  if ($$props.onPageChange === void 0 && $$bindings.onPageChange && onPageChange !== void 0)
-    $$bindings.onPageChange(onPageChange);
-  return `<div class="pagination flex justify-center items-center mt-20"><button class="${"mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white " + escape(
-    currentPage === 1 ? "cursor-not-allowed" : "cursor-pointer",
-    true
-  )}" ${currentPage === 1 ? "disabled" : ""}>Previous</button> ${each(getDisplayRange(), (page) => {
-    return `<button class="${[
-      "mx-1 px-2 py-1 border border-gray-300 rounded cursor-pointer " + escape(
-        currentPage === page ? "bg-blue-500 text-white" : "bg-white dark:bg-gray-800 dark:text-white",
-        true
-      ),
-      currentPage === page ? "selected" : ""
-    ].join(" ").trim()}">${escape(page)} </button>`;
-  })} <button class="${"mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white " + escape(
-    currentPage === totalPages ? "cursor-not-allowed" : "cursor-pointer",
-    true
-  )}" ${currentPage === totalPages ? "disabled" : ""}>Next</button></div>`;
-});
 function convertImageJsonToArray(json) {
   return JSON.parse(json);
 }
@@ -253,4 +221,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-5e1459b9.js.map
+//# sourceMappingURL=_page.svelte-dd5a7e8f.js.map
