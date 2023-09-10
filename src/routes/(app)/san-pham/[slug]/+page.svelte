@@ -5,7 +5,6 @@
     let product = data.data;
 
     let images = JSON.parse(product?.images);
-    console.log(images)
     let imageSeo = "";
     if (images.length > 0) {
         imageSeo = host + images[0] ? host + images[0] : "";
@@ -14,18 +13,18 @@
 
 
 <svelte:head>
-    <title>{(product?.seo?.metaTitle ? product.productName : '')}</title>
-    <meta name="description" content={product?.seo?.metaDescription} />
-    <meta name="keywords" content={product?.seo?.keywords} />
-    <link rel="canonical" href={product?.seo?.canonicalUrl} />
+    <title>{(product?.seo?.metaTitle ? product?.seo?.metaTitle:   product.productName )}</title>
+    <meta name="description" content={product?.seo?.metaDescription ? product?.seo?.metaDescription : product.productName} />
+    <meta name="keywords" content={product?.seo?.keywords ? product?.seo?.keywords :   product.productName} />
+    <link rel="canonical" href={product?.seo?.canonicalUrl ?product?.seo?.canonicalUrl : host + product.slug } />
 
     <meta property="og:title" content={product?.seo?.openGraphTags} />
 
 
     {@html '<script type="application/ld+json">'+ product?.seo?.structuredData + '</script>'}
 
-    <meta name="sitemap_priority" content={product?.seo?.sitemapPriority} />
-    <meta name="sitemap_frequency" content={product?.seo?.sitemapFrequency} />
+    <meta name="sitemap_priority" content={product?.seo?.sitemapPriority ? product?.seo?.sitemapPriority : '' } />
+    <meta name="sitemap_frequency" content={product?.seo?.sitemapFrequency ? product?.seo?.sitemapFrequency : 'always'} />
 
     <meta property="og:image" content={imageSeo} />
     <meta name="twitter:image" content={imageSeo} />
