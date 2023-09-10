@@ -23,11 +23,11 @@ var _page_server_ts = /*#__PURE__*/Object.freeze({
 
 const index = 7;
 let component_cache;
-const component = async () => component_cache ??= (await import('./_page.svelte-f15fec80.js')).default;
+const component = async () => component_cache ??= (await import('./_page.svelte-aea6b631.js')).default;
 const server_id = "src/routes/(app)/san-pham/[slug]/+page.server.ts";
-const imports = ["_app/immutable/nodes/7.0a2024cf.js","_app/immutable/chunks/scheduler.b4686469.js","_app/immutable/chunks/globals.7f7f1b26.js","_app/immutable/chunks/index.07c1f1fe.js"];
+const imports = ["_app/immutable/nodes/7.8df7c02f.js","_app/immutable/chunks/scheduler.b4686469.js","_app/immutable/chunks/globals.7f7f1b26.js","_app/immutable/chunks/index.07c1f1fe.js"];
 const stylesheets = [];
 const fonts = [];
 
 export { component, fonts, imports, index, _page_server_ts as server, server_id, stylesheets };
-//# sourceMappingURL=7-815f0c99.js.map
+//# sourceMappingURL=7-e62c0bae.js.map
