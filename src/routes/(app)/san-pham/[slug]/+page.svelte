@@ -12,19 +12,20 @@
     }
 </script>
 
+
 <svelte:head>
-    <title>{product?.seo.metaTitle}</title>
-    <meta name="description" content={product?.seo.metaDescription} />
-    <meta name="keywords" content={product?.seo.keywords} />
-    <link rel="canonical" href={product?.seo.canonicalUrl} />
+    <title>{(product?.seo?.metaTitle ? product.productName : '')}</title>
+    <meta name="description" content={product?.seo?.metaDescription} />
+    <meta name="keywords" content={product?.seo?.keywords} />
+    <link rel="canonical" href={product?.seo?.canonicalUrl} />
 
-    <meta property="og:title" content={product?.seo.openGraphTags} />
+    <meta property="og:title" content={product?.seo?.openGraphTags} />
 
 
-    {@html '<script type="application/ld+json">'+ product?.seo.structuredData + '</script>'}
+    {@html '<script type="application/ld+json">'+ product?.seo?.structuredData + '</script>'}
 
-    <meta name="sitemap_priority" content={product?.seo.sitemapPriority} />
-    <meta name="sitemap_frequency" content={product?.seo.sitemapFrequency} />
+    <meta name="sitemap_priority" content={product?.seo?.sitemapPriority} />
+    <meta name="sitemap_frequency" content={product?.seo?.sitemapFrequency} />
 
     <meta property="og:image" content={imageSeo} />
     <meta name="twitter:image" content={imageSeo} />

@@ -116,7 +116,7 @@ export const getDetailMenu = async (req) => {
 };
 
 export const createMenu = async (menuData) => {
-    const { name, url, parent_id, isShowDescription, description, active } = menuData;
+    const { name, url, parent_id, isShowDescription, description, active, type } = menuData;
 
     try {
         const newmenu = await models.Menu.create({
@@ -125,7 +125,8 @@ export const createMenu = async (menuData) => {
             parent_id,
             isShowDescription,
             description,
-            active
+            active,
+            type: type ? type : 'product'
         });
         return newmenu;
     } catch (error) {
@@ -135,27 +136,66 @@ export const createMenu = async (menuData) => {
         throw new Error("Error creating menu");
     }
 };
+export const checkIdExits = async (menuId) => {
+    const menu = await models.Menu.findByPk(menuId);
+    if (!menu) {
+        return Promise.reject('menu not exists');
+    }
+    return Promise.resolve();
+};
 export const updateMenu = async (req) => {
-    const menuId = req.params.id;
-    const { name, url, parent_id } = req.body;
+    const { id } = req.params;
+    const {
+        name,
+        url,
+        parent_id,
+        isShowDescription,
+        description,
+        active,
+        type = 'product', // Giá trị mặc định cho type
+    } = req.body;
+
+    const transaction = await models.sequelize.transaction();
+
     try {
-        const menu = await models.Menu.findByPk(menuId);
+        const menu = await models.Menu.findByPk(id);
 
         if (!menu) {
             throw new Error('Menu not found');
         }
 
-        menu.name = name;
-        menu.url = url;
-        menu.parent_id = parent_id;
+        menu.set({
+            name,
+            url,
+            parent_id,
+            description,
+            isShowDescription,
+            active,
+            type,
+        });
 
-        await menu.save();
+        await menu.save({ transaction });
+
+        await models.Categories.update(
+            { type },
+            {
+                where: {
+                    menuId: id,
+                },
+                transaction,
+            }
+        );
+
+        await transaction.commit();
 
         return menu;
     } catch (error) {
-        throw new Error("Error updating menu");
+        await transaction.rollback();
+        throw new Error(`Error updating menu: ${error.message}`);
     }
 };
+
+
 export const deleteMenu = async (req) => {
     const menuId = req.params.id;
     try {

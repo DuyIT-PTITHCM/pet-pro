@@ -24,12 +24,13 @@ export const getAllCategories = async (type) => {
 };
 
 export const createCategory = async (categoryData) => {
-    const { categoryName, type, menuId } = categoryData;
+    const { categoryName,menuId } = categoryData;
+    const menuType = models.Menu.findByPk(menuId);
 
     try {
         const newCategory = await models.Categories.create({
             categoryName,
-            type,
+            type : menuType?.type ? menuType.type : 'product',
             menuId
         });
         return newCategory;
