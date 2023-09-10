@@ -5,10 +5,10 @@
     import Icon from "@iconify/svelte";
     import { toastErr } from "$lib/store/toastError";
     import MenuItem from "./MenuItem.svelte";
-    import { isUserEdited } from "$lib/store/userManagement";
     import { onMount } from "svelte";
     import Category from "./Category.svelte";
     import Editor from "$lib/components/common/Editor.svelte";
+    import { isMenuEdited } from "$lib/store/menuManagement";
 
     const menuService = RepositoryFactory.get("menuRepository");
     let parentAdd = false;
@@ -37,9 +37,18 @@
         loadingState.set(false);
     }
     onMount(() => {
-        const unSubscribe = isUserEdited.subscribe((edited) => {
-            edited && getMenus();
-            isUserEdited.set(false);
+        const unSubscribe = isMenuEdited.subscribe((edited) => {
+            if(edited.isEdit) {
+                getMenus();
+                let menu= menus.map((item)=>{
+                    return item.id = edited.menuId
+                });
+                categories = menu.ca
+            } 
+            isMenuEdited.set({
+                isEdit: false,
+                menuId: null
+            });
         });
 
         return unSubscribe;
@@ -89,65 +98,63 @@
         </h1>
     </div>
 </div>
-<div class="flex justify-center w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
-    <div class="">
+<div class="grid md:grid-cols-3 grid-cols-1 w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
     {#if !menus && !$loadingState}
         <h1>nodata</h1>
     {:else if !$loadingState}
-        <div class="flex">
-            <button on:click={()=> isAction = !isAction} class="hover:opacity-80 p-2 bg-black dark:bg-gray-700 text-white rounded-lg mr-2">
-                <Icon icon="ic:outline-electric-bolt" class="{isAction == true ? 'text-yellow-300' : ''} text-[28px]" />
-            </button>
-            <button on:click={()=> parentAdd = !parentAdd} class="hover:opacity-80 p-2 bg-black dark:bg-gray-700 text-white rounded-lg">
-                <Icon icon="mingcute:add-fill" class="{parentAdd == true ? 'rotate-45' : ''} text-[28px]" />
-            </button>
-            <div class="{parentAdd ? '' : 'hidden'}">
-                <form class="flex items-center"><hr class="w-4 h-[4px] bg-cyan-700">
-                    <Input defaultClass="max-w-[300px]" placeholder="Input name..." bind:value={newMenu.name}/>
-                    <hr class="w-4 h-[4px] bg-cyan-700">
-                    <Input defaultClass="max-w-[300px]" placeholder="Input address..." bind:value={newMenu.url}/>
-                    <hr class="w-4 h-[4px] bg-cyan-700">
-                    <Button color="dark" outline id="addsubmenu" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
-                    <Popover class="w-full text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
-                        <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/> -->
-                        <Editor bind:text={newMenu.description}/>
-                        <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:value={newMenu.isShowDescription}>Show Description</Checkbox>
-                    </Popover>
-                    <hr class="w-4 h-[4px] bg-cyan-700">
-                    <Button color="none" id="menuaddtype" class="text-xl p-0 m-0">
-                        <Icon icon="{newMenu.type == 'product' ? 'fluent-emoji:cat' : newMenu.type == 'blog' ? 'openmoji:hacker-cat' : 'twemoji:guide-dog'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
-                    </Button>
-                    <Popover class="text-sm font-light z-50" title="Type" triggeredBy="#menuaddtype" trigger="click">
-                        <ul class="w-48 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600">
-                            {#each types as type}
-                                <li><Radio class="p-3" bind:group={newMenu.type} value={type.value}>{type.name}</Radio></li>
-                            {/each}
-                        </ul>
-                    </Popover>
-                    <hr class="w-4 h-[4px] bg-cyan-700">
-                    <button on:click={addMenu}>
-                        <Icon icon="ep:success-filled" class="hover:opacity-80 text-[40px] p-2.5 bg-gray-300 text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
-                    </button>
-                </form>
+        <div class="col-span-2">
+            <div class="flex">
+                <button on:click={()=> isAction = !isAction} class="hover:opacity-80 p-2 bg-black dark:bg-gray-700 text-white rounded-lg mr-2">
+                    <Icon icon="ic:outline-electric-bolt" class="{isAction == true ? 'text-yellow-300' : ''} text-[28px]" />
+                </button>
+                <button on:click={()=> parentAdd = !parentAdd} class="hover:opacity-80 p-2 bg-black dark:bg-gray-700 text-white rounded-lg">
+                    <Icon icon="mingcute:add-fill" class="{parentAdd == true ? 'rotate-45' : ''} text-[28px]" />
+                </button>
+                <div class="{parentAdd ? '' : 'hidden'}">
+                    <form class="flex items-center"><hr class="w-4 h-[4px] bg-cyan-700">
+                        <Input defaultClass="max-w-[300px]" placeholder="Input name..." bind:value={newMenu.name}/>
+                        <hr class="w-4 h-[4px] bg-cyan-700">
+                        <Input defaultClass="max-w-[300px]" placeholder="Input address..." bind:value={newMenu.url}/>
+                        <hr class="w-4 h-[4px] bg-cyan-700">
+                        <Button color="dark" outline id="addsubmenu" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
+                        <Popover class="w-full text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
+                            <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/> -->
+                            <Editor bind:text={newMenu.description}/>
+                            <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:value={newMenu.isShowDescription}>Show Description</Checkbox>
+                        </Popover>
+                        <hr class="w-4 h-[4px] bg-cyan-700">
+                        <Button color="none" id="menuaddtype" class="text-xl p-0 m-0">
+                            <Icon icon="{newMenu.type == 'product' ? 'fluent-emoji:cat' : newMenu.type == 'blog' ? 'openmoji:hacker-cat' : 'twemoji:guide-dog'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
+                        </Button>
+                        <Popover class="text-sm font-light z-50" title="Type" triggeredBy="#menuaddtype" trigger="click">
+                            <ul class="w-48 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600">
+                                {#each types as type}
+                                    <li><Radio class="p-3" bind:group={newMenu.type} value={type.value}>{type.name}</Radio></li>
+                                {/each}
+                            </ul>
+                        </Popover>
+                        <hr class="w-4 h-[4px] bg-cyan-700">
+                        <button on:click={addMenu}>
+                            <Icon icon="ep:success-filled" class="hover:opacity-80 text-[40px] p-2.5 bg-gray-300 text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
             <div>
                 {#each menus as menu (menu.id)}
                 <MenuItem menu={menu} isAction={isAction} bind:categories={categories}/>
                 {/each}
             </div>
-            <div>
-                {#if categories}
-                    <Category categories={categories}/>
-                {:else}
-                    <div class="w-full h-full dark:text-white rounded-lg flex flex-col justify-center items-center">
-                        <img class="rounded-lg w-[200px]" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExandoOHd6NXU3bDB4bTJwMTg3NXVoN205N3NmNzU4YXRudzF5ZDJ6YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AW6eOaOemvDv1FBpZ6/giphy.gif" alt="">
-                        <b>Choose one menu to view categories of that menu</b>
-                    </div>
-                {/if}
-            </div>
+        </div>
+        <div>
+            {#if categories}
+                <Category categories={categories}/>
+            {:else}
+                <div class="w-full h-full dark:text-white rounded-lg flex flex-col justify-center items-center">
+                    <img class="rounded-lg w-[200px]" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExandoOHd6NXU3bDB4bTJwMTg3NXVoN205N3NmNzU4YXRudzF5ZDJ6YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AW6eOaOemvDv1FBpZ6/giphy.gif" alt="">
+                    <b>Choose one menu to view categories of that menu</b>
+                </div>
+            {/if}
         </div>
     {/if}
-    </div>
 </div>

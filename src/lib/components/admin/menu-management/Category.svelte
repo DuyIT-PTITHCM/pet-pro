@@ -1,46 +1,130 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
     import { Tabs, TabItem, Label, Input, Radio } from 'flowbite-svelte';
+    import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
+    import { toastErr } from '$lib/store/toastError';
+    import { isMenuEdited } from '$lib/store/userManagement';
+    const categoryService = RepositoryFactory.get("categoryRepository");
+
     export let categories : any;
-    let isAddCate = false;
-    let category: any;
     // $: console.log(categories)
-    function viewCategory(data: any){
-        isAddCate = false;
-        category = data;
+    let nameCategoryName: string;
+    async function addCategory(name: string, menuId: number){
+        try {
+            var newCategory = {
+                categoryName: name,
+                menuId: menuId,
+            }
+            const res = await categoryService.post(newCategory);
+            toastErr.set([
+                {
+                    message: res.data.message,
+                    type: "success"
+                }
+            ]);
+            isMenuEdited.set({
+                isEdit : true,
+                menuId: menuId
+            });
+        } catch (error) {
+            const errors = error?.response?.data?.errors;
+            var toasts = errors?.map(element => {
+                return {
+                    message : element.msg,
+                    type : "error"
+                }
+            });
+            toastErr.set(toasts);
+        }
+    }
+    async function editCategory(name: string, id: number, menuId: number){
+        try {
+            var category = {
+                categoryName: name,
+                menuId: menuId,
+            }
+            const res = await categoryService.put(id, category);
+            toastErr.set([
+                {
+                    message: res.data.message,
+                    type: "success"
+                }
+            ]);
+            isMenuEdited.set({
+                isEdit : true,
+                menuId: menuId
+            });
+        } catch (error) {
+            const errors = error?.response?.data?.errors;
+            var toasts = errors?.map(element => {
+                return {
+                    message : element.msg,
+                    type : "error"
+                }
+            });
+            toastErr.set(toasts);
+        }
+    }
+
+    async function deleteMenu(id = 0) {
+        try {
+            const res = await categoryService.delete(id);
+            toastErr.set([
+                {
+                    message: res.data.message,
+                    type: "success"
+                }
+            ]);
+            isMenuEdited.set({
+                isEdit : true,
+                menuId: menuId
+            });
+        } catch (error) {
+            console.log("hi")
+            const errors = error?.response?.data?.errors;
+            var toasts = errors?.map(element => {
+                return {
+                    message : element.msg,
+                    type : "error"
+                }
+            });
+            toastErr.set(toasts);
+        }
     }
   </script>
 <div class="border-2 border-gray-300 shadow-[0_20px_20px_-8px_rgba(0,0,0,0.3)] dark:border-gray-800 dark:shadow rounded-xl overflow-hidden">
-    <Tabs contentClass="px-4 bg-gray-50 rounded-lg dark:bg-gray-800" style="underline">
+    <Tabs contentClass="bg-gray-50 rounded-lg dark:bg-gray-800 h-full" style="underline">
         <TabItem open>
             <div slot="title" class="flex items-center gap-2 rounded-lg">
                 Categories of {categories.manuname}
             </div>
-            <div>
+            <div class="dark:bg-gray-700 min-h-[150px] p-4">
                 {#if categories.cates.length > 0}
                     <div class="w-full h-full">
                         {#each categories.cates as category}
-                            <button class="flex justify-between items-center w-full bg-slate-200 dark:bg-slate-900 dark:hover:bg-slate-700 my-4 pl-4 cursor-pointer rounded-lg overflow-hidden"
-                            on:click={() => viewCategory(category)}>
-                                <p class="text-sm text-gray-900 dark:text-gray-200">{category.categoryName}</p>
+                            <div class="flex justify-between items-center mb-4 w-full bg-slate-200 dark:bg-slate-900 pl-4 cursor-pointer rounded-lg overflow-hidden">
+                                <input type="text" class="flex-1 block bg-transparent outline-0 border-0 dark:text-gray-200 rounded-lg" bind:value={category.categoryName} />
                                 <div>
-                                    <button class="text-xl dark:text-white p-4 -mr-1 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-300 dark:hover:text-black">
+                                    <button class="text-xl dark:text-white p-4 -mr-1 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-300 dark:hover:text-black"
+                                    on:click={() => {editCategory(category.categoryName, category.id, categories.id)}}>
                                         <Icon icon="fluent:edit-20-filled" />
                                     </button>
-                                    <button class="text-xl dark:text-white p-4 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-300 dark:hover:text-black">
+                                    <button class="text-xl dark:text-white p-4 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-300 dark:hover:text-black"
+                                    on:click={() => {deleteMenu(category.id)}}>
                                         <Icon icon="fluent:delete-28-filled" />
                                     </button>
                                 </div>
-                            </button>
-                        {/each}
-                        <button class="flex justify-between items-center w-full  text-gray-900 dark:text-gray-200 bg-slate-200 dark:bg-slate-900
-                                hover:bg-slate-800 hover:text-white dark:hover:bg-slate-700 my-4 pl-4 cursor-pointer rounded-lg overflow-hidden"
-                                on:click={() => {isAddCate = !isAddCate; category = null}}>
-                            <p class="text-sm">Add new Category</p>
-                            <div class="text-xl p-4">
-                                <Icon icon="fluent:add-12-filled" />
                             </div>
-                        </button>
+                        {/each}
+                        <div class="flex justify-between items-center w-full  text-gray-900 dark:text-gray-200 bg-slate-200 dark:bg-slate-900
+                                my-4 pl-4 rounded-lg overflow-hidden"
+                                >
+                                <input type="text" class="flex-1 block bg-transparent outline-0 border-0 dark:text-gray-200 rounded-lg" placeholder="Input category name to add..." bind:value={nameCategoryName}/>
+
+                            <button class="text-xl p-4 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-500 " on:click={() => {addCategory(nameCategoryName, categories.id)}}>
+                                <Icon icon="fluent:add-12-filled" />
+                            </button>
+                        </div>
                     </div>
                     <!-- {#if isAddCate || category}
                         <div class="w-full rounded-lg my-4 border p-4">

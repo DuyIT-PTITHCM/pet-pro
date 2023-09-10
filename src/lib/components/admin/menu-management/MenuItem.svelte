@@ -143,6 +143,7 @@
         }
     }
 </script>
+
 <div class="border-l-4 border-cyan-400 my-4">
     <div class="flex items-center">
         <hr class="w-2 h-[4px] bg-cyan-400">
@@ -188,6 +189,9 @@
             <Icon icon="icon-park-solid:right-one" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] {numCategory == menu.id ? 'text-yellow-400' : 'text-gray-900 dark:text-white'} dark:bg-gray-700 rounded-lg" />
         </button>
     </div>
+
+    <!-- Child menu -->
+
     <div class="{isShowMenu ? '' : 'hidden'} my-2">
         {#each menu.subMenus as subMenu, index}
         <div class="flex items-center my-2">
@@ -230,6 +234,9 @@
         </div>
         {/each}
     </div>
+
+    <!-- Add child menu -->
+
     <div class="{isShowAdd ? '' : 'hidden'} my-2">
         <div class="flex items-center my-2"><hr class="w-8 h-[4px] bg-cyan-400">
             <Input defaultClass="max-w-[300px]" placeholder="Input name..." required bind:value={newMenu.name}/>
