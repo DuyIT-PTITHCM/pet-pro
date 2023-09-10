@@ -1,34 +1,35 @@
 <script lang="ts">
     import { loadingState } from "../../../store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { Button, Checkbox, Input, Popover, Textarea } from "flowbite-svelte";
+    import { Button, Checkbox, Input, Popover, Radio, Textarea } from "flowbite-svelte";
     import Icon from "@iconify/svelte";
     import { toastErr } from "$lib/store/toastError";
     import MenuItem from "./MenuItem.svelte";
     import { isUserEdited } from "$lib/store/userManagement";
     import { onMount } from "svelte";
     import Category from "./Category.svelte";
+    import Editor from "$lib/components/common/Editor.svelte";
 
     const menuService = RepositoryFactory.get("menuRepository");
     let parentAdd = false;
     let isAction = false;
     let categories: any;
-    let menus = [
-        {
-            id: 0,
-            name: '',
-            url: null,
-            parent_id: null,
-            subMenus: [
-                {
-                    id: 0,
-                    name: '',
-                    url: null
-                }
-            ]
-        }
-    ];
+    let menus: any;
     loadingState.set(true);
+    let types = [
+        {
+            name: 'Product',
+            value: 'product'
+        },
+        {
+            name: 'Service',
+            value: 'service'
+        },
+        {
+            name: 'Blog',
+            value: 'blog'
+        }
+    ]
     async function getMenus() {   
         loadingState.set(true);
         const res = await menuService.get();
@@ -50,8 +51,10 @@
         name: null,
         url: null,
         parent_id: null,
-        description: null,
-        isShowDescription: 0,
+        description: "",
+        isShowDescription: true,
+        active: true,
+        type: "product",
     }
     async function addMenu() {
         try {
@@ -64,6 +67,7 @@
             ]);
             newMenu.name = null;
             newMenu.url = null;
+            newMenu.description= "";
             getMenus()
         } catch (error) {
             const errors = error?.response?.data?.errors;
@@ -85,8 +89,8 @@
         </h1>
     </div>
 </div>
-<div>
-    <div class="bg-neutral-50 dark:bg-slate-900 rounded-lg p-6">
+<div class="flex justify-center w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
+    <div class="">
     {#if !menus && !$loadingState}
         <h1>nodata</h1>
     {:else if !$loadingState}
@@ -99,14 +103,26 @@
             </button>
             <div class="{parentAdd ? '' : 'hidden'}">
                 <form class="flex items-center"><hr class="w-4 h-[4px] bg-cyan-700">
-                    <Input defaultClass="max-w-[300px]" placeholder="Input name..." required bind:value={newMenu.name}/>
+                    <Input defaultClass="max-w-[300px]" placeholder="Input name..." bind:value={newMenu.name}/>
                     <hr class="w-4 h-[4px] bg-cyan-700">
-                    <Input defaultClass="max-w-[300px]" placeholder="Input address..." required bind:value={newMenu.url}/>
+                    <Input defaultClass="max-w-[300px]" placeholder="Input address..." bind:value={newMenu.url}/>
                     <hr class="w-4 h-[4px] bg-cyan-700">
                     <Button color="dark" outline id="addsubmenu" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
-                    <Popover class="w-64 text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
-                        <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/>
+                    <Popover class="w-full text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
+                        <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/> -->
+                        <Editor bind:text={newMenu.description}/>
                         <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:value={newMenu.isShowDescription}>Show Description</Checkbox>
+                    </Popover>
+                    <hr class="w-4 h-[4px] bg-cyan-700">
+                    <Button color="none" id="menuaddtype" class="text-xl p-0 m-0">
+                        <Icon icon="{newMenu.type == 'product' ? 'fluent-emoji:cat' : newMenu.type == 'blog' ? 'openmoji:hacker-cat' : 'twemoji:guide-dog'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
+                    </Button>
+                    <Popover class="text-sm font-light z-50" title="Type" triggeredBy="#menuaddtype" trigger="click">
+                        <ul class="w-48 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600">
+                            {#each types as type}
+                                <li><Radio class="p-3" bind:group={newMenu.type} value={type.value}>{type.name}</Radio></li>
+                            {/each}
+                        </ul>
                     </Popover>
                     <hr class="w-4 h-[4px] bg-cyan-700">
                     <button on:click={addMenu}>
@@ -115,7 +131,7 @@
                 </form>
             </div>
         </div>
-        <div class="grid md:grid-cols-2 grid-cols-1">
+        <div class="grid md:grid-cols-2 grid-cols-1 gap-4">
             <div>
                 {#each menus as menu (menu.id)}
                 <MenuItem menu={menu} isAction={isAction} bind:categories={categories}/>
@@ -124,6 +140,11 @@
             <div>
                 {#if categories}
                     <Category categories={categories}/>
+                {:else}
+                    <div class="w-full h-full dark:text-white rounded-lg flex flex-col justify-center items-center">
+                        <img class="rounded-lg w-[200px]" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExandoOHd6NXU3bDB4bTJwMTg3NXVoN205N3NmNzU4YXRudzF5ZDJ6YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AW6eOaOemvDv1FBpZ6/giphy.gif" alt="">
+                        <b>Choose one menu to view categories of that menu</b>
+                    </div>
                 {/if}
             </div>
         </div>
