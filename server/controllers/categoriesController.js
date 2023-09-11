@@ -9,8 +9,19 @@ import {
 
 export const index = async (req, res) => {
     let type = req.query?.type? req.query?.type: 'article';
+    let filters = {
+        menuId: req.query.menuId
+    };
+
+    filters = Object.entries(filters).reduce((acc, [key, value]) => {
+        if (value !== null && value !== undefined && !(value instanceof Object && Object.keys(value).length === 0)) {
+            acc[key] = value;
+        }
+        return acc;
+    }, {});
     try {
-        const data = await getAllCategories(type);
+
+        const data = await getAllCategories(type,filters);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching categories from controller", error);
