@@ -1,0 +1,15 @@
+PetOne
+GD1 : 
+Admin
+- user management 
+- auth
+- dashboard (admin , customer )
+- menu management
+- product management
+- category management
+Front: 
+- Home Page (load sản phẩm ex : best selling…)
+- Menu Page (load Theo menu product, service , news)
+- ProductDetail (dành cho sản phẩm)
+- Service Detail (Dành cho service)
+- New Detail (Dành cho new)
