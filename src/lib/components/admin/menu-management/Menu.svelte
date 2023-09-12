@@ -9,7 +9,6 @@
     import Category from "./Category.svelte";
     import Editor from "$lib/components/common/Editor.svelte";
     import { isMenuEdited } from "$lib/store/menuManagement";
-
     const menuService = RepositoryFactory.get("menuRepository");
     let parentAdd = false;
     let isAction = false;
@@ -35,20 +34,12 @@
         const res = await menuService.get();
         menus = res.data.data;
         loadingState.set(false);
+        return menus;
     }
     onMount(() => {
         const unSubscribe = isMenuEdited.subscribe((edited) => {
-            if(edited.isEdit) {
-                getMenus();
-                let menu= menus.map((item)=>{
-                    return item.id = edited.menuId
-                });
-                categories = menu.ca
-            } 
-            isMenuEdited.set({
-                isEdit: false,
-                menuId: null
-            });
+            edited && getMenus();
+            isMenuEdited.set(false);
         });
 
         return unSubscribe;
@@ -91,7 +82,7 @@
     }
 </script>
 
-<div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
+<div class="bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
     <div class="flex items-center justify-between">
         <h1 class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold">
             Menu management
@@ -102,7 +93,7 @@
     {#if !menus && !$loadingState}
         <h1>nodata</h1>
     {:else if !$loadingState}
-        <div class="col-span-2">
+        <div class="col-span-2 pl-4">
             <div class="flex">
                 <button on:click={()=> isAction = !isAction} class="hover:opacity-80 p-2 bg-black dark:bg-gray-700 text-white rounded-lg mr-2">
                     <Icon icon="ic:outline-electric-bolt" class="{isAction == true ? 'text-yellow-300' : ''} text-[28px]" />
@@ -120,7 +111,7 @@
                         <Popover class="w-full text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
                             <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/> -->
                             <Editor bind:text={newMenu.description}/>
-                            <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:value={newMenu.isShowDescription}>Show Description</Checkbox>
+                            <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:checked={newMenu.isShowDescription}>Show Description</Checkbox>
                         </Popover>
                         <hr class="w-4 h-[4px] bg-cyan-700">
                         <Button color="none" id="menuaddtype" class="text-xl p-0 m-0">
@@ -142,11 +133,11 @@
             </div>
             <div>
                 {#each menus as menu (menu.id)}
-                <MenuItem menu={menu} isAction={isAction} bind:categories={categories}/>
+                    <MenuItem menu={menu} isAction={isAction} bind:categories={categories}/>
                 {/each}
             </div>
         </div>
-        <div>
+        <div class="pr-10 mt-[56px]">
             {#if categories}
                 <Category categories={categories}/>
             {:else}
