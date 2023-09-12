@@ -262,7 +262,7 @@ export const isUniqueUrlUpdate = async (url, { req }) => {
             }
         }
     });
-    if (menu?.length > 0) {
+    if (menu?.length > 1) {
         return Promise.reject("url already exists");
     }
     return Promise.resolve();
