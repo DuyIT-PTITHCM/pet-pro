@@ -1,16 +1,22 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
 
-export const getAllPosts = async () => {
+export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
     try {
-        const posts = await models.Post.findAll({
+        const posts = await models.Post.paginate({
             include: [
                 {
-                    model: models.Menu,
-                    as: 'menu',
-                    attributes: ['id', 'name', 'url']
+                    model: models.Categories,
+                    as: 'category',
+                    where: {
+                        type: filters.type
+                    },
+                    attributes: [],
                 }
-            ]
+            ],
+            page,
+            paginate: perPage,
+            order: [['createdAt', 'DESC']],
         });
 
         return posts;
@@ -21,7 +27,7 @@ export const getAllPosts = async () => {
 };
 
 export const createPost = async (postData) => {
-    const { title, content, author, published_at, tags, category, views, imageUrl, referenceId, reference } = postData;
+    const { title, content, description, author, published_at, views, imageUrl, referenceId, reference, categoryId } = postData;
 
     let transaction;
     try {
@@ -29,38 +35,28 @@ export const createPost = async (postData) => {
         const newPost = await models.Post.create({
             title,
             content,
+            description,
             author,
             published_at,
-            tags,
-            category,
             views,
+            categoryId,
             imageUrl
-        },{transaction});
+        }, { transaction });
 
         switch (reference) {
             case 'product':
                 let product = await models.Product.findByPk(referenceId);
                 product.postId = newPost.id;
-                await product.save({transaction});
+                await product.save({ transaction });
                 break;
             case 'menu':
                 let menu = await models.Menu.findByPk(referenceId);
                 menu.postId = newPost.id;
-                await menu.save({transaction});
-                break;
-            case 'categories':
-                let category = await models.Categories.findByPk(referenceId);
-                category.postId = newPost.id;
-                await category.save({transaction});
+                await menu.save({ transaction });
                 break;
             case 'article':
-
-                break;
-
             case 'service':
-
                 break;
-
             default:
                 break;
         }
@@ -75,7 +71,7 @@ export const createPost = async (postData) => {
 };
 
 export const updatePost = async (postId, postData) => {
-    const { title, content, author, published_at, tags, category, views, imageUrl } = postData;
+    const { title, content, description, author, published_at, views, imageUrl, categoryId } = postData;
 
     try {
         const post = await models.Post.findByPk(postId);
@@ -88,8 +84,10 @@ export const updatePost = async (postId, postData) => {
         post.content = content;
         post.author = author;
         post.published_at = published_at;
-        post.tags = tags;
-        post.category = category;
+        post.description = description;
+        if (categoryId) {
+            post.categoryId = categoryId;
+        }
         post.views = views;
         post.imageUrl = imageUrl;
         await post.save();

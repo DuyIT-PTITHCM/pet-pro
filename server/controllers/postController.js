@@ -2,9 +2,19 @@ import { validationResult } from "express-validator";
 import { coreResponse } from "../lib/coreResponse.js";
 import { createPost, getAllPosts, updatePost, deletePost } from "../repositories/postRepository.js";
 
+const PER_PAGE = 10;
 export const index = async (req, res) => {
+    let page = req.query?.page || 1;
+    const size = req.query?.size || PER_PAGE;
+
+    let filters = {
+        type: 'service'
+    };
+
+    filters.type = req.query?.type ? req.query?.type : 'service';
+
     try {
-        const data = await getAllPosts();
+        const data = await getAllPosts(page, size, filters);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching posts from controller", error);

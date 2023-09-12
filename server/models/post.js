@@ -1,8 +1,13 @@
 import { Model } from 'sequelize';
+import sequelizePaginate from 'sequelize-paginate';
 
 export default (sequelize, DataTypes) => {
     class Post extends Model {
         static associate(models) {
+            Post.belongsTo(models.Categories, {
+                foreignKey: 'categoryId',
+                as: 'category',
+            });
         }
     }
 
@@ -18,6 +23,10 @@ export default (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+            description: {
+                type: DataTypes.TEXT,
+                allowNull: true,
+            },
             content: {
                 type: DataTypes.TEXT,
                 allowNull: true,
@@ -30,14 +39,6 @@ export default (sequelize, DataTypes) => {
                 type: DataTypes.DATE,
                 allowNull: true,
             },
-            tags: {
-                type: DataTypes.STRING,
-                allowNull: true,
-            },
-            category: {
-                type: DataTypes.STRING,
-                allowNull: true,
-            },
             views: {
                 type: DataTypes.INTEGER,
                 allowNull: true,
@@ -45,6 +46,13 @@ export default (sequelize, DataTypes) => {
             imageUrl: {
                 type: DataTypes.STRING,
                 allowNull: true,
+            },
+            categoryId: {
+                type: DataTypes.INTEGER,
+                references: {
+                    model: 'Categories',
+                    key: 'id',
+                },
             },
             createdAt: DataTypes.DATE,
             updatedAt: DataTypes.DATE,
@@ -54,6 +62,7 @@ export default (sequelize, DataTypes) => {
             modelName: 'Post',
         }
     );
+    sequelizePaginate.paginate(Post);
 
     return Post;
 };
