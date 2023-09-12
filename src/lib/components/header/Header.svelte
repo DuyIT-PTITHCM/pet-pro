@@ -14,8 +14,7 @@
     DropdownDivider,
     Modal,
     DarkMode,
-    Button,
-    Indicator,
+    Popover,
   } from "flowbite-svelte";
   import LanguageSelect from "../LanguageSelect.svelte";
   import { loadTranslations, t } from "$lib/translations";
@@ -106,7 +105,7 @@
           <NavLi nonActiveClass="">
             <div class="parent-menu relative w-full">
               <div class="flex items-center p-3">
-                  <button class="cursor-pointer w-full h-full { item.active == false?  'dark:text-white text-primary-600' : 'text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent'}" 
+                <button id="menu{item.id}" class="cursor-pointer w-full h-full { item.active == false?  'dark:text-white text-primary-600' : ''}" 
                   on:click={() => {
                     item.active = false;
                     menu.filter((i) => i !== item).forEach((i) => (i.active = true));
@@ -116,19 +115,20 @@
                   >
                   {$t(item.name)}
                 </button>
-                {#if item?.subMenus && item?.subMenus?.length > 0}
+                <!-- {#if item?.subMenus && item?.subMenus?.length > 0}
                 <button class="ml-2 px-1 hover:rounded dark:hover:bg-slate-700 hover:bg-slate-200" on:click={ ()=> showSubmenu(index)}>
                   <Icon icon="icon-park-solid:{numACtiveMenu == index ? 'up' : 'down'}-one" class="text-xl cursor-pointer"/>
                 </button>
-                {/if}
+                {/if} -->
               </div>
               {#if item?.subMenus && item?.subMenus?.length > 0}
-                <div class="{numACtiveMenu == index ? 'active-child-menu' : 'h-0 hidden'} md:absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white bg-white dark:bg-slate-900 rounded-lg z-20">
+                <Popover class="w-64 text-sm font-light " triggeredBy="#menu{item.id}">
+                <!-- <div class="{numACtiveMenu == index ? 'active-child-menu' : 'h-0 hidden'} md:absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white bg-white dark:bg-slate-900 rounded-lg z-20">
                   <div class="flex justify-center w-full -mt-[14px] absolute text-center">
                     <Icon icon="icon-park-solid:up-one" class="text-xl"/>
-                  </div>
+                  </div> -->
                   {#each item.subMenus as sub}
-                    <button class="block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white dark:text-slate-300 { sub.active == false ?  'dark:text-white text-primary-600' : ''}"
+                    <button class="block w-full p-4  { sub.active == false ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
                       on:click={() => {
                         item.active = false;
                         menu.filter((i) => i !== item).forEach((i) => (i.active = true));
@@ -140,7 +140,8 @@
                       {sub.name}
                     </button>
                   {/each}
-                </div>
+                <!-- </div> -->
+                </Popover>
               {/if}
             </div>
           </NavLi>
@@ -194,20 +195,3 @@
     <GradientButton color="teal">No, cancel</GradientButton>
   </div>
 </Modal>
-<style>
-  .active-child-menu{
-    display: block;
-    height: auto;
-    animation: movedown linear .4s;
-  }
-  @keyframes movedown {
-    0% {
-      transform: translateY(-20px);
-      opacity: 0;
-    }
-    100%{
-      transform: translateY(0%);
-      opacity: 1;
-    }
-  }
-</style>

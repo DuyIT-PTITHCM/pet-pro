@@ -11,7 +11,7 @@
     import { isMenuEdited } from "$lib/store/menuManagement";
     const menuService = RepositoryFactory.get("menuRepository");
     let parentAdd = false;
-    let isAction = false;
+    let isAction = true;
     let categories: any;
     let menus: any;
     loadingState.set(true);
