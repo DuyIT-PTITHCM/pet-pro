@@ -4,11 +4,11 @@ import { isMenuExits, isUniqueName, isUniqueNameUpdate, isUniqueUrl, isUniqueUrl
 export const createMenuValidation = [
     body('name').notEmpty().isString().custom(isUniqueName),
     body('url').notEmpty().isString().custom(isUniqueUrl),
-    body('parent_id').optional().isInt().custom(isMenuExits),
+    body('parent_id').optional().custom(isMenuExits),
 ];
 
 export const updateMenuValidation = [
     body('name').notEmpty().isString().custom(isUniqueNameUpdate),
     body('url').notEmpty().isString().custom(isUniqueUrlUpdate),
-    body('parent_id').optional().isInt().custom(isMenuExits),
+    body('parent_id').optional().custom(isMenuExits),
 ];
