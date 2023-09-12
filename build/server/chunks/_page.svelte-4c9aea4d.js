@@ -1,12 +1,12 @@
 import { c as create_ssr_component, v as validate_component, a as add_attribute, b as each, e as escape, i as createEventDispatcher, g as getContext } from './ssr-6197c9bb.js';
-import { v as validate_store, a as subscribe, c as compute_rest_props, d as compute_slots, h as identity } from './utils-779d328f.js';
+import { v as validate_store, a as subscribe, c as compute_rest_props, h as identity } from './utils-779d328f.js';
 import { l as loadingState } from './loading-561efc4f.js';
 import { R as RepositoryFactory } from './RepositoryFactory-5f61db19.js';
 import { B as Button } from './Button-e87eace1.js';
 import { I as Icon } from './Indicator.svelte_svelte_type_style_lang-5ca2282a.js';
 import { C as Checkbox, R as Radio } from './Checkbox-dc2445a7.js';
 import { I as Input } from './Input-b6c6b4cd.js';
-import { P as Popper } from './Popper-9e43361b.js';
+import { P as Popover } from './Popover-49bae1cb.js';
 import { twMerge } from 'tailwind-merge';
 import { M as Modal, C as CloseButton } from './Modal-d1200818.js';
 import { F as Frame } from './Frame-b83f8f7d.js';
@@ -20,6 +20,7 @@ import 'js-cookie';
 import 'axios';
 import './dev-1873bb41.js';
 import './Wrapper-48062af6.js';
+import './Popper-9e43361b.js';
 import '@floating-ui/dom';
 
 function fade(node, { delay = 0, duration = 400, easing = identity } = {}) {
@@ -190,28 +191,6 @@ const Toggle = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     )} `;
   } while (!$$settled);
   return $$rendered;
-});
-const Popover = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["title", "defaultClass"]);
-  let $$slots = compute_slots(slots);
-  let { title: title2 = "" } = $$props;
-  let { defaultClass = "py-2 px-3" } = $$props;
-  if ($$props.title === void 0 && $$bindings.title && title2 !== void 0)
-    $$bindings.title(title2);
-  if ($$props.defaultClass === void 0 && $$bindings.defaultClass && defaultClass !== void 0)
-    $$bindings.defaultClass(defaultClass);
-  return `${validate_component(Popper, "Popper").$$render(
-    $$result,
-    Object.assign({}, { activeContent: true }, { border: true }, { shadow: true }, { rounded: true }, $$restProps, {
-      class: "dark:!border-gray-600 " + $$props.class
-    }),
-    {},
-    {
-      default: () => {
-        return `${$$slots.title || title2 ? `<div class="py-2 px-3 bg-gray-100 rounded-t-md border-b border-gray-200 dark:border-gray-600 dark:bg-gray-700">${slots.title ? slots.title({}) : ` <h3 class="font-semibold text-gray-900 dark:text-white">${escape(title2)}</h3> `}</div>` : ``} <div${add_attribute("class", defaultClass, 0)}>${slots.default ? slots.default({}) : ``}</div>`;
-      }
-    }
-  )} `;
 });
 const ListPlaceholder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let { divClass = "p-4 space-y-4 max-w-md rounded border border-gray-200 divide-y divide-gray-200 shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700" } = $$props;
@@ -865,7 +844,7 @@ const Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   validate_store(loadingState, "loadingState");
   $$unsubscribe_loadingState = subscribe(loadingState, (value) => $loadingState = value);
   const menuService = RepositoryFactory.get("menuRepository");
-  let isAction = false;
+  let isAction = true;
   let categories;
   let menus;
   loadingState.set(true);
@@ -900,7 +879,7 @@ const Menu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       $$result,
       {
         icon: "ic:outline-electric-bolt",
-        class: " text-[28px]"
+        class: "text-yellow-300 text-[28px]"
       },
       {},
       {}
@@ -1091,4 +1070,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-a5c0d184.js.map
+//# sourceMappingURL=_page.svelte-4c9aea4d.js.map

@@ -12,6 +12,7 @@ import { twMerge } from 'tailwind-merge';
 import { v as validate_dynamic_element, a as validate_void_dynamic_element, i as is_void } from './dev-1873bb41.js';
 import { q as quintOut } from './index3-e15cc75f.js';
 import { w as writable } from './index-6d3e2f99.js';
+import { P as Popover } from './Popover-49bae1cb.js';
 import { g as getCookie } from './cookieUtils-3c057440.js';
 import { t as t2 } from './index2-ea715c5b.js';
 import axios from 'axios';
@@ -266,7 +267,7 @@ const NavUl = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   )}><ul${add_attribute("class", _ulClass, 0)}>${slots.default ? slots.default({}) : ``}</ul></div>`} `;
 });
 const selectedLanguage = writable(getCookie("lang") ?? "en");
-const css$2 = {
+const css$1 = {
   code: "select.s-stFEWcntJTPy{outline:none;border:none;padding:0 24px;cursor:pointer;border-radius:100px}select.s-stFEWcntJTPy:hover{opacity:.9}",
   map: null
 };
@@ -276,16 +277,12 @@ const LanguageSelect = create_ssr_component(($$result, $$props, $$bindings, slot
   $$unsubscribe_selectedLanguage = subscribe(selectedLanguage, (value) => value);
   const languages = [{ id: "en", name: "English" }, { id: "vi", name: "Tiếng Việt" }];
   selectedLanguage.set(getCookie("lang"));
-  $$result.css.add(css$2);
+  $$result.css.add(css$1);
   $$unsubscribe_selectedLanguage();
   return `   <select class="dark:bg-slate-800 s-stFEWcntJTPy">${each(languages, (language) => {
     return `<option${add_attribute("value", language.id, 0)}>${escape(language.name)}</option>`;
   })}</select>`;
 });
-const css$1 = {
-  code: ".active-child-menu.s-f_PBzT5OICzS{display:block;height:auto;animation:s-f_PBzT5OICzS-movedown linear .4s}@keyframes s-f_PBzT5OICzS-movedown{0%{transform:translateY(-20px);opacity:0}100%{transform:translateY(0%);opacity:1}}",
-  map: null
-};
 const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $t, $$unsubscribe_t;
   validate_store(t2, "t");
@@ -310,8 +307,6 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg"
   };
   let popupModal = false;
-  let numACtiveMenu = 0;
-  $$result.css.add(css$1);
   let $$settled;
   let $$rendered;
   do {
@@ -374,34 +369,27 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
               return `${each(menu, (item, index) => {
                 return `${validate_component(NavLi, "NavLi").$$render($$result, { nonActiveClass: "" }, {}, {
                   default: () => {
-                    return `<div class="parent-menu relative w-full"><div class="flex items-center p-3"><button class="${"cursor-pointer w-full h-full " + escape(
-                      item.active == false ? "dark:text-white text-primary-600" : "text-gray-700 hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-primary-700 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent",
+                    return `<div class="parent-menu relative w-full"><div class="flex items-center p-3"><button id="${"menu" + escape(item.id, true)}" class="${"cursor-pointer w-full h-full " + escape(
+                      item.active == false ? "dark:text-white text-primary-600" : "",
                       true
-                    )}">${escape($t(item.name))}</button> ${item?.subMenus && item?.subMenus?.length > 0 ? `<button class="ml-2 px-1 hover:rounded dark:hover:bg-slate-700 hover:bg-slate-200">${validate_component(Icon, "Icon").$$render(
+                    )}">${escape($t(item.name))}</button> </div> ${item?.subMenus && item?.subMenus?.length > 0 ? `${validate_component(Popover, "Popover").$$render(
                       $$result,
                       {
-                        icon: "icon-park-solid:" + (numACtiveMenu == index ? "up" : "down") + "-one",
-                        class: "text-xl cursor-pointer"
+                        class: "w-64 text-sm font-light ",
+                        triggeredBy: "#menu" + item.id
                       },
                       {},
-                      {}
-                    )} </button>` : ``}</div> ${item?.subMenus && item?.subMenus?.length > 0 ? `<div class="${escape(
-                      numACtiveMenu == index ? "active-child-menu" : "h-0 hidden",
-                      true
-                    ) + " md:absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white bg-white dark:bg-slate-900 rounded-lg z-20 s-f_PBzT5OICzS"}"><div class="flex justify-center w-full -mt-[14px] absolute text-center">${validate_component(Icon, "Icon").$$render(
-                      $$result,
                       {
-                        icon: "icon-park-solid:up-one",
-                        class: "text-xl"
-                      },
-                      {},
-                      {}
-                    )}</div> ${each(item.subMenus, (sub) => {
-                      return `<button class="${"block w-full p-4 hover:bg-slate-600 duration-300 hover:text-white dark:text-slate-300 " + escape(
-                        sub.active == false ? "dark:text-white text-primary-600" : "",
-                        true
-                      )}">${escape(sub.name)} </button>`;
-                    })} </div>` : ``}</div> `;
+                        default: () => {
+                          return ` ${each(item.subMenus, (sub) => {
+                            return `<button class="${"block w-full p-4 " + escape(
+                              sub.active == false ? "dark:text-white text-primary-600 font-bold" : "hover:text-primary-700 dark:text-slate-400 dark:hover:text-white",
+                              true
+                            )}">${escape(sub.name)} </button>`;
+                          })}  `;
+                        }
+                      }
+                    )}` : ``}</div> `;
                   }
                 })}`;
               })} ${validate_component(LanguageSelect, "LanguageSelect").$$render($$result, {}, {}, {})}`;
@@ -633,4 +621,4 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-78f65412.js.map
+//# sourceMappingURL=_layout.svelte-168fcc58.js.map
