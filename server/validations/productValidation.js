@@ -1,4 +1,4 @@
-import { body } from 'express-validator';
+import { body, query } from 'express-validator';
 import { isUniqueSlug, isUniqueSlugUpdate } from '../repositories/productRepository.js';
 
 export const createProductValidation = [
@@ -38,4 +38,8 @@ export const updateProductValidation = [
     body('slug').notEmpty().isString().custom(isUniqueSlugUpdate),
     body('editedBy').notEmpty().isInt(),
     body('categoryId').notEmpty().isInt()
+];
+export const getProductValidation = [
+    query('type').notEmpty().withMessage('status is required').isIn(['pet', 'accessory', 'medical_equipment']).withMessage('type must be a string and it is pet or accessory or medical_equipment '),
+    query('status').notEmpty().withMessage('status is required').isIn(['featured', 'best_selling', 'normal']).withMessage('status must be a string and it is featured or best_selling or normal]'),
 ];

@@ -30,10 +30,28 @@ export const getAllProducts = async (page = 1, perPage = 10, filters = {}) => {
     }
 };
 
+export const getAllProductsForFront = async (filters = {}) => {
+    try {
+        const data = await models.Product.findAll({
+            order: [['createdAt', 'DESC']],
+            where:{
+                ...filters
+            }
+        });
+
+        return data;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Error fetching products");
+    }
+};
+
+
+
 export const showProduct = async (req) => {
     const id = req.params.id;
     const slug = req.params.slug;
-    
+
     try {
         const product = await models.Product.findOne({
             where: id ? { id } : { slug },
@@ -52,7 +70,7 @@ export const showProduct = async (req) => {
                 },
             ],
         });
-        
+
         if (!product) {
             throw new Error("Product not found");
         }
