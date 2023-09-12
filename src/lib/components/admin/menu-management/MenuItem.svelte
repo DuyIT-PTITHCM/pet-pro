@@ -2,8 +2,9 @@
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { toastErr } from "$lib/store/toastError";
     import Icon from "@iconify/svelte";
-    import { Badge, Button, Checkbox, Input, Modal, Popover, Radio, Textarea, Toggle } from "flowbite-svelte";
-    import { isUserEdited } from "$lib/store/userManagement";
+    import { Badge, Button, Checkbox, Input, Modal, Popover, Radio, Toggle } from "flowbite-svelte";
+    import { isMenuEdited } from "$lib/store/menuManagement";
+
     import Editor from "$lib/components/common/Editor.svelte";
     export let isAction = false;
     export let menu:any;
@@ -14,15 +15,17 @@
     let deleteMenuName = '';
     let popupDeleteModal = false;
     let isButtonDisabled = false;
-    let isShowCategory = false;
     let numCategory = 0;
     let newMenu = {
-                name: null,
-                url: null,
-                parent_id: null,
-                description: "",
-                isShowDescription: 0
-            }
+        id: null,
+        name: null,
+        url: null,
+        parent_id: 0,
+        description: "",
+        isShowDescription: true,
+        active: true,
+        type: "product",
+    }
     let types = [
         {
             name: 'Product',
@@ -38,14 +41,10 @@
         }
     ]
     const menuService = RepositoryFactory.get("menuRepository");
-    async function addMenu(name = null, url = null, parent_id = 0) {
+    async function addMenu(parent_id: number) {
         try {
-            const newMenuItem = {
-                name: name,
-                url: url,
-                parent_id: parent_id,
-            }
-            const res = await menuService.post(newMenuItem);
+            newMenu.parent_id = parent_id;
+            const res = await menuService.post(newMenu);
             toastErr.set([
                 {
                     message: res.data.message,
@@ -54,7 +53,8 @@
             ]);
             newMenu.name = null;
             newMenu.url = null;
-            isUserEdited.set(true);
+            newMenu.description = "";
+            isMenuEdited.set(true);
         } catch (error) {
             const errors = error?.response?.data?.errors;
             var toasts = errors?.map(element => {
@@ -107,7 +107,8 @@
                     type: "success"
                 }
             ]);
-            isUserEdited.set(true);
+            isMenuEdited.set(true);
+            
         } catch (error) {
             console.log("hi")
             const errors = error?.response?.data?.errors;
@@ -124,21 +125,20 @@
         isButtonDisabled = true;
         setTimeout(() => {
             isButtonDisabled = false;
-            isUserEdited.set(true);
+            isMenuEdited.set(true);
+
         }, 2000);
     }
-    function ShowCategory(cate: any, menuname: string, id: number){
-        if(numCategory == id){
+    function ShowCategory(menuId: number, menuType: string, menuName: string){
+        if(numCategory == menuId){
             numCategory = 0;
-            isShowCategory = false;
             categories = null;
         }else{
-            numCategory = id;
-            isShowCategory = true;
+            numCategory = menuId;
             categories = {
-                cates: cate,
-                manuname: menuname,
-                id: numCategory,
+                menuId: menuId,
+                menuType: menuType,
+                menuName: menuName
             };
         }
     }
@@ -185,7 +185,7 @@
             <Toggle class="cursor-pointer p-2 dark:bg-gray-700 shadow-[inset_0_-2px_4px_rgba(0,0,0)] rounded-lg hover:opacity-80" bind:checked={menu.active}>{menu.active? 'Active' : 'InActive'}</Toggle>
         </div>
         <hr class="w-2 h-[4px] bg-cyan-400">
-        <button on:click={() => ShowCategory(menu.categories, menu.name, menu.id)}>
+        <button on:click={() => ShowCategory(menu.id, menu.type, menu.name)}>
             <Icon icon="icon-park-solid:right-one" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] {numCategory == menu.id ? 'text-yellow-400' : 'text-gray-900 dark:text-white'} dark:bg-gray-700 rounded-lg" />
         </button>
     </div>
@@ -196,7 +196,7 @@
         {#each menu.subMenus as subMenu, index}
         <div class="flex items-center my-2">
             <div class="flex items-center">
-                <hr class="w-10 h-[4px] bg-cyan-400">
+                <hr class="w-8 h-[4px] bg-cyan-400">
                 <Input defaultClass="max-w-[300px]" bind:value={subMenu.name}/>
                 <hr class="w-4 h-[4px] bg-cyan-400">
                 <Input defaultClass="max-w-[300px]" bind:value={subMenu.url}/>
@@ -218,6 +218,7 @@
                         {/each}
                     </ul>
                 </Popover>
+                
             </div>
             <div class="flex items-center {!isAction && 'hidden'}">
                 <hr class="w-2 h-[4px] bg-cyan-400">
@@ -228,7 +229,7 @@
                 <Toggle class="cursor-pointer p-2 dark:bg-gray-700 shadow-[inset_0_-2px_4px_rgba(0,0,0)] rounded-lg hover:opacity-80" bind:checked={subMenu.active}>{subMenu.active? 'Active' : 'InActive'}</Toggle>
             </div>
             <hr class="w-2 h-[4px] bg-cyan-400">
-            <button on:click={() => ShowCategory(subMenu.categories, subMenu.name, subMenu.id)}>
+            <button on:click={() => ShowCategory(subMenu.id, subMenu.type, subMenu.name)}>
                 <Icon icon="icon-park-solid:right-one" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] dark:bg-gray-700 {numCategory == subMenu.id ? 'text-yellow-400' : 'text-gray-900 dark:text-white'} rounded-lg" />
             </button>
         </div>
@@ -247,10 +248,21 @@
             <Popover class="w-full text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
                 <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/> -->
                 <Editor bind:text={newMenu.description}/>
-                <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:value={newMenu.isShowDescription}>Show Description</Checkbox>
+                <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:checked={newMenu.isShowDescription}>Show Description</Checkbox>
             </Popover>
             <hr class="w-4 h-[4px] bg-cyan-400">
-            <button on:click={() => addMenu(newMenu.name, newMenu.url, menu.id)}>
+            <Button color="none" id="menuaddtype" class="text-xl p-0 m-0">
+                <Icon icon="{newMenu.type == 'product' ? 'fluent-emoji:cat' : newMenu.type == 'blog' ? 'openmoji:hacker-cat' : 'twemoji:guide-dog'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
+            </Button>
+            <Popover class="text-sm font-light z-50" title="Type" triggeredBy="#menuaddtype" trigger="click">
+                <ul class="w-48 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600">
+                    {#each types as type}
+                        <li><Radio class="p-3" bind:group={newMenu.type} value={type.value}>{type.name}</Radio></li>
+                    {/each}
+                </ul>
+            </Popover>
+            <hr class="w-2 h-[4px] bg-cyan-400">
+            <button on:click={() => addMenu(menu.id)}>
                 <Icon icon="ep:success-filled" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
             </button>
         </div>

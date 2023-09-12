@@ -1,14 +1,37 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
-    import { Tabs, TabItem, Label, Input, Radio } from 'flowbite-svelte';
+    import { Tabs, TabItem, ListPlaceholder } from 'flowbite-svelte';
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { toastErr } from '$lib/store/toastError';
-    import { isMenuEdited } from '$lib/store/userManagement';
-    const categoryService = RepositoryFactory.get("categoryRepository");
 
+    const categoryService = RepositoryFactory.get("categoryRepository");
+    var isReload = false;
     export let categories : any;
+    let datacate: any[] = [];
     // $: console.log(categories)
     let nameCategoryName: string;
+    async function showCategories(){
+        try {
+            isReload = true;
+            let queryParams = {
+                menuId: categories.menuId, // Example query parameter
+                type: categories.menuType,
+            };
+            const res = await categoryService.get(queryParams);
+            datacate = res.data.data;
+            console.log(datacate)
+            isReload = false;
+        } catch (error) {
+            const errors = error?.response?.data?.errors;
+            var toasts = errors?.map(element => {
+                return {
+                    message : element.msg,
+                    type : "error"
+                }
+            });
+            toastErr.set(toasts);
+        }
+    }
     async function addCategory(name: string, menuId: number){
         try {
             var newCategory = {
@@ -22,10 +45,9 @@
                     type: "success"
                 }
             ]);
-            isMenuEdited.set({
-                isEdit : true,
-                menuId: menuId
-            });
+            nameCategoryName = '';
+            showCategories();
+            //isMenuEdited.set(true);
         } catch (error) {
             const errors = error?.response?.data?.errors;
             var toasts = errors?.map(element => {
@@ -50,10 +72,8 @@
                     type: "success"
                 }
             ]);
-            isMenuEdited.set({
-                isEdit : true,
-                menuId: menuId
-            });
+            showCategories();
+            //isMenuEdited.set(true);
         } catch (error) {
             const errors = error?.response?.data?.errors;
             var toasts = errors?.map(element => {
@@ -75,10 +95,8 @@
                     type: "success"
                 }
             ]);
-            isMenuEdited.set({
-                isEdit : true,
-                menuId: menuId
-            });
+            showCategories();
+            //isMenuEdited.set(true);
         } catch (error) {
             console.log("hi")
             const errors = error?.response?.data?.errors;
@@ -91,22 +109,25 @@
             toastErr.set(toasts);
         }
     }
+    $: categories && showCategories();
   </script>
 <div class="border-2 border-gray-300 shadow-[0_20px_20px_-8px_rgba(0,0,0,0.3)] dark:border-gray-800 dark:shadow rounded-xl overflow-hidden">
     <Tabs contentClass="bg-gray-50 rounded-lg dark:bg-gray-800 h-full" style="underline">
         <TabItem open>
             <div slot="title" class="flex items-center gap-2 rounded-lg">
-                Categories of {categories.manuname}
+                Categories of {categories.menuName}
             </div>
             <div class="dark:bg-gray-700 min-h-[150px] p-4">
-                {#if categories.cates.length > 0}
+                {#if isReload}
+                    <ListPlaceholder />
+                {:else if datacate.length > 0}
                     <div class="w-full h-full">
-                        {#each categories.cates as category}
+                        {#each datacate as category}
                             <div class="flex justify-between items-center mb-4 w-full bg-slate-200 dark:bg-slate-900 pl-4 cursor-pointer rounded-lg overflow-hidden">
                                 <input type="text" class="flex-1 block bg-transparent outline-0 border-0 dark:text-gray-200 rounded-lg" bind:value={category.categoryName} />
                                 <div>
                                     <button class="text-xl dark:text-white p-4 -mr-1 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-300 dark:hover:text-black"
-                                    on:click={() => {editCategory(category.categoryName, category.id, categories.id)}}>
+                                    on:click={() => {editCategory(category.categoryName, category.id, category.menuId)}}>
                                         <Icon icon="fluent:edit-20-filled" />
                                     </button>
                                     <button class="text-xl dark:text-white p-4 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-300 dark:hover:text-black"
@@ -121,33 +142,23 @@
                                 >
                                 <input type="text" class="flex-1 block bg-transparent outline-0 border-0 dark:text-gray-200 rounded-lg" placeholder="Input category name to add..." bind:value={nameCategoryName}/>
 
-                            <button class="text-xl p-4 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-500 " on:click={() => {addCategory(nameCategoryName, categories.id)}}>
+                            <button class="text-xl p-4 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-500 " on:click={() => {addCategory(nameCategoryName, categories.menuId)}}>
                                 <Icon icon="fluent:add-12-filled" />
                             </button>
                         </div>
                     </div>
-                    <!-- {#if isAddCate || category}
-                        <div class="w-full rounded-lg my-4 border p-4">
-                            <div>
-                                <Label for="catename" class="mb-2">Category name</Label>
-                                <Input type="text" id="catename" placeholder="Input category name" required />
-                            </div>
-                            <br>
-                            <div class="flex justify-between">
-                                <p class="mb-4 font-semibold text-gray-900 dark:text-white">
-                                Category: <span class="capitalize">{technology}</span>
-                                </p>
-                                <ul class="w-48 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600">
-                                    <li><Radio class="p-3" bind:group={technology} disabled value="product">Product</Radio></li>
-                                    <li><Radio class="p-3" bind:group={technology} disabled value="service">Service</Radio></li>
-                                    <li><Radio class="p-3" bind:group={technology} disabled value="blog">Blog</Radio></li>
-                                </ul>
-                            </div>
-                        </div>
-                    {/if} -->
                 {:else}
-                    <div class="flex p-4 dark:text-gray-200">
-                        <p>This menu don't have any category</p> <div class="animate-bounce font-bold ml-1">. . .</div>
+                    <div class="p-4 dark:text-gray-200">
+                        <p>This menu don't have any category <span class="block animate-bounce font-bold ml-1">. . .</span></p>
+                        <div class="flex justify-between items-center w-full  text-gray-900 dark:text-gray-200 bg-slate-200 dark:bg-slate-900
+                                my-4 pl-4 rounded-lg overflow-hidden"
+                                >
+                                <input type="text" class="flex-1 block bg-transparent outline-0 border-0 dark:text-gray-200 rounded-lg" placeholder="Input category name to add..." bind:value={nameCategoryName}/>
+
+                            <button class="text-xl p-4 hover:bg-slate-800 hover:text-white dark:hover:bg-slate-500 " on:click={() => {addCategory(nameCategoryName, categories.menuId)}}>
+                                <Icon icon="fluent:add-12-filled" />
+                            </button>
+                        </div>
                     </div>
                 {/if}
             </div>
