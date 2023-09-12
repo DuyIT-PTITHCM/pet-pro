@@ -26,7 +26,7 @@ export const getAllCategories = async (type ,  filters = {}) => {
 
 export const createCategory = async (categoryData) => {
     const { categoryName,menuId } = categoryData;
-    const menuType = models.Menu.findByPk(menuId);
+    const menuType = await models.Menu.findByPk(menuId);
 
     try {
         const newCategory = await models.Categories.create({
@@ -43,7 +43,7 @@ export const createCategory = async (categoryData) => {
 export const updateCategory = async (req) => {
     const categoryId = req.params.id;
     const { categoryName, menuId } = req.body;
-    const menuType = models.Menu.findByPk(menuId);
+    const menuType = await models.Menu.findByPk(menuId);
 
     try {
         const category = await models.Categories.findByPk(categoryId);
