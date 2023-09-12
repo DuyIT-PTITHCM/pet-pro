@@ -3,12 +3,23 @@ import { createJWTToken } from "../lib/jwtCommon.js";
 import { coreResponse } from "../lib/coreResponse.js";
 import { rigisterUser } from "../repositories/authRepository.js";
 import { validationResult } from "express-validator";
+import { Op } from "sequelize";
+import { ROLE } from "../utils/const.js";
 
 export const login = async (req, res) => {
     try {
         const { email, password, rememberMe } = req.body;
 
-        const user = await models.User.findOne({ where: { email } });
+        const user = await models.User.findOne({
+            where: {
+                email,
+                [Op.or]: [
+                    { role: ROLE.admin },
+                    { role: ROLE.customer }
+                ]
+
+            },
+        });
 
         if (!user) {
             return coreResponse(res, 401, 'Invalid credentials');
@@ -21,7 +32,8 @@ export const login = async (req, res) => {
         }
         const expiresIn = rememberMe ? '30d' : '7d';
         const token = createJWTToken(user.id, expiresIn);
-        return coreResponse(res, 200, 'Login successful', { token });
+        const { password: passwordToRemove, ...userWithoutPassword } = user.dataValues;
+        return coreResponse(res, 200, 'Login successful', { token, userWithoutPassword });
     } catch (error) {
         console.error('Error during login:', error);
         return coreResponse(res, 500, 'Error during login', error);
