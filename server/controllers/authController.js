@@ -33,7 +33,7 @@ export const login = async (req, res) => {
         const expiresIn = rememberMe ? '30d' : '7d';
         const token = createJWTToken(user.id, expiresIn);
         const { password: passwordToRemove, ...userWithoutPassword } = user.dataValues;
-        return coreResponse(res, 200, 'Login successful', { token, userWithoutPassword });
+        return coreResponse(res, 200, 'Login successful', { token, ...userWithoutPassword });
     } catch (error) {
         console.error('Error during login:', error);
         return coreResponse(res, 500, 'Error during login', error);
