@@ -268,6 +268,9 @@ export const isUniqueUrlUpdate = async (url, { req }) => {
     return Promise.resolve();
 };
 export const isMenuExits = async (parent_id) => {
+    if (!parent_id) {
+        return Promise.resolve();
+    }
     const menu = await models.Menu.findByPk(parent_id);
     if (!menu) {
         return Promise.reject('url not exists');
