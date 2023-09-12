@@ -1,12 +1,14 @@
 import { body} from 'express-validator';
-import { isUniqueName, isUniqueNameUpdate, isUniqueUrl, isUniqueUrlUpdate } from '../repositories/menuRepository.js';
+import { isMenuExits, isUniqueName, isUniqueNameUpdate, isUniqueUrl, isUniqueUrlUpdate } from '../repositories/menuRepository.js';
 
 export const createMenuValidation = [
     body('name').notEmpty().isString().custom(isUniqueName),
-    body('url').notEmpty().isString().custom(isUniqueUrl)
+    body('url').notEmpty().isString().custom(isUniqueUrl),
+    body('parent_id').optional().isInt().custom(isMenuExits),
 ];
 
 export const updateMenuValidation = [
     body('name').notEmpty().isString().custom(isUniqueNameUpdate),
-    body('url').notEmpty().isString().custom(isUniqueUrlUpdate)
+    body('url').notEmpty().isString().custom(isUniqueUrlUpdate),
+    body('parent_id').optional().isInt().custom(isMenuExits),
 ];

@@ -116,8 +116,12 @@ export const getDetailMenu = async (req) => {
 };
 
 export const createMenu = async (menuData) => {
-    const { name, url, parent_id, isShowDescription, description, active, type } = menuData;
-
+    let { name, url, parent_id, isShowDescription, description, active, type } = menuData;
+ 
+    if (parent_id) {
+        const menu = await models.Menu.findByPk(parent_id);
+        type = menu.type;
+    }
     try {
         const newmenu = await models.Menu.create({
             name,
@@ -145,7 +149,7 @@ export const checkIdExits = async (menuId) => {
 };
 export const updateMenu = async (req) => {
     const { id } = req.params;
-    const {
+    let {
         name,
         url,
         parent_id,
@@ -154,6 +158,11 @@ export const updateMenu = async (req) => {
         active,
         type = 'product', // Giá trị mặc định cho type
     } = req.body;
+
+    if (parent_id) {
+        const menu = await models.Menu.findByPk(parent_id);
+        type = menu.type;
+    }
 
     const transaction = await models.sequelize.transaction();
 
@@ -255,6 +264,13 @@ export const isUniqueUrlUpdate = async (url, { req }) => {
     });
     if (menu?.length > 0) {
         return Promise.reject("url already exists");
+    }
+    return Promise.resolve();
+};
+export const isMenuExits = async (parent_id) => {
+    const menu = await models.Menu.findByPk(parent_id);
+    if (!menu) {
+        return Promise.reject('url not exists');
     }
     return Promise.resolve();
 };
