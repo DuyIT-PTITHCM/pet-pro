@@ -31,7 +31,7 @@ export const createCategory = async (categoryData) => {
     try {
         const newCategory = await models.Categories.create({
             categoryName,
-            type : menuType?.type ? menuType.type : 'product',
+            type : menuType.type ,
             menuId
         });
         return newCategory;
@@ -53,7 +53,7 @@ export const updateCategory = async (req) => {
         }
 
         category.categoryName = categoryName;
-        category.type = menuType?.type ? menuType.type : 'product',
+        category.type = menuType.type ,
         category.menuId = menuId;
 
         await category.save();
