@@ -47,8 +47,14 @@ let colors = [
     },
     {
       name: "blog",
-      url: "#",
+      url: "/admin/blog",
       icon: "icon-park-solid:hi",
+      active: false,
+    },
+    {
+      name: "service",
+      url: "/admin/service",
+      icon: "twemoji:service-dog",
       active: false,
     },
     {
