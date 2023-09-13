@@ -10,8 +10,7 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
                     as: 'category',
                     where: {
                         type: filters.type
-                    },
-                    attributes: [],
+                    }
                 }
             ],
             page,
