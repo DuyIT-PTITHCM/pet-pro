@@ -1,12 +1,18 @@
 <script lang="ts">
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
+    import { BASE_API } from "$lib/Const";
     import { loadingState } from "$lib/store/loading";
     import { toastErr } from "$lib/store/toastError";
+    import Icon from "@iconify/svelte";
+    import axios from "axios";
+    import { Fileupload } from "flowbite-svelte";
 
     export let seoData: any;
 
     let seo = seoData.seo;
     let host = "http://103.142.26.42";
+    let file: any;
+    file = seo.image;
     function convertImageJsonToArray(json) {
         if (json) {
             return JSON.parse(json);
@@ -41,6 +47,7 @@
                 },
             },
         };
+        seo.image = file;
         seo.structuredData = JSON.stringify(structuredData);
         const res = await seoService.post(seo);
         seo = res.data.data;
@@ -97,6 +104,55 @@
             }
         }
         loadingState.set(false);
+    }
+    async function handleFileInputChange(event: any) {
+        file = event.target.files[0];
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+            const res = await axios.post(`${BASE_API}/upload`, formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem(
+                        "access_token"
+                    )}`,
+                },
+            });
+
+            file = res.data.data.path;
+        } catch (error) {
+            toastErr.set([
+                {
+                    message: "File upload failed",
+                    type: "error",
+                },
+            ]);
+        }
+    }
+    async function handleDeleteFile(path: String) {
+        try {
+            await axios.post(
+                `${BASE_API}/upload/delete`,
+                {
+                    path: path,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "access_token"
+                        )}`,
+                    },
+                }
+            );
+            file = "";
+        } catch (error) {
+            toastErr.set([
+                {
+                    message: "File deleting failed",
+                    type: "error",
+                },
+            ]);
+        }
     }
 </script>
 
@@ -218,6 +274,35 @@
                 placeholder="Innput Sitemap Frequency "
             />
         </div>
+    </div>
+    <div>
+        <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+            for="grid-zip"
+        >
+            Images
+        </label>
+        <Fileupload
+            on:change={handleFileInputChange}
+            class="w-24 py-[10px] bg-white"
+        />
+        {#if file}
+            <div class="grid grid-cols-1 xl:grid-cols-4 gap-[10px] py-[20px]">
+                <div class="relative">
+                    <img
+                        class="object-cover w-full h-[300px] rounded"
+                        src={`http://103.142.26.42${file}`}
+                        alt="avatar"
+                    />
+                    <div
+                        class="absolute top-0 right-0 cursor-pointer bg-white rounded text-red-500"
+                        on:click={handleDeleteFile(file)}
+                    >
+                        <Icon icon="iwwa:delete" width="30" />
+                    </div>
+                </div>
+            </div>
+        {/if}
     </div>
     <div class="flex justify-center items-center relative bottom-0">
         <div class="btn-signup w-fit">

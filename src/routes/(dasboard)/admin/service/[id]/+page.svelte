@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { title } from "$lib/store/meta";
     import { loadingState } from "./../../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { Tabs, TabItem, DeviceMockup } from "flowbite-svelte";
     import CreateArticle from "$lib/components/admin/article/CreateArticle.svelte";
-
+    import CreateSeo from "$lib/components/admin/seo/CreateSeo.svelte";
 
     const postService = RepositoryFactory.get("postRepository");
     let service: any;
@@ -21,6 +22,7 @@
         status: null,
         discount: null,
         slug: null,
+        seoId: null,
         createdBy: 1,
         editedBy: 1,
         categoryId: null,
@@ -30,6 +32,21 @@
     let queryParams = {
         type: "service",
     };
+    let seo = {
+        id: null,
+        metaTitle: null,
+        metaDescription: null,
+        keywords: null,
+        canonicalUrl: null,
+        robotMetaTags: null,
+        openGraphTags: null,
+        structuredData: null,
+        sitemapPriority: null,
+        sitemapFrequency: null,
+        sitemapLastModified: null,
+        referenceId: null,
+        reference: "service",
+    };
     export let data;
 
     async function postDetail() {
@@ -37,6 +54,13 @@
         service = await postService.show(data?.id);
         service = service.data.data;
         services = service;
+
+        if (!services.seoId) {
+            service.seo = seo;
+            service.seo = seo;
+        }
+        service.seo.referenceId = service.id;
+
         loadingState.set(false);
     }
     function convertImageJsonToArray(json) {
@@ -49,19 +73,20 @@
     postDetail();
 </script>
 
-<!-- <Tabs
+<Tabs
     activeClasses="p-2 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-800 dark:text-primary-500"
     inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
     contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg"
 >
-    <TabItem title="Seo {service?.productName}">
-        <CreateProduct {mode} {services} title="Edit services" />
+    <TabItem title="Edit {service?.title}" open>
+        {#if service}
+            <CreateArticle bind:article={service} bind:queryParams />
+        {/if}
     </TabItem>
-</Tabs> -->
-{#if service}
-<CreateArticle bind:article={service}  bind:queryParams/>
-
-{/if}
+    <TabItem title="Write Seo">
+        <CreateSeo bind:seoData={service} />
+    </TabItem>
+</Tabs>
 
 <style>
     .gallery {
