@@ -107,10 +107,10 @@ export const showPost = async (req) => {
         const post = await models.Post.findOne({
             where: id ? { id } : { slug },
             include: [
-                {
-                    model: models.Seo,
-                    as: 'seo',
-                },
+                // {
+                //     model: models.Seo,
+                //     as: 'seo',
+                // },
                 {
                     model: models.Categories,
                     as: 'category',
@@ -124,6 +124,7 @@ export const showPost = async (req) => {
 
         return post;
     } catch (error) {
+        console.log(error);
         throw new Error("Error showing post");
     }
 };
