@@ -1,22 +1,65 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
 
+// export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
+//     try {
+//         const posts = await models.Post.paginate({
+//             include: [
+//                 {
+//                     model: models.Categories,
+//                     as: 'category',
+//                     where: {
+//                         type: filters.type
+//                     }
+//                 },
+//                 {
+//                     model: models.Seo,
+//                     as: 'seo',
+//                 },
+//             ],
+//             page,
+//             paginate: perPage,
+//             order: [['createdAt', 'DESC']],
+//         });
+
+//         return posts;
+//     } catch (error) {
+//         console.log(error);
+//         throw new Error("Error fetching posts");
+//     }
+// };
+
 export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
     try {
-        const posts = await models.Post.paginate({
+        const { type, ...otherFilters } = filters;
+
+        // Truy vấn danh sách ID của các category có type
+        const categoryIds = await models.Categories.findAll({
+            attributes: ['id'],
+            where: {
+                type // So khớp category.type với filters.type
+            },
+        });
+
+        // Lấy danh sách các ID của category từ kết quả truy vấn
+        const categoryIdList = categoryIds.map(category => category.id);
+
+        // Truy vấn danh sách bài post có categoryId trong danh sách ID trên
+        const posts = await models.Post.findAll({
             include: [
                 {
                     model: models.Categories,
                     as: 'category',
-                    where: {
-                        type: filters.type
-                    }
                 },
                 {
                     model: models.Seo,
                     as: 'seo',
                 },
             ],
+            where: {
+                categoryId: categoryIdList, // Sử dụng danh sách ID của category để lọc bài post
+                ...otherFilters // Áp dụng các điều kiện khác cho bảng Post
+            },
             page,
             paginate: perPage,
             order: [['createdAt', 'DESC']],
@@ -28,6 +71,7 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
         throw new Error("Error fetching posts");
     }
 };
+
 
 export const createPost = async (postData) => {
     const { title, content, description, author, published_at, views, imageUrl, referenceId, reference, categoryId, slug } = postData;
