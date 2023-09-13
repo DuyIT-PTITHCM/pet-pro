@@ -99,6 +99,35 @@ export const updatePost = async (postId, postData) => {
     }
 };
 
+export const showPost = async (req) => {
+    const id = req.params.id;
+    const slug = req.params.slug;
+
+    try {
+        const post = await models.Post.findOne({
+            where: id ? { id } : { slug },
+            include: [
+                {
+                    model: models.Seo,
+                    as: 'seo',
+                },
+                {
+                    model: models.Categories,
+                    as: 'category',
+                },
+            ],
+        });
+
+        if (!post) {
+            throw new Error("Post not found");
+        }
+
+        return post;
+    } catch (error) {
+        throw new Error("Error showing post");
+    }
+};
+
 export const deletePost = async (postId) => {
     try {
         const post = await models.Post.findByPk(postId);
