@@ -16,6 +16,10 @@ export const getAllMenus = async () => {
                     ]
                 },
                 {
+                    model: models.Seo,
+                    as: 'seo',
+                },
+                {
                     model: models.Categories,
                     as: 'categories'
                 }
@@ -44,7 +48,7 @@ export const getAllMenusForFront = async () => {
                         {
                             model: models.Categories,
                             as: 'categories'
-                        }
+                        },
                     ]
                 },
                 {
@@ -81,10 +85,14 @@ export const getDetailMenu = async (req) => {
                                 {
                                     model: models.Product,
                                     as: 'products'
-                                }
+                                },
                             ]
                         }
                     ]
+                },
+                {
+                    model: models.Seo,
+                    as: 'seo',
                 },
                 {
                     model: models.Categories,
@@ -156,6 +164,7 @@ export const updateMenu = async (req) => {
         isShowDescription,
         description,
         active,
+        seoId = null,
         type = 'product', // Giá trị mặc định cho type
     } = req.body;
 
@@ -180,6 +189,7 @@ export const updateMenu = async (req) => {
             description,
             isShowDescription,
             active,
+            seoId,
             type,
         });
 

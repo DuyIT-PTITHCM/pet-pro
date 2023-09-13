@@ -11,6 +11,10 @@ export default (sequelize, DataTypes) => {
                 foreignKey: 'menuId',
                 as: 'categories',
             });
+            Menu.belongsTo(models.Seo, {
+                foreignKey: 'seoId',
+                as: 'seo',
+            });
         }
     }
 
@@ -56,6 +60,14 @@ export default (sequelize, DataTypes) => {
                 },
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
+            },
+            seoId: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+                references: {
+                    model: 'Seo',
+                    key: 'id',
+                },
             },
             createdAt: DataTypes.DATE,
             updatedAt: DataTypes.DATE,
