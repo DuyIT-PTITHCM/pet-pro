@@ -3,7 +3,6 @@ import { c as create_ssr_component, e as escape, a as add_attribute, v as valida
 import { L as Loading, G as GradientButton } from './GradientButton-1edbbdbd.js';
 import { D as DarkMode } from './DarkMode-45e3c0b5.js';
 import { t as title, d as description } from './meta-6d1ff2d0.js';
-import { l as loadingState } from './loading-561efc4f.js';
 import { A as Avatar, D as Dropdown, a as DropdownHeader, b as DropdownItem, c as DropdownDivider } from './DropdownItem-6c17f3d3.js';
 import { I as Icon } from './Indicator.svelte_svelte_type_style_lang-5ca2282a.js';
 import { M as Modal, T as ToolbarButton } from './Modal-d1200818.js';
@@ -15,9 +14,8 @@ import { w as writable } from './index-6d3e2f99.js';
 import { P as Popover } from './Popover-49bae1cb.js';
 import { g as getCookie } from './cookieUtils-3c057440.js';
 import { t as t2 } from './index2-ea715c5b.js';
-import axios from 'axios';
-import { B as BASE_API } from './Const-3b06302f.js';
 import { B as Button } from './Button-e87eace1.js';
+import './loading-561efc4f.js';
 import './Popper-9e43361b.js';
 import '@floating-ui/dom';
 import './Wrapper-48062af6.js';
@@ -287,6 +285,7 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $t, $$unsubscribe_t;
   validate_store(t2, "t");
   $$unsubscribe_t = subscribe(t2, (value) => $t = value);
+  let { menuProp = [] } = $$props;
   let btnClass = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
   let menu = [
     {
@@ -295,11 +294,7 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       active: true
     }
   ];
-  loadingState.set(true);
-  axios.get(`${BASE_API}/front/menu`).then((res) => {
-    menu = menu.concat(res.data.data);
-    loadingState.set(false);
-  });
+  menu = menu.concat(menuProp);
   let user = {
     id: "aabbcc",
     username: "Rosé BlackPink",
@@ -307,6 +302,8 @@ const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     avatar: "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg"
   };
   let popupModal = false;
+  if ($$props.menuProp === void 0 && $$bindings.menuProp && menuProp !== void 0)
+    $$bindings.menuProp(menuProp);
   let $$settled;
   let $$rendered;
   do {
@@ -615,10 +612,29 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$unsubscribe_title = subscribe(title, (value) => $title = value);
   validate_store(description, "description");
   $$unsubscribe_description = subscribe(description, (value) => $description = value);
+  let { data } = $$props;
+  if ($$props.data === void 0 && $$bindings.data && data !== void 0)
+    $$bindings.data(data);
+  let $$settled;
+  let $$rendered;
+  do {
+    $$settled = true;
+    $$rendered = `${$$result.head += `<!-- HEAD_svelte-i0x8a_START -->${$$result.title = `<title>${escape($title)}</title>`, ""}<meta name="description"${add_attribute("content", $description, 0)}><link rel="icon" href="/favicon.ico" type="image/x-icon"><!-- HEAD_svelte-i0x8a_END -->`, ""} ${data.menu.length > 0 ? `${validate_component(Header, "Header").$$render(
+      $$result,
+      { menuProp: data.menu },
+      {
+        menuProp: ($$value) => {
+          data.menu = $$value;
+          $$settled = false;
+        }
+      },
+      {}
+    )}` : ``} <main>${slots.default ? slots.default({}) : ``}</main> ${validate_component(Footer, "Footer").$$render($$result, {}, {}, {})} ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}`;
+  } while (!$$settled);
   $$unsubscribe_title();
   $$unsubscribe_description();
-  return `${$$result.head += `<!-- HEAD_svelte-oil3m5_START -->${$$result.title = `<title>${escape($title)}</title>`, ""}<meta name="description"${add_attribute("content", $description, 0)}><link rel="icon" href="/favicon.ico" type="image/x-icon"><!-- HEAD_svelte-oil3m5_END -->`, ""} ${validate_component(Header, "Header").$$render($$result, {}, {}, {})} <main>${slots.default ? slots.default({}) : ``}</main> ${validate_component(Footer, "Footer").$$render($$result, {}, {}, {})} ${validate_component(Loading, "Loading").$$render($$result, {}, {}, {})}`;
+  return $$rendered;
 });
 
 export { Layout as default };
-//# sourceMappingURL=_layout.svelte-168fcc58.js.map
+//# sourceMappingURL=_layout.svelte-9c8797a8.js.map
