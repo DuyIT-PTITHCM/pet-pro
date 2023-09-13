@@ -45,7 +45,7 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
         const categoryIdList = categoryIds.map(category => category.id);
 
         // Truy vấn danh sách bài post có categoryId trong danh sách ID trên
-        const posts = await models.Post.findAll({
+        const posts = await models.Post.paginate({
             include: [
                 {
                     model: models.Categories,
