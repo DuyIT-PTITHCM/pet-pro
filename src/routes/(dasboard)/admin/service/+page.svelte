@@ -24,23 +24,24 @@
     title.set("Producs Management");
     description.set("Producs Management System");
 
-    const productService = RepositoryFactory.get("productRepository");
+    const articleService = RepositoryFactory.get("postRepository");
     let isCheck = false;
-    let products = null;
-    let sortedProducts: any[] = [];
+    let services = null;
+    let sortedServices: any[] = [];
     let sortBy = "";
     let sortDirection = 1;
-    let dataProductFromApi: any[] = [];
+    let dataServiceFromApi: any[] = [];
     let host = "http://103.142.26.42/";
     let queryParams = {
         page: 1,
+        type:'service'
     };
 
     // Function to handle page change
     async function handlePageChange(page) {
         queryParams.page = page;
         updateQueryParams(queryParams);
-        await getProduct();
+        await getService();
     }
 
     function toggleSort(column = "") {
@@ -51,13 +52,14 @@
             sortDirection = 1;
         }
     }
-    async function getProduct() {
+    async function getService() {
         loadingState.set(true);
         let queryFilter = getAllQueryParams();
         queryParams = queryParamsToObject(queryFilter);
-        products = await productService.get(queryParams);
+        queryParams.type = 'service';
+        services = await articleService.get(queryParams);
 
-        dataProductFromApi = products.data.data.docs;
+        dataServiceFromApi = services.data.data.docs;
         loadingState.set(false);
     }
 
@@ -65,10 +67,10 @@
         return JSON.parse(json);
     }
     function gotoDetail(id: Number) {
-        window.location.href = "/admin/products/" + id;
+        window.location.href = "/admin/service/" + id;
     }
     $: {
-        sortedProducts = [...dataProductFromApi].sort((a, b) => {
+        sortedServices = [...dataServiceFromApi].sort((a, b) => {
             let aValue = a[sortBy];
             let bValue = b[sortBy];
             if (typeof aValue === "string" && typeof bValue === "string") {
@@ -86,7 +88,7 @@
             }
         });
     }
-    getProduct();
+    getService();
 </script>
 
 <div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
@@ -120,61 +122,24 @@
                 on:change={() => (isCheck = !isCheck)}
             /></TableHeadCell
         >
-        <TableHeadCell class="text-center" on:click={() => toggleSort("id")}
+        <TableHeadCell  on:click={() => toggleSort("id")}
             >Id</TableHeadCell
         >
         <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("productName")}>NAME</TableHeadCell
+            
+            on:click={() => toggleSort("title")}>NAME</TableHeadCell
         >
-        <TableHeadCell class="text-center">IMAGES</TableHeadCell>
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("description")}
-            >DESCRIPTION</TableHeadCell
-        > -->
-        <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("originalPrice")}
-            >ORIGINAL PRICE</TableHeadCell
-        >
-        <TableHeadCell class="text-center" on:click={() => toggleSort("price")}
-            >PRICE</TableHeadCell
-        >
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("stockQuantity")}
-            >STOCK QUANTITY
-        </TableHeadCell> -->
-        <TableHeadCell class="text-center" on:click={() => toggleSort("origin")}
-            >POST</TableHeadCell
-        >
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("discount")}
-            >STOCK DISCOUNT
-        </TableHeadCell> -->
-        <TableHeadCell class="text-center" on:click={() => toggleSort("slug")}
+        <TableHeadCell >IMAGES</TableHeadCell>
+        <TableHeadCell  on:click={() => toggleSort("slug")}
             >SLUG
         </TableHeadCell>
-        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("notes")}
-            >NOTE
-        </TableHeadCell> -->
-        <TableHeadCell class="text-center" on:click={() => toggleSort("status")}
+        <TableHeadCell  on:click={() => toggleSort("status")}
             >SEO
         </TableHeadCell>
-        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("type")}
-            >TYPE
-        </TableHeadCell> -->
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("expirationDate")}
-            >EXPIRATION DATE
-        </TableHeadCell> -->
-        <TableHeadCell class="text-center">CATEGORY</TableHeadCell>
+        <TableHeadCell >CATEGORY</TableHeadCell>
     </TableHead>
     <TableBody>
-        {#each sortedProducts as item}
+        {#each sortedServices as item}
             <TableBodyRow class="cursor-pointer" on:click={gotoDetail(item.id)}>
                 <TableBodyCell tdClass="w-3"
                     ><div class="flex justify-center">
@@ -182,10 +147,10 @@
                     </div></TableBodyCell
                 >
                 <TableBodyCell>{item.id}</TableBodyCell>
-                <TableBodyCell>{item.productName}</TableBodyCell>
+                <TableBodyCell>{item.title}</TableBodyCell>
                 <TableBodyCell tdClass="min-w-[180px]">
                     <div class="grid grid-cols-4 gap-y-[4px] py-[2px]">
-                        {#each convertImageJsonToArray(item.images) as path, i}
+                        {#each convertImageJsonToArray(item.imageUrl) as path, i}
                             <div
                                 class="w-14 h-14 overflow-hidden bg-black rounded-[8px]"
                             >
@@ -200,35 +165,9 @@
                         {/each}
                     </div>
                 </TableBodyCell>
-                <!-- <TableBodyCell>{item.description}</TableBodyCell> -->
-                <TableBodyCell
-                    >{formatCurrency(item.originalPrice)}</TableBodyCell
-                >
-                <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
-                <!-- <TableBodyCell>{item.stockQuantity}</TableBodyCell> -->
-                <TableBodyCell>
-                    {#if item.post}
-                        <Icon
-                            icon="material-symbols:done-rounded"
-                            color="green"
-                            width="40"
-                            height="40"
-                        />
-                    {:else}
-                        <Icon
-                            icon="ic:outline-warning"
-                            color="red"
-                            width="40"
-                            height="40"
-                        />
-                    {/if}
-                </TableBodyCell>
-                <!-- <TableBodyCell>{item.discount +' %'}</TableBodyCell> -->
+                
                 <TableBodyCell>{item.slug}</TableBodyCell>
-                <!-- <TableBodyCell
-                    tdClass="line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"
-                    >{!item.notes ? "-" : item.notes}</TableBodyCell
-                > -->
+
                 <TableBodyCell>
                     {#if item.seo}
                         <Icon
@@ -246,23 +185,15 @@
                         />
                     {/if}
                 </TableBodyCell>
-                <!-- <TableBodyCell>{item.type}</TableBodyCell> -->
-                <!-- <TableBodyCell
-                    >{!item.expirationDate != null
-                        ? moment(new Date(item?.expirationDate)).format(
-                              "DD-MM-YYYY"
-                          )
-                        : "-"}</TableBodyCell
-                > -->
                 <TableBodyCell>{item.category.categoryName}</TableBodyCell>
             </TableBodyRow>
         {/each}
     </TableBody>
 </Table>
-{#if products}
+{#if services}
     <Pagination
-        currentPage={products?.data?.data.currentPage}
-        totalPages={products?.data?.data.pages}
+        currentPage={services?.data?.data.currentPage}
+        totalPages={services?.data?.data.pages}
         onPageChange={handlePageChange}
     />
 {/if}

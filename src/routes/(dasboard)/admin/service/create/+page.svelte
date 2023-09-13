@@ -9,6 +9,7 @@
         author: "",
         published_at: null,
         views: 0,
+        slug: null,
         categoryId: null,
         imageUrl: ''
     };

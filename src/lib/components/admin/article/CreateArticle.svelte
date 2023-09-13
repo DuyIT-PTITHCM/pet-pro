@@ -7,6 +7,7 @@
     import { toastErr } from "$lib/store/toastError";
     import { Fileupload } from "flowbite-svelte";
     import Icon from "@iconify/svelte";
+    import { goto } from "$app/navigation";
 
     export let article: any;
     export let queryParams: any;
@@ -92,13 +93,12 @@
     }
 
     async function handleSubmit() {
-        console.log(article);
         loadingState.set(true);
         if (!article.id) {
             try {
                 await handleSubmitCreatePost();
                 loadingState.set(false);
-
+                goto('/admin/service/');
             } catch (error) {
                 const errors = error?.response?.data?.errors;
                 var toasts = errors?.map((element: any) => {
@@ -145,22 +145,7 @@
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
                 id="grid-first-name"
                 type="text"
-                placeholder="Input Meta Description"
-            />
-        </div>
-        <div class="md:w-1/2 px-3">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-last-name"
-            >
-                Author
-            </label>
-            <input
-                bind:value={article.author}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="grid-last-name"
-                type="text"
-                placeholder="Meta Description "
+                placeholder="Input Title"
             />
         </div>
         <div class="md:w-1/2 px-3">
@@ -181,6 +166,38 @@
                     {/each}
                 </select>
             </div>
+        </div>
+    </div>
+    <div class="-mx-3 md:flex mb-2">
+        <div class="md:w-1/2 px-3">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-last-name"
+            >
+                Author
+            </label>
+            <input
+                bind:value={article.author}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+                id="grid-last-name"
+                type="text"
+                placeholder="Input Author "
+            />
+        </div>
+        <div class="md:w-1/2 px-3">
+            <label
+                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+                for="grid-zip"
+            >
+                Slug
+            </label>
+            <input
+                bind:value={article.slug}
+                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+                id="grid-first-name"
+                type="text"
+                placeholder="Input Slug"
+            />
         </div>
     </div>
     <div class="-mx-3 md:flex mb-6">
