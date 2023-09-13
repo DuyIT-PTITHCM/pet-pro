@@ -22,6 +22,9 @@
   import axios from "axios";
   import { BASE_API } from "$lib/Const";
   import { goto } from "$app/navigation";
+
+  export let menuProp: any[] = [];
+
   let btnClass =
     "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
 
@@ -33,11 +36,8 @@
     },
   ];
 
-  loadingState.set(true);
-  axios.get(`${BASE_API}/front/menu`).then((res) => {
-    menu = menu.concat(res.data.data);
-    loadingState.set(false);
-  });
+  menu = menu.concat(menuProp);
+
   let user = {
     id: "aabbcc",
     username: "Rosé BlackPink",
