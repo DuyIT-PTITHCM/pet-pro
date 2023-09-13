@@ -3,7 +3,6 @@
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { title, description } from "$lib/store/meta";
     import {
-        ButtonGroup,
         Checkbox,
         Table,
         TableBody,
@@ -12,8 +11,6 @@
         TableHead,
         TableHeadCell,
     } from "flowbite-svelte";
-    import moment from "moment";
-    import { formatCurrency } from "$lib/Utils/accounting";
     import Pagination from "$lib/components/common/Pagination.svelte";
     import {
         getAllQueryParams,
@@ -21,8 +18,8 @@
         updateQueryParams,
     } from "$lib/Utils/queryParams";
     import Icon from "@iconify/svelte";
-    title.set("Producs Management");
-    description.set("Producs Management System");
+    title.set("Service Management");
+    description.set("Service Management System");
 
     const articleService = RepositoryFactory.get("postRepository");
     let isCheck = false;

@@ -18,6 +18,9 @@
         files: any[] = [],
         file;
 
+    if (article && article.id) {
+        files = JSON.parse(article.imageUrl);
+    }
     const postService = RepositoryFactory.get("postRepository");
     const categoryService = RepositoryFactory.get("categoryRepository");
     async function handleSubmitCreatePost() {
@@ -72,9 +75,9 @@
                 }
             );
             files = files.filter((item) => item !== path);
-            // if (mode == "modify") {
-            //     await handleSubmitUpdateProduct();
-            // }
+            if (article && article.id) {
+                await handleSubmitUpdatePost();
+            }
         } catch (error) {
             toastErr.set([
                 {
