@@ -26,7 +26,7 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
 };
 
 export const createPost = async (postData) => {
-    const { title, content, description, author, published_at, views, imageUrl, referenceId, reference, categoryId } = postData;
+    const { title, content, description, author, published_at, views, imageUrl, referenceId, reference, categoryId, slug } = postData;
 
     let transaction;
     try {
@@ -38,6 +38,7 @@ export const createPost = async (postData) => {
             author,
             published_at,
             views,
+            slug,
             categoryId,
             imageUrl
         }, { transaction });
@@ -70,7 +71,7 @@ export const createPost = async (postData) => {
 };
 
 export const updatePost = async (postId, postData) => {
-    const { title, content, description, author, published_at, views, imageUrl, categoryId } = postData;
+    const { title, content, description, author, published_at, views, imageUrl, categoryId, slug } = postData;
 
     try {
         const post = await models.Post.findByPk(postId);
@@ -83,6 +84,7 @@ export const updatePost = async (postId, postData) => {
         post.content = content;
         post.author = author;
         post.published_at = published_at;
+        post.slug = slug;
         post.description = description;
         if (categoryId) {
             post.categoryId = categoryId;
@@ -134,6 +136,32 @@ export const isUniqueTitleUpdate = async (title, { req }) => {
     });
     if (post?.length > 0) {
         return Promise.reject("Title already exists");
+    }
+    return Promise.resolve();
+};
+
+export const isUniqueSlug = async (slug) => {
+    const post = await models.Post.findOne({ where: { slug } });
+    if (post) {
+        return Promise.reject('Slug already exists');
+    }
+    return Promise.resolve();
+};
+
+export const isUniqueSlugUpdate = async (slug, { req }) => {
+    const productId = req.params.id;
+    const post = await models.Post.findAll({
+        where: {
+            id: {
+                [Op.ne]: productId
+            },
+            slug: {
+                [Op.eq]: slug
+            }
+        }
+    });
+    if (post?.length > 1) {
+        return Promise.reject('Slug already exists');
     }
     return Promise.resolve();
 };

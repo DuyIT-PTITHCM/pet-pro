@@ -35,6 +35,7 @@ export default (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+            slug: DataTypes.STRING,
             published_at: {
                 type: DataTypes.DATE,
                 allowNull: true,
