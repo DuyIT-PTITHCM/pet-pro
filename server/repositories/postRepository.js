@@ -11,7 +11,11 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
                     where: {
                         type: filters.type
                     }
-                }
+                },
+                {
+                    model: models.Seo,
+                    as: 'seo',
+                },
             ],
             page,
             paginate: perPage,
@@ -71,7 +75,7 @@ export const createPost = async (postData) => {
 };
 
 export const updatePost = async (postId, postData) => {
-    const { title, content, description, author, published_at, views, imageUrl, categoryId, slug } = postData;
+    const { title, content, description, author, published_at, views, imageUrl, categoryId, slug, seoId } = postData;
 
     try {
         const post = await models.Post.findByPk(postId);
@@ -88,6 +92,9 @@ export const updatePost = async (postId, postData) => {
         post.description = description;
         if (categoryId) {
             post.categoryId = categoryId;
+        }
+        if (seoId) {
+            post.seoId = seoId;
         }
         post.views = views;
         post.imageUrl = imageUrl;
@@ -107,10 +114,10 @@ export const showPost = async (req) => {
         const post = await models.Post.findOne({
             where: id ? { id } : { slug },
             include: [
-                // {
-                //     model: models.Seo,
-                //     as: 'seo',
-                // },
+                {
+                    model: models.Seo,
+                    as: 'seo',
+                },
                 {
                     model: models.Categories,
                     as: 'category',

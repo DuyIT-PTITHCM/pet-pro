@@ -8,6 +8,10 @@ export default (sequelize, DataTypes) => {
                 foreignKey: 'categoryId',
                 as: 'category',
             });
+            Post.belongsTo(models.Seo, {
+                foreignKey: 'seoId',
+                as: 'seo',
+            });
         }
     }
 
@@ -47,6 +51,14 @@ export default (sequelize, DataTypes) => {
             imageUrl: {
                 type: DataTypes.TEXT,
                 allowNull: true,
+            },
+            seoId: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+                references: {
+                    model: 'Seo',
+                    key: 'id',
+                },
             },
             categoryId: {
                 type: DataTypes.INTEGER,
