@@ -12,7 +12,8 @@
     const menuService = RepositoryFactory.get("menuRepository");
     let parentAdd = false;
     let isAction = true;
-    let categories: any;
+    let menuDetail: any;
+    let showMenuById = 0;
     let menus: any;
     loadingState.set(true);
     let types = [
@@ -89,11 +90,11 @@
         </h1>
     </div>
 </div>
-<div class="grid md:grid-cols-3 grid-cols-1 w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
+<div class="grid md:grid-cols-5 grid-cols-1 w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
     {#if !menus && !$loadingState}
         <h1>nodata</h1>
     {:else if !$loadingState}
-        <div class="col-span-2 pl-4">
+        <div class="col-span-3 pl-4">
             <div class="flex">
                 <button on:click={()=> isAction = !isAction} class="hover:opacity-80 p-2 bg-black dark:bg-gray-700 text-white rounded-lg mr-2">
                     <Icon icon="ic:outline-electric-bolt" class="{isAction == true ? 'text-yellow-300' : ''} text-[28px]" />
@@ -133,13 +134,15 @@
             </div>
             <div>
                 {#each menus as menu (menu.id)}
-                    <MenuItem menu={menu} isAction={isAction} bind:categories={categories}/>
+                    <MenuItem menu={menu} isAction={isAction} bind:categoriesMenu={menuDetail} bind:numCategory={showMenuById} showMenuId={showMenuById}/>
                 {/each}
             </div>
         </div>
-        <div class="pr-10 mt-[56px]">
-            {#if categories}
-                <Category categories={categories}/>
+        <div class=" w-full col-span-2">
+            {#if menuDetail}
+            <div class="w-full h-full dark:text-white rounded-lg flex flex-col justify-center items-center">
+                <Category menu={menuDetail}/>
+            </div>
             {:else}
                 <div class="w-full h-full dark:text-white rounded-lg flex flex-col justify-center items-center">
                     <img class="rounded-lg w-[200px]" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExandoOHd6NXU3bDB4bTJwMTg3NXVoN205N3NmNzU4YXRudzF5ZDJ6YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AW6eOaOemvDv1FBpZ6/giphy.gif" alt="">
