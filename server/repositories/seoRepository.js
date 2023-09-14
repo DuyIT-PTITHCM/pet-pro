@@ -47,9 +47,7 @@ export const createSeo = async (seoData) => {
                 await category.save({ transaction });
                 break;
             case 'article':
-
-                break;
-
+            case 'blog':
             case 'service':
                 let post = await models.Post.findByPk(referenceId);
                 post.seoId = newSeo.id;

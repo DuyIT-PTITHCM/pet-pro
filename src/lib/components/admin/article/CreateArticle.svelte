@@ -23,6 +23,8 @@
     }
     const postService = RepositoryFactory.get("postRepository");
     const categoryService = RepositoryFactory.get("categoryRepository");
+    const uploadFileService = RepositoryFactory.get("uploadRepository");
+
     async function handleSubmitCreatePost() {
         article.imageUrl = JSON.stringify(files);
         const res = await postService.post(article);
@@ -40,13 +42,7 @@
         formData.append("file", file);
 
         try {
-            const res = await axios.post(`${BASE_API}/upload`, formData, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "access_token"
-                    )}`,
-                },
-            });
+            const res = await uploadFileService.uploadFile(formData);
 
             files.push(res.data.data.path);
             files = files;
@@ -61,19 +57,9 @@
     }
     async function handleDeleteFile(path: String) {
         try {
-            await axios.post(
-                `${BASE_API}/upload/delete`,
-                {
-                    path: path,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "access_token"
-                        )}`,
-                    },
-                }
-            );
+            await uploadFileService.deleteFile({
+                path: path,
+            });
             files = files.filter((item) => item !== path);
             if (article && article.id) {
                 await handleSubmitUpdatePost();
@@ -101,7 +87,7 @@
             try {
                 await handleSubmitCreatePost();
                 loadingState.set(false);
-                goto('/admin/service/');
+                goto("/admin/service/");
             } catch (error) {
                 const errors = error?.response?.data?.errors;
                 var toasts = errors?.map((element: any) => {
