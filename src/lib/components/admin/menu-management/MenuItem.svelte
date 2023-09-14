@@ -8,14 +8,16 @@
     import Editor from "$lib/components/common/Editor.svelte";
     export let isAction = false;
     export let menu:any;
-    export let categories:any;
+    export let categoriesMenu:any;
+    export let numCategory = 0;
+    export let showMenuId = 0;
     let isShowMenu = false;
     let isShowAdd = false;
     let deleteMenuId = 0;
     let deleteMenuName = '';
     let popupDeleteModal = false;
     let isButtonDisabled = false;
-    let numCategory = 0;
+
     let newMenu = {
         id: null,
         name: null,
@@ -129,17 +131,13 @@
 
         }, 2000);
     }
-    function ShowCategory(menuId: number, menuType: string, menuName: string){
-        if(numCategory == menuId){
+    function ShowCategory(menu: any){
+        if(numCategory == menu.id){
             numCategory = 0;
-            categories = null;
+            categoriesMenu = null;
         }else{
-            numCategory = menuId;
-            categories = {
-                menuId: menuId,
-                menuType: menuType,
-                menuName: menuName
-            };
+            numCategory = menu.id;
+            categoriesMenu = menu
         }
     }
 </script>
@@ -182,11 +180,11 @@
                 <Icon icon="bxs:edit" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
             </button>
             <hr class="w-2 h-[4px] bg-cyan-400">
-            <Toggle class="cursor-pointer p-2 dark:bg-gray-700 shadow-[inset_0_-2px_4px_rgba(0,0,0)] rounded-lg hover:opacity-80" bind:checked={menu.active}>{menu.active? 'Active' : 'InActive'}</Toggle>
+            <Toggle class="cursor-pointer p-2 dark:bg-gray-700 shadow-[inset_0_-2px_4px_rgba(0,0,0)] rounded-lg hover:opacity-80" bind:checked={menu.active}>Active</Toggle>
         </div>
         <hr class="w-2 h-[4px] bg-cyan-400">
-        <button on:click={() => ShowCategory(menu.id, menu.type, menu.name)}>
-            <Icon icon="icon-park-solid:right-one" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] {numCategory == menu.id ? 'text-yellow-400' : 'text-gray-900 dark:text-white'} dark:bg-gray-700 rounded-lg" />
+        <button on:click={() => ShowCategory(menu)}>
+            <Icon icon="icon-park-solid:right-one" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] {showMenuId == menu.id ? 'text-yellow-400' : 'text-gray-900 dark:text-white'} dark:bg-gray-700 rounded-lg" />
         </button>
     </div>
 
@@ -226,11 +224,11 @@
                     <Icon icon="bxs:edit" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
                 </button>
                 <hr class="w-2 h-[4px] bg-cyan-400">
-                <Toggle class="cursor-pointer p-2 dark:bg-gray-700 shadow-[inset_0_-2px_4px_rgba(0,0,0)] rounded-lg hover:opacity-80" bind:checked={subMenu.active}>{subMenu.active? 'Active' : 'InActive'}</Toggle>
+                <Toggle class="cursor-pointer p-2 dark:bg-gray-700 shadow-[inset_0_-2px_4px_rgba(0,0,0)] rounded-lg hover:opacity-80" bind:checked={subMenu.active}>Active</Toggle>
             </div>
             <hr class="w-2 h-[4px] bg-cyan-400">
-            <button on:click={() => ShowCategory(subMenu.id, subMenu.type, subMenu.name)}>
-                <Icon icon="icon-park-solid:right-one" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] dark:bg-gray-700 {numCategory == subMenu.id ? 'text-yellow-400' : 'text-gray-900 dark:text-white'} rounded-lg" />
+            <button on:click={() => ShowCategory(subMenu)}>
+                <Icon icon="icon-park-solid:right-one" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] dark:bg-gray-700 {showMenuId == subMenu.id ? 'text-yellow-400' : 'text-gray-900 dark:text-white'} rounded-lg" />
             </button>
         </div>
         {/each}

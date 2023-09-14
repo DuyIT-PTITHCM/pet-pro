@@ -18,6 +18,7 @@
   } from "flowbite-svelte";
   import LanguageSelect from "../LanguageSelect.svelte";
   import { loadTranslations, t } from "$lib/translations";
+  import { blur, fade, slide } from 'svelte/transition';
   import Icon from "@iconify/svelte";
   import axios from "axios";
   import { BASE_API } from "$lib/Const";
@@ -49,14 +50,11 @@
   let isSignIn = true;
   let heightHeader = 0;
   let numACtiveMenu = 0;
-  function showSubmenu (id: number){
-    numACtiveMenu == id ? numACtiveMenu = 0 : numACtiveMenu = id;
-  }
 </script>
 
 <div class="w-full relative h-auto" bind:clientHeight={heightHeader}>
   <div class="w-full fixed top-0 z-50">
-    <Navbar let:hidden let:toggle>
+    <Navbar let:hidden let:toggle class="shadow-md">
       <NavBrand href="/">
         <img
           src="/images/logo.png"
@@ -100,12 +98,12 @@
           <DropdownItem href="/signup">Sign Up</DropdownItem>
         {/if}
       </Dropdown>
-      <NavUl {hidden} divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium">
+      <NavUl {hidden} divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent">
         {#each menu as item, index}
           <NavLi nonActiveClass="">
-            <div class="parent-menu relative w-full">
-              <div class="flex items-center p-3">
-                <button id="menu{item.id}" class="cursor-pointer w-full h-full { item.active == false?  'dark:text-white text-primary-600' : ''}" 
+            <div class="parent-menu relative w-full border-b-2 md:border-none">
+              <div id="menu{item.id}" class="flex items-center relative">
+                <button class="cursor-pointer w-full px-5 py-3 z-10 flex-1 text-left { item.active == false?  'dark:text-white text-primary-600' : ''}" 
                   on:click={() => {
                     item.active = false;
                     menu.filter((i) => i !== item).forEach((i) => (i.active = true));
@@ -115,24 +113,22 @@
                   >
                   {$t(item.name)}
                 </button>
-                <!-- {#if item?.subMenus && item?.subMenus?.length > 0}
-                <button class="ml-2 px-1 hover:rounded dark:hover:bg-slate-700 hover:bg-slate-200" on:click={ ()=> showSubmenu(index)}>
-                  <Icon icon="icon-park-solid:{numACtiveMenu == index ? 'up' : 'down'}-one" class="text-xl cursor-pointer"/>
-                </button>
-                {/if} -->
+                <div class="p-3 w-12 z-0 md:hidden"></div>
+                {#if item?.subMenus && item?.subMenus?.length > 0}
+                  <div id="mobile{item.id}" class="absolute text-xl p-3 md:hidden w-full">
+                    <Icon icon="mingcute:down-fill" class="float-right" />
+                  </div>
+                {/if}
               </div>
               {#if item?.subMenus && item?.subMenus?.length > 0}
-                <Popover class="w-64 text-sm font-light " triggeredBy="#menu{item.id}">
-                <!-- <div class="{numACtiveMenu == index ? 'active-child-menu' : 'h-0 hidden'} md:absolute left-0 top-full border-2 w-full border-gray-600 dark:border-white bg-white dark:bg-slate-900 rounded-lg z-20">
-                  <div class="flex justify-center w-full -mt-[14px] absolute text-center">
-                    <Icon icon="icon-park-solid:up-one" class="text-xl"/>
-                  </div> -->
+                <Popover class="text-sm font-normal w-64 hidden md:block text-black" transition={slide} triggeredBy="#menu{item.id}">
                   {#each item.subMenus as sub}
-                    <button class="block w-full p-4  { sub.active == false ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
+                    <button class="block w-full p-4 { (sub.active == false && numACtiveMenu == sub.id)?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
                       on:click={() => {
                         item.active = false;
                         menu.filter((i) => i !== item).forEach((i) => (i.active = true));
                         sub.active = false;
+                        numACtiveMenu = sub.id;
                         item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
                         const baseUrl = window.location.origin;
                         goto(`${baseUrl}/` + sub.url);
@@ -140,7 +136,22 @@
                       {sub.name}
                     </button>
                   {/each}
-                <!-- </div> -->
+                </Popover>
+                <Popover class="text-sm w-full font-normal md:hidden z-50 mr-[100px]" placement="bottom" triggeredBy="#mobile{item.id}" trigger="click">
+                  {#each item.subMenus as sub}
+                    <button class="block w-full p-4  { (sub.active == false && numACtiveMenu == sub.id)?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
+                      on:click={() => {
+                        item.active = false;
+                        menu.filter((i) => i !== item).forEach((i) => (i.active = true));
+                        sub.active = false;
+                        numACtiveMenu = sub.id;
+                        item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
+                        const baseUrl = window.location.origin;
+                        goto(`${baseUrl}/` + sub.url);
+                      }}>
+                      {sub.name}
+                    </button>
+                  {/each}
                 </Popover>
               {/if}
             </div>
