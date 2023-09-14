@@ -41,15 +41,8 @@
             blog.seo = seo;
         }
         blog.seo.referenceId = blog.id;
-        console.log(blog);
 
         loadingState.set(false);
-    }
-    function convertImageJsonToArray(json) {
-        if (json) {
-            return JSON.parse(json);
-        }
-        return [];
     }
 
     postDetail();
@@ -69,37 +62,3 @@
         <CreateSeo bind:seoData={blog} />
     </TabItem>
 </Tabs>
-
-<style>
-    .gallery {
-        column-count: 3;
-        --webkit-column-count: 3;
-        --moz-column-count: 3;
-        gap: 1rem;
-    }
-
-    /* Responsive-ness for different screen-sizes */
-    @media screen and (max-width: 810px) {
-        .gallery {
-            column-count: 3;
-            --webkit-column-count: 3;
-            --moz-column-count: 3;
-        }
-    }
-
-    @media screen and (max-width: 500px) {
-        .gallery {
-            column-count: 2 !important;
-            --webkit-column-count: 2;
-            --moz-column-count: 2;
-        }
-    }
-
-    @media screen and (max-width: 400px) {
-        .gallery {
-            column-count: 1 !important;
-            --webkit-column-count: 1;
-            --moz-column-count: 1;
-        }
-    }
-</style>

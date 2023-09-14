@@ -9,7 +9,7 @@
   import { Fileupload, Input, TabItem, Tabs } from "flowbite-svelte";
   import moment from "moment";
   import CreateSeo from "../seo/CreateSeo.svelte";
-    import CreatePost from "../posts/CreatePost.svelte";
+  import CreatePost from "../posts/CreatePost.svelte";
 
   export let products: any;
   export let title: string;
@@ -47,6 +47,7 @@
   };
   const categoryService = RepositoryFactory.get("categoryRepository");
   const productService = RepositoryFactory.get("productRepository");
+  const uploadFileService = RepositoryFactory.get("uploadRepository");
 
   if (mode == "modify") {
     files = JSON.parse(products.images);
@@ -64,11 +65,7 @@
     formData.append("file", file);
 
     try {
-      const res = await axios.post(`${BASE_API}/upload`, formData, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
+      const res = await uploadFileService.uploadFile(formData);
 
       files.push(res.data.data.path);
       files = files;
@@ -100,17 +97,9 @@
 
   async function handleDeleteFile(path: String) {
     try {
-      await axios.post(
-        `${BASE_API}/upload/delete`,
-        {
-          path: path,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        }
-      );
+      await uploadFileService.deleteFile({
+        path: path,
+      });
       files = files.filter((item) => item !== path);
       if (mode == "modify") {
         await handleSubmitUpdateProduct();
@@ -448,8 +437,7 @@
         <div class="grid grid-cols-1 gap-5">
           <CreatePost bind:postData={products} />
         </div>
-        </TabItem
-      >
+      </TabItem>
     </Tabs>
   {/if}
 </div>

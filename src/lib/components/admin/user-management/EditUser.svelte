@@ -23,6 +23,8 @@
         { value: "other", name: "Other" },
     ];
 
+    const uploadFileService = RepositoryFactory.get("uploadRepository");
+
     let roles = [
         { value: "customer", name: "Customer" },
         { value: "employer", name: "Employee" },
@@ -57,26 +59,14 @@
         const formData = new FormData();
         formData.append("file", file);
         try {
-            axios
-                .post("http://103.142.26.42/api/v1.0/upload", formData)
-                .then((response) => {
-                    console.log(response.data.data.path);
-                    user.avatar = response.data.data.path;
-                })
-                .catch((error) => {
-                    toastErr.set([
-                    {
-                        message: "File upload failed",
-                        type: "error"
-                    }
-            ]);
-                });
+            const res = await uploadFileService.uploadFile(formData);
+            user.avatar = res.data.data.path;
         } catch (error) {
             toastErr.set([
                 {
                     message: "File upload failed",
-                    type: "error"
-                }
+                    type: "error",
+                },
             ]);
         }
     }

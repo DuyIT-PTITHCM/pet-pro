@@ -135,7 +135,7 @@
     <form
         class="2xl:w-1/4 xl:w-1/4 md:w-2/4 w-11/12 bg-slate-100 dark:bg-slate-900 relative p-[20px] rounded-lg z-10"
     >
-        <div class="flex items-center justify-center text-center flex-col">
+        <!-- <div class="flex items-center justify-center text-center flex-col">
             {#if selectedImage}
                 <img
                     class="avt rounded-full h-100 w-100 object-cover"
@@ -150,7 +150,7 @@
                     on:change={handleFileInputChange}
                 />
             </Label>
-        </div>
+        </div> -->
         <div class="grid gap-4 mb-6 md:grid-cols-1">
             <div>
                 <Label for="username" class="mb-2"

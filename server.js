@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.use(V_1_0 + '/auth', authRoute);
 app.use(V_1_0 + '/user-management', verifyToken, usersRouter);
 app.use(V_1_0 + '/menu', verifyToken, menusRouter);
-app.use(V_1_0 + '/upload', uploadFileRoute);
+app.use(V_1_0 + '/upload', verifyToken, uploadFileRoute);
 app.use(V_1_0 + '/posts', verifyToken, postRouter);
 app.use(V_1_0 + '/categories', verifyToken, categoriesRoute);
 app.use(V_1_0 + '/products', verifyToken, productsRoute);

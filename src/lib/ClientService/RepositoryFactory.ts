@@ -5,6 +5,7 @@ import UserRepository from "./repositories/UserRepository";
 import ProductRepository from "./repositories/ProductRepository";
 import SeoRepository from "./repositories/SeoRepository";
 import PostRepository from "./repositories/PostRepository";
+import UploadRepository from "./repositories/UploadRepository";
 
 interface RepositoryList {
     [key: string]: any;
@@ -18,6 +19,7 @@ const repositories: RepositoryList = {
     menuRepository: MenuRepository,
     seoRepository: SeoRepository,
     postRepository: PostRepository,
+    uploadRepository: UploadRepository,
 };
 
 export const RepositoryFactory = {

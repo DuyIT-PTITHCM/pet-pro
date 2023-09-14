@@ -13,6 +13,8 @@
     let host = "http://103.142.26.42";
     let file: any;
     file = seo.image;
+
+    const uploadFileService = RepositoryFactory.get("uploadRepository");
     function convertImageJsonToArray(json) {
         if (json) {
             return JSON.parse(json);
@@ -106,19 +108,12 @@
         loadingState.set(false);
     }
     async function handleFileInputChange(event: any) {
-        file = event.target.files[0];
-        const formData = new FormData();
+        file = await event.target.files[0];
+        let formData = new FormData();
         formData.append("file", file);
 
         try {
-            const res = await axios.post(`${BASE_API}/upload`, formData, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem(
-                        "access_token"
-                    )}`,
-                },
-            });
-
+            const res = await uploadFileService.uploadFile(formData);
             file = res.data.data.path;
         } catch (error) {
             toastErr.set([
@@ -131,19 +126,9 @@
     }
     async function handleDeleteFile(path: String) {
         try {
-            await axios.post(
-                `${BASE_API}/upload/delete`,
-                {
-                    path: path,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "access_token"
-                        )}`,
-                    },
-                }
-            );
+            await uploadFileService.deleteFile({
+                path: path,
+            });
             file = "";
         } catch (error) {
             toastErr.set([
@@ -291,7 +276,7 @@
                 <div class="relative">
                     <img
                         class="object-cover w-full h-[300px] rounded"
-                        src={`http://103.142.26.42${file}`}
+                        src={file}
                         alt="avatar"
                     />
                     <div

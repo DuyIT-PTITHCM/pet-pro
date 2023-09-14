@@ -31,37 +31,37 @@ let colors = [
       name: "home",
       url: "/admin",
       icon: "heroicons:chart-pie-solid",
-      active: false,
+      active: true
     },
     {
       name: "user managerment",
       url: "/admin/user-management",
       icon: "teenyicons:user-solid",
-      active: false,
+      active: false
     },
     {
       name: "menu managerment",
       url: "/admin/menu-management",
       icon: "eva:menu-2-outline",
-      active: false,
+      active: false
     },
     {
       name: "blog",
       url: "/admin/blog",
-      icon: "icon-park-solid:hi",
-      active: false,
+      icon: "fa-brands:blogger",
+      active: false
     },
     {
       name: "service",
       url: "/admin/service",
-      icon: "twemoji:service-dog",
-      active: false,
+      icon: "ri:service-fill",
+      active: false
     },
     {
       name: "products",
       url: "/admin/products",
-      icon: "emojione-v1:cat",
-      active: false,
+      icon: "ri:product-hunt-line",
+      active: false
     },
   ];
   var isHide = true;
@@ -167,7 +167,7 @@ let colors = [
             on:click={() => {
               item.active = true;
               menu.filter((i) => i !== item).forEach((i) => (i.active = false));
-            }}><Icon class="text-3xl" icon={item.icon} /></a>
+            }}><Icon class="text-3xl" icon={item.icon} color={item.active ? 'red' :''} /></a>
         </li>
         {/each}
       {:else}
