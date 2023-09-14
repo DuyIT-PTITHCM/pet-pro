@@ -102,7 +102,7 @@ export const createPost = async (postData) => {
                 menu.postId = newPost.id;
                 await menu.save({ transaction });
                 break;
-            case 'article':
+            case 'blog':
             case 'service':
                 break;
             default:
