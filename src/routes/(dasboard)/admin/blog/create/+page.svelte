@@ -9,11 +9,12 @@
         author: "",
         published_at: null,
         views: 0,
+        slug: null,
         categoryId: null,
         imageUrl: ''
     };
     let queryParams = {
-        type: "service",
+        type: "blog",
     };
 </script>
 
