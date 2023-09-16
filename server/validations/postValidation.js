@@ -2,11 +2,25 @@ import { body } from 'express-validator';
 import { isUniqueSlug, isUniqueSlugUpdate, isUniqueTitle, isUniqueTitleUpdate } from '../repositories/postRepository.js';
 
 export const createPostValidation = [
-    body('title').notEmpty().isString().custom(isUniqueTitle),
-    body('slug').optional().isString().custom(isUniqueSlug),
+    body('title')
+        .notEmpty().withMessage('Title is required')
+        .isString().withMessage('Title must be a string')
+        .custom(isUniqueTitle).withMessage('Title already exists'),
+
+    body('slug')
+        .optional()
+        .isString().withMessage('Slug must be a string')
+        .custom(isUniqueSlug).withMessage('Slug already exists')
 ];
 
 export const updatePostValidation = [
-    body('title').notEmpty().isString().custom(isUniqueTitleUpdate),
-    body('slug').optional().isString().custom(isUniqueSlugUpdate),
+    body('title')
+        .notEmpty().withMessage('Title is required')
+        .isString().withMessage('Title must be a string')
+        .custom(isUniqueTitleUpdate).withMessage('Title already exists'),
+
+    body('slug')
+        .optional()
+        .isString().withMessage('Slug must be a string')
+        .custom(isUniqueSlugUpdate).withMessage('Slug already exists')
 ];
