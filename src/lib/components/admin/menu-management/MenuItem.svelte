@@ -150,7 +150,7 @@
         <Input defaultClass="max-w-[300px]" bind:value={menu.url}/>
         <hr class="w-2 h-[4px] bg-cyan-400">
         <Button color="dark" outline id="submenu{menu.id}" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
-        <Popover class="w-full text-sm font-light z-50" title="Description of {menu.name}" translate="yes" triggeredBy="#submenu{menu.id}" trigger="click">
+        <Popover class="md:w-2/4 w-full text-sm font-light z-50" title="Description of {menu.name}" translate="yes" triggeredBy="#submenu{menu.id}" trigger="click">
             <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={menu.description}/> -->
             <Editor bind:text={menu.description}/>
             <Checkbox class="cursor-pointer mt-1" aria-describedby="helper-checkbox-text" bind:checked={menu.isShowDescription}>Show Description</Checkbox>
@@ -168,7 +168,7 @@
         </Popover>
         <hr class="w-2 h-[4px] bg-cyan-400">
         <button on:click={() => isShowMenu = !isShowMenu}>
-            <Icon icon="{isShowMenu? 'icon-park-solid:down-one' : 'icon-park-solid:up-one'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
+            <Icon icon="{isShowMenu? 'icon-park-solid:up-one' : 'icon-park-solid:down-one'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
         </button>
         <div class="flex items-center {!isAction && 'hidden'}">
             <hr class="w-2 h-[4px] bg-cyan-400">

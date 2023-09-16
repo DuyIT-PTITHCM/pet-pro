@@ -56,6 +56,12 @@
         seo = res.data.data;
         seoData.seoId = seo.id;
         seoData.seo = seo;
+        toastErr.set([
+                {
+                    message: res.data.message,
+                    type: "success"
+                }
+            ]);
         return res;
     }
     async function handleSubmitUpdateSeo() {
@@ -103,6 +109,12 @@
         } else {
             try {
                 const res = await handleSubmitUpdateSeo();
+                toastErr.set([
+                {
+                    message: res.data.message,
+                    type: "success"
+                }
+            ]);
             } catch (error) {
                 console.log(error);
             }
@@ -271,7 +283,7 @@
             class="w-24 py-[10px] bg-white"
         />
         {#if file}
-            <div class="grid grid-cols-1 xl:grid-cols-4 gap-[10px] py-[20px]">
+            <div class="py-[20px]">
                 <div class="relative">
                     <img
                         class="object-cover w-full h-[300px] rounded"
