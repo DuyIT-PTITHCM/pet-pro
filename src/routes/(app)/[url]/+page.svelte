@@ -1,8 +1,29 @@
 <script lang="ts">
     import Icon from '@iconify/svelte';
     import Products from "$lib/components/products/Products.svelte";
+    import { HOST } from '$lib/Const.js';
     export let data;
 </script>
+
+<svelte:head>
+    <title>{(data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle:   data?.data.name )}</title>
+    <meta name="description" content={data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name} />
+    <meta name="keywords" content={data?.data?.seo?.keywords ? data?.data?.seo?.keywords :   data?.data.name} />
+
+    <link rel="canonical" href={data?.data?.seo?.canonicalUrl ?data?.data?.seo?.canonicalUrl : HOST + data?.data.slug } />
+    {@html '<script type="application/ld+json">'+ data?.data?.seo?.structuredData + '</script>'}
+
+    <meta name="sitemap_priority" content={data?.data?.seo?.sitemapPriority ? data?.data?.seo?.sitemapPriority : '' } />
+    <meta name="sitemap_frequency" content={data?.data?.seo?.sitemapFrequency ? data?.data?.seo?.sitemapFrequency : 'always'} />
+
+    <meta property="og:title" content={(data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle:   data?.data.name )} />
+    <meta property="og:description" content={data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name} />
+    <meta property="og:image" content={data?.data?.image} />
+
+    <meta property="twitter:title" content={(data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle:   data?.data.name )} />
+    <meta property="twitter:description" content={data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name} />
+    <meta property="twitter:image" content={data?.data?.image} />
+</svelte:head>
 
 <div class="flex relative gap-4 m-4 clear-both mb-10">
     <div class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white md:block hidden">
