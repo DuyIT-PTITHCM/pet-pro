@@ -18,11 +18,11 @@
 
     <meta property="og:title" content={(data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle:   data?.data.name )} />
     <meta property="og:description" content={data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name} />
-    <meta property="og:image" content={data?.data?.seo.image} />
+    <meta property="og:image" content={HOST+ data?.data?.seo.image} />
 
     <meta property="twitter:title" content={(data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle:   data?.data.name )} />
     <meta property="twitter:description" content={data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name} />
-    <meta property="twitter:image" content={data?.data?.seo.image} />
+    <meta property="twitter:image" content={ HOST+ data?.data?.seo.image} />
 </svelte:head>
 
 <div class="flex relative gap-4 m-4 clear-both mb-10">
