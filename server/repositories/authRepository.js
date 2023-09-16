@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import { models } from '../models/index.js';
+import { markImageAsUsed } from '../utils/imageUtils.js';
 
 export const rigisterUser = async (userData) => {
     const { name, email, phone, password, avatar } = userData;
@@ -11,12 +12,7 @@ export const rigisterUser = async (userData) => {
     try {
         transaction = await models.sequelize.transaction();
 
-        const storage = await models.Storage.findOne({ where: { path: avatar }, transaction });
-        if (storage) {
-            storage.isUse = true;
-            await storage.save({ transaction });
-        }
-
+        await markImageAsUsed(avatar,transaction);
         const newUser = await models.User.create({
             name,
             avatar,

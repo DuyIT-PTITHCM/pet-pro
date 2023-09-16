@@ -80,6 +80,7 @@
                 },
             },
         };
+        seo.image = file;
         seo.structuredData = JSON.stringify(structuredData);
         return seoService.put(seo.id, seo);
     }
@@ -109,9 +110,9 @@
         loadingState.set(false);
     }
     async function handleFileInputChange(event: any) {
-        file = await event.target.files[0];
+        const fileUpload = await event.target.files[0];
         let formData = new FormData();
-        formData.append("file", file);
+        formData.append("file", fileUpload);
 
         try {
             const res = await uploadFileService.uploadFile(formData);

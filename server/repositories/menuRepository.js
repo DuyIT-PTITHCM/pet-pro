@@ -44,17 +44,7 @@ export const getAllMenusForFront = async () => {
                 {
                     model: models.Menu,
                     as: 'subMenus',
-                    // include: [
-                    //     {
-                    //         model: models.Categories,
-                    //         as: 'categories'
-                    //     },
-                    // ]
                 },
-                // {
-                //     model: models.Categories,
-                //     as: 'categories'
-                // }
             ],
             where: {
                 parent_id: null,

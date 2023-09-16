@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
+import { markImagesListAsUsed } from '../utils/imageUtils.js';
 
 export const getAllProducts = async (page = 1, perPage = 10, filters = {}) => {
     try {
@@ -34,7 +35,7 @@ export const getAllProductsForFront = async (filters = {}) => {
     try {
         const data = await models.Product.findAll({
             order: [['createdAt', 'DESC']],
-            where:{
+            where: {
                 ...filters
             }
         });
@@ -83,11 +84,18 @@ export const showProduct = async (req) => {
 
 
 export const createProduct = async (productData) => {
+    let transaction;
     try {
-        const newProduct = await models.Product.create(productData);
+        transaction = await models.sequelize.transaction();
+        await markImagesListAsUsed(productData.images, transaction);
+        const newProduct = await models.Product.create(productData, { transaction });
+        await transaction.commit();
         return newProduct;
     } catch (error) {
         console.log(error);
+        if (transaction) {
+            await transaction.rollback();
+        }
         throw new Error("Error creating product");
     }
 };
@@ -95,8 +103,11 @@ export const createProduct = async (productData) => {
 export const updateProduct = async (req) => {
     const productId = req.params.id;
     const productData = req.body;
-
+    let transaction;
     try {
+        transaction = await models.sequelize.transaction();
+        await markImagesListAsUsed(productData.images, transaction);
+
         const product = await models.Product.findByPk(productId);
 
         if (!product) {
@@ -104,10 +115,14 @@ export const updateProduct = async (req) => {
         }
 
         Object.assign(product, productData);
-        await product.save();
+        await product.save({ transaction });
+        await transaction.commit();
 
         return product;
     } catch (error) {
+        if (transaction) {
+            await transaction.rollback();
+        }
         throw new Error("Error updating product");
     }
 };

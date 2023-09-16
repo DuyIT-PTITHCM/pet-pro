@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
 import bcrypt from 'bcryptjs';
+import { markImageAsUsed } from '../utils/imageUtils.js';
 
 export const getAllUsers = async (page = 1, perPage, filters = {}) => {
     try {
@@ -82,11 +83,8 @@ export const createUser = async (userData) => {
     let transaction;
     try {
         transaction = await models.sequelize.transaction();
-        const storage = await models.Storage.findOne({ where: { path: avatar }, transaction });
-        if (storage) {
-            storage.isUse = true;
-            await storage.save({ transaction });
-        }
+
+        await markImageAsUsed(avatar,transaction);
 
         const newUser = await models.User.create({
             name,
@@ -130,11 +128,7 @@ export const updateUser = async (req) => {
     try {
         transaction = await models.sequelize.transaction();
 
-        const storage = await models.Storage.findOne({ where: { path: avatar }, transaction });
-        if (storage) {
-            storage.isUse = true;
-            await storage.save({ transaction });
-        }
+        await markImageAsUsed(avatar,transaction);
 
         const user = await models.User.findByPk(userId);
         user.name = name;
