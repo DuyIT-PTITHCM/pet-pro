@@ -43,7 +43,7 @@ app.use(V_1_0 + '/seo', verifyToken, seoRoute);
 app.use(V_1_0 + '/front', frontRoute);
 
 // cron job 
-cron.schedule('* * * * *', dailyJobDeleteImage);
+cron.schedule('0 0 * * *', dailyJobDeleteImage);
 
 //adapter front-end sveltekit
 app.use(handler);
