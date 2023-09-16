@@ -38,15 +38,14 @@
                     type: "error",
                 },
             ]);
-        }else if (!validatePassword(user.password)) {
+        } else if (!validatePassword(user.password)) {
             toastErr.set([
                 {
                     message: "Password is not valid",
                     type: "error",
                 },
             ]);
-        }
-        else{
+        } else {
             userLogin();
         }
     }
@@ -63,7 +62,8 @@
                 expires: expiresIn,
             });
             loadingState.set(false);
-            window.location.href = "/";
+
+            window.location.href = "/" + response?.data?.data?.role;
         } catch (error) {
             loadingState.set(false);
             toastErr.set([
@@ -112,7 +112,12 @@
                     <Helper class="mt-2" />
                 </div>
                 <div class="mb-6">
-                    <Label for="password" class="block mb-2" title="Password should be at least 8 characters long and contain at least one digit and one special character">Password</Label>
+                    <Label
+                        for="password"
+                        class="block mb-2"
+                        title="Password should be at least 8 characters long and contain at least one digit and one special character"
+                        >Password</Label
+                    >
                     <Input
                         bind:value={user.password}
                         type="password"
@@ -130,8 +135,10 @@
                         >Forgot password ?</a
                     >
                 </div>
-                <Button on:click={handleSubmitLogin} type="submit" class="w-full"
-                    >Log In</Button
+                <Button
+                    on:click={handleSubmitLogin}
+                    type="submit"
+                    class="w-full">Log In</Button
                 >
                 <a
                     href="/signup"
