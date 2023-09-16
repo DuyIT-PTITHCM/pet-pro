@@ -48,7 +48,7 @@
 </script>
 
 <div
-    class="bg-white dark:bg-slate-800 dark:text-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-full"
+    class="bg-white dark:bg-slate-800 dark:text-white shadow-md rounded flex flex-col p-4 h-full"
 >
     <h1 class="text-[34px] py-[10px] uppercase text-center font-bold">
         Post edit
@@ -89,7 +89,7 @@
         <Editor bind:text={post.content}/>
     </div>
 
-    <div class="flex justify-center items-center relative bottom-0">
+    <div class="flex justify-center items-center p-4">
         <div class="btn-signup w-fit">
             <button
                 class=" bg-black text-white border border-black-500 hover:border-transparent rounded px-[80px] py-[10px]"

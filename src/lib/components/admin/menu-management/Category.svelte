@@ -23,8 +23,8 @@
         sitemapPriority: null,
         sitemapFrequency: null,
         sitemapLastModified: null,
-        referenceId: null,
-        reference: "product",
+        reference: "menu",
+        referenceId: menu.id,
     };
     menu.seo = menu.seo ? menu.seo : seo;
     async function showCategories(){

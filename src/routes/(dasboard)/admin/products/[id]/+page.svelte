@@ -54,61 +54,62 @@
   }
 </script>
 
-<Tabs activeClasses="p-2 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-800 dark:text-primary-500" 
+<Tabs style="underline"
+activeClasses="p-2 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-800 dark:text-primary-500" 
 inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300" 
-contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
+contentClass="bg-white dark:bg-gray-800 bg-blue-500 rounded-b-lg">
     <TabItem open title="{product?.productName}">
         <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
-            <div class="grid md:grid-cols-2 grid-cols-1 text-gray-500 dark:text-gray-300 text-lg">
+            <div class="grid md:grid-cols-2 grid-cols-1 dark:text-gray-300">
                 <div>
                     <p class="border-b p-2 m-4">
-                        Product Name : {product?.productName}
+                        <b>Product Name:</b> {product?.productName}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Type : {product?.type}
+                        <b>Type:</b> {product?.type}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Product Location Status : {product?.status}
+                        <b>Product Location Status:</b> {product?.status}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Product Category : {product?.category.categoryName}
+                        <b>Product Category:</b> {product?.category.categoryName}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Product Stock : {product?.stockQuantity}
+                        <b>Product Stock:</b> {product?.stockQuantity}
                     </p>
                     <p class="border-b p-2 m-4">
-                        The Origin : {product?.origin}
+                        <b>The Origin:</b> {product?.origin}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Product Description : {product?.description}
+                        <b>Product Description:</b> {product?.description}
                     </p>
                 </div>
                 <div>
                     <p class="border-b p-2 m-4">
-                        Original Price : {formatCurrency(product?.originalPrice)}
+                        <b>Original Price:</b> {formatCurrency(product?.originalPrice)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Price Sales : {formatCurrency(product?.price)}
+                        <b>Price Sales:</b> {formatCurrency(product?.price)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Product Discount : {product?.discount} %
+                        <b>Product Discount:</b> {product?.discount} %
                     </p>
                     {#if product?.type != 'pet'}    
                     <p class="border-b p-2 m-4">
-                        Product Expiration Date : {formatDate(product?.expirationDate)}
+                        <b>Product Expiration Date:</b> {formatDate(product?.expirationDate)}
                     </p>
                     {/if}
                     <p class="border-b p-2 m-4">
-                        Notes : {product?.notes}
+                        <b>Notes:</b> {product?.notes}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Unique URL : {product?.slug}
+                        <b>Unique URL:</b> {product?.slug}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Created At : {formatDate(product?.createdAt)}
+                        <b>Created At:</b> {formatDate(product?.createdAt)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        Updated At : {formatDate(product?.updatedAt)}
+                        <b>Updated At:</b> {formatDate(product?.updatedAt)}
                     </p>
                 </div>
             </div>
@@ -128,101 +129,101 @@ contentClass="p-4 bg-gray-50 dark:bg-gray-800 bg-blue-500 rounded-b-lg">
             </div>
         </div>
         <div class="border-[1px] rounded-lg border-gray-700 dark:border-gray-300 mt-2">
-        <Tabs contentClass="p-4 bg-gray-50 dark:bg-slate-900 rounded-b-lg" activeClasses="p-2 text-primary-500 bg-gray-100 rounded-t-lg dark:bg-slate-900 dark:text-primary-500" inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300">
-            <TabItem open title="Seo">
-                <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5">
-                    <div class=" text-gray-500 dark:text-gray-400">
-                        <b class="block my-[10px]">Seo Information</b><br />
-                        {#if product?.seo}
-                            <p class="border-b p-2 m-4">
-                                Canonical Url : {product?.seo?.canonicalUrl}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Keywords : {product?.seo?.keywords}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Meta Description : {product?.seo
-                                    ?.metaDescription}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Meta Title : {product?.seo?.metaTitle}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Open GraphTags : {product?.seo?.openGraphTags}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Robot MetaTags : {product?.seo?.robotMetaTags}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Sitemap Frequency : {product?.seo
-                                    ?.sitemapFrequency}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Structured Data : {JSON.parse(product?.seo?.structuredData)}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Created At : {formatDate(product?.seo?.createdAt)}
-                            </p>
-                        {:else}
-                            <p>No Data</p>
-                        {/if}
-                    </div>
-                    <div>
-                        <b
-                            class="block my-[10px] text-gray-500 dark:text-gray-300"
-                            >Preview</b
-                        ><br />
+            <Tabs contentClass="p-4 bg-gray-50 dark:bg-slate-900 rounded-b-lg" activeClasses="p-2 text-primary-500 bg-gray-100 rounded-t-lg dark:bg-slate-900 dark:text-primary-500" inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300">
+                <TabItem open title="Seo">
+                    <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5">
+                        <div class=" text-gray-500 dark:text-gray-400">
+                            <b class="block my-[10px]">Seo Information</b><br />
+                            {#if product?.seo}
+                                <p class="border-b p-2 m-4">
+                                    Canonical Url : {product?.seo?.canonicalUrl}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Keywords : {product?.seo?.keywords}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Meta Description : {product?.seo
+                                        ?.metaDescription}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Meta Title : {product?.seo?.metaTitle}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Open GraphTags : {product?.seo?.openGraphTags}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Robot MetaTags : {product?.seo?.robotMetaTags}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Sitemap Frequency : {product?.seo
+                                        ?.sitemapFrequency}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Structured Data : {JSON.parse(product?.seo?.structuredData)}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Created At : {formatDate(product?.seo?.createdAt)}
+                                </p>
+                            {:else}
+                                <p>No Data</p>
+                            {/if}
+                        </div>
+                        <div>
+                            <b
+                                class="block my-[10px] text-gray-500 dark:text-gray-300"
+                                >Preview</b
+                            ><br />
 
-                        <DeviceMockup device="ios">
-                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-light.png" class="dark:hidden w-[272px] h-[572px]" alt="ios example 1" />
-                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-dark.png" class="hidden dark:block w-[272px] h-[572px]" alt="ios example 2" />
-                        </DeviceMockup>
-                    </div>
-                </div>
-            </TabItem>
-            <TabItem open title="Posts">
-                <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5">
-                    <div class=" text-gray-500 dark:text-gray-300">
-                        <b class="block my-[10px]">Posts Information</b><br />
-                        {#if product?.post}
-                            <p class="border-b p-2 m-4">
-                                Author : {product?.post?.author}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                Category : {product?.post?.category}
-                            </p>
-                            <p class="border-b p-2 m-4">
-                                published At : {formatDate(product?.post?.published_at)}
-                            </p>
-                        {:else}
-                            <p>No Data</p>
-                        {/if}
-                    </div>
-                    <div>
-                        <p class="py-[10px]">Images Posts</p>
-                        <div class="grid grid-cols-3 gap-1">
-                            {#each convertImageJsonToArray(product?.post?.images) as path, i}
-                                <img
-                                    src={!path
-                                        ? "/images/logo.png"
-                                        : `${host}` + "/" + path}
-                                    class=""
-                                    alt=""
-                                />
-                            {/each}
+                            <DeviceMockup device="ios">
+                                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-light.png" class="dark:hidden w-[272px] h-[572px]" alt="ios example 1" />
+                                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-dark.png" class="hidden dark:block w-[272px] h-[572px]" alt="ios example 2" />
+                            </DeviceMockup>
                         </div>
                     </div>
-                </div>
-                <!-- content show here  -->
-                <div class="py-[20px] justify-center">
-                    <h3> Content Posts</h3><br>
-                    <div>
-                        {@html product?.post?.content}
+                </TabItem>
+                <TabItem open title="Posts">
+                    <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5">
+                        <div class=" text-gray-500 dark:text-gray-300">
+                            <b class="block my-[10px]">Posts Information</b><br />
+                            {#if product?.post}
+                                <p class="border-b p-2 m-4">
+                                    Author : {product?.post?.author}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    Category : {product?.post?.category}
+                                </p>
+                                <p class="border-b p-2 m-4">
+                                    published At : {formatDate(product?.post?.published_at)}
+                                </p>
+                            {:else}
+                                <p>No Data</p>
+                            {/if}
+                        </div>
+                        <div>
+                            <p class="py-[10px]">Images Posts</p>
+                            <div class="grid grid-cols-3 gap-1">
+                                {#each convertImageJsonToArray(product?.post?.images) as path, i}
+                                    <img
+                                        src={!path
+                                            ? "/images/logo.png"
+                                            : `${host}` + "/" + path}
+                                        class=""
+                                        alt=""
+                                    />
+                                {/each}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </TabItem>
-        </Tabs>
-    </div>
+                    <!-- content show here  -->
+                    <div class="py-[20px] justify-center">
+                        <h3> Content Posts</h3><br>
+                        <div>
+                            {@html product?.post?.content}
+                        </div>
+                    </div>
+                </TabItem>
+            </Tabs>
+        </div>
     </TabItem>
     <TabItem title="Edit {product?.productName}">
         <CreateProduct mode={mode} products={products} title="Edit Products"/>
