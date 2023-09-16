@@ -5,9 +5,10 @@
     import { toastErr } from "$lib/store/toastError";
     import Icon from "@iconify/svelte";
     import axios from "axios";
-    import { Fileupload } from "flowbite-svelte";
+    import { Fileupload, Textarea } from "flowbite-svelte";
 
     export let seoData: any;
+    export let divClass = "grid sm:grid-cols-2 grid-cols-1";
 
     let seo = seoData.seo;
     let host = "http://103.142.26.42";
@@ -140,127 +141,124 @@
         }
     }
 </script>
-
-<div
-    class="bg-white dark:bg-slate-800 dark:text-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2 h-full"
->
-    <h1 class="text-[34px] py-[10px] uppercase text-center font-bold">
+<div class="{divClass} bg-white dark:bg-slate-800 dark:text-white shadow-md rounded h-full" >
+    <h1 class="text-[34px] py-[10px] uppercase text-center font-bold col-span-full">
         seo edit
     </h1>
-    <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+    <!-- <div class="-mx-3 md:flex mb-6"> -->
+        <div class="px-3 mb-6 md:mb-0">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-first-name"
+                for="metaTitle"
             >
                 Meta Title
             </label>
             <input
                 bind:value={seo.metaTitle}
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                id="grid-first-name"
+                id="metaTitle"
                 type="text"
                 placeholder="Input Meta Description"
             />
         </div>
-        <div class="md:w-1/2 px-3">
+        <div class="px-3">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-last-name"
+                for="metaDescription"
             >
                 Meta Description
             </label>
-            <input
+            <Textarea
                 bind:value={seo.metaDescription}
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="grid-last-name"
+                id="metaDescription"
                 type="text"
                 placeholder="Meta Description "
             />
         </div>
-    </div>
-    <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+    <!-- </div>
+    <div class="-mx-3 md:flex mb-6"> -->
+        <div class="px-3 mb-6 md:mb-0">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-first-name"
+                for="keywords"
             >
                 Keywords
             </label>
             <input
                 bind:value={seo.keywords}
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                id="grid-first-name"
+                id="keywords"
                 type="text"
                 placeholder="Input Meta keywords"
             />
         </div>
-        <div class="md:w-1/2 px-3">
+        <div class="px-3">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-last-name"
+                for="canonicalUrl"
             >
                 Canonical Url
             </label>
             <input
                 bind:value={seo.canonicalUrl}
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="grid-last-name"
+                id="canonicalUrl"
                 type="text"
                 placeholder="Innput Canonical Url "
             />
         </div>
-    </div>
-    <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-1/2 px-3 mb-6 md:mb-0">
+    <!-- </div>
+    <div class="-mx-3 md:flex mb-6"> -->
+        <div class="px-3 mb-6 md:mb-0">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-first-name"
+                for="robotMetaTags"
             >
                 Robot MetaTags
             </label>
             <input
                 bind:value={seo.robotMetaTags}
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                id="grid-first-name"
+                id="robotMetaTags"
                 type="text"
                 placeholder="Input Meta Robot MetaTags"
             />
         </div>
-        <div class="md:w-1/2 px-3">
+        <!-- <div class="px-3">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-last-name"
+                for="openGraphTags"
             >
                 Open GraphTags
             </label>
             <input
                 bind:value={seo.openGraphTags}
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="grid-last-name"
+                id="openGraphTags"
                 type="text"
                 placeholder="Innput Open GraphTags "
             />
-        </div>
-    </div>
-    <div class="-mx-3 md:flex mb-6">
-        <div class="md:w-1/2 px-3">
+        </div> -->
+    <!-- </div>
+    <div class="-mx-3 md:flex mb-6"> -->
+        <div class="px-3">
             <label
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="grid-last-name"
+                for="sitemapFrequency"
             >
                 Sitemap Frequency
             </label>
             <input
                 bind:value={seo.sitemapFrequency}
                 class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="grid-last-name"
+                id="sitemapFrequency"
                 type="text"
                 placeholder="Innput Sitemap Frequency "
             />
         </div>
-    </div>
-    <div>
+    <!-- </div> -->
+    <div class="px-3 col-span-full">
         <label
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
             for="grid-zip"
@@ -279,17 +277,17 @@
                         src={file}
                         alt="avatar"
                     />
-                    <div
+                    <button
                         class="absolute top-0 right-0 cursor-pointer bg-white rounded text-red-500"
-                        on:click={handleDeleteFile(file)}
+                        on:click={() => handleDeleteFile(file)}
                     >
                         <Icon icon="iwwa:delete" width="30" />
-                    </div>
+                </button>
                 </div>
             </div>
         {/if}
     </div>
-    <div class="flex justify-center items-center relative bottom-0">
+    <div class="col-span-full flex justify-center items-center relative mb-4">
         <div class="btn-signup w-fit">
             <button
                 class=" bg-black text-white border border-black-500 hover:border-transparent rounded px-[80px] py-[10px]"

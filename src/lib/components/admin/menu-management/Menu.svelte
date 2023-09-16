@@ -90,7 +90,7 @@
         </h1>
     </div>
 </div>
-<div class="grid md:grid-cols-5 grid-cols-1 w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
+<div class="grid xl:grid-cols-5 grid-cols-1 w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
     {#if !menus && !$loadingState}
         <h1>nodata</h1>
     {:else if !$loadingState}

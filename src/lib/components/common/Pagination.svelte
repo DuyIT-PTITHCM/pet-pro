@@ -20,7 +20,7 @@
 </script>
 
 {#if totalPages > 1}
-    <div class="pagination flex justify-center items-center mt-20">
+    <div class="pagination flex justify-center items-center mt-10">
         <button
             on:click={() => changePage(currentPage - 1)}
             class="mx-1 px-2 py-1 border border-gray-300 rounded bg-white dark:bg-gray-800 dark:text-white {currentPage ===
