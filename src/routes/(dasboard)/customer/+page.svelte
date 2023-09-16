@@ -1,0 +1,1 @@
+<h1>Dashboard for customer</h1>

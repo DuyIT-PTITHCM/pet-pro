@@ -15,6 +15,7 @@ import verifyToken from './server/middleware/authMiddleware.js'
 import cors from 'cors';
 import cron from 'node-cron';
 import dailyJobDeleteImage from './server/cron/dailyJobDeleteImage.js';
+import verifyAdmin from './server/middleware/verifyAdmin.js';
 
 
 const __filename = new URL(import.meta.url).pathname;
@@ -33,13 +34,13 @@ app.use(express.static(path.join(__dirname, 'static')));
 
 // router 
 app.use(V_1_0 + '/auth', authRoute);
-app.use(V_1_0 + '/user-management', verifyToken, usersRouter);
-app.use(V_1_0 + '/menu', verifyToken, menusRouter);
-app.use(V_1_0 + '/upload', verifyToken, uploadFileRoute);
-app.use(V_1_0 + '/posts', verifyToken, postRouter);
-app.use(V_1_0 + '/categories', verifyToken, categoriesRoute);
-app.use(V_1_0 + '/products', verifyToken, productsRoute);
-app.use(V_1_0 + '/seo', verifyToken, seoRoute);
+app.use(V_1_0 + '/user-management', verifyToken, verifyAdmin, usersRouter);
+app.use(V_1_0 + '/menu', verifyToken, verifyAdmin, menusRouter);
+app.use(V_1_0 + '/upload', verifyToken, verifyAdmin, uploadFileRoute);
+app.use(V_1_0 + '/posts', verifyToken, verifyAdmin, postRouter);
+app.use(V_1_0 + '/categories', verifyToken, verifyAdmin, categoriesRoute);
+app.use(V_1_0 + '/products', verifyToken, verifyAdmin, productsRoute);
+app.use(V_1_0 + '/seo', verifyToken, verifyAdmin, seoRoute);
 app.use(V_1_0 + '/front', frontRoute);
 
 // cron job 

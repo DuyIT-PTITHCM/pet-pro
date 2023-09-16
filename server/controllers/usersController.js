@@ -40,7 +40,8 @@ export const index = async (req, res) => {
 
 export const show = async (req, res) => {
     try {
-        const user = await showDetail(req);
+        const userId = req.params.id;
+        const user = await showDetail(userId);
         coreResponse(res, 201, "User detail", user);
     } catch (error) {
         coreResponse(res, 500, "Error show user");
