@@ -7,7 +7,7 @@
     export let data;
 </script>
 
-<svelte:head>
+<!-- <svelte:head>
     <title>Trang chủ - Cửa hàng thú cưng Pet One</title>
     <meta
         name="description"
@@ -30,7 +30,7 @@
     <meta property="og:url" content="http://103.142.26.42/" />
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-</svelte:head>
+</svelte:head> -->
 {#if data.menu.length > 0}
     <Header bind:menuProp={data.menu} />
 {/if}
