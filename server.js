@@ -13,6 +13,8 @@ import seoRoute from './server/routes/api/v1.0/seoRoute.js';
 import frontRoute from './server/routes/api/v1.0/frontRoute.js';
 import verifyToken from './server/middleware/authMiddleware.js'
 import cors from 'cors';
+import cron from 'node-cron';
+import dailyJobDeleteImage from './server/cron/dailyJobDeleteImage.js';
 
 
 const __filename = new URL(import.meta.url).pathname;
@@ -39,6 +41,9 @@ app.use(V_1_0 + '/categories', verifyToken, categoriesRoute);
 app.use(V_1_0 + '/products', verifyToken, productsRoute);
 app.use(V_1_0 + '/seo', verifyToken, seoRoute);
 app.use(V_1_0 + '/front', frontRoute);
+
+// cron job 
+cron.schedule('* * * * *', dailyJobDeleteImage);
 
 //adapter front-end sveltekit
 app.use(handler);

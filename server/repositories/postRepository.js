@@ -1,33 +1,6 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
-
-// export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
-//     try {
-//         const posts = await models.Post.paginate({
-//             include: [
-//                 {
-//                     model: models.Categories,
-//                     as: 'category',
-//                     where: {
-//                         type: filters.type
-//                     }
-//                 },
-//                 {
-//                     model: models.Seo,
-//                     as: 'seo',
-//                 },
-//             ],
-//             page,
-//             paginate: perPage,
-//             order: [['createdAt', 'DESC']],
-//         });
-
-//         return posts;
-//     } catch (error) {
-//         console.log(error);
-//         throw new Error("Error fetching posts");
-//     }
-// };
+import { markImagesListAsUsed } from '../utils/imageUtils.js';
 
 export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
     try {
@@ -37,14 +10,12 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
         const categoryIds = await models.Categories.findAll({
             attributes: ['id'],
             where: {
-                type // So khớp category.type với filters.type
+                type
             },
         });
 
-        // Lấy danh sách các ID của category từ kết quả truy vấn
         const categoryIdList = categoryIds.map(category => category.id);
 
-        // Truy vấn danh sách bài post có categoryId trong danh sách ID trên
         const posts = await models.Post.paginate({
             include: [
                 {
@@ -57,8 +28,8 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
                 },
             ],
             where: {
-                categoryId: categoryIdList, // Sử dụng danh sách ID của category để lọc bài post
-                ...otherFilters // Áp dụng các điều kiện khác cho bảng Post
+                categoryId: categoryIdList,
+                ...otherFilters
             },
             page,
             paginate: perPage,
@@ -79,6 +50,7 @@ export const createPost = async (postData) => {
     let transaction;
     try {
         transaction = await models.sequelize.transaction();
+        await markImagesListAsUsed(imageUrl, transaction);
         const newPost = await models.Post.create({
             title,
             content,
@@ -121,12 +93,15 @@ export const createPost = async (postData) => {
 export const updatePost = async (postId, postData) => {
     const { title, content, description, author, published_at, views, imageUrl, categoryId, slug, seoId } = postData;
 
+    let transaction;
     try {
+        transaction = await models.sequelize.transaction();
         const post = await models.Post.findByPk(postId);
 
         if (!post) {
             throw new Error('Post not found');
         }
+        await markImagesListAsUsed(imageUrl, transaction);
 
         post.title = title;
         post.content = content;
@@ -142,10 +117,14 @@ export const updatePost = async (postId, postData) => {
         }
         post.views = views;
         post.imageUrl = imageUrl;
-        await post.save();
+        await post.save({ transaction });
 
+        await transaction.commit();
         return post;
     } catch (error) {
+        if (transaction) {
+            await transaction.rollback();
+        }
         throw new Error("Error updating post");
     }
 };

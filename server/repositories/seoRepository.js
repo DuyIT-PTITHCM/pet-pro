@@ -1,5 +1,6 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
+import { markImageAsUsed } from '../utils/imageUtils.js';
 
 export const getAllSeos = async () => {
     try {
@@ -30,6 +31,8 @@ export const createSeo = async (seoData) => {
             sitemapLastModified,
             image
         }, { transaction });
+        await markImageAsUsed(image, transaction);
+
         switch (reference) {
             case 'product':
                 let product = await models.Product.findByPk(referenceId);
@@ -68,13 +71,17 @@ export const createSeo = async (seoData) => {
 };
 
 export const updateSeo = async (seoId, seoData) => {
+    let transaction;
     try {
+        transaction = await models.sequelize.transaction();
+
         const { metaTitle, metaDescription, keywords, canonicalUrl, robotMetaTags, openGraphTags, structuredData, sitemapPriority, sitemapFrequency, sitemapLastModified, image } = seoData;
         const seo = await models.Seo.findByPk(seoId);
 
         if (!seo) {
             throw new Error('SEO not found');
         }
+        await markImageAsUsed(image, transaction);
 
         seo.metaTitle = metaTitle;
         seo.metaDescription = metaDescription;
@@ -88,10 +95,14 @@ export const updateSeo = async (seoId, seoData) => {
         seo.sitemapFrequency = sitemapFrequency;
         seo.sitemapLastModified = sitemapLastModified;
 
-        await seo.save();
+        await seo.save({ transaction });
+        await transaction.commit();
         return seo;
 
     } catch (error) {
+        if (transaction) {
+            await transaction.rollback();
+        }
         throw new Error("Error updating SEO");
     }
 };
