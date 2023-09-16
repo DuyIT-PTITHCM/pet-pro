@@ -139,7 +139,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   if ($$props.data === void 0 && $$bindings.data && data !== void 0)
     $$bindings.data(data);
   $$result.css.add(css);
-  return `${$$result.head += `<!-- HEAD_svelte-1fj46cc_START -->${$$result.title = `<title>${escape(data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle : data?.data.name)}</title>`, ""}<meta name="description"${add_attribute(
+  return `${$$result.head += `<!-- HEAD_svelte-66s36y_START -->${$$result.title = `<title>${escape(data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle : data?.data.name)}</title>`, ""}<meta name="description"${add_attribute(
     "content",
     data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name,
     0
@@ -167,7 +167,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     "content",
     data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name,
     0
-  )}><meta property="og:image"${add_attribute("content", data?.data?.image, 0)}><meta property="twitter:title"${add_attribute(
+  )}><meta property="og:image"${add_attribute("content", data?.data?.seo.image, 0)}><meta property="twitter:title"${add_attribute(
     "content",
     data?.data?.seo?.metaTitle ? data?.data?.seo?.metaTitle : data?.data.name,
     0
@@ -175,7 +175,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     "content",
     data?.data?.seo?.metaDescription ? data?.data?.seo?.metaDescription : data?.data.name,
     0
-  )}><meta property="twitter:image"${add_attribute("content", data?.data?.image, 0)}><!-- HEAD_svelte-1fj46cc_END -->`, ""} <div class="flex relative gap-4 m-4 clear-both mb-10"><div class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white md:block hidden s-_m32SN5m6RSJ"><div class="w-full rounded-lg border"><ul class="list-none">${data?.data.parent_id ? `<p class="text-center p-4" data-svelte-h="svelte-1vmwz62">Menus Referent</p> ${each(data?.data?.menuReferent, (menuReferent) => {
+  )}><meta property="twitter:image"${add_attribute("content", data?.data?.seo.image, 0)}><!-- HEAD_svelte-66s36y_END -->`, ""} <div class="flex relative gap-4 m-4 clear-both mb-10"><div class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white md:block hidden s-_m32SN5m6RSJ"><div class="w-full rounded-lg border"><ul class="list-none">${data?.data.parent_id ? `<p class="text-center p-4" data-svelte-h="svelte-1vmwz62">Menus Referent</p> ${each(data?.data?.menuReferent, (menuReferent) => {
     return `${data?.data?.id != menuReferent ? `<li class="menu-item s-_m32SN5m6RSJ"><a class="${escape(
       menuReferent.url == data?.data.url ? "text-primary-600" : "",
       true
@@ -244,4 +244,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-9cd786c5.js.map
+//# sourceMappingURL=_page.svelte-853608fa.js.map
