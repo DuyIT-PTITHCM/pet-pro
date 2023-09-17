@@ -175,7 +175,7 @@
     </TableHead>
     <TableBody>
         {#each sortedProducts as item}
-            <TableBodyRow class="cursor-pointer" on:click={gotoDetail(item.id)}>
+            <TableBodyRow class="cursor-pointer" on:click={() => gotoDetail(item.id)}>
                 <TableBodyCell tdClass="w-3"
                     ><div class="flex justify-center">
                         <Checkbox checked={isCheck} value={item.id} />

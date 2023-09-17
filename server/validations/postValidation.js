@@ -9,7 +9,6 @@ export const createPostValidation = [
 
     body('slug')
         .optional()
-        .isString().withMessage('Slug must be a string')
         .custom(isUniqueSlug).withMessage('Slug already exists')
 ];
 
@@ -21,6 +20,5 @@ export const updatePostValidation = [
 
     body('slug')
         .optional()
-        .isString().withMessage('Slug must be a string')
         .custom(isUniqueSlugUpdate).withMessage('Slug already exists')
 ];

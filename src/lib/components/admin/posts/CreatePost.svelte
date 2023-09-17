@@ -15,6 +15,12 @@
         post = res.data.data;
         postData.postId = post.id;
         postData.post = post;
+        toastErr.set([
+                {
+                    message: res.data.message,
+                    type: "success"
+                }
+            ]);
         return res;
     }
     async function handleSubmitUpdatePost() {
