@@ -201,6 +201,9 @@ export const isUniqueTitleUpdate = async (title, { req }) => {
 };
 
 export const isUniqueSlug = async (slug) => {
+    if (!slug) {
+        return Promise.resolve();
+    }
     const post = await models.Post.findOne({ where: { slug } });
     if (post) {
         return Promise.reject('Slug already exists');
@@ -209,6 +212,9 @@ export const isUniqueSlug = async (slug) => {
 };
 
 export const isUniqueSlugUpdate = async (slug, { req }) => {
+    if (!slug) {
+        return Promise.resolve();
+    }
     const productId = req.params.id;
     const post = await models.Post.findAll({
         where: {
