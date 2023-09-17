@@ -3,10 +3,10 @@ import { isUniqueSlug, isUniqueSlugUpdate, isUniqueTitle, isUniqueTitleUpdate } 
 
 export const createPostValidation = [
     body('title').notEmpty().isString().custom(isUniqueTitle),
-    body('slug').optional().isString().custom(isUniqueSlug),
+    body('slug').optional().custom(isUniqueSlug),
 ];
 
 export const updatePostValidation = [
     body('title').notEmpty().isString().custom(isUniqueTitleUpdate),
-    body('slug').optional().isString().custom(isUniqueSlugUpdate),
+    body('slug').optional().custom(isUniqueSlugUpdate),
 ];
