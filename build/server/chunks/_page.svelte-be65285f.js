@@ -37,9 +37,9 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$rendered;
   do {
     $$settled = true;
-    $$rendered = `${$$result.head += `<!-- HEAD_svelte-7wwze_START -->${$$result.title = `<title>${escape(product?.seo?.metaTitle ? product?.seo?.metaTitle : product.productName)}</title>`, ""}<meta name="description"${add_attribute(
+    $$rendered = `${$$result.head += `<!-- HEAD_svelte-1l85s6z_START -->${$$result.title = `<title>${escape(product?.seo?.metaTitle ? product?.seo?.metaTitle : product.productName)}</title>`, ""}<meta name="description"${add_attribute(
       "content",
-      product?.seo?.metaDescription ? product?.seo?.metaDescription : product.productName,
+      product?.seo?.metaDescription ? product?.seo?.metaDescription : product.description,
       0
     )}><meta name="keywords"${add_attribute(
       "content",
@@ -49,7 +49,19 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       "href",
       product?.seo?.canonicalUrl ? product?.seo?.canonicalUrl : host + product.slug,
       0
-    )}><meta property="og:title"${add_attribute("content", product?.seo?.openGraphTags, 0)}><!-- HTML_TAG_START -->${'<script type="application/ld+json">' + product?.seo?.structuredData + "<\/script>"}<!-- HTML_TAG_END --><meta name="sitemap_priority"${add_attribute(
+    )}><meta property="og:title"${add_attribute(
+      "content",
+      product?.seo?.metaTitle ? product?.seo?.metaTitle : product.productName,
+      0
+    )}><meta property="og:description"${add_attribute(
+      "content",
+      product?.seo?.metaDescription ? product?.seo?.metaDescription : product.description,
+      0
+    )}><meta property="og:image"${add_attribute(
+      "content",
+      product?.seo?.image ? host + product?.seo?.image : imageSeo,
+      0
+    )}><!-- HTML_TAG_START -->${'<script type="application/ld+json">' + product?.seo?.structuredData + "<\/script>"}<!-- HTML_TAG_END --><meta name="sitemap_priority"${add_attribute(
       "content",
       product?.seo?.sitemapPriority ? product?.seo?.sitemapPriority : "",
       0
@@ -57,7 +69,19 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       "content",
       product?.seo?.sitemapFrequency ? product?.seo?.sitemapFrequency : "always",
       0
-    )}><meta property="og:image"${add_attribute("content", imageSeo, 0)}><meta name="twitter:image"${add_attribute("content", imageSeo, 0)}><!-- HEAD_svelte-7wwze_END -->`, ""} <h1 class="my-10 text-primary-600 dark:text-white flex justify-center items-center">${validate_component(Icon, "Icon").$$render($$result, { icon: "ph:paw-print-bold" }, {}, {})}${escape(product.productName)}${validate_component(Icon, "Icon").$$render($$result, { icon: "ph:paw-print-bold" }, {}, {})}</h1> <div class="flex justify-center dark:text-slate-100 overflow-hidden"><div class="m-1 mb-10 container"><div class="w-full grid lg:grid-cols-3 grid-cols-1 gap-4"><div class="${"rounded-xl overflow-hidden md:col-span-2 " + escape(
+    )}><meta property="twitter:title"${add_attribute(
+      "content",
+      product?.seo?.metaTitle ? product?.seo?.metaTitle : product.productName,
+      0
+    )}><meta property="twitter:description"${add_attribute(
+      "content",
+      product?.seo?.metaDescription ? product?.seo?.metaDescription : product.description,
+      0
+    )}><meta name="twitter:image"${add_attribute(
+      "content",
+      product?.seo?.image ? host + product?.seo?.image : imageSeo,
+      0
+    )}><!-- HEAD_svelte-1l85s6z_END -->`, ""} <h1 class="my-10 text-primary-600 dark:text-white flex justify-center items-center">${validate_component(Icon, "Icon").$$render($$result, { icon: "ph:paw-print-bold" }, {}, {})}${escape(product.productName)}${validate_component(Icon, "Icon").$$render($$result, { icon: "ph:paw-print-bold" }, {}, {})}</h1> <div class="flex justify-center dark:text-slate-100 overflow-hidden"><div class="m-1 mb-10 container"><div class="w-full grid lg:grid-cols-3 grid-cols-1 gap-4"><div class="${"rounded-xl overflow-hidden md:col-span-2 " + escape(
       images.length < 3 ? "columns-" + images.length + " w-full" : images.length == 3 ? "grid grid-cols-2 gap-4 " : "md:columns-3 columns-2 gap-4 ",
       true
     )}">${each(images, (path, i) => {
@@ -140,4 +164,4 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 });
 
 export { Page as default };
-//# sourceMappingURL=_page.svelte-2d1c21e0.js.map
+//# sourceMappingURL=_page.svelte-be65285f.js.map
