@@ -20,41 +20,45 @@
     }
 </script>
 {#if products}
-
-{#each products as product}
-{#await getProductImage(product.images)}
-<div class="w-full">
-    <CardPlaceholder size="lg" />
-</div>
-{:then res}
-<div class="relative">
-    {#if product.discount > 0}
-        <div class="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 rounded-tr-md rounded-bl-2xl border-l-8 border-t-4 border-red-600 -ml-2 transform z-10 animate-bounce">
-            {product.discount}% discount
+    {#each products as product}
+        {#await getProductImage(product.images)}
+        <div class="w-full">
+            <CardPlaceholder size="lg" />
         </div>
-    {/if}
-    <Card class="min-w-full" padding="none">
-        <CarouselCustom perPage={1}  duration={400}>
-            {#each res as path, i}
-                <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded-xl w-full mb-4 h-[400px] object-cover" alt="{product?.name}" />
-            {/each}
-        </CarouselCustom>
-        
-        <div class="px-5 pb-5">
-            <a href="/san-pham/{product.slug}">
-                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4">{product?.productName}</h5>
-                <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px]">{product.description}</p>
-            </a>
-            <div class="flex justify-between items-center">
-                <span class="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(product?.price)}</span>
-            </div>
-            <div class="flex float-right">
-                <Button class="mr-1 text-2xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
-                <Button class="text-2xl" href="/"><Icon icon="fa6-solid:cart-plus" /></Button>
-            </div>
+        {:then res}
+        <div class="relative">
+            {#if product.discount > 0}
+                <div class="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 rounded-tr-md rounded-bl-2xl border-l-8 border-t-4 border-red-600 -ml-2 transform z-10 animate-bounce">
+                    {product.discount}% discount
+                </div>
+            {/if}
+            <Card class="min-w-full overflow-hidden" padding="none">
+                <CarouselCustom perPage={1}  duration={400}>
+                    {#each res as path, i}
+                        <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded-xl w-full mb-4 max-h-[400px] min-h-[300px] object-cover" alt="{product?.name}" />
+                    {/each}
+                </CarouselCustom>
+                
+                <div class="px-5 pb-5">
+                    <a href="/san-pham/{product.slug}">
+                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4 hover:text-primary-600 dark:hover:text-primary-500">{product?.productName}</h5>
+                        <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px] hover:text-primary-600 dark:hover:text-primary-500">{product.description}</p>
+                    </a>
+                    <div class="flex justify-between items-center mt-4">
+                        <div>
+                            <span class="text-xl font-bold text-primary-600 dark:text-white">{formatCurrency(product?.price)}</span>
+                            {#if product.discount>0}
+                            <br><del>{formatCurrency(product?.originprice)}</del>
+                            {/if}
+                        </div>
+                        <div class="flex float-right">
+                            <Button outline class="mr-1 text-2xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
+                            <Button outline class="text-2xl" href="/"><Icon icon="fa6-solid:cart-plus" /></Button>
+                        </div>
+                    </div>
+                </div>
+            </Card>
         </div>
-    </Card>
-</div>
-{/await}
-{/each}
+        {/await}
+    {/each}
 {/if}

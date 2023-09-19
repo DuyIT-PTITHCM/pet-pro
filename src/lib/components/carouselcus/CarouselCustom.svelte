@@ -152,9 +152,9 @@
 		justify-content: center;
 		align-items: center;
 	}
-	.slides {
+	/* .slides {
 		height: 400px !important;
-	}
+	} */
 	button {
 		position: absolute;
 		width: 40px;

@@ -171,7 +171,7 @@
       >
         Product Description
       </label>
-      <input
+      <Textarea
         bind:value={products.description}
         class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
         id="grid-last-name"
