@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       price: {
         type: Sequelize.DECIMAL
@@ -28,7 +28,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       notes: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
       images: {
         type: Sequelize.TEXT

@@ -22,12 +22,12 @@ export default (sequelize, DataTypes) => {
   Product.init(
     {
       productName: DataTypes.STRING,
-      description: DataTypes.STRING,
+      description: DataTypes.TEXT,
       price: DataTypes.DECIMAL,
       originalPrice: DataTypes.DECIMAL,
       stockQuantity: DataTypes.INTEGER,
       origin: DataTypes.STRING,
-      notes: DataTypes.STRING,
+      notes: DataTypes.TEXT,
       images: DataTypes.TEXT,
       type: DataTypes.ENUM('pet', 'accessory', 'medical_equipment'),
       discount: DataTypes.DECIMAL,
