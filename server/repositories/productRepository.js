@@ -83,6 +83,58 @@ export const showProduct = async (req) => {
 };
 
 
+export const showProductForFront = async (req) => {
+    const id = req.params.id;
+    const slug = req.params.slug;
+    let filter = {};
+    if (id) {
+        filter.id = {
+            [Op.ne]: id
+        };
+    } else {
+        filter.slug = {
+            [Op.ne]: slug
+        };
+    }
+
+    const productDetail = await models.Product.findOne({
+        where: id ? { id } : { slug },
+        include: [
+            {
+                model: models.Seo,
+                as: 'seo',
+            },
+            {
+                model: models.Post,
+                as: 'post',
+            },
+            {
+                model: models.Categories,
+                as: 'category',
+            },
+        ],
+    });
+
+    if (!productDetail) {
+        throw new Error("Product not found");
+    }
+
+    const productReferences = await models.Product.findAll({
+        where: {
+            categoryId: productDetail.categoryId,
+            ...filter
+        },
+    });
+
+    const product = {
+        ...productDetail.toJSON(),
+        productReferences,
+    };
+
+    return product;
+
+}
+
 export const createProduct = async (productData) => {
     let transaction;
     try {

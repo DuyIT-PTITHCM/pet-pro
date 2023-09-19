@@ -6,7 +6,8 @@ import {
     updateProduct,
     deleteProduct,
     showProduct,
-    getAllProductsForFront
+    getAllProductsForFront,
+    showProductForFront
 } from "../repositories/productRepository.js";
 
 const PER_PAGE = 10;
@@ -49,6 +50,16 @@ export const show = async (req, res) => {
         const data = await showProduct(req);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
+        coreResponse(res, 500, "Error fetching products from controller", error);
+    }
+};
+
+export const showProductFront = async (req, res) => {
+    try {
+        const data = await showProductForFront(req);
+        coreResponse(res, 200, "Success", data);
+    } catch (error) {
+        console.log(error);
         coreResponse(res, 500, "Error fetching products from controller", error);
     }
 };
