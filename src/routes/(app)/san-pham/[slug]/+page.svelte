@@ -2,6 +2,7 @@
     import { formatCurrency } from '$lib/Utils/accounting.js';
     import CarouselCustom from '$lib/components/carouselcus/CarouselCustom.svelte';
     import PostProductDetail from '$lib/components/products/PostProductDetail.svelte';
+    import Products from '$lib/components/products/Products.svelte';
     import Icon from '@iconify/svelte';
     import { Button, Modal, TabItem, Tabs } from 'flowbite-svelte';
 
@@ -9,6 +10,7 @@
     let host = "http://103.142.26.42";
 
     let product = data.data;
+    console.log(product)
     let imagesModel = false;
     let isViewedImage = false;
     let images = JSON.parse(product?.images);
@@ -44,22 +46,22 @@
     <meta property="og:image" content={imageSeo} />
     <meta name="twitter:image" content={imageSeo} />
 </svelte:head>
-<h1 class="text-3xl font-bold text-center my-10 dark:text-white">{product.productName}</h1>
-<div class="flex justify-center dark:text-slate-100">
+<h1 class="my-10 text-primary-600 dark:text-white flex justify-center items-center"><Icon icon="ph:paw-print-bold" />{product.productName}<Icon icon="ph:paw-print-bold" /></h1>
+<div class="flex justify-center dark:text-slate-100 overflow-hidden">
     <div class="m-1 mb-10 container">
         <div class="w-full grid lg:grid-cols-3 grid-cols-1 gap-4">
-            <div class="md:col-span-2 {images.length < 3 ? 'columns-' + (images.length) + ' h-[600px] w-full' : images.length == 3 ? 'grid grid-cols-2 gap-4 ' :'md:columns-3 columns-2 gap-4 '}">
+            <div class="rounded-xl overflow-hidden md:col-span-2 {images.length < 3 ? 'columns-' + (images.length) + ' w-full' : images.length == 3 ? 'grid grid-cols-2 gap-4 ' :'md:columns-3 columns-2 gap-4 '}">
                 {#each images as path, i}
                 <img on:click={() => (imagesModel = true)}
                     src={!path
                         ? "/images/logo.png"
                         : `${host}` + "/" + path}
-                    class="rounded-xl  shadow-2xl  { images.length < 3 ? 'h-full w-full object-cover' : images.length == 3 ? 'w-full' : 'h-full w-full object-contain mb-4'} {images.length == 3  && i==2 ? 'col-span-2' : '' }"
+                    class="rounded-xl  shadow-xl cursor-zoom-in { images.length < 3 ? 'w-full object-cover' : images.length == 3 ? 'w-full' : 'w-full object-contain mb-4'} {images.length == 3  && i==2 ? 'col-span-2' : '' }"
                     alt="{product?.productName}"
                 />
                 {/each}
             </div>
-            <div class="border rounded-xl shadow-2xl w-full h-fit md:p-6 p-4">
+            <div class="border rounded-xl shadow-xl w-full h-fit md:p-6 p-4">
                 <div class="">
                     <h2 class="mb-4 text-xl font-bold">Product name: {product.productName}</h2>
                     <p class="mb-4"><b>Origin</b>: {product.origin}</p>
@@ -111,8 +113,16 @@
 </div>
 
 <!-- Post Product -->
-<div class="flex justify-center w-full">
+<div class="flex justify-center w-full clear-both">
     <div class="container m-4">
-        <PostProductDetail post={product.post}/>
+        {#if product.post}
+            <PostProductDetail post={product.post}/>
+        {/if}
+        {#if product.productReferences.length > 0}
+        <h4 class="text-center m-4 dark:text-white">Product References</h4>
+            <div class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                <Products products={product.productReferences}/>
+            </div>
+        {/if}
     </div>
 </div>
