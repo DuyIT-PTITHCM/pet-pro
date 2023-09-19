@@ -26,7 +26,8 @@ export const getAllMenus = async () => {
             ],
             where: {
                 parent_id: null
-            }
+            },
+            order: [['priority', 'ASC']],
         });
 
         return data;
@@ -49,7 +50,9 @@ export const getAllMenusForFront = async () => {
             where: {
                 parent_id: null,
                 active: true
-            }
+            },
+            order: [['priority', 'ASC']],
+
         });
 
         return data;
@@ -277,3 +280,16 @@ export const isMenuExits = async (parent_id) => {
     }
     return Promise.resolve();
 };
+
+export const updateMenuPriority = async (menuId, priority) => {
+    try {
+      const menu = await models.Menu.findByPk(menuId);
+      if (!menu) {
+        throw new Error('Menu not found');
+      }
+      menu.priority = priority;
+      await menu.save();
+    } catch (error) {
+      throw error;
+    }
+  };

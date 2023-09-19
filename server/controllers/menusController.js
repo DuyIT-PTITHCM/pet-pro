@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import { coreResponse } from "../lib/coreResponse.js";
-import { createMenu, getAllMenus, updateMenu, deleteMenu, getDetailMenu, getAllMenusForFront } from "../repositories/menuRepository.js";
+import { createMenu, getAllMenus, updateMenu, deleteMenu, getDetailMenu, getAllMenusForFront, updateMenuPriority } from "../repositories/menuRepository.js";
 
 export const index = async (req, res) => {
     try {
@@ -21,7 +21,7 @@ export const indexFront = async (req, res) => {
 };
 
 export const show = async (req, res) => {
-    
+
     try {
         const data = await getDetailMenu(req);
         coreResponse(res, 200, "Success", data);
@@ -62,5 +62,22 @@ export const forceDeleteMenu = async (req, res) => {
         coreResponse(res, 201, "Menu deleted successfully", menuDeleted);
     } catch (error) {
         coreResponse(res, 500, "Error deleting menu", error);
+    }
+};
+
+export const updateMenuPriorities = async (req, res) => {
+    try {
+        const { menuIds } = req.body;
+
+        for (let i = 0; i < menuIds.length; i++) {
+            const menuId = menuIds[i];
+            const priority = i + 1;
+            await updateMenuPriority(menuId, priority);
+        }
+
+        const menus = await getAllMenus();
+        return coreResponse(res, 201, "Update Menu Priorities successfully", menus);
+    } catch (error) {
+        return coreResponse(res, 500, "Internal Server Error", error);
     }
 };

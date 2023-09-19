@@ -51,6 +51,10 @@ export default (sequelize, DataTypes) => {
                 defaultValue: 'product',
                 allowNull: false,
             },
+            priority: {
+                type: DataTypes.INTEGER,
+                allowNull: true,
+            },
             parent_id: {
                 type: DataTypes.INTEGER,
                 allowNull: true,
