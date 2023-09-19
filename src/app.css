@@ -37,7 +37,14 @@
   box-shadow: 2px 0px 1px rgb(30, 41, 59) !important;
   background-color: rgb(30, 41, 59) !important;
 }
-
+.post-container iframe{
+  margin: 0 auto;
+  max-width: 100%;
+}
+.post-container img{
+  text-align: center !important;
+  margin: 0 auto;
+}
 
 .gender-select option{
   font-size: 20px;

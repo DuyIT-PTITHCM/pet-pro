@@ -42,15 +42,20 @@
         
         <div class="px-5 pb-5">
             <a href="/san-pham/{product.slug}">
-                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4">{product?.productName}</h5>
-                <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px]">{product.description}</p>
+                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4 hover:text-primary-600 dark:hover:text-primary-500">{product?.productName}</h5>
+                <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px] hover:text-primary-600 dark:hover:text-primary-500">{product.description}</p>
             </a>
-            <div class="flex justify-between items-center">
-                <span class="text-xl font-bold text-gray-900 dark:text-white">{formatCurrency(product?.price)}</span>
-            </div>
-            <div class="flex float-right">
-                <Button class="mr-1 text-2xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
-                <Button class="text-2xl" href="/"><Icon icon="fa6-solid:cart-plus" /></Button>
+            <div class="flex justify-between items-center mt-4">
+                <div>
+                    <span class="text-xl font-bold text-primary-600 dark:text-white">{formatCurrency(product?.price)}</span>
+                    {#if product.discount>0}
+                    <br><del>{formatCurrency(product?.originprice)}</del>
+                    {/if}
+                </div>
+                <div class="flex float-right">
+                    <Button outline class="mr-1 text-2xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
+                    <Button outline class="text-2xl" href="/"><Icon icon="fa6-solid:cart-plus" /></Button>
+                </div>
             </div>
         </div>
     </Card>

@@ -4,6 +4,7 @@
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { Tabs, TabItem, DeviceMockup } from "flowbite-svelte";
     import CreateProduct from "$lib/components/admin/products/CreateProduct.svelte";
+    import Icon from "@iconify/svelte";
 
     const productService = RepositoryFactory.get("productRepository");
     let product: any;
@@ -175,14 +176,38 @@ contentClass="bg-white dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                             ><br />
 
                             <DeviceMockup device="ios">
-                                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-light.png" class="dark:hidden w-[272px] h-[572px]" alt="ios example 1" />
-                                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-dark.png" class="hidden dark:block w-[272px] h-[572px]" alt="ios example 2" />
+                                <div class="flex flex-col items-center justify-center w-full h-full p-4 text-gray-200 bg-no-repeat bg-fixed bg-cover bg-center" style="background: url(https://mondaycareer.com/wp-content/uploads/2020/11/background-%C4%91%E1%BA%B9p-3-1-768x512.jpg);">
+                                    <div class="w-full flex items-center mb-2">
+                                        <img src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg" alt="" class="mr-2 w-10 h-10 rounded-full object-cover">
+                                        <p class="rounded-lg p-2 bg-slate-600 text-sm">Hey!</p>
+                                    </div>
+                                    <div class="w-full flex items-center mb-2">
+                                        <img src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg" alt="" class="mr-2 w-10 h-10 rounded-full object-cover">
+                                        <p class="rounded-lg p-2 bg-slate-600 text-sm flex-1">This is {product?.productName}</p>
+                                    </div>
+                                    <div class="w-full flex mb-2">
+                                        <img src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg" alt="" class="mr-2 w-10 h-10 rounded-full object-cover">
+                                        <div class="w-full rounded-lg bg-slate-600 flex-1">
+                                            <p class="text-sm text-center p-1">{product?.seo?.canonicalUrl}</p>
+                                            <img src={host+product?.seo?.image} alt="{product?.seo?.metaTitle}">
+                                            <p class="text-sm p-2">{product?.seo?.metaTitle}</p>
+                                        </div>
+                                    </div>
+                                    <div class="w-full flex items-center justify-end mb-2">
+                                        <p class="rounded-lg p-2 bg-slate-600 text-sm flex items-center">Oh! It very nice  <Icon icon="fluent-emoji-flat:red-heart" /> <Icon icon="fluent-emoji-flat:red-heart" /></p>
+                                        <img src="https://kenh14cdn.com/2020/2/23/005ghwu5ly1g5zg5rv1udj33aj4xme84-15824491538811346801649.jpg" alt="" class="ml-2 w-10 h-10 rounded-full object-cover">
+                                    </div>
+                                    <div class="w-full flex items-center justify-end mb-2">
+                                        <p class="rounded-lg p-2 bg-slate-600 text-sm flex items-center">Thank you <Icon icon="fluent-emoji-flat:heart-with-ribbon" /></p>
+                                        <img src="https://kenh14cdn.com/2020/2/23/005ghwu5ly1g5zg5rv1udj33aj4xme84-15824491538811346801649.jpg" alt="" class="ml-2 w-10 h-10 rounded-full object-cover">
+                                    </div>
+                                </div>
                             </DeviceMockup>
                         </div>
                     </div>
                 </TabItem>
                 <TabItem open title="Posts">
-                    <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5">
+                    <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5 ">
                         <div class=" text-gray-500 dark:text-gray-300">
                             <b class="block my-[10px]">Posts Information</b><br />
                             {#if product?.post}
@@ -217,7 +242,7 @@ contentClass="bg-white dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                     <!-- content show here  -->
                     <div class="py-[20px] justify-center">
                         <h3> Content Posts</h3><br>
-                        <div>
+                        <div class="dark:text-gray-100">
                             {@html product?.post?.content}
                         </div>
                     </div>

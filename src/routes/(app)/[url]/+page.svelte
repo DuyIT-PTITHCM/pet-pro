@@ -27,7 +27,7 @@
 
 <div class="flex relative gap-4 m-4 clear-both mb-10">
     <div class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white md:block hidden">
-        <div class="w-full rounded-lg border">
+        <div class="w-full rounded-lg border text-sm">
             <ul class="list-none">
                 {#if data?.data.parent_id}
                     <p class="text-center p-4">Menus Referent</p>
@@ -44,7 +44,7 @@
                 {/if}
             </ul>
         </div>
-        <div class="w-full rounded-lg mt-4 border">
+        <div class="w-full rounded-lg mt-4 border text-sm">
             {#if data?.data.parent_id}
                 <p class="text-center p-4">categories</p>
                 <ul class="list-none">
