@@ -7,10 +7,10 @@ import {
     deleteCategory,
 } from "../repositories/categoriesRepository.js";
 
-export const index = async (req, res) => {
-    let type = req.query?.type? req.query?.type: 'article';
+export const index = async (req, res) => {    
     let filters = {
-        menuId: req.query.menuId
+        menuId: req.query.menuId,
+        type: req.query?.type
     };
 
     filters = Object.entries(filters).reduce((acc, [key, value]) => {
@@ -21,7 +21,7 @@ export const index = async (req, res) => {
     }, {});
     try {
 
-        const data = await getAllCategories(type,filters);
+        const data = await getAllCategories(filters);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching categories from controller", error);

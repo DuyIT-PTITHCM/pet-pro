@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 import { models } from '../models/index.js';
 
-export const getAllCategories = async (type ,  filters = {}) => {
+export const getAllCategories = async (filters = {}) => {
     try {
         const data = await models.Categories.findAll({
             include: [
@@ -11,9 +11,6 @@ export const getAllCategories = async (type ,  filters = {}) => {
                 }
             ],
             where: {
-                type: {
-                    [Op.eq]: type
-                },
                 ...filters,
             }
         });
