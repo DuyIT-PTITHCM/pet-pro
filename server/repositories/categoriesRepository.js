@@ -9,11 +9,11 @@ export const getAllCategories = async (filters = {}) => {
                     model: models.Product,
                     as: 'products'
                 },
-                {
-                    model: models.Menu,
-                    as: 'menu',
-                    attributes:['name']
-                }
+                // {
+                //     model: models.Menu,
+                //     as: 'menu',
+                //     attributes:['name']
+                // }
             ],
             where: {
                 ...filters,
