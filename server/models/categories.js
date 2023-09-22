@@ -7,6 +7,11 @@ export default (sequelize, DataTypes) => {
         foreignKey: 'categoryId',
         as: 'products',
       });
+      Categories.belongsTo(models.Menu, {
+        foreignKey: 'id',
+        primaryKey: 'menuId',
+        as: 'menu',
+      });
     }
   }
 
