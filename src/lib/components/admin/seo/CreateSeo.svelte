@@ -1,6 +1,6 @@
 <script lang="ts">
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { BASE_API } from "$lib/Const";
+    import { BASE_API, HOST } from "$lib/Const";
     import { loadingState } from "$lib/store/loading";
     import { toastErr } from "$lib/store/toastError";
     import Icon from "@iconify/svelte";
@@ -30,11 +30,11 @@
     const seoService = RepositoryFactory.get("seoRepository");
     async function handleSubmitCreateSeo() {
         let structuredData = {
-            "@context": `${host}`,
+            "@context": `${HOST}`,
             "@type": "sản phẩm ",
             name: `${seoData.name}`,
             description: `${seo.metaDescription}`,
-            image: `${image}`,
+            image: HOST+`${image}`,
             brand: {
                 "@type": "Thương Hiệu",
                 name: "Pet One",
@@ -43,7 +43,7 @@
                 "@type": "Offer",
                 price: `${seoData.price}`,
                 priceCurrency: "VNĐ",
-                availability: "http://103.142.26.42",
+                availability: HOST,
                 seller: {
                     "@type": "Organization",
                     name: "Pet One",
@@ -66,11 +66,11 @@
     }
     async function handleSubmitUpdateSeo() {
         let structuredData = {
-            "@context": `${host}`,
+            "@context": `${HOST}`,
             "@type": "sản phẩm ",
             name: `${seoData.productName}`,
             description: `${seo.metaDescription}`,
-            image: `${image}`,
+            image: HOST+`${image}`,
             brand: {
                 "@type": "Thương Hiệu",
                 name: "Pet One",
@@ -79,7 +79,7 @@
                 "@type": "Offer",
                 price: `${seoData.price}`,
                 priceCurrency: "VNĐ",
-                availability: "http://103.142.26.42",
+                availability: HOST,
                 seller: {
                     "@type": "Organization",
                     name: "Pet One",
