@@ -81,7 +81,7 @@ export const getDetailMenu = async (req) => {
                                 },
                                 {
                                     model: models.Post,
-                                    as: 'post'
+                                    as: 'posts'
                                 },
                             ]
                         }

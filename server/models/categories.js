@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
       });
       Categories.hasMany(models.Post, {
         foreignKey: 'categoryId',
-        as: 'post',
+        as: 'posts',
       });
       Categories.belongsTo(models.Menu, {
         foreignKey: 'id',
