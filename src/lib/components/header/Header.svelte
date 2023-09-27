@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { loadingState } from "./../../store/loading";
   import {
     Navbar,
     NavBrand,
@@ -20,8 +19,6 @@
   import { loadTranslations, t } from "$lib/translations";
   import { blur, fade, slide } from 'svelte/transition';
   import Icon from "@iconify/svelte";
-  import axios from "axios";
-  import { BASE_API } from "$lib/Const";
   import { goto } from "$app/navigation";
 
   export let menuProp: any[] = [];
@@ -50,11 +47,12 @@
   let isSignIn = true;
   let heightHeader = 0;
   let numACtiveMenu = 0;
+  let toggle =false;
 </script>
 
 <div class="w-full relative h-auto" bind:clientHeight={heightHeader}>
   <div class="w-full fixed top-0 z-50">
-    <Navbar let:hidden let:toggle class="shadow-md">
+    <Navbar let:hidden let:toggle={toggle} class="shadow-md">
       <NavBrand href="/">
         <img
           src="/images/logo.png"
@@ -87,15 +85,15 @@
             <span class="block text-sm">{user.username}</span>
             <span class="block truncate text-sm font-medium">{user.email}</span>
           </DropdownHeader>
-          <DropdownItem href="/profile?userid={user.id}">Profile</DropdownItem>
+          <DropdownItem  href="/profile?userid={user.id}">Profile</DropdownItem>
           <DropdownDivider />
-          <DropdownItem on:click={() => (popupModal = true)}
+          <DropdownItem  on:click={() => (popupModal = true)}
             >Sign out</DropdownItem
           >
         {:else}
-          <DropdownItem href="/login">Sign In</DropdownItem>
+          <DropdownItem  href="/login">Sign In</DropdownItem>
           <DropdownDivider />
-          <DropdownItem href="/signup">Sign Up</DropdownItem>
+          <DropdownItem  href="/signup">Sign Up</DropdownItem>
         {/if}
       </Dropdown>
       <NavUl {hidden} divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent">
@@ -108,7 +106,7 @@
                     item.active = false;
                     menu.filter((i) => i !== item).forEach((i) => (i.active = true));
                     const baseUrl = window.location.origin;
-                    goto(`${baseUrl}/` + item.url);
+                    window.location.href=(`${baseUrl}/` + item.url);
                   }}
                   >
                   {$t(item.name)}
@@ -131,7 +129,7 @@
                         numACtiveMenu = sub.id;
                         item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
                         const baseUrl = window.location.origin;
-                        goto(`${baseUrl}/` + sub.url);
+                        window.location.href=(`${baseUrl}/` + sub.url);
                       }}>
                       {sub.name}
                     </button>
@@ -147,7 +145,7 @@
                         numACtiveMenu = sub.id;
                         item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
                         const baseUrl = window.location.origin;
-                        goto(`${baseUrl}/` + sub.url);
+                        window.location.href=(`${baseUrl}/` + sub.url);
                       }}>
                       {sub.name}
                     </button>
