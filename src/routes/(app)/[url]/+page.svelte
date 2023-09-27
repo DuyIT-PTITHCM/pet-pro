@@ -78,7 +78,7 @@
 
 <div class="flex relative gap-4 m-4 clear-both mb-10">
     <div
-        class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white md:block hidden height-100vh my-custom-box-shadow rounded-lg"
+        class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white md:block hidden height-100vh border-r border-gray-400"
     >
         <div class="w-full rounded-lg text-sm">
             <ul class="list-none">
@@ -292,9 +292,6 @@
         top: 100px;
         left: 0;
         height: 100%;
-    }
-    .my-custom-box-shadow {
-        box-shadow: 0px 15px 30px rgba(130, 130, 130, 0.667);
     }
     .height-100vh{
         height: 100vh;
