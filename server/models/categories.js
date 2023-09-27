@@ -7,6 +7,10 @@ export default (sequelize, DataTypes) => {
         foreignKey: 'categoryId',
         as: 'products',
       });
+      Categories.hasMany(models.Post, {
+        foreignKey: 'categoryId',
+        as: 'post',
+      });
       Categories.belongsTo(models.Menu, {
         foreignKey: 'id',
         primaryKey: 'menuId',
