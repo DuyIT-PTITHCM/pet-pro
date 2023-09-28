@@ -50,7 +50,7 @@ export const show = async (req, res) => {
 
 export const info = async (req, res) => {
     try {
-        return coreResponse(res, 201, "User detail", req.user);
+        return coreResponse(res, 201, "User info", req.user);
     } catch (error) {
         return coreResponse(res, 500, "Error show user");
     }

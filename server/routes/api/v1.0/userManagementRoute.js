@@ -6,8 +6,8 @@ const router = express.Router();
 
 // Đây là Route API endpoint GET /api/users
 router.get('/', index);
-router.get('/:id', show);
 router.get('/info', info);
+router.get('/:id', show);
 router.post('/', createUserValidation, store);
 router.put('/:id', updateUserValidation, update);
 router.delete('/:id', softDelete);
