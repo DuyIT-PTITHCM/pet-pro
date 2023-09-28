@@ -12,6 +12,7 @@
     import { setCookie } from "$lib/Utils/cookieUtils";
     import { toastErr } from "$lib/store/toastError";
     import { loadingState } from "$lib/store/loading";
+    import { me } from "$lib/store/userManagement";
 
     let user = {
         email: "",
@@ -61,6 +62,8 @@
             setCookie("access_token", response?.data?.data?.token, {
                 expires: expiresIn,
             });
+            localStorage.setItem('me', JSON.stringify(response?.data?.data));
+            me.set(response?.data?.data);
             loadingState.set(false);
 
             window.location.href = "/" + response?.data?.data?.role;
