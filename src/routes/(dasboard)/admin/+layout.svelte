@@ -21,6 +21,7 @@
   import ToastError from "$lib/components/common/ToastError.svelte";
   import Loading from "$lib/components/common/Loading.svelte";
   import { me } from "$lib/store/userManagement";
+  import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
 
   // show setting dashboard
   let hidden6 = true;
@@ -80,10 +81,16 @@
   var isHide = true;
   var isFixedHeader = false;
   //
-  $me = JSON.parse(localStorage.getItem("me") || '');
-  console.log($me);
+  const userService = RepositoryFactory.get("userRepository");
+
   let popupModal = false;
   let sidebarWidth = 0;
+
+  async function init() {
+    const userData  = await userService.info();
+    me.set(userData?.data.data);
+  }
+  init();
 </script>
 
 <svelte:head>

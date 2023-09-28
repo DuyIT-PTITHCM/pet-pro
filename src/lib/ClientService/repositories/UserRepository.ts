@@ -12,6 +12,9 @@ export default {
     async getUser(userId: any){
         return axiosClient.get(`${prefix}/${userId}`);
     },
+    async info(){
+        return axiosClient.get(`${prefix}/info`);
+    },
     async put(userId: any, payload: any) {
         return await axiosClient.put(`${prefix}/${userId}`, payload);
     },
