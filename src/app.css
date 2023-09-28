@@ -61,8 +61,8 @@
 }
 
 .dark .active{
-  box-shadow: 2px 0px 1px rgb(30, 41, 59) !important;
-  background-color: rgb(30, 41, 59) !important;
+  /* box-shadow: 2px 0px 1px rgb(30, 41, 59) !important;
+  background-color: rgb(30, 41, 59) !important; */
 }
 .post-container iframe{
   margin: 0 auto;

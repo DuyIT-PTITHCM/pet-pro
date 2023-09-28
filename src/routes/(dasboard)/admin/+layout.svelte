@@ -16,8 +16,8 @@
   };
 // set background color
 let colors = [
-		"#fff989",
-		"#89d9ff"
+		"#0f0f0f;",
+		"#0f0f0f;"
 	]
 	let deg = 45
 	
@@ -257,8 +257,8 @@ let colors = [
   background-color: transparent;
 }
 .active{
-  box-shadow: 2px 0px 1px rgb(255, 255, 255);
-  background-color: rgb(255, 255, 255);
+  /* box-shadow: 2px 0px 1px rgb(255, 255, 255); */
+  /* background-color: rgb(255, 255, 255); */
 }
 
 /* set bg */
