@@ -21,6 +21,7 @@
         updateQueryParams,
     } from "$lib/Utils/queryParams";
     import Icon from "@iconify/svelte";
+    import { goto } from "$app/navigation";
     title.set("Producs Management");
     description.set("Producs Management System");
 
@@ -65,7 +66,7 @@
         return JSON.parse(json);
     }
     function gotoDetail(id: Number) {
-        window.location.href = "/admin/products/" + id;
+        goto("/admin/products/" + id);
     }
     $: {
         sortedProducts = [...dataProductFromApi].sort((a, b) => {

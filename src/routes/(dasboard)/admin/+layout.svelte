@@ -1,6 +1,7 @@
 <script>
   import "../../../app.css";
   import Icon from "@iconify/svelte";
+  import { page } from "$app/stores";
   import {
     GradientButton,
     Avatar,
@@ -22,21 +23,18 @@
   import Loading from "$lib/components/common/Loading.svelte";
   import { me } from "$lib/store/userManagement";
   import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
+  import { goto } from "$app/navigation";
 
-  // show setting dashboard
   let hidden6 = true;
   let transitionParamsRight = {
     x: 320,
     duration: 200,
     easing: sineIn,
   };
-  // set background color
   let colors = ["#0f0f0f;", "#0f0f0f;"];
   let deg = 45;
 
-  // 	Convert deg number to string for CSS
   $: degString = `${deg}deg`;
-  // end
 
   let btnClass =
     "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
@@ -45,7 +43,7 @@
       name: "home",
       url: "/admin",
       icon: "heroicons:chart-pie-solid",
-      active: true,
+      active: false,
     },
     {
       name: "user managerment",
@@ -87,7 +85,7 @@
   let sidebarWidth = 0;
 
   async function init() {
-    const userData  = await userService.info();
+    const userData = await userService.info();
     me.set(userData?.data.data);
   }
   init();
@@ -251,18 +249,15 @@
         {#each menu as item}
           <li class="2xl:block xl:block lg:block md:block sm:block hidden">
             <a
-              class="admin-sidebar__item {item.active == true ? 'active' : ''}"
-              href={item.url}
-              on:click={() => {
-                item.active = true;
-                menu
-                  .filter((i) => i !== item)
-                  .forEach((i) => (i.active = false));
+              class="admin-sidebar__item {(($page.url.href.includes(item.url) && (item.url != '/admin')) || $page.url.pathname == item.url) ? "active-admin" : ""}"
+              href=""
+              on:click={(event) => {
+                event.preventDefault();
+                goto(item.url);
               }}
               ><Icon
                 class="text-3xl"
                 icon={item.icon}
-                color={item.active ? "red" : ""}
               /></a
             >
           </li>
@@ -271,16 +266,16 @@
         {#each menu as item}
           <li>
             <a
-              class="admin-sidebar__item min-w-max {item.active == true
-                ? 'active'
-                : ''}"
-              href={item.url}
-              on:click={() => {
-                item.active = true;
-                menu
-                  .filter((i) => i !== item)
-                  .forEach((i) => (i.active = false));
-              }}><Icon class="text-3xl  mr-2" icon={item.icon} />{item.name}</a
+              class="admin-sidebar__item min-w-max {(($page.url.href.includes(item.url) && (item.url != '/admin')) || $page.url.pathname == item.url) ? "active-admin" : ""}"
+              href=""
+              on:click={(event) => {
+                event.preventDefault();
+                goto(item.url);
+              }}
+              ><Icon
+                class="text-3xl  mr-2"
+                icon={item.icon}
+              />{item.name}</a
             >
           </li>
         {/each}
@@ -288,7 +283,7 @@
     </ul>
   </div>
   <div
-    class="admin-content-box grow overflow-hidden"
+    class="bg-gray-200 bg-opacity-75 dark:bg-[#0d0e1e] grow overflow-hidden"
     style="--deg: {degString}; --gradient-1:{colors[0]}; --gradient-2:{colors[1]};"
   >
     <div class="2xl:m-4 xl:m-4 lg:m-4 md:m-4 sm:m-2">
@@ -349,11 +344,7 @@
     transition: 0.4s ease;
   }
   .admin-content-box {
-    background: linear-gradient(
-      var(--deg),
-      var(--gradient-1),
-      var(--gradient-2)
-    );
+    background: rgb(219 220 222 / 75%);
   }
   /* Fixed header */
   .fixheader {
@@ -364,10 +355,6 @@
     height: 60px;
     width: 100%;
     background-color: transparent;
-  }
-  .active {
-    /* box-shadow: 2px 0px 1px rgb(255, 255, 255); */
-    /* background-color: rgb(255, 255, 255); */
   }
 
   /* set bg */
@@ -380,6 +367,14 @@
       var(--gradient-1),
       var(--gradient-2)
     );
+  }
+  .active-admin{
+    background-color: gray;
+    color: white;
+    border-radius: 10px;
+    transform: scale(0.9);
+    box-shadow: 0 4px 4px rgb(0, 0, 0);
+    transition: 0.4s ease;
   }
   /* end */
 </style>

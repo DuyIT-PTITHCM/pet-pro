@@ -18,6 +18,7 @@
         updateQueryParams,
     } from "$lib/Utils/queryParams";
     import Icon from "@iconify/svelte";
+    import { goto } from "$app/navigation";
     title.set("Service Management");
     description.set("Service Management System");
 
@@ -64,7 +65,7 @@
         return JSON.parse(json);
     }
     function gotoDetail(id: Number) {
-        window.location.href = "/admin/service/" + id;
+        goto("/admin/service/" + id);
     }
     $: {
         sortedServices = [...dataServiceFromApi].sort((a, b) => {

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { description } from './../../../../lib/store/meta.ts';
     import { formatCurrency } from '$lib/Utils/accounting.js';
     import CarouselCustom from '$lib/components/carouselcus/CarouselCustom.svelte';
     import PostProductDetail from '$lib/components/products/PostProductDetail.svelte';
