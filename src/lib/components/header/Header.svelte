@@ -7,19 +7,15 @@
     NavHamburger,
     GradientButton,
     Avatar,
-    Dropdown,
-    DropdownItem,
-    DropdownHeader,
-    DropdownDivider,
     Modal,
     DarkMode,
     Popover,
   } from "flowbite-svelte";
   import LanguageSelect from "../LanguageSelect.svelte";
   import { loadTranslations, t } from "$lib/translations";
-  import { blur, fade, slide } from 'svelte/transition';
+  import { slide } from 'svelte/transition';
   import Icon from "@iconify/svelte";
-  import { goto } from "$app/navigation";
+    import { page } from "$app/stores";
 
   export let menuProp: any[] = [];
 
@@ -35,14 +31,19 @@
   ];
 
   menu = menu.concat(menuProp);
+  menu= menu.concat([
+    {
+      name: "Login",
+      url: "login",
+      active: false
+    },
+    {
+      name: "Sign Up",
+      url: "signup",
+      active: false
+    },
+  ]);
 
-  let user = {
-    id: "aabbcc",
-    username: "Rosé BlackPink",
-    email: "cheayoung@example.com",
-    avatar:
-      "https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg",
-  };
   let popupModal = false;
   let isSignIn = true;
   let heightHeader = 0;
@@ -80,10 +81,8 @@
           <NavLi nonActiveClass="">
             <div class="parent-menu relative w-full border-b-2 md:border-none">
               <div id="menu{item.id}" class="flex items-center relative">
-                <button class="cursor-pointer w-full px-5 py-3 z-10 flex-1 text-left { item.active == false?  'dark:text-white text-primary-600' : ''}" 
+                <button class="cursor-pointer w-full px-5 py-3 z-10 flex-1 text-left { $page.params.url == item.url?  'dark:text-white text-primary-600' : ''}" 
                   on:click={() => {
-                    item.active = false;
-                    menu.filter((i) => i !== item).forEach((i) => (i.active = true));
                     const baseUrl = window.location.origin;
                     window.location.href=(`${baseUrl}/` + item.url);
                   }}
@@ -100,11 +99,8 @@
               {#if item?.subMenus && item?.subMenus?.length > 0}
                 <Popover class="text-sm font-normal w-64 hidden md:block text-black" transition={slide} triggeredBy="#menu{item.id}">
                   {#each item.subMenus as sub}
-                    <button class="block w-full p-4 { (sub.active == false && numACtiveMenu == sub.id)?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
+                    <button class="block w-full p-4 { $page.params.url == sub.url ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
                       on:click={() => {
-                        item.active = false;
-                        menu.filter((i) => i !== item).forEach((i) => (i.active = true));
-                        sub.active = false;
                         numACtiveMenu = sub.id;
                         item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
                         const baseUrl = window.location.origin;
@@ -116,7 +112,7 @@
                 </Popover>
                 <Popover class="text-sm w-full font-normal md:hidden z-50 mr-[100px]" placement="bottom" triggeredBy="#mobile{item.id}" trigger="click">
                   {#each item.subMenus as sub}
-                    <button class="block w-full p-4  { (sub.active == false && numACtiveMenu == sub.id)?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
+                    <button class="block w-full p-4 { $page.params.url == sub.url ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
                       on:click={() => {
                         item.active = false;
                         menu.filter((i) => i !== item).forEach((i) => (i.active = true));
