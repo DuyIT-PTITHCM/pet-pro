@@ -62,7 +62,7 @@
                 />
                 {/each}
             </div>
-            <div class="border-l border-gray-400 w-full h-fit md:p-6 p-4">
+            <div class="md:border-l md:border-gray-400 w-full md:p-6 p-4">
                 <div class="">
                     <h2 class="mb-4 text-xl font-bold">{product.productName}</h2>
                     <!-- <p class="mb-4"><b>Origin</b>: {product.origin}</p> -->
