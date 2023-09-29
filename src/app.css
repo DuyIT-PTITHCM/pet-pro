@@ -114,3 +114,6 @@
   background-color: #04AA6D;
   color: white;
 }
+.admin-content input, .admin-content textarea, .admin-content select{
+  border-color: rgb(220, 221, 224);
+}

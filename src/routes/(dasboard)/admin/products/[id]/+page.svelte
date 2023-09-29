@@ -48,69 +48,86 @@
 
     function formatDate(dateString: any) {
         const date = new Date(dateString);
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
+        const day = date.getDate().toString().padStart(2, "0");
+        const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
-  }
+    }
 </script>
 
-<Tabs style="underline"
-activeClasses="p-2 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-800 dark:text-primary-500" 
-inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300" 
-contentClass="bg-white dark:bg-gray-800 bg-blue-500 rounded-b-lg">
-    <TabItem open title="{product?.productName}">
-        <div class="grid lg:grid-cols-2 grid-cols-1 gap-5">
+<Tabs
+    style="underline"
+    activeClasses="p-2 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-800 dark:text-primary-500"
+    inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+    contentClass="rounded-b-lg"
+>
+    <TabItem open title={product?.productName}>
+        <div class="grid lg:grid-cols-2 grid-cols-1 gap-5 bg-white dark:bg-gray-800 rounded-b-lg">
             <div class="grid md:grid-cols-2 grid-cols-1 dark:text-gray-300">
                 <div>
                     <p class="border-b p-2 m-4">
-                        <b>Product Name:</b> {product?.productName}
+                        <b>Product Name:</b>
+                        {product?.productName}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Type:</b> {product?.type}
+                        <b>Type:</b>
+                        {product?.type}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Location Status:</b> {product?.status}
+                        <b>Product Location Status:</b>
+                        {product?.status}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Category:</b> {product?.category.categoryName}
+                        <b>Product Category:</b>
+                        {product?.category.categoryName}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Stock:</b> {product?.stockQuantity}
+                        <b>Product Stock:</b>
+                        {product?.stockQuantity}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>The Origin:</b> {product?.origin}
+                        <b>The Origin:</b>
+                        {product?.origin}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Description:</b> {product?.description}
+                        <b>Product Description:</b>
+                        {product?.description}
                     </p>
                 </div>
                 <div>
                     <p class="border-b p-2 m-4">
-                        <b>Original Price:</b> {formatCurrency(product?.originalPrice)}
+                        <b>Original Price:</b>
+                        {formatCurrency(product?.originalPrice)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Price Sales:</b> {formatCurrency(product?.price)}
+                        <b>Price Sales:</b>
+                        {formatCurrency(product?.price)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Discount:</b> {product?.discount} %
+                        <b>Product Discount:</b>
+                        {product?.discount} %
                     </p>
-                    {#if product?.type != 'pet'}    
-                    <p class="border-b p-2 m-4">
-                        <b>Product Expiration Date:</b> {formatDate(product?.expirationDate)}
-                    </p>
+                    {#if product?.type != "pet"}
+                        <p class="border-b p-2 m-4">
+                            <b>Product Expiration Date:</b>
+                            {formatDate(product?.expirationDate)}
+                        </p>
                     {/if}
                     <p class="border-b p-2 m-4">
-                        <b>Notes:</b> {product?.notes}
+                        <b>Notes:</b>
+                        {@html product?.notes}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Unique URL:</b> {product?.slug}
+                        <b>Unique URL:</b>
+                        {product?.slug}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Created At:</b> {formatDate(product?.createdAt)}
+                        <b>Created At:</b>
+                        {formatDate(product?.createdAt)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Updated At:</b> {formatDate(product?.updatedAt)}
+                        <b>Updated At:</b>
+                        {formatDate(product?.updatedAt)}
                     </p>
                 </div>
             </div>
@@ -118,99 +135,173 @@ contentClass="bg-white dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                 <b class="block dark:text-gray-300">Images Product</b>
                 <div class="gap-4 md:columns-3 sm:columns-2 columns-1">
                     {#each convertImageJsonToArray(product?.images) as path, i}
-                    <img
-                        src={!path
-                            ? "/images/logo.png"
-                            : `${host}` + "/" + path}
-                        class="rounded-xl w-full h-auto mb-4 pi"
-                        alt="{product?.name}"
-                    />
+                        <img
+                            src={!path
+                                ? "/images/logo.png"
+                                : `${host}` + "/" + path}
+                            class="rounded-xl w-full h-auto mb-4 pi"
+                            alt={product?.name}
+                        />
                     {/each}
                 </div>
             </div>
         </div>
-        <div class="border-[1px] rounded-lg border-gray-700 dark:border-gray-300 mt-2">
-            <Tabs contentClass="p-4 bg-gray-50 dark:bg-slate-900 rounded-b-lg" activeClasses="p-2 text-primary-500 bg-gray-100 rounded-t-lg dark:bg-slate-900 dark:text-primary-500" inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300">
-                <TabItem open title="Seo">
-                    <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5">
-                        <div class=" text-gray-500 dark:text-gray-400">
-                            <b class="block my-[10px]">Seo Information</b><br />
-                            {#if product?.seo}
+        <div class="mt-2 bg-white dark:bg-gray-800 rounded-lg">
+            <Tabs
+                style="underline"
+                activeClasses="p-2 text-primary-600 bg-gray-100 rounded-t-lg dark:bg-gray-800 dark:text-primary-500"
+                inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
+                contentClass=""
+            >
+                <TabItem open title="Seo Information">
+                    {#if product?.seo}
+                        <div
+                            class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5"
+                        >
+                            <div class=" text-gray-500 dark:text-gray-400">
                                 <p class="border-b p-2 m-4">
-                                    Canonical Url : {product?.seo?.canonicalUrl}
+                                    <b>Meta Title : </b>{product?.seo
+                                        ?.metaTitle}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    Keywords : {product?.seo?.keywords}
+                                    <b>Meta Description</b> <br />
+                                    {product?.seo?.metaDescription}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    Meta Description : {product?.seo
-                                        ?.metaDescription}
+                                    <b>Canonical Url :</b>
+                                    {product?.seo?.canonicalUrl}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    Meta Title : {product?.seo?.metaTitle}
+                                    <b>Keywords :</b>
+                                    {product?.seo?.keywords}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    Open GraphTags : {product?.seo?.openGraphTags}
+                                    <b>Robot MetaTags :</b>
+                                    {product?.seo?.robotMetaTags}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    Robot MetaTags : {product?.seo?.robotMetaTags}
-                                </p>
-                                <p class="border-b p-2 m-4">
-                                    Sitemap Frequency : {product?.seo
+                                    <b>Sitemap Frequency : </b>{product?.seo
                                         ?.sitemapFrequency}
                                 </p>
-                                <p class="border-b p-2 m-4">
-                                    Structured Data : {JSON.parse(product?.seo?.structuredData)}
-                                </p>
-                                <p class="border-b p-2 m-4">
-                                    Created At : {formatDate(product?.seo?.createdAt)}
-                                </p>
-                            {:else}
-                                <p>No Data</p>
-                            {/if}
-                        </div>
-                        <div>
-                            <b
-                                class="block my-[10px] text-gray-500 dark:text-gray-300"
-                                >Preview</b
-                            ><br />
+                            </div>
+                            <div>
 
-                            <DeviceMockup device="ios">
-                                <div class="flex flex-col items-center justify-center w-full h-full p-4 text-gray-200 bg-no-repeat bg-fixed bg-cover bg-center" style="background: url(https://mondaycareer.com/wp-content/uploads/2020/11/background-%C4%91%E1%BA%B9p-3-1-768x512.jpg);">
-                                    <div class="w-full flex items-center mb-2">
-                                        <img src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg" alt="" class="mr-2 w-10 h-10 rounded-full object-cover">
-                                        <p class="rounded-lg p-2 bg-slate-600 text-sm">Hey!</p>
-                                    </div>
-                                    <div class="w-full flex items-center mb-2">
-                                        <img src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg" alt="" class="mr-2 w-10 h-10 rounded-full object-cover">
-                                        <p class="rounded-lg p-2 bg-slate-600 text-sm flex-1">This is {product?.productName}</p>
-                                    </div>
-                                    <div class="w-full flex mb-2">
-                                        <img src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg" alt="" class="mr-2 w-10 h-10 rounded-full object-cover">
-                                        <div class="w-full rounded-lg bg-slate-600 flex-1">
-                                            <p class="text-sm text-center p-1">{product?.seo?.canonicalUrl}</p>
-                                            <img src={host+product?.seo?.image} alt="{product?.seo?.metaTitle}">
-                                            <p class="text-sm p-2">{product?.seo?.metaTitle}</p>
+                                <DeviceMockup device="ios">
+                                    <div
+                                        class="flex flex-col items-center justify-center w-full h-full p-4 text-gray-200 bg-no-repeat bg-fixed bg-cover bg-center"
+                                        style="background: url(https://mondaycareer.com/wp-content/uploads/2020/11/background-%C4%91%E1%BA%B9p-3-1-768x512.jpg);"
+                                    >
+                                        <div
+                                            class="w-full flex items-center mb-2"
+                                        >
+                                            <img
+                                                src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg"
+                                                alt=""
+                                                class="mr-2 w-10 h-10 rounded-full object-cover"
+                                            />
+                                            <p
+                                                class="rounded-lg p-2 bg-slate-600 text-sm"
+                                            >
+                                                Hey!
+                                            </p>
+                                        </div>
+                                        <div
+                                            class="w-full flex items-center mb-2"
+                                        >
+                                            <img
+                                                src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg"
+                                                alt=""
+                                                class="mr-2 w-10 h-10 rounded-full object-cover"
+                                            />
+                                            <p
+                                                class="rounded-lg p-2 bg-slate-600 text-sm flex-1"
+                                            >
+                                                This is {product?.productName}
+                                            </p>
+                                        </div>
+                                        <div class="w-full flex mb-2">
+                                            <img
+                                                src="https://media.thethaovanhoa.vn/Upload/YSu1TgnVnIyxx9zisEumA/files/2021/05/3005/1/1.jpg"
+                                                alt=""
+                                                class="mr-2 w-10 h-10 rounded-full object-cover"
+                                            />
+                                            <div
+                                                class="w-full rounded-lg bg-slate-600 flex-1"
+                                            >
+                                                <p
+                                                    class="text-sm text-center p-1"
+                                                >
+                                                    {product?.seo?.canonicalUrl}
+                                                </p>
+                                                <img
+                                                    src={host +
+                                                        product?.seo?.image}
+                                                    alt={product?.seo
+                                                        ?.metaTitle}
+                                                />
+                                                <p class="text-sm p-2">
+                                                    {product?.seo?.metaTitle}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="w-full flex items-center justify-end mb-2"
+                                        >
+                                            <p
+                                                class="rounded-lg p-2 bg-slate-600 text-sm flex items-center"
+                                            >
+                                                Oh! It very nice <Icon
+                                                    icon="fluent-emoji-flat:red-heart"
+                                                />
+                                                <Icon
+                                                    icon="fluent-emoji-flat:red-heart"
+                                                />
+                                            </p>
+                                            <img
+                                                src="https://kenh14cdn.com/2020/2/23/005ghwu5ly1g5zg5rv1udj33aj4xme84-15824491538811346801649.jpg"
+                                                alt=""
+                                                class="ml-2 w-10 h-10 rounded-full object-cover"
+                                            />
+                                        </div>
+                                        <div
+                                            class="w-full flex items-center justify-end mb-2"
+                                        >
+                                            <p
+                                                class="rounded-lg p-2 bg-slate-600 text-sm flex items-center"
+                                            >
+                                                Thank you <Icon
+                                                    icon="fluent-emoji-flat:heart-with-ribbon"
+                                                />
+                                            </p>
+                                            <img
+                                                src="https://kenh14cdn.com/2020/2/23/005ghwu5ly1g5zg5rv1udj33aj4xme84-15824491538811346801649.jpg"
+                                                alt=""
+                                                class="ml-2 w-10 h-10 rounded-full object-cover"
+                                            />
                                         </div>
                                     </div>
-                                    <div class="w-full flex items-center justify-end mb-2">
-                                        <p class="rounded-lg p-2 bg-slate-600 text-sm flex items-center">Oh! It very nice  <Icon icon="fluent-emoji-flat:red-heart" /> <Icon icon="fluent-emoji-flat:red-heart" /></p>
-                                        <img src="https://kenh14cdn.com/2020/2/23/005ghwu5ly1g5zg5rv1udj33aj4xme84-15824491538811346801649.jpg" alt="" class="ml-2 w-10 h-10 rounded-full object-cover">
-                                    </div>
-                                    <div class="w-full flex items-center justify-end mb-2">
-                                        <p class="rounded-lg p-2 bg-slate-600 text-sm flex items-center">Thank you <Icon icon="fluent-emoji-flat:heart-with-ribbon" /></p>
-                                        <img src="https://kenh14cdn.com/2020/2/23/005ghwu5ly1g5zg5rv1udj33aj4xme84-15824491538811346801649.jpg" alt="" class="ml-2 w-10 h-10 rounded-full object-cover">
-                                    </div>
-                                </div>
-                            </DeviceMockup>
+                                </DeviceMockup>
+                            </div>
                         </div>
-                    </div>
+                    {:else}
+                        <div class="h-[300px] flex justify-center items-center">
+                            <Icon
+                                icon="mdi:null-off"
+                                color="gray"
+                                width="50"
+                                height="50"
+                            />No Data
+                        </div>
+                    {/if}
                 </TabItem>
-                <TabItem open title="Posts">
-                    <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5 ">
-                        <div class=" text-gray-500 dark:text-gray-300">
-                            <b class="block my-[10px]">Posts Information</b><br />
-                            {#if product?.post}
+                <TabItem open title="Product Post Detail">
+                    {#if product?.post}
+                        <div
+                            class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5"
+                        >
+                            <div class=" text-gray-500 dark:text-gray-300">
+                                <b class="block my-[10px]">Posts Information</b
+                                ><br />
                                 <p class="border-b p-2 m-4">
                                     Author : {product?.post?.author}
                                 </p>
@@ -218,74 +309,83 @@ contentClass="bg-white dark:bg-gray-800 bg-blue-500 rounded-b-lg">
                                     Category : {product?.post?.category}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    published At : {formatDate(product?.post?.published_at)}
+                                    published At : {formatDate(
+                                        product?.post?.published_at
+                                    )}
                                 </p>
-                            {:else}
-                                <p>No Data</p>
-                            {/if}
-                        </div>
-                        <div>
-                            <p class="py-[10px]">Images Posts</p>
-                            <div class="grid grid-cols-3 gap-1">
-                                {#each convertImageJsonToArray(product?.post?.images) as path, i}
-                                    <img
-                                        src={!path
-                                            ? "/images/logo.png"
-                                            : `${host}` + "/" + path}
-                                        class=""
-                                        alt=""
-                                    />
-                                {/each}
+                            </div>
+                            <div>
+                                <p class="py-[10px]">Images Posts</p>
+                                <div class="grid grid-cols-3 gap-1">
+                                    {#each convertImageJsonToArray(product?.post?.images) as path, i}
+                                        <img
+                                            src={!path
+                                                ? "/images/logo.png"
+                                                : `${host}` + "/" + path}
+                                            class=""
+                                            alt=""
+                                        />
+                                    {/each}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!-- content show here  -->
-                    <div class="py-[20px] justify-center">
-                        <h3> Content Posts</h3><br>
-                        <div class="dark:text-gray-100">
-                            {@html product?.post?.content}
+                        <!-- content show here  -->
+                        <div class="py-[20px] justify-center">
+                            <h3>Content Posts</h3>
+                            <br />
+                            <div class="dark:text-gray-100">
+                                {@html product?.post?.content}
+                            </div>
                         </div>
-                    </div>
+                    {:else}
+                        <div class="h-[300px] flex justify-center items-center">
+                            <Icon
+                                icon="mdi:null-off"
+                                color="gray"
+                                width="50"
+                                height="50"
+                            />No Data
+                        </div>
+                    {/if}
                 </TabItem>
             </Tabs>
         </div>
     </TabItem>
     <TabItem title="Edit {product?.productName}">
-        <CreateProduct mode={mode} products={products} title="Edit Products"/>
+        <CreateProduct {mode} {products} title="Edit Products" />
     </TabItem>
 </Tabs>
+
 <style>
+    .gallery {
+        column-count: 3;
+        --webkit-column-count: 3;
+        --moz-column-count: 3;
+        gap: 1rem;
+    }
 
-.gallery {
-  column-count: 3;
-  --webkit-column-count: 3;
-  --moz-column-count: 3;
-  gap: 1rem;
-}
+    /* Responsive-ness for different screen-sizes */
+    @media screen and (max-width: 810px) {
+        .gallery {
+            column-count: 3;
+            --webkit-column-count: 3;
+            --moz-column-count: 3;
+        }
+    }
 
-/* Responsive-ness for different screen-sizes */
-@media screen and (max-width: 810px) {
-  .gallery {
-    column-count: 3;
-    --webkit-column-count: 3;
-    --moz-column-count: 3;
-  }
-}
+    @media screen and (max-width: 500px) {
+        .gallery {
+            column-count: 2 !important;
+            --webkit-column-count: 2;
+            --moz-column-count: 2;
+        }
+    }
 
-@media screen and (max-width: 500px) {
-  .gallery {
-    column-count: 2 !important;
-    --webkit-column-count: 2;
-    --moz-column-count: 2;
-  }
-}
-
-@media screen and (max-width: 400px) {
-  .gallery {
-    column-count: 1 !important;    
-    --webkit-column-count: 1;
-    --moz-column-count: 1;
-  }
-}
-
+    @media screen and (max-width: 400px) {
+        .gallery {
+            column-count: 1 !important;
+            --webkit-column-count: 1;
+            --moz-column-count: 1;
+        }
+    }
 </style>
