@@ -8,6 +8,7 @@
     export let postData: any;
 
     let post = postData.post;
+    let idEditor = 'editor-post-description';
 
     const postService = RepositoryFactory.get("postRepository");
     async function handleSubmitCreatePost() { 
@@ -92,7 +93,7 @@
         </div>
     </div>
     <div>
-        <Editor bind:text={post.content}/>
+        <Editor bind:id={idEditor} bind:text={post.content}/>
     </div>
 
     <div class="flex justify-center items-center p-4">

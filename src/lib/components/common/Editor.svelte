@@ -2,9 +2,11 @@
     import Editor from "@tinymce/tinymce-svelte";
 
     export let text ="";
+    export let id ="";
+
 
     const conf = {
-        plugins: "image",
+        plugins: "image table",
         toolbar1:
             "newdocument fullpage | blocks fontfamily fontsize | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | heading",
         toolbar2:
@@ -18,7 +20,7 @@
 
 <Editor
     apiKey="4zwho6iauuup5m7zl61gs294kuht6k9pzbwz87v7hnpkhh10"
-    id="uuid"
+    {id}
     inline="false"
     disabled="false"
     {conf}

@@ -10,6 +10,7 @@
   import moment from "moment";
   import CreateSeo from "../seo/CreateSeo.svelte";
   import CreatePost from "../posts/CreatePost.svelte";
+  import Editor from "$lib/components/common/Editor.svelte";
 
   export let products: any;
   export let title: string;
@@ -141,302 +142,309 @@
     loadingState.set(false);
   }
 
+  products.notes = products?.notes ?? "";
   getCategories();
 </script>
 
 <div
-  class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 bg-white dark:bg-slate-800 dark:text-white shadow-md rounded p-4 h-full"
+  class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 bg-white dark:bg-slate-800 dark:text-white rounded p-4 h-full"
 >
-  <h1 class="text-[34px] py-[10px] uppercase text-center font-bold col-span-full">{title}</h1>
+  <h1
+    class="text-[34px] py-[10px] uppercase text-center font-bold col-span-full"
+  >
+    {title}
+  </h1>
   <!-- <div class="-mx-3 md:flex mb-6"> -->
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-first-name"
-      >
-        Product Name
-      </label>
-      <input
-        bind:value={products.productName}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-        id="grid-first-name"
-        type="text"
-        placeholder="Cat Indo"
-      />
-    </div>
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-last-name"
-      >
-        Product Description
-      </label>
-      <Textarea
-        bind:value={products.description}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-        id="grid-last-name"
-        type="text"
-        placeholder="Description for product"
-      />
-    </div>
+  <div class="px-3">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-first-name"
+    >
+      Product Name
+    </label>
+    <input
+      bind:value={products.productName}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+      id="grid-first-name"
+      type="text"
+      placeholder="Cat Indo"
+    />
+  </div>
+  <div class="px-3">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-last-name"
+    >
+      Product Description
+    </label>
+    <Textarea
+      bind:value={products.description}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+      id="grid-last-name"
+      type="text"
+      placeholder="Description for product"
+    />
+  </div>
   <!-- </div>
   <div class="-mx-3 md:flex mb-6"> -->
-    <div class="px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-first-name"
-      >
-        Original Price
-      </label>
-      <input
-        bind:value={products.originalPrice}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-        id="grid-first-name"
-        type="number"
-        min="10000"
-        placeholder="Input Original Price"
-      />
-      <p class="text-[blue] dark:text-white text-xs italic">
-        Original Price : {formatCurrency(products.originalPrice)}
-      </p>
-    </div>
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-last-name"
-      >
-        Price
-      </label>
-      <input
-        bind:value={products.price}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
-        id="grid-last-name"
-        type="number"
-        min="10000"
-        placeholder="Input Price"
-      />
-      <p class="text-[blue] dark:text-white text-xs italic">
-        Price : {formatCurrency(products.price)}
-      </p>
-    </div>
+  <div class="px-3 mb-6 md:mb-0">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-first-name"
+    >
+      Original Price
+    </label>
+    <input
+      bind:value={products.originalPrice}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+      id="grid-first-name"
+      type="number"
+      min="10000"
+      placeholder="Input Original Price"
+    />
+    <p class="text-[blue] dark:text-white text-xs italic">
+      Original Price : {formatCurrency(products.originalPrice)}
+    </p>
+  </div>
+  <div class="px-3">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-last-name"
+    >
+      Price
+    </label>
+    <input
+      bind:value={products.price}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
+      id="grid-last-name"
+      type="number"
+      min="10000"
+      placeholder="Input Price"
+    />
+    <p class="text-[blue] dark:text-white text-xs italic">
+      Price : {formatCurrency(products.price)}
+    </p>
+  </div>
   <!-- </div>
   <div class="-mx-3 md:flex mb-6"> -->
-    <div class="px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-first-name"
-      >
-        Quantity In Stock
-      </label>
-      <input
-        bind:value={products.stockQuantity}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-        id="grid-first-name"
-        type="number"
-        min="10000"
-        placeholder="Input quantity in stock"
-      />
-    </div>
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-last-name"
-      >
-        The Origin
-      </label>
-      <input
-        bind:value={products.origin}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-        id="grid-last-name"
-        type="text"
-        placeholder="Input The Origin"
-      />
-    </div>
+  <div class="px-3 mb-6 md:mb-0">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-first-name"
+    >
+      Quantity In Stock
+    </label>
+    <input
+      bind:value={products.stockQuantity}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+      id="grid-first-name"
+      type="number"
+      min="10000"
+      placeholder="Input quantity in stock"
+    />
+  </div>
+  <div class="px-3">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-last-name"
+    >
+      The Origin
+    </label>
+    <input
+      bind:value={products.origin}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+      id="grid-last-name"
+      type="text"
+      placeholder="Input The Origin"
+    />
+  </div>
   <!-- </div>
 
   <div class="-mx-3 md:flex mb-6"> -->
-    <div class="px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-first-name"
-      >
-        % Discount
-      </label>
-      <input
-        bind:value={products.discount}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-        id="grid-first-name"
-        type="number"
-        min="10000"
-        placeholder="Input % Discount"
-      />
-      <p class="text-[blue] dark:text-white text-xs italic">
-        Example : 10 = 10%
-      </p>
-    </div>
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-last-name"
-      >
-        URL Product
-      </label>
-      <input
-        bind:value={products.slug}
-        class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
-        id="grid-last-name"
-        type="text"
-        placeholder="con-cho-co"
-      />
-      <p class="text-[blue] dark:text-white text-xs italic">
-        Example : http://pet-pro/con-cho-co
-      </p>
-    </div>
+  <div class="px-3 mb-6 md:mb-0">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-first-name"
+    >
+      % Discount
+    </label>
+    <input
+      bind:value={products.discount}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+      id="grid-first-name"
+      type="number"
+      min="10000"
+      placeholder="Input % Discount"
+    />
+    <p class="text-[blue] dark:text-white text-xs italic">Example : 10 = 10%</p>
+  </div>
+  <div class="px-3">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-last-name"
+    >
+      URL Product
+    </label>
+    <input
+      bind:value={products.slug}
+      class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 mb-3"
+      id="grid-last-name"
+      type="text"
+      placeholder="con-cho-co"
+    />
+    <p class="text-[blue] dark:text-white text-xs italic">
+      Example : http://pet-pro/con-cho-co
+    </p>
+  </div>
   <!-- </div>
   <div class="-mx-3 md:flex mb-6"> -->
-    <div class="md:w-full px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-password"
-      >
-        Note
-      </label>
-
-      <Textarea
-        bind:value={products.notes}
-        class="bg-white border-gray-500"
-        placeholder="Write your thoughts here..."
-      />
-    </div>
-  <!-- </div>
-  <div class="-mx-3 md:flex mb-2"> -->
-    <div class="px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-state"
-      >
-        Status
-      </label>
-      <div class="relative">
-        <select
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
-          id="grid-state"
-          bind:value={products.status}
-        >
-          <option value="featured">Featured</option>
-          <option value="best_selling">Best Selling</option>
-          <option value="normal">Normal</option>
-        </select>
-      </div>
-    </div>
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-state"
-      >
-        Type
-      </label>
-      <div class="relative">
-        <select
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
-          id="grid-state"
-          bind:value={products.type}
-        >
-          <option value="pet">Pet</option>
-          <option value="accessory">Accessory</option>
-          <option value="medical_equipment">Medical Equipment</option>
-        </select>
-      </div>
-    </div>
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-zip"
-      >
-        Category Products
-      </label>
-      <div class="relative">
-        <select
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
-          id="grid-state"
-          bind:value={products.categoryId}
-        >
-          {#each categories as item, index}
-            <option value={item.id}>{item.categoryName}</option>
-          {/each}
-        </select>
-      </div>
-    </div>
-    <div class="px-3">
-      <label
-        class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-        for="grid-zip"
-      >
-        Expiration Date
-      </label>
-      <div class="relative">
-        <Input
-          type="date"
-          class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
-          min={new Date(Date.now()).toISOString().split("T")[0]}
-          bind:value={products.expirationDate}
-        />
-      </div>
-    </div>
-  <!-- </div> -->
-  <div class="col-span-full p-3">
+  <div class="md:w-full px-3">
     <label
       class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
       for="grid-zip"
     >
-      Images Products
+      Expiration Date
     </label>
-    <Fileupload
-      on:change={handleFileInputChange}
-      class="w-24 py-[10px] bg-white"
-    />
-    <div class="grid grid-cols-1 xl:grid-cols-4 gap-[10px] py-[20px]">
-      {#each files as path}
-        <div class="relative">
-          <img
-            class="object-cover w-full h-[300px] rounded"
-            src={`http://103.142.26.42${path}`}
-            alt="avatar"
-          />
-          <button
-            class="absolute top-0 right-0 cursor-pointer bg-white rounded text-red-500"
-            on:click={()=>handleDeleteFile(path)}
-          >
-            <Icon icon="iwwa:delete" width="30" />
-        </button>
-        </div>
-      {/each}
+    <div class="relative">
+      <Input
+        type="date"
+        class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+        min={new Date(Date.now()).toISOString().split("T")[0]}
+        bind:value={products.expirationDate}
+      />
     </div>
   </div>
-  <div class="col-span-full flex justify-center">
-    <div class="btn-signup w-fit">
-      <button
-        class=" bg-black text-white border border-black-500 hover:border-transparent rounded px-[80px] py-[10px]"
-        on:click={handleSubmit}>Submit</button
+
+  <!-- </div>
+  <div class="-mx-3 md:flex mb-2"> -->
+  <div class="px-3 mb-6 md:mb-0">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-state"
+    >
+      Status
+    </label>
+    <div class="relative">
+      <select
+        class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+        id="grid-state"
+        bind:value={products.status}
       >
+        <option value="featured">Featured</option>
+        <option value="best_selling">Best Selling</option>
+        <option value="normal">Normal</option>
+      </select>
     </div>
   </div>
-  {#if mode == "modify"}
-    <div class="col-span-full">
-      <Tabs style="none"
+  <div class="px-3">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-state"
+    >
+      Type
+    </label>
+    <div class="relative">
+      <select
+        class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+        id="grid-state"
+        bind:value={products.type}
+      >
+        <option value="pet">Pet</option>
+        <option value="accessory">Accessory</option>
+        <option value="medical_equipment">Medical Equipment</option>
+      </select>
+    </div>
+  </div>
+  <div class="px-3">
+    <label
+      class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+      for="grid-zip"
+    >
+      Category Products
+    </label>
+    <div class="relative">
+      <select
+        class="block appearance-none w-full bg-grey-lighter border border-grey-lighter text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+        id="grid-state"
+        bind:value={products.categoryId}
+      >
+        {#each categories as item, index}
+          <option value={item.id}>{item.categoryName}</option>
+        {/each}
+      </select>
+    </div>
+  </div>
+
+  <!-- </div> -->
+</div>
+<div class="px-3">
+  <label
+    class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+    for="grid-password"
+  >
+    Note
+  </label>
+
+  <div>
+    <Editor bind:text={products.notes} />
+  </div>
+</div>
+<div class="col-span-full p-3">
+  <label
+    class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+    for="grid-zip"
+  >
+    Images Products
+  </label>
+  <Fileupload
+    on:change={handleFileInputChange}
+    class="w-24 py-[10px] bg-white"
+  />
+  <div class="grid grid-cols-1 xl:grid-cols-4 gap-[10px] py-[20px]">
+    {#each files as path}
+      <div class="relative">
+        <img
+          class="object-cover w-full h-[300px] rounded"
+          src={`http://103.142.26.42${path}`}
+          alt="avatar"
+        />
+        <button
+          class="absolute top-0 right-0 cursor-pointer bg-white rounded text-red-500"
+          on:click={() => handleDeleteFile(path)}
+        >
+          <Icon icon="iwwa:delete" width="30" />
+        </button>
+      </div>
+    {/each}
+  </div>
+</div>
+<div class="col-span-full flex justify-center">
+  <div class="btn-signup w-fit">
+    <button
+      class=" bg-black text-white border border-black-500 hover:border-transparent rounded px-[80px] py-[10px]"
+      on:click={handleSubmit}>Submit</button
+    >
+  </div>
+</div>
+{#if mode == "modify"}
+  <div class="col-span-full">
+    <Tabs
+      style="none"
       contentClass="bg-gray-50 dark:bg-slate-900 rounded-b-lg"
       activeClasses="p-2 text-primary-500 bg-gray-100 rounded-t-lg dark:bg-slate-900 dark:text-primary-500"
       inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
-      >
-        <TabItem open title="Seo">
-            <CreateSeo divClass="grid md:grid-cols-3 grid-cols-2" bind:seoData={products} />
-        </TabItem>
-        <TabItem title="Posts">
-          <div class="grid grid-cols-1 gap-5">
-            <CreatePost bind:postData={products} />
-          </div>
-        </TabItem>
-      </Tabs>
-    </div>
-  {/if}
-</div>
+    >
+      <TabItem open title="Seo">
+        <CreateSeo
+          divClass="grid md:grid-cols-3 grid-cols-2"
+          bind:seoData={products}
+        />
+      </TabItem>
+      <TabItem title="Posts">
+        <div class="grid grid-cols-1 gap-5">
+          <CreatePost bind:postData={products} />
+        </div>
+      </TabItem>
+    </Tabs>
+  </div>
+{/if}

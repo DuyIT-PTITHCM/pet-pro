@@ -67,7 +67,7 @@
                     <h2 class="mb-4 text-xl font-bold">Product name: {product.productName}</h2>
                     <p class="mb-4"><b>Origin</b>: {product.origin}</p>
                     <p class="mb-4"> <b>Description:</b> <br> {@html product.description}</p>
-                    <p class="mb-4"><b>Notes:</b> <br> {@html product.notes}</p>
+                    <div class="mb-4" id="note">{@html product.notes}</div>
                     <div class="mb-4">
                         <p class="text-right">
                             {#if product.discount}
