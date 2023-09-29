@@ -70,32 +70,11 @@
           <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2">10</span>
         </button>
         <DarkMode {btnClass} />
-        <Avatar
-          id="avatar-menu"
-          src={isSignIn ? user.avatar : "/images/avt.png"}
-        />
         <NavHamburger
           on:click={toggle}
           class1="w-full md:flex md:w-auto md:order-1"
         />
       </div>
-      <Dropdown placement="bottom" triggeredBy="#avatar-menu">
-        {#if isSignIn}
-          <DropdownHeader>
-            <span class="block text-sm">{user.username}</span>
-            <span class="block truncate text-sm font-medium">{user.email}</span>
-          </DropdownHeader>
-          <DropdownItem  href="/profile?userid={user.id}">Profile</DropdownItem>
-          <DropdownDivider />
-          <DropdownItem  on:click={() => (popupModal = true)}
-            >Sign out</DropdownItem
-          >
-        {:else}
-          <DropdownItem  href="/login">Sign In</DropdownItem>
-          <DropdownDivider />
-          <DropdownItem  href="/signup">Sign Up</DropdownItem>
-        {/if}
-      </Dropdown>
       <NavUl {hidden} divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent">
         {#each menu as item, index}
           <NavLi nonActiveClass="">
