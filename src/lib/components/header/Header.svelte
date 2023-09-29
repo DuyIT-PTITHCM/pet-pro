@@ -31,18 +31,18 @@
   ];
 
   menu = menu.concat(menuProp);
-  menu= menu.concat([
-    {
-      name: "Login",
-      url: "login",
-      active: false
-    },
-    {
-      name: "Sign Up",
-      url: "signup",
-      active: false
-    },
-  ]);
+  // menu= menu.concat([
+  //   {
+  //     name: "Login",
+  //     url: "login",
+  //     active: false
+  //   },
+  //   {
+  //     name: "Sign Up",
+  //     url: "signup",
+  //     active: false
+  //   },
+  // ]);
 
   let popupModal = false;
   let isSignIn = true;
@@ -66,6 +66,9 @@
         >
       </NavBrand>
       <div class="flex items-center md:order-2">
+        <a href="/login" title="Login" class="hidden md:block">
+          <Icon icon="fluent-mdl2:signin" color="black" width="30" height="30" />
+        </a>
         <button class="relative p-4">
           <Icon icon="mdi:cart" class="scale-150" />
           <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2">10</span>
