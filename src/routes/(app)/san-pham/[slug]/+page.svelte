@@ -62,10 +62,10 @@
                 />
                 {/each}
             </div>
-            <div class="border rounded-xl shadow-xl w-full h-fit md:p-6 p-4">
+            <div class="border-l border-gray-400 w-full h-fit md:p-6 p-4">
                 <div class="">
-                    <h2 class="mb-4 text-xl font-bold">Product name: {product.productName}</h2>
-                    <p class="mb-4"><b>Origin</b>: {product.origin}</p>
+                    <h2 class="mb-4 text-xl font-bold">{product.productName}</h2>
+                    <!-- <p class="mb-4"><b>Origin</b>: {product.origin}</p> -->
                     <p class="mb-4"> <b>Description:</b> <br> {@html product.description}</p>
                     <div class="mb-4" id="note">{@html product.notes}</div>
                     <div class="mb-4">
