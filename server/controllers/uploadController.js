@@ -76,7 +76,8 @@ export const uploadFileEditor = [
                 description: originalname,
                 type: mimetype,
                 size: size,
-                path: filePath
+                path: filePath,
+                isUse: 1
             });
             return res.status(200).json({location: filePath});
         } catch (error) {

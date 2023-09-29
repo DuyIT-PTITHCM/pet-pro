@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { HOST } from '$lib/Const.js';
+    import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
+    import { toastErr } from "$lib/store/toastError";
     import Editor from "@tinymce/tinymce-svelte";
 
     export let text ="";
     export let id ="";
 
+    const uploadFileService = RepositoryFactory.get("uploadRepository");
 
     const conf = {
         plugins: "image table",
@@ -14,7 +18,32 @@
         toolbar3:
             "table | hr removeformat | subscript superscript | charmap emoticons | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
         menubar: false,
-        images_upload_url: "/api/v1.0/upload/editor",
+        file_picker_types: "image",
+        file_picker_callback: async function (callback, value, meta) {
+            var input = document.createElement("input");
+            input.setAttribute("type", "file");
+            input.setAttribute("accept", "image/*");
+            input.onchange = async function () {
+                var file = this.files[0];
+                const formData = new FormData();
+                formData.append("file", file);
+
+                try {
+                    const res = await uploadFileService.uploadFileEditor(formData);
+                    console.log(res);
+                    callback(HOST+res?.data?.location, {alt: ''});
+                } catch (error) {
+                    toastErr.set([
+                        {
+                            message: "File upload failed",
+                            type: "error",
+                        },
+                    ]);
+                }
+            };
+
+            input.click();
+        },
     };
 </script>
 
