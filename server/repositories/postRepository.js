@@ -83,6 +83,7 @@ export const createPost = async (postData) => {
         await transaction.commit();
         return newPost;
     } catch (error) {
+        console.log(error);
         if (transaction) {
             await transaction.rollback();
         }
