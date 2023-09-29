@@ -50,7 +50,7 @@ export const createPost = async (postData) => {
     let transaction;
     try {
         transaction = await models.sequelize.transaction();
-        await markImagesListAsUsed(imageUrl, transaction);
+        imageUrl && await markImagesListAsUsed(imageUrl, transaction);
         const newPost = await models.Post.create({
             title,
             content,
