@@ -1,7 +1,7 @@
 <script lang="ts">
     import { loadingState } from "./../../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { Tabs, TabItem, DeviceMockup } from "flowbite-svelte";
+    import { Tabs, TabItem } from "flowbite-svelte";
     import CreateArticle from "$lib/components/admin/article/CreateArticle.svelte";
     import CreateSeo from "$lib/components/admin/seo/CreateSeo.svelte";
 
