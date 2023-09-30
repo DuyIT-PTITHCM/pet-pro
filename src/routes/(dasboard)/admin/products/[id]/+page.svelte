@@ -5,11 +5,14 @@
     import { Tabs, TabItem, DeviceMockup } from "flowbite-svelte";
     import CreateProduct from "$lib/components/admin/products/CreateProduct.svelte";
     import Icon from "@iconify/svelte";
+    import { HOST, MODE_MODIFY } from "$lib/Const";
+    import { convertImageJsonToArray } from "$lib/Utils/common";
+    import Nodata from "$lib/components/common/Nodata.svelte";
+
+    export let data;
 
     const productService = RepositoryFactory.get("productRepository");
     let product: any;
-    let host = "http://103.142.26.42/";
-    const mode = "modify";
     let products = {
         productName: null,
         description: null,
@@ -28,7 +31,6 @@
         images: "",
         expirationDate: null,
     };
-    export let data;
 
     async function productDetail() {
         loadingState.set(true);
@@ -37,14 +39,6 @@
         products = product;
         loadingState.set(false);
     }
-    function convertImageJsonToArray(json) {
-        if (json) {
-            return JSON.parse(json);
-        }
-        return [];
-    }
-
-    productDetail();
 
     function formatDate(dateString: any) {
         const date = new Date(dateString);
@@ -53,6 +47,12 @@
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
     }
+
+    function init() {
+        productDetail();
+    }
+
+    init();
 </script>
 
 <Tabs
@@ -62,7 +62,9 @@
     contentClass="rounded-b-lg"
 >
     <TabItem open title={product?.productName}>
-        <div class="grid lg:grid-cols-2 grid-cols-1 gap-5 bg-white dark:bg-gray-800 rounded-b-lg">
+        <div
+            class="grid lg:grid-cols-2 grid-cols-1 gap-5 bg-white dark:bg-gray-800 rounded-b-lg"
+        >
             <div class="grid md:grid-cols-2 grid-cols-1 dark:text-gray-300">
                 <div>
                     <p class="border-b p-2 m-4">
@@ -138,7 +140,7 @@
                         <img
                             src={!path
                                 ? "/images/logo.png"
-                                : `${host}` + "/" + path}
+                                : `${HOST}` + "/" + path}
                             class="rounded-xl w-full h-auto mb-4 pi"
                             alt={product?.name}
                         />
@@ -185,7 +187,6 @@
                                 </p>
                             </div>
                             <div>
-
                                 <DeviceMockup device="ios">
                                     <div
                                         class="flex flex-col items-center justify-center w-full h-full p-4 text-gray-200 bg-no-repeat bg-fixed bg-cover bg-center"
@@ -234,7 +235,7 @@
                                                     {product?.seo?.canonicalUrl}
                                                 </p>
                                                 <img
-                                                    src={host +
+                                                    src={HOST +
                                                         product?.seo?.image}
                                                     alt={product?.seo
                                                         ?.metaTitle}
@@ -284,14 +285,7 @@
                             </div>
                         </div>
                     {:else}
-                        <div class="h-[300px] flex justify-center items-center">
-                            <Icon
-                                icon="mdi:null-off"
-                                color="gray"
-                                width="50"
-                                height="50"
-                            />No Data
-                        </div>
+                        <Nodata />
                     {/if}
                 </TabItem>
                 <TabItem open title="Product Post Detail">
@@ -321,7 +315,7 @@
                                         <img
                                             src={!path
                                                 ? "/images/logo.png"
-                                                : `${host}` + "/" + path}
+                                                : `${HOST}` + "/" + path}
                                             class=""
                                             alt=""
                                         />
@@ -338,21 +332,14 @@
                             </div>
                         </div>
                     {:else}
-                        <div class="h-[300px] flex justify-center items-center">
-                            <Icon
-                                icon="mdi:null-off"
-                                color="gray"
-                                width="50"
-                                height="50"
-                            />No Data
-                        </div>
+                        <Nodata />
                     {/if}
                 </TabItem>
             </Tabs>
         </div>
     </TabItem>
     <TabItem title="Edit {product?.productName}">
-        <CreateProduct {mode} {products} title="Edit Products" />
+        <CreateProduct mode={MODE_MODIFY} {products} title="Edit Products" />
     </TabItem>
 </Tabs>
 

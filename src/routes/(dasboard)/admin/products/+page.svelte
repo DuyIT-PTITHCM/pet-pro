@@ -3,7 +3,6 @@
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { title, description } from "$lib/store/meta";
     import {
-        ButtonGroup,
         Checkbox,
         Table,
         TableBody,
@@ -12,7 +11,6 @@
         TableHead,
         TableHeadCell,
     } from "flowbite-svelte";
-    import moment from "moment";
     import { formatCurrency } from "$lib/Utils/accounting";
     import Pagination from "$lib/components/common/Pagination.svelte";
     import {
@@ -22,6 +20,9 @@
     } from "$lib/Utils/queryParams";
     import Icon from "@iconify/svelte";
     import { goto } from "$app/navigation";
+    import { convertImageJsonToArray } from "$lib/Utils/common";
+    import { HOST } from "$lib/Const";
+
     title.set("Producs Management");
     description.set("Producs Management System");
 
@@ -32,12 +33,10 @@
     let sortBy = "";
     let sortDirection = 1;
     let dataProductFromApi: any[] = [];
-    let host = "http://103.142.26.42/";
     let queryParams = {
         page: 1,
     };
 
-    // Function to handle page change
     async function handlePageChange(page) {
         queryParams.page = page;
         updateQueryParams(queryParams);
@@ -62,12 +61,10 @@
         loadingState.set(false);
     }
 
-    function convertImageJsonToArray(json) {
-        return JSON.parse(json);
-    }
     function gotoDetail(id: Number) {
         goto("/admin/products/" + id);
     }
+
     $: {
         sortedProducts = [...dataProductFromApi].sort((a, b) => {
             let aValue = a[sortBy];
@@ -87,7 +84,12 @@
             }
         });
     }
-    getProduct();
+
+    function init() {
+        getProduct();
+    };
+
+    init();
 </script>
 
 <div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
@@ -193,7 +195,7 @@
                                 <img
                                     src={!path
                                         ? "/images/logo.png"
-                                        : `${host}` + "/" + path}
+                                        : `${HOST}` + "/" + path}
                                     class="w-full h-full"
                                     alt={item.name}
                                 />
@@ -201,12 +203,10 @@
                         {/each}
                     </div>
                 </TableBodyCell>
-                <!-- <TableBodyCell>{item.description}</TableBodyCell> -->
                 <TableBodyCell
                     >{formatCurrency(item.originalPrice)}</TableBodyCell
                 >
                 <TableBodyCell>{formatCurrency(item.price)}</TableBodyCell>
-                <!-- <TableBodyCell>{item.stockQuantity}</TableBodyCell> -->
                 <TableBodyCell>
                     {#if item.post}
                         <Icon
@@ -224,12 +224,7 @@
                         />
                     {/if}
                 </TableBodyCell>
-                <!-- <TableBodyCell>{item.discount +' %'}</TableBodyCell> -->
                 <TableBodyCell>{item.slug}</TableBodyCell>
-                <!-- <TableBodyCell
-                    tdClass="line-clamp-3 text-ellipsis max-w-[300px] min-w-[200px] text-justify px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-white"
-                    >{!item.notes ? "-" : item.notes}</TableBodyCell
-                > -->
                 <TableBodyCell>
                     {#if item.seo}
                         <Icon
@@ -247,14 +242,6 @@
                         />
                     {/if}
                 </TableBodyCell>
-                <!-- <TableBodyCell>{item.type}</TableBodyCell> -->
-                <!-- <TableBodyCell
-                    >{!item.expirationDate != null
-                        ? moment(new Date(item?.expirationDate)).format(
-                              "DD-MM-YYYY"
-                          )
-                        : "-"}</TableBodyCell
-                > -->
                 <TableBodyCell>{item.category.categoryName}</TableBodyCell>
             </TableBodyRow>
         {/each}

@@ -1,28 +1,27 @@
 <script lang="ts">
   import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-  import { BASE_API } from "$lib/Const";
   import { formatCurrency } from "$lib/Utils/accounting";
   import { loadingState } from "$lib/store/loading";
   import { toastErr } from "$lib/store/toastError";
   import Icon from "@iconify/svelte";
-  import axios from "axios";
   import { Fileupload, Input, TabItem, Tabs, Textarea } from "flowbite-svelte";
   import moment from "moment";
   import CreateSeo from "../seo/CreateSeo.svelte";
   import CreatePost from "../posts/CreatePost.svelte";
   import Editor from "$lib/components/common/Editor.svelte";
+    import { MODE_MODIFY } from "$lib/Const";
 
   export let products: any;
   export let title: string;
   export let mode: string;
 
+  const PRODUCT_REFERENCE = "product";
   let categories: any[] = [],
     files: any[] = [],
     file;
   let queryParams = {
-    type: "product",
+    type: PRODUCT_REFERENCE,
   };
-  let text = "";
   let seo = {
     id: null,
     metaTitle: null,
@@ -35,22 +34,22 @@
     sitemapPriority: null,
     sitemapFrequency: null,
     sitemapLastModified: null,
-    referenceId: mode == "modify" ? products.id : null,
-    reference: "product",
+    referenceId: mode == MODE_MODIFY ? products.id : null,
+    reference: PRODUCT_REFERENCE,
   };
   let post = {
     id: null,
     title: "",
     content: "",
     author: "Admin Duy Dep Trai",
-    referenceId: mode == "modify" ? products.id : null,
-    reference: "product",
+    referenceId: mode == MODE_MODIFY ? products.id : null,
+    reference: PRODUCT_REFERENCE,
   };
   const categoryService = RepositoryFactory.get("categoryRepository");
   const productService = RepositoryFactory.get("productRepository");
   const uploadFileService = RepositoryFactory.get("uploadRepository");
 
-  if (mode == "modify") {
+  if (mode == MODE_MODIFY) {
     files = JSON.parse(products.images);
     products.expirationDate = moment(new Date(products.expirationDate)).format(
       "yyyy-MM-DD"
@@ -102,7 +101,7 @@
         path: path,
       });
       files = files.filter((item) => item !== path);
-      if (mode == "modify") {
+      if (mode == MODE_MODIFY) {
         await handleSubmitUpdateProduct();
       }
     } catch (error) {
@@ -131,7 +130,7 @@
         });
         toastErr.set(toasts);
       }
-    } else if (mode == "modify") {
+    } else if (mode == MODE_MODIFY) {
       try {
         const res = await handleSubmitUpdateProduct();
         console.log(res);
@@ -426,7 +425,7 @@
   </div>
 </div>
 
-{#if mode == "modify"}
+{#if mode == MODE_MODIFY}
   <div class="col-span-full">
     <Tabs
       style="none"
