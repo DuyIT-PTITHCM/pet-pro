@@ -24,6 +24,7 @@
   import { me } from "$lib/store/userManagement";
   import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
   import { goto } from "$app/navigation";
+    import LanguageSelect from "$lib/components/LanguageSelect.svelte";
 
   let hidden6 = true;
   let transitionParamsRight = {
@@ -128,6 +129,9 @@
     <DarkMode {btnClass} />
   </div>
   <div class="admin-header-box admin-header__right">
+    <div class="flex items-center mr-3">
+      <LanguageSelect />
+    </div>
     <div>
       <Avatar id="avatar-menu" src={$me?.avatar} class="mr-4 cursor-pointer" />
       <Dropdown placement="bottom" triggeredBy="#avatar-menu">

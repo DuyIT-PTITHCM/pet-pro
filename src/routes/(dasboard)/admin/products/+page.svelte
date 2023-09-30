@@ -2,6 +2,7 @@
     import { loadingState } from "./../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { title, description } from "$lib/store/meta";
+    import { loadTranslations, t } from "$lib/translations";
     import {
         Checkbox,
         Table,
@@ -97,7 +98,7 @@
         <h1
             class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold"
         >
-            Products Management
+            {$t("products.productsManagement")}
         </h1>
         <div class="flex gap-1">
             <a

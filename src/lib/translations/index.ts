@@ -13,7 +13,7 @@ const config = ({
     {
       locale: 'en',
       key: 'header',
-      routes: ['', '/','/about','/blog'],
+      routes: ['', '/', '/about', '/blog'],
       loader: async () => (
         await import('./en/header.json')
       ).default,
@@ -26,6 +26,14 @@ const config = ({
       ).default,
     },
     {
+      locale: 'en',
+      key: 'products',
+      loader: async () => (
+        await import('./en/products.json')
+      ).default,
+    },
+
+    {
       locale: 'vi',
       key: 'common',
       loader: async () => (
@@ -35,7 +43,7 @@ const config = ({
     {
       locale: 'vi',
       key: 'header',
-      routes: ['', '/','/about','/blog'],
+      routes: ['', '/', '/about', '/blog'],
       loader: async () => (
         await import('./vi/header.json')
       ).default,
@@ -45,6 +53,13 @@ const config = ({
       key: 'homepage',
       loader: async () => (
         await import('./vi/homepage.json')
+      ).default,
+    },
+    {
+      locale: 'vi',
+      key: 'products',
+      loader: async () => (
+        await import('./vi/products.json')
       ).default,
     },
   ],
