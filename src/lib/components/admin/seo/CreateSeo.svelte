@@ -1,32 +1,25 @@
 <script lang="ts">
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { BASE_API, HOST } from "$lib/Const";
+    import { HOST } from "$lib/Const";
+    import { convertImageJsonToArray } from "$lib/Utils/common";
     import { loadingState } from "$lib/store/loading";
     import { toastErr } from "$lib/store/toastError";
     import Icon from "@iconify/svelte";
-    import axios from "axios";
     import { Fileupload, Textarea } from "flowbite-svelte";
+    import { t } from "$lib/translations";
 
     export let seoData: any;
     export let divClass = "grid sm:grid-cols-2 grid-cols-1";
 
     let seo = seoData.seo;
-    let host = "http://103.142.26.42";
     let file: any;
     file = seo.image;
 
     const uploadFileService = RepositoryFactory.get("uploadRepository");
-    function convertImageJsonToArray(json) {
-        if (json) {
-            return JSON.parse(json);
-        }
-        return [];
-    }
 
     let images = convertImageJsonToArray(seoData.images);
     let image = images ? images[0] : "";
 
-    // Chèn dữ liệu động
     const seoService = RepositoryFactory.get("seoRepository");
     async function handleSubmitCreateSeo() {
         let structuredData = {
@@ -34,7 +27,7 @@
             "@type": "sản phẩm ",
             name: `${seoData.name}`,
             description: `${seo.metaDescription}`,
-            image: HOST+`${image}`,
+            image: HOST + `${image}`,
             brand: {
                 "@type": "Thương Hiệu",
                 name: "Pet One",
@@ -57,11 +50,11 @@
         seoData.seoId = seo.id;
         seoData.seo = seo;
         toastErr.set([
-                {
-                    message: res.data.message,
-                    type: "success"
-                }
-            ]);
+            {
+                message: res.data.message,
+                type: "success",
+            },
+        ]);
         return res;
     }
     async function handleSubmitUpdateSeo() {
@@ -70,7 +63,7 @@
             "@type": "sản phẩm ",
             name: `${seoData.productName}`,
             description: `${seo.metaDescription}`,
-            image: HOST+`${image}`,
+            image: HOST + `${image}`,
             brand: {
                 "@type": "Thương Hiệu",
                 name: "Pet One",
@@ -110,11 +103,11 @@
             try {
                 const res = await handleSubmitUpdateSeo();
                 toastErr.set([
-                {
-                    message: res.data.message,
-                    type: "success"
-                }
-            ]);
+                    {
+                        message: res.data.message,
+                        type: "success",
+                    },
+                ]);
             } catch (error) {
                 console.log(error);
             }
@@ -154,129 +147,115 @@
         }
     }
 </script>
-<div class="{divClass} bg-white dark:bg-slate-800 dark:text-white shadow-md rounded h-full" >
-    <h1 class="text-[34px] py-[10px] uppercase text-center font-bold col-span-full">
-        seo edit
+
+<div
+    class="{divClass} bg-white dark:bg-slate-800 dark:text-white shadow-md rounded h-full"
+>
+    <h1
+        class="text-[34px] py-[10px] uppercase text-center font-bold col-span-full"
+    >
+        {$t("seo.seoEdit")}
     </h1>
     <!-- <div class="-mx-3 md:flex mb-6"> -->
-        <div class="px-3 mb-6 md:mb-0">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="metaTitle"
-            >
-                Meta Title
-            </label>
-            <input
-                bind:value={seo.metaTitle}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                id="metaTitle"
-                type="text"
-                placeholder="Input Meta Description"
-            />
-        </div>
-        <div class="px-3">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="metaDescription"
-            >
-                Meta Description
-            </label>
-            <Textarea
-                bind:value={seo.metaDescription}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="metaDescription"
-                type="text"
-                placeholder="Meta Description "
-            />
-        </div>
-    <!-- </div>
-    <div class="-mx-3 md:flex mb-6"> -->
-        <div class="px-3 mb-6 md:mb-0">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="keywords"
-            >
-                Keywords
-            </label>
-            <input
-                bind:value={seo.keywords}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                id="keywords"
-                type="text"
-                placeholder="Input Meta keywords"
-            />
-        </div>
-        <div class="px-3">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="canonicalUrl"
-            >
-                Canonical Url
-            </label>
-            <input
-                bind:value={seo.canonicalUrl}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="canonicalUrl"
-                type="text"
-                placeholder="Innput Canonical Url "
-            />
-        </div>
-    <!-- </div>
-    <div class="-mx-3 md:flex mb-6"> -->
-        <div class="px-3 mb-6 md:mb-0">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="robotMetaTags"
-            >
-                Robot MetaTags
-            </label>
-            <input
-                bind:value={seo.robotMetaTags}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
-                id="robotMetaTags"
-                type="text"
-                placeholder="Input Meta Robot MetaTags"
-            />
-        </div>
-        <!-- <div class="px-3">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="openGraphTags"
-            >
-                Open GraphTags
-            </label>
-            <input
-                bind:value={seo.openGraphTags}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="openGraphTags"
-                type="text"
-                placeholder="Innput Open GraphTags "
-            />
-        </div> -->
-    <!-- </div>
-    <div class="-mx-3 md:flex mb-6"> -->
-        <div class="px-3">
-            <label
-                class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
-                for="sitemapFrequency"
-            >
-                Sitemap Frequency
-            </label>
-            <input
-                bind:value={seo.sitemapFrequency}
-                class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
-                id="sitemapFrequency"
-                type="text"
-                placeholder="Innput Sitemap Frequency "
-            />
-        </div>
+    <div class="px-3 mb-6 md:mb-0">
+        <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+            for="metaTitle"
+        >
+            {$t("seo.metaTitle")}
+        </label>
+        <input
+            bind:value={seo.metaTitle}
+            class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+            id="metaTitle"
+            type="text"
+            placeholder="Input Meta Description"
+        />
+    </div>
+    <div class="px-3">
+        <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+            for="metaDescription"
+        >
+            {$t("seo.metaDescription")}
+        </label>
+        <Textarea
+            bind:value={seo.metaDescription}
+            class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+            id="metaDescription"
+            type="text"
+            placeholder="Meta Description "
+        />
+    </div>
+
+    <div class="px-3 mb-6 md:mb-0">
+        <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+            for="keywords"
+        >
+            {$t("seo.keywords")}
+        </label>
+        <input
+            bind:value={seo.keywords}
+            class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+            id="keywords"
+            type="text"
+            placeholder="Input Meta keywords"
+        />
+    </div>
+    <div class="px-3">
+        <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+            for="canonicalUrl"
+        >
+            {$t("seo.canonicalUrl")}
+        </label>
+        <input
+            bind:value={seo.canonicalUrl}
+            class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+            id="canonicalUrl"
+            type="text"
+            placeholder="Innput Canonical Url "
+        />
+    </div>
+
+    <div class="px-3 mb-6 md:mb-0">
+        <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+            for="robotMetaTags"
+        >
+            {$t("seo.robotMetatags")}
+        </label>
+        <input
+            bind:value={seo.robotMetaTags}
+            class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3"
+            id="robotMetaTags"
+            type="text"
+            placeholder="Input Meta Robot MetaTags"
+        />
+    </div>
+    <div class="px-3">
+        <label
+            class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
+            for="sitemapFrequency"
+        >
+            {$t("seo.sitemapFrequency")}
+        </label>
+        <input
+            bind:value={seo.sitemapFrequency}
+            class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4"
+            id="sitemapFrequency"
+            type="text"
+            placeholder="Innput Sitemap Frequency "
+        />
+    </div>
     <!-- </div> -->
     <div class="px-3 col-span-full">
         <label
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
             for="grid-zip"
         >
-            Images
+            {$t("common.images")}
         </label>
         <Fileupload
             on:change={handleFileInputChange}
@@ -295,7 +274,7 @@
                         on:click={() => handleDeleteFile(file)}
                     >
                         <Icon icon="iwwa:delete" width="30" />
-                </button>
+                    </button>
                 </div>
             </div>
         {/if}

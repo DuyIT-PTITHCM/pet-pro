@@ -1,3 +1,19 @@
 {
-    "productsManagement" : "Quản Lý Sản Phẩm"
+    "productsManagement" : "Quản Lý Sản Phẩm",
+    "createProduct": "Tạo Sản Phẩm",
+    "editProduct": "Sửa Sản Phẩm",
+    "name": "Tên sản phẩm",
+    "description": "Mô tả sản phẩm",
+    "quantityInStock": "Số lượng trong kho",
+    "origin": "Xuất xứ",
+    "discount": "Giảm giá",
+    "urlProduct": "URL Sản phẩm",
+    "expirationDate": "Ngày hết hạn",
+    "status": "Trạng thái",
+    "type": "Loại",
+    "categoryProduct": "Danh mục sản phẩm",
+    "note": "Ghi chú",
+    "imagesProducts": "Hình ảnh sản phẩm",
+    "productPostEdit": "Sửa Bài Viết Cho Sản Phẩm",
+    "notes": "Ghi chú"
 }

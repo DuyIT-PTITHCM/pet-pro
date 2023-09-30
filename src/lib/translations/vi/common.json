@@ -1,3 +1,15 @@
 {
-    "title": "titlr vi"
+    "title": "titlr vi",
+    "name": "Tên",
+    "images": "Hình ảnh",
+    "originalPrice": "Giá Gốc",
+    "price": "Giá",
+    "post": "Bài đăng",
+    "slug": "Đường dẫn",
+    "seo": "Tối ưu hóa SEO",
+    "category": "Danh mục",
+    "description": "Mô tả sản phẩm",
+    "createdAt": "Ngày Tạo",
+    "updatedAt": "Ngày Cập Nhật",
+    "publishedAt": "Ngày Xuất Bài"
 }

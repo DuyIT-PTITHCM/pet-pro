@@ -21,6 +21,7 @@
     import { goto } from "$app/navigation";
     import { HOST } from "$lib/Const";
     import { convertImageJsonToArray } from "$lib/Utils/common";
+    import { t } from "$lib/translations";
 
     title.set("Blog Management");
     description.set("Blog Management System");
@@ -98,7 +99,7 @@
         <h1
             class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold"
         >
-            Blog Management
+            {$t("post.blogManagement")}
         </h1>
         <div class="flex gap-1">
             <a
@@ -109,7 +110,7 @@
             <a
                 href="./blog/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >Create Blog</a
+                >{$t("post.createBlog")}</a
             >
         </div>
     </div>
@@ -129,16 +130,16 @@
         >
         <TableHeadCell
             
-            on:click={() => toggleSort("title")}>NAME</TableHeadCell
+            on:click={() => toggleSort("title")}>{$t("common.name")}</TableHeadCell
         >
-        <TableHeadCell >IMAGES</TableHeadCell>
+        <TableHeadCell >{$t("common.images")}</TableHeadCell>
         <TableHeadCell  on:click={() => toggleSort("slug")}
-            >SLUG
+            >{$t("common.slug")}
         </TableHeadCell>
         <TableHeadCell  on:click={() => toggleSort("status")}
-            >SEO
+            >{$t("common.seo")}
         </TableHeadCell>
-        <TableHeadCell >CATEGORY</TableHeadCell>
+        <TableHeadCell >{$t("common.category")}</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each sortedServices as item}

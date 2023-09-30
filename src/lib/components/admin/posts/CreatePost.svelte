@@ -1,27 +1,27 @@
 <script lang="ts">
-	
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { loadingState } from "$lib/store/loading";
     import { toastErr } from "$lib/store/toastError";
-    import Editor from '$lib/components/common/Editor.svelte';
+    import Editor from "$lib/components/common/Editor.svelte";
+    import { t } from "$lib/translations";
 
     export let postData: any;
 
     let post = postData.post;
-    let idEditor = 'editor-post-description';
+    let idEditor = "editor-post-description";
 
     const postService = RepositoryFactory.get("postRepository");
-    async function handleSubmitCreatePost() { 
+    async function handleSubmitCreatePost() {
         const res = await postService.post(post);
         post = res.data.data;
         postData.postId = post.id;
         postData.post = post;
         toastErr.set([
-                {
-                    message: res.data.message,
-                    type: "success"
-                }
-            ]);
+            {
+                message: res.data.message,
+                type: "success",
+            },
+        ]);
         return res;
     }
     async function handleSubmitUpdatePost() {
@@ -58,7 +58,7 @@
     class="bg-white dark:bg-slate-800 dark:text-white shadow-md rounded flex flex-col p-4 h-full"
 >
     <h1 class="text-[34px] py-[10px] uppercase text-center font-bold">
-        Post edit
+        {$t("post.postEdit")}
     </h1>
     <div class="-mx-3 md:flex mb-6">
         <div class="md:w-1/2 px-3 mb-6 md:mb-0">
@@ -66,7 +66,7 @@
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
                 for="grid-first-name"
             >
-                Title
+                {$t("post.title")}
             </label>
             <input
                 bind:value={post.title}
@@ -81,7 +81,7 @@
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
                 for="grid-last-name"
             >
-               Author
+                {$t("post.author")}
             </label>
             <input
                 bind:value={post.author}
@@ -93,7 +93,7 @@
         </div>
     </div>
     <div>
-        <Editor bind:id={idEditor} bind:text={post.content}/>
+        <Editor bind:id={idEditor} bind:text={post.content} />
     </div>
 
     <div class="flex justify-center items-center p-4">

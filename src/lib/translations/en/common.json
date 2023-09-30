@@ -1,3 +1,15 @@
 {
-    "title": "en title"
+    "title": "en title",
+    "name": "Product Name",
+    "images": "Images",
+    "originalPrice": "Original Price",
+    "price": "Price",
+    "post": "Post",
+    "slug": "Slug",
+    "seo": "SEO",
+    "category": "Category",
+    "description": "Description",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "publishedAt": "published At"
 }

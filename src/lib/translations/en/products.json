@@ -1,3 +1,20 @@
 {
-    "productsManagement" : "Products Management"
+    "productsManagement" : "Products Management",
+    "createProduct" : "Create Product",
+    "editProduct": "Edit Product",
+    "name": "Product Name",
+    "description": "Product Description",
+    "quantityInStock": "Quantity in Stock",
+    "origin": "The Origin",
+    "discount": "Discount",
+    "urlProduct": "URL Product",
+    "expirationDate": "Expiration Date",
+    "status": "Status",
+    "type": "Type",
+    "categoryProduct": "Category Product",
+    "note": "Note",
+    "imagesProducts": "Images Products",
+    "productPostEdit": "Product Post Edit",
+    "productPostDetail": "Product Post Detail",
+    "notes": "Notes"
 }

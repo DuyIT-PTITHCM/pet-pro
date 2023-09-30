@@ -2,12 +2,11 @@
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { loadingState } from "$lib/store/loading";
     import Editor from "$lib/components/common/Editor.svelte";
-    import axios from "axios";
-    import { BASE_API } from "$lib/Const";
     import { toastErr } from "$lib/store/toastError";
     import { Fileupload } from "flowbite-svelte";
     import Icon from "@iconify/svelte";
     import { goto } from "$app/navigation";
+    import { t } from "$lib/translations";
 
     export let article: any;
     export let queryParams: any;
@@ -127,7 +126,7 @@
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
                 for="grid-first-name"
             >
-                Title
+                {$t("post.title")}
             </label>
             <input
                 bind:value={article.title}
@@ -142,7 +141,7 @@
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
                 for="grid-zip"
             >
-                Category
+                {$t("common.category")}
             </label>
             <div class="relative">
                 <select
@@ -163,7 +162,7 @@
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
                 for="grid-last-name"
             >
-                Author
+                {$t("post.author")}
             </label>
             <input
                 bind:value={article.author}
@@ -178,7 +177,7 @@
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
                 for="grid-zip"
             >
-                Slug
+                {$t("common.slug")}
             </label>
             <input
                 bind:value={article.slug}
@@ -195,7 +194,7 @@
                 class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
                 for="grid-password"
             >
-                Description
+                {$t("common.description")}
             </label>
 
             <textarea
@@ -211,7 +210,7 @@
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
             for="grid-last-name"
         >
-            content
+            {$t("post.content")}
         </label>
         <Editor bind:text={article.content} />
     </div>
@@ -221,7 +220,7 @@
             class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
             for="grid-zip"
         >
-            Images
+            {$t("common.images")}
         </label>
         <Fileupload
             on:change={handleFileInputChange}

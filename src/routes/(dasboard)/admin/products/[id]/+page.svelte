@@ -8,6 +8,7 @@
     import { HOST, MODE_MODIFY } from "$lib/Const";
     import { convertImageJsonToArray } from "$lib/Utils/common";
     import Nodata from "$lib/components/common/Nodata.svelte";
+    import { t } from "$lib/translations";
 
     export let data;
 
@@ -68,73 +69,73 @@
             <div class="grid md:grid-cols-2 grid-cols-1 dark:text-gray-300">
                 <div>
                     <p class="border-b p-2 m-4">
-                        <b>Product Name:</b>
+                        <b>{$t("products.name")}:</b>
                         {product?.productName}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Type:</b>
+                        <b>{$t("products.type")}:</b>
                         {product?.type}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Location Status:</b>
+                        <b>{$t("products.status")}:</b>
                         {product?.status}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Category:</b>
+                        <b>{$t("common.category")}:</b>
                         {product?.category.categoryName}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Stock:</b>
+                        <b>{$t("products.quantityInStock")}:</b>
                         {product?.stockQuantity}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>The Origin:</b>
+                        <b>{$t("products.origin")}:</b>
                         {product?.origin}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Description:</b>
+                        <b>{$t("common.description")}:</b>
                         {product?.description}
                     </p>
                 </div>
                 <div>
                     <p class="border-b p-2 m-4">
-                        <b>Original Price:</b>
+                        <b> {$t("common.originalPrice")}:</b>
                         {formatCurrency(product?.originalPrice)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Price Sales:</b>
+                        <b>{$t("common.price")}:</b>
                         {formatCurrency(product?.price)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Product Discount:</b>
+                        <b>{$t("products.discount")}:</b>
                         {product?.discount} %
                     </p>
                     {#if product?.type != "pet"}
                         <p class="border-b p-2 m-4">
-                            <b>Product Expiration Date:</b>
+                            <b>{$t("products.expirationDate")}:</b>
                             {formatDate(product?.expirationDate)}
                         </p>
                     {/if}
                     <p class="border-b p-2 m-4">
-                        <b>Notes:</b>
+                        <b>{$t("products.notes")} :</b>
                         {@html product?.notes}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Unique URL:</b>
+                        <b>{$t("common.slug")}:</b>
                         {product?.slug}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Created At:</b>
+                        <b>{$t("common.createdAt")} :</b>
                         {formatDate(product?.createdAt)}
                     </p>
                     <p class="border-b p-2 m-4">
-                        <b>Updated At:</b>
+                        <b> {$t("common.updatedAt")} :</b>
                         {formatDate(product?.updatedAt)}
                     </p>
                 </div>
             </div>
             <div class="leading-8 flex flex-col items-center">
-                <b class="block dark:text-gray-300">Images Product</b>
+                <b class="block dark:text-gray-300">{$t("common.images")}</b>
                 <div class="gap-4 md:columns-3 sm:columns-2 columns-1">
                     {#each convertImageJsonToArray(product?.images) as path, i}
                         <img
@@ -155,35 +156,36 @@
                 inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
                 contentClass=""
             >
-                <TabItem open title="Seo Information">
-                    {#if product?.seo}
+                <TabItem open title={$t("seo.seoInformation")}>
+                    {#if product?.seo?.id}
                         <div
                             class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5"
                         >
                             <div class=" text-gray-500 dark:text-gray-400">
                                 <p class="border-b p-2 m-4">
-                                    <b>Meta Title : </b>{product?.seo
+                                    <b>{$t("seo.metaTitle")} : </b>{product?.seo
                                         ?.metaTitle}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    <b>Meta Description</b> <br />
+                                    <b>{$t("seo.metaDescription")} </b> <br />
                                     {product?.seo?.metaDescription}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    <b>Canonical Url :</b>
+                                    <b>{$t("seo.canonicalUrl")} :</b>
                                     {product?.seo?.canonicalUrl}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    <b>Keywords :</b>
+                                    <b>{$t("seo.keywords")} :</b>
                                     {product?.seo?.keywords}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    <b>Robot MetaTags :</b>
+                                    <b>{$t("seo.robotMetatags")} :</b>
                                     {product?.seo?.robotMetaTags}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    <b>Sitemap Frequency : </b>{product?.seo
-                                        ?.sitemapFrequency}
+                                    <b>
+                                        {$t("seo.sitemapFrequency")} :
+                                    </b>{product?.seo?.sitemapFrequency}
                                 </p>
                             </div>
                             <div>
@@ -288,28 +290,28 @@
                         <Nodata />
                     {/if}
                 </TabItem>
-                <TabItem open title="Product Post Detail">
-                    {#if product?.post}
+                <TabItem open title={$t("post.productPostDetail")}>
+                    {#if product?.post?.id}
                         <div
                             class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1 grid-cols-1 gap-5"
                         >
                             <div class=" text-gray-500 dark:text-gray-300">
-                                <b class="block my-[10px]">Posts Information</b
-                                ><br />
                                 <p class="border-b p-2 m-4">
-                                    Author : {product?.post?.author}
+                                    {$t("post.author")} : {product?.post
+                                        ?.author}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    Category : {product?.post?.category}
+                                    {$t("common.category")} : {product?.post
+                                        ?.category}
                                 </p>
                                 <p class="border-b p-2 m-4">
-                                    published At : {formatDate(
+                                    {$t("common.publishedAt")} : {formatDate(
                                         product?.post?.published_at
                                     )}
                                 </p>
                             </div>
                             <div>
-                                <p class="py-[10px]">Images Posts</p>
+                                <p class="py-[10px]">{$t("common.images")}</p>
                                 <div class="grid grid-cols-3 gap-1">
                                     {#each convertImageJsonToArray(product?.post?.images) as path, i}
                                         <img
@@ -325,7 +327,7 @@
                         </div>
                         <!-- content show here  -->
                         <div class="py-[20px] justify-center">
-                            <h3>Content Posts</h3>
+                            <h3>{$t("post.content")}</h3>
                             <br />
                             <div class="dark:text-gray-100">
                                 {@html product?.post?.content}
@@ -339,7 +341,11 @@
         </div>
     </TabItem>
     <TabItem title="Edit {product?.productName}">
-        <CreateProduct mode={MODE_MODIFY} {products} title="Edit Products" />
+        <CreateProduct
+            mode={MODE_MODIFY}
+            {products}
+            title="products.editProduct"
+        />
     </TabItem>
 </Tabs>
 

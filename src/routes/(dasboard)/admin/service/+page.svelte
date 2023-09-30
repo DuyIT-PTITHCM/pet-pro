@@ -20,7 +20,9 @@
     import Icon from "@iconify/svelte";
     import { goto } from "$app/navigation";
     import { convertImageJsonToArray } from "$lib/Utils/common";
-    
+    import { HOST } from "$lib/Const";
+    import { t } from "$lib/translations";
+
     title.set("Service Management");
     description.set("Service Management System");
 
@@ -31,13 +33,11 @@
     let sortBy = "";
     let sortDirection = 1;
     let dataServiceFromApi: any[] = [];
-    let host = "http://103.142.26.42/";
     let queryParams = {
         page: 1,
-        type:'service'
+        type: "service",
     };
 
-    // Function to handle page change
     async function handlePageChange(page) {
         queryParams.page = page;
         updateQueryParams(queryParams);
@@ -56,7 +56,7 @@
         loadingState.set(true);
         let queryFilter = getAllQueryParams();
         queryParams = queryParamsToObject(queryFilter);
-        queryParams.type = 'service';
+        queryParams.type = "service";
         services = await articleService.get(queryParams);
 
         dataServiceFromApi = services.data.data.docs;
@@ -87,7 +87,7 @@
     }
     function init() {
         getService();
-    };
+    }
 
     init();
 </script>
@@ -97,7 +97,7 @@
         <h1
             class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold"
         >
-            Service Management
+            {$t("post.serviceManagement")}
         </h1>
         <div class="flex gap-1">
             <a
@@ -108,7 +108,8 @@
             <a
                 href="./service/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >Create Service</a
+            >
+                {$t("post.createService")}</a
             >
         </div>
     </div>
@@ -123,21 +124,18 @@
                 on:change={() => (isCheck = !isCheck)}
             /></TableHeadCell
         >
-        <TableHeadCell  on:click={() => toggleSort("id")}
-            >Id</TableHeadCell
+        <TableHeadCell on:click={() => toggleSort("id")}>Id</TableHeadCell>
+        <TableHeadCell on:click={() => toggleSort("title")}
+            >{$t("common.name")}</TableHeadCell
         >
-        <TableHeadCell
-            
-            on:click={() => toggleSort("title")}>NAME</TableHeadCell
-        >
-        <TableHeadCell >IMAGES</TableHeadCell>
-        <TableHeadCell  on:click={() => toggleSort("slug")}
-            >SLUG
+        <TableHeadCell>{$t("common.images")}</TableHeadCell>
+        <TableHeadCell on:click={() => toggleSort("slug")}
+            >{$t("common.slug")}
         </TableHeadCell>
-        <TableHeadCell  on:click={() => toggleSort("status")}
-            >SEO
+        <TableHeadCell on:click={() => toggleSort("status")}
+            >{$t("common.seo")}
         </TableHeadCell>
-        <TableHeadCell >CATEGORY</TableHeadCell>
+        <TableHeadCell>{$t("common.category")}</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each sortedServices as item}
@@ -158,7 +156,7 @@
                                 <img
                                     src={!path
                                         ? "/images/logo.png"
-                                        : `${host}` + "/" + path}
+                                        : `${HOST}` + "/" + path}
                                     class="w-full h-full"
                                     alt={item.name}
                                 />
@@ -166,7 +164,7 @@
                         {/each}
                     </div>
                 </TableBodyCell>
-                
+
                 <TableBodyCell>{item.slug}</TableBodyCell>
 
                 <TableBodyCell>

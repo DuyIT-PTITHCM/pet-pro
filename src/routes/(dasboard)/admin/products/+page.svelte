@@ -2,7 +2,7 @@
     import { loadingState } from "./../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { title, description } from "$lib/store/meta";
-    import { loadTranslations, t } from "$lib/translations";
+    import { t } from "$lib/translations";
     import {
         Checkbox,
         Table,
@@ -88,7 +88,7 @@
 
     function init() {
         getProduct();
-    };
+    }
 
     init();
 </script>
@@ -109,7 +109,7 @@
             <a
                 href="./products/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                >Create Products</a
+                >{$t("products.createProduct")}</a
             >
         </div>
     </div>
@@ -129,57 +129,37 @@
         >
         <TableHeadCell
             class="text-center"
-            on:click={() => toggleSort("productName")}>NAME</TableHeadCell
+            on:click={() => toggleSort("productName")}
+            >{$t("common.name")}</TableHeadCell
         >
-        <TableHeadCell class="text-center">IMAGES</TableHeadCell>
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("description")}
-            >DESCRIPTION</TableHeadCell
-        > -->
+        <TableHeadCell class="text-center">{$t("common.images")}</TableHeadCell>
         <TableHeadCell
             class="text-center"
             on:click={() => toggleSort("originalPrice")}
-            >ORIGINAL PRICE</TableHeadCell
+            >{$t("common.originalPrice")}</TableHeadCell
         >
         <TableHeadCell class="text-center" on:click={() => toggleSort("price")}
-            >PRICE</TableHeadCell
+            >{$t("common.price")}</TableHeadCell
         >
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("stockQuantity")}
-            >STOCK QUANTITY
-        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("origin")}
-            >POST</TableHeadCell
+            >{$t("common.post")}</TableHeadCell
         >
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("discount")}
-            >STOCK DISCOUNT
-        </TableHeadCell> -->
-        <TableHeadCell class="text-center" on:click={() => toggleSort("slug")}
-            >SLUG
+        <TableHeadCell class="text-center" on:click={() => toggleSort("slug")}>
+            {$t("common.slug")}
         </TableHeadCell>
-        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("notes")}
-            >NOTE
-        </TableHeadCell> -->
         <TableHeadCell class="text-center" on:click={() => toggleSort("status")}
-            >SEO
+            >{$t("common.seo")}
         </TableHeadCell>
-        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("type")}
-            >TYPE
-        </TableHeadCell> -->
-        <!-- <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("expirationDate")}
-            >EXPIRATION DATE
-        </TableHeadCell> -->
-        <TableHeadCell class="text-center">CATEGORY</TableHeadCell>
+        <TableHeadCell class="text-center"
+            >{$t("common.category")}</TableHeadCell
+        >
     </TableHead>
     <TableBody>
         {#each sortedProducts as item}
-            <TableBodyRow class="cursor-pointer" on:click={() => gotoDetail(item.id)}>
+            <TableBodyRow
+                class="cursor-pointer"
+                on:click={() => gotoDetail(item.id)}
+            >
                 <TableBodyCell tdClass="w-3"
                     ><div class="flex justify-center">
                         <Checkbox checked={isCheck} value={item.id} />

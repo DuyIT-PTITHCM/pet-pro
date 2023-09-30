@@ -9,7 +9,8 @@
   import CreateSeo from "../seo/CreateSeo.svelte";
   import CreatePost from "../posts/CreatePost.svelte";
   import Editor from "$lib/components/common/Editor.svelte";
-    import { MODE_MODIFY } from "$lib/Const";
+  import { HOST, MODE_MODIFY } from "$lib/Const";
+  import { t } from "$lib/translations";
 
   export let products: any;
   export let title: string;
@@ -145,19 +146,21 @@
   getCategories();
 </script>
 
-<div class="bg-white dark:bg-slate-800 dark:text-white rounded h-full py-[10px] my-3">
+<div
+  class="bg-white dark:bg-slate-800 dark:text-white rounded h-full py-[10px] my-3"
+>
   <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 p-4">
     <h1
       class="text-[34px] py-[10px] uppercase text-center font-bold col-span-full"
     >
-      {title}
+      {$t(title)}
     </h1>
     <div class="px-3">
       <label
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
-        Product Name
+        {$t("products.name")}
       </label>
       <input
         bind:value={products.productName}
@@ -172,7 +175,7 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
-        Product Description
+        {$t("products.description")}
       </label>
       <Textarea
         bind:value={products.description}
@@ -189,7 +192,7 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
-        Original Price
+        {$t("common.originalPrice")}
       </label>
       <input
         bind:value={products.originalPrice}
@@ -200,7 +203,7 @@
         placeholder="Input Original Price"
       />
       <p class="text-[blue] dark:text-white text-xs italic">
-        Original Price : {formatCurrency(products.originalPrice)}
+        {$t("common.originalPrice")}: {formatCurrency(products.originalPrice)}
       </p>
     </div>
     <div class="px-3">
@@ -208,18 +211,18 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
-        Price
+        {$t("common.price")}
       </label>
       <input
         bind:value={products.price}
-        class="appearance-none border-[#dcdde0] dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border  rounded py-3 px-4 mb-3"
+        class="appearance-none border-[#dcdde0] dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border rounded py-3 px-4 mb-3"
         id="grid-last-name"
         type="number"
         min="10000"
         placeholder="Input Price"
       />
       <p class="text-[blue] dark:text-white text-xs italic">
-        Price : {formatCurrency(products.price)}
+        {$t("common.price")} : {formatCurrency(products.price)}
       </p>
     </div>
     <!-- </div>
@@ -229,7 +232,7 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
-        Quantity In Stock
+        {$t("products.quantityInStock")}
       </label>
       <input
         bind:value={products.stockQuantity}
@@ -245,11 +248,11 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
-        The Origin
+        {$t("products.origin")}
       </label>
       <input
         bind:value={products.origin}
-        class="appearance-none border-[#dcdde0] dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border  rounded py-3 px-4"
+        class="appearance-none border-[#dcdde0] dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border rounded py-3 px-4"
         id="grid-last-name"
         type="text"
         placeholder="Input The Origin"
@@ -263,7 +266,7 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-first-name"
       >
-        % Discount
+        % {$t("products.discount")}
       </label>
       <input
         bind:value={products.discount}
@@ -282,11 +285,11 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-last-name"
       >
-        URL Product
+        {$t("products.urlProduct")}
       </label>
       <input
         bind:value={products.slug}
-        class="appearance-none border-[#dcdde0] dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border  rounded py-3 px-4 mb-3"
+        class="appearance-none border-[#dcdde0] dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border rounded py-3 px-4 mb-3"
         id="grid-last-name"
         type="text"
         placeholder="con-cho-co"
@@ -302,7 +305,7 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-zip"
       >
-        Expiration Date
+        {$t("products.expirationDate")}
       </label>
       <div class="relative">
         <Input
@@ -321,11 +324,11 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-state"
       >
-        Status
+        {$t("products.status")}
       </label>
       <div class="relative">
         <select
-          class="block appearance-none w-full bg-grey-lighter border  text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+          class="block appearance-none w-full bg-grey-lighter border text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
           id="grid-state"
           bind:value={products.status}
         >
@@ -340,11 +343,11 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-state"
       >
-        Type
+        {$t("products.type")}
       </label>
       <div class="relative">
         <select
-          class="block appearance-none w-full bg-grey-lighter border  text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+          class="block appearance-none w-full bg-grey-lighter border text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
           id="grid-state"
           bind:value={products.type}
         >
@@ -359,11 +362,11 @@
         class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
         for="grid-zip"
       >
-        Category Products
+        {$t("products.categoryProduct")}
       </label>
       <div class="relative">
         <select
-          class="block appearance-none w-full bg-grey-lighter border  text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
+          class="block appearance-none w-full bg-grey-lighter border text-grey-darker py-3 px-4 pr-8 rounded dark:bg-gray-700"
           id="grid-state"
           bind:value={products.categoryId}
         >
@@ -379,7 +382,7 @@
       class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
       for="grid-password"
     >
-      Note
+      {$t("products.note")}
     </label>
 
     <div>
@@ -391,7 +394,7 @@
       class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2 text-[14px] py-[10px]"
       for="grid-zip"
     >
-      Images Products
+      {$t("products.imagesProducts")}
     </label>
     <Fileupload
       on:change={handleFileInputChange}
@@ -402,7 +405,7 @@
         <div class="relative">
           <img
             class="object-cover w-full h-[300px] rounded"
-            src={`http://103.142.26.42${path}`}
+            src={HOST + `${path}`}
             alt="avatar"
           />
           <button
@@ -433,13 +436,13 @@
       activeClasses="p-2 text-primary-500 bg-gray-100 rounded-t-lg dark:bg-slate-900 dark:text-primary-500"
       inactiveClasses="p-2 text-gray-500 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-300"
     >
-      <TabItem open title="Seo Edit">
+      <TabItem open title="{$t("seo.seoEdit")}">
         <CreateSeo
           divClass="grid md:grid-cols-3 grid-cols-2"
           bind:seoData={products}
         />
       </TabItem>
-      <TabItem title="Product Posts Edit">
+      <TabItem title="{$t("products.productPostEdit")}">
         <div class="grid grid-cols-1 gap-5">
           <CreatePost bind:postData={products} />
         </div>

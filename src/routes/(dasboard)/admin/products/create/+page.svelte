@@ -1,7 +1,7 @@
 <script>
 	import CreateProduct from "$lib/components/admin/products/CreateProduct.svelte"
     let mode = 'create';
-    let title = 'Create Products';
+    let title = 'products.createProduct';
     let products = {
         productName: null,
         description: null,
