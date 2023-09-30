@@ -19,6 +19,9 @@
     } from "$lib/Utils/queryParams";
     import Icon from "@iconify/svelte";
     import { goto } from "$app/navigation";
+    import { HOST } from "$lib/Const";
+    import { convertImageJsonToArray } from "$lib/Utils/common";
+
     title.set("Blog Management");
     description.set("Blog Management System");
 
@@ -29,7 +32,6 @@
     let sortBy = "";
     let sortDirection = 1;
     let dataServiceFromApi: any[] = [];
-    let host = "http://103.142.26.42/";
     let queryParams = {
         page: 1,
         type:'blog'
@@ -61,9 +63,6 @@
         loadingState.set(false);
     }
 
-    function convertImageJsonToArray(json) {
-        return JSON.parse(json);
-    }
     function gotoDetail(id: Number) {
         goto("/admin/blog/" + id);
     }
@@ -86,7 +85,12 @@
             }
         });
     }
-    getBlog();
+
+    function init() {
+        getBlog();
+    };
+
+    init();
 </script>
 
 <div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
@@ -155,7 +159,7 @@
                                 <img
                                     src={!path
                                         ? "/images/logo.png"
-                                        : `${host}` + "/" + path}
+                                        : `${HOST}` + "/" + path}
                                     class="w-full h-full"
                                     alt={item.name}
                                 />

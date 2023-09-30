@@ -19,6 +19,8 @@
     } from "$lib/Utils/queryParams";
     import Icon from "@iconify/svelte";
     import { goto } from "$app/navigation";
+    import { convertImageJsonToArray } from "$lib/Utils/common";
+    
     title.set("Service Management");
     description.set("Service Management System");
 
@@ -61,9 +63,6 @@
         loadingState.set(false);
     }
 
-    function convertImageJsonToArray(json) {
-        return JSON.parse(json);
-    }
     function gotoDetail(id: Number) {
         goto("/admin/service/" + id);
     }
@@ -86,7 +85,11 @@
             }
         });
     }
-    getService();
+    function init() {
+        getService();
+    };
+
+    init();
 </script>
 
 <div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">

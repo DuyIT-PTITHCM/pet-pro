@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { title } from "$lib/store/meta";
     import { loadingState } from "./../../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { Tabs, TabItem, DeviceMockup } from "flowbite-svelte";
@@ -8,9 +7,6 @@
 
     const postService = RepositoryFactory.get("postRepository");
     let blog: any;
-    let host = "http://103.142.26.42/";
-    const mode = "modify";
-
     let queryParams = {
         type: "blog",
     };
@@ -45,7 +41,11 @@
         loadingState.set(false);
     }
 
-    postDetail();
+    function init() {
+        postDetail();
+    };
+    
+    init();
 </script>
 
 <Tabs

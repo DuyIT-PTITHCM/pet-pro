@@ -88,6 +88,7 @@
     const userData = await userService.info();
     me.set(userData?.data.data);
   }
+
   init();
 </script>
 
@@ -131,7 +132,7 @@
       <Avatar id="avatar-menu" src={$me?.avatar} class="mr-4 cursor-pointer" />
       <Dropdown placement="bottom" triggeredBy="#avatar-menu">
         <DropdownHeader>
-          <span class="block text-sm">{$me?.username}</span>
+          <span class="block text-sm">{$me?.name}</span>
           <span class="block truncate text-sm font-medium">{$me?.email}</span>
         </DropdownHeader>
         <DropdownItem href="/profile?userid={$me?.id}">Profile</DropdownItem>

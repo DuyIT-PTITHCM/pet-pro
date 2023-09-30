@@ -1,15 +1,12 @@
 <script lang="ts">
-    import { title } from "$lib/store/meta";
     import { loadingState } from "./../../../../../lib/store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { Tabs, TabItem, DeviceMockup } from "flowbite-svelte";
+    import { Tabs, TabItem } from "flowbite-svelte";
     import CreateArticle from "$lib/components/admin/article/CreateArticle.svelte";
     import CreateSeo from "$lib/components/admin/seo/CreateSeo.svelte";
 
     const postService = RepositoryFactory.get("postRepository");
     let service: any;
-    let host = "http://103.142.26.42/";
-    const mode = "modify";
     let services = {
         productName: null,
         description: null,
@@ -63,14 +60,12 @@
 
         loadingState.set(false);
     }
-    function convertImageJsonToArray(json) {
-        if (json) {
-            return JSON.parse(json);
-        }
-        return [];
-    }
 
-    postDetail();
+    function init() {
+        postDetail();
+    };
+
+    init();
 </script>
 
 <Tabs
