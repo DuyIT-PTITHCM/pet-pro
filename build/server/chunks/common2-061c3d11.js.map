@@ -1,1 +1,0 @@
-{"version":3,"file":"common2-061c3d11.js","sources":["../../../.svelte-kit/adapter-node/chunks/common2.js"],"sourcesContent":["const title = \"en title\";\nconst common = {\n  title\n};\nexport {\n  common as default,\n  title\n};\n"],"names":[],"mappings":"AAAK,MAAC,KAAK,GAAG,WAAW;AACpB,MAAC,MAAM,GAAG;AACf,EAAE,KAAK;AACP;;;;"}
