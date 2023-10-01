@@ -6,7 +6,6 @@
     NavUl,
     NavHamburger,
     GradientButton,
-    Avatar,
     Modal,
     DarkMode,
     Popover,
@@ -28,12 +27,19 @@
   let popupModal = false;
   let isSignIn = true;
   let heightHeader = 0;
-  let numACtiveMenu = 0;
   let toggle =false;
+  let numSubmenu = 0;
+
+  function showMobileSubmenu(id: number){
+    numSubmenu == id ? numSubmenu = 0 : numSubmenu = id;
+    return numSubmenu;
+  }
 </script>
 
-<div class="w-full relative h-auto" bind:clientHeight={heightHeader}>
-  <div class="w-full fixed top-0 z-50">
+<div class="w-full relative">
+  <div class="w-full" style="height: {heightHeader}px;"></div>
+
+  <div class="w-full fixed top-0 z-50" bind:clientHeight={heightHeader}>
     <Navbar let:hidden let:toggle={toggle} class="shadow-md">
       <NavBrand href="/">
         <img
@@ -73,11 +79,11 @@
                   >
                   {$t(item.name)}
                 </button>
-                <div class="p-3 w-12 z-0 md:hidden"></div>
+                <div class="md:hidden"></div>
                 {#if item?.subMenus && item?.subMenus?.length > 0}
-                  <div id="mobile{item.id}" class="absolute text-xl p-3 md:hidden w-full">
+                  <button class="text-xl p-3 md:hidden" on:click={() => showMobileSubmenu(item.id)}>
                     <Icon icon="mingcute:down-fill" class="float-right" />
-                  </div>
+                  </button>
                 {/if}
               </div>
               {#if item?.subMenus && item?.subMenus?.length > 0}
@@ -85,8 +91,6 @@
                   {#each item.subMenus as sub}
                     <button class="block w-full p-4 { $page.params.url == sub.url ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
                       on:click={() => {
-                        numACtiveMenu = sub.id;
-                        item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
                         const baseUrl = window.location.origin;
                         window.location.href=(`${baseUrl}/` + sub.url);
                       }}>
@@ -94,22 +98,17 @@
                     </button>
                   {/each}
                 </Popover>
-                <Popover class="text-sm w-full font-normal md:hidden z-50 mr-[100px]" placement="bottom" triggeredBy="#mobile{item.id}" trigger="click">
+                <div class="text-sm w-full font-normal md:hidden">
                   {#each item.subMenus as sub}
-                    <button class="block w-full p-4 { $page.params.url == sub.url ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
+                    <button class="block w-full {numSubmenu == item.id ? 'h-14' : 'h-0 overflow-hidden'}  transition-all { $page.params.url == sub.url ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
                       on:click={() => {
-                        item.active = false;
-                        menu.filter((i) => i !== item).forEach((i) => (i.active = true));
-                        sub.active = false;
-                        numACtiveMenu = sub.id;
-                        item.subMenus.filter((s) => s !== sub).forEach((s) => (s.active = true));
                         const baseUrl = window.location.origin;
                         window.location.href=(`${baseUrl}/` + sub.url);
                       }}>
                       {sub.name}
                     </button>
                   {/each}
-                </Popover>
+                  </div>
               {/if}
             </div>
           </NavLi>
@@ -119,35 +118,6 @@
     </Navbar>
   </div>
 </div>
-<div class="w-full relative h-auto opacity-0">
-  <div class="w-full">
-    <Navbar>
-      <NavBrand href="/">
-        <img
-          src="https://static.vecteezy.com/system/resources/previews/009/551/676/original/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg"
-          class="mr-3 h-6 sm:h-9 rounded-full"
-          alt="PetOne Logo"
-        />
-        <span
-          class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-          >PetOne</span
-        >
-      </NavBrand>
-   
-        <Avatar
-          id="avatar-menu"
-          src={true ? "/images/avt.png" : "/images/avt.png"}
-        />
-
-      <NavUl>
-        {#each menu as item}
-          <NavLi>hi</NavLi>
-        {/each}
-      </NavUl>
-    </Navbar>
-  </div>
-</div>
-<!-- <div class="w-full" style="min-width:{heightHeader}px;"></div> -->
 <Modal bind:open={popupModal} size="xs" autoclose class="z-50">
   <div class="text-center">
     <Icon
