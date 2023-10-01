@@ -13,6 +13,8 @@
     import Profile from "./Profile.svelte";
     import moment from 'moment'
     import Icon from "@iconify/svelte";
+    import { t } from "$lib/translations";
+
 
     export let items;
 
@@ -39,7 +41,6 @@
             } else if (typeof aValue === 'number' && typeof bValue === 'number') {
                 return (aValue - bValue) * sortDirection;
             } else {
-                // Fallback to simple comparison
                 return (aValue > bValue ? 1 : aValue < bValue ? -1 : 0) * sortDirection;
             }
         });
@@ -51,15 +52,15 @@
     <TableHead>
         <TableHeadCell><Checkbox  checked={isCheck} on:change={() => (isCheck = !isCheck)}/></TableHeadCell>
         <TableHeadCell class="text-center" on:click={() => toggleSort("id")}>Id</TableHeadCell>
-        <TableHeadCell class="text-center">Avatar</TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("name")}>Name</TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("address")}>Address</TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("email")}>Email</TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("phone")}>Phone</TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("birthDate")}>Birth Date</TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("gender")}>Gender</TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("role")}>Role</TableHeadCell>
-        <TableHeadCell class="text-center">Action</TableHeadCell>
+        <TableHeadCell class="text-center">{$t("common.avatar")}</TableHeadCell>
+        <TableHeadCell class="text-center" on:click={() => toggleSort("name")}>{$t("common.name")}</TableHeadCell>
+        <TableHeadCell class="text-center" on:click={() => toggleSort("address")}>{$t("common.address")} </TableHeadCell>
+        <TableHeadCell class="text-center" on:click={() => toggleSort("email")}>{$t("common.email")}</TableHeadCell>
+        <TableHeadCell class="text-center" on:click={() => toggleSort("phone")}>{$t("common.phone")}</TableHeadCell>
+        <TableHeadCell class="text-center" on:click={() => toggleSort("birthDate")}>{$t("common.birthDate")}</TableHeadCell>
+        <TableHeadCell class="text-center" on:click={() => toggleSort("gender")}>{$t("common.gender")}</TableHeadCell>
+        <TableHeadCell class="text-center" on:click={() => toggleSort("role")}>{$t("common.role")}</TableHeadCell>
+        <TableHeadCell class="text-center">{$t("common.action")}</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each sortedUsers as item}

@@ -11,5 +11,21 @@
     "description": "Description",
     "createdAt": "Created At",
     "updatedAt": "Updated At",
-    "publishedAt": "published At"
+    "publishedAt": "published At",
+    "menuManagement": "Menu Management",
+    "chooseMenu": "Choose one menu to view categories of that menu",
+    "categoryOf": "Category of",
+    "userManagement": "User Management",
+    "avatar": "Avatar",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "birthDate": "Birth Date",
+    "gender": "Gender",
+    "role": "Role",
+    "action": "Action",
+    "createNewUser": "Create New User",
+    "editUser": "Edit User",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
 }

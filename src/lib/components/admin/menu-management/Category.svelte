@@ -4,6 +4,8 @@
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import { toastErr } from '$lib/store/toastError';
     import CreateSeo from '../seo/CreateSeo.svelte';
+    import { t } from "$lib/translations";
+
 
     const categoryService = RepositoryFactory.get("categoryRepository");
     var isReload = false;
@@ -131,7 +133,7 @@
     <Tabs contentClass="bg-gray-50 rounded-lg dark:bg-gray-800 h-full" style="underline">
         <TabItem open>
             <div slot="title" class="flex items-center gap-2 rounded-lg">
-                Categories of {menu.name}
+                {$t("common.categoryOf")} {menu.name}
             </div>
             <div class="dark:bg-gray-700 min-h-[150px] p-4">
                 {#if isReload}
@@ -181,7 +183,7 @@
         </TabItem>
         <TabItem>
             <div slot="title" class="flex items-center gap-2">
-                Seo
+                {$t("common.seo")}
             </div>
             <CreateSeo bind:seoData={menu}/>
         </TabItem>

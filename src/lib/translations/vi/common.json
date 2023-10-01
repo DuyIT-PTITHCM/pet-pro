@@ -11,5 +11,21 @@
     "description": "Mô tả sản phẩm",
     "createdAt": "Ngày Tạo",
     "updatedAt": "Ngày Cập Nhật",
-    "publishedAt": "Ngày Xuất Bài"
+    "publishedAt": "Ngày Xuất Bài",
+    "menuManagement": "Quản Lý Menu Header",
+    "chooseMenu": "Chọn một menu để xem các danh mục của menu đó",
+    "categoryOf": "Danh Mục Của",
+    "userManagement": "Quản lý Người dùng",
+    "avatar": "Ảnh đại diện",
+    "address": "Địa chỉ",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "birthDate": "Ngày sinh",
+    "gender": "Giới tính",
+    "role": "Vai trò",
+    "action": "Hành động",
+    "createNewUser": "Tạo Người dùng Mới",
+    "editUser": "Sửa Người dùng",
+    "password": "Mật Khẩu",
+    "confirmPassword": "Xác Nhận Mật Khẩu"
 }

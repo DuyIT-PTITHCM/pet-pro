@@ -1,7 +1,7 @@
 <script lang="ts">
     import { loadingState } from "../../../store/loading";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
-    import { Button, Checkbox, Input, Popover, Radio, Textarea } from "flowbite-svelte";
+    import { Button, Checkbox, Input, Popover, Radio } from "flowbite-svelte";
     import Icon from "@iconify/svelte";
     import { toastErr } from "$lib/store/toastError";
     import MenuItem from "./MenuItem.svelte";
@@ -9,6 +9,9 @@
     import Category from "./Category.svelte";
     import Editor from "$lib/components/common/Editor.svelte";
     import { isMenuEdited } from "$lib/store/menuManagement";
+    import Nodata from "$lib/components/common/Nodata.svelte";
+    import { t } from "$lib/translations";
+
     const menuService = RepositoryFactory.get("menuRepository");
     let parentAdd = false;
     let isAction = true;
@@ -86,13 +89,13 @@
 <div class="bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
     <div class="flex items-center justify-between">
         <h1 class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold">
-            Menu management
+            {$t("common.menuManagement")}
         </h1>
     </div>
 </div>
 <div class="grid xl:grid-cols-5 grid-cols-1 w-full h-full bg-neutral-50  dark:bg-slate-900 rounded-lg p-6">
     {#if !menus && !$loadingState}
-        <h1>nodata</h1>
+        <Nodata />
     {:else if !$loadingState}
         <div class="col-span-3 pl-4">
             <div class="flex">
@@ -110,7 +113,6 @@
                         <hr class="w-4 h-[4px] bg-cyan-700">
                         <Button color="dark" outline id="addsubmenu" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
                         <Popover class="w-full text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
-                            <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/> -->
                             <Editor bind:text={newMenu.description}/>
                             <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:checked={newMenu.isShowDescription}>Show Description</Checkbox>
                         </Popover>
@@ -146,7 +148,7 @@
             {:else}
                 <div class="w-full h-full dark:text-white rounded-lg flex flex-col justify-center items-center">
                     <img class="rounded-lg w-[200px]" src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExandoOHd6NXU3bDB4bTJwMTg3NXVoN205N3NmNzU4YXRudzF5ZDJ6YiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/AW6eOaOemvDv1FBpZ6/giphy.gif" alt="">
-                    <b>Choose one menu to view categories of that menu</b>
+                    <b>{$t("common.chooseMenu")}</b>
                 </div>
             {/if}
         </div>

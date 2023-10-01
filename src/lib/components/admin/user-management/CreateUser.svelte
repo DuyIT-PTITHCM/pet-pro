@@ -16,8 +16,8 @@
   import { toastErr } from "$lib/store/toastError";
   import { loadingState } from "$lib/store/loading";
   import { isUserEdited } from "$lib/store/userManagement";
-  import axios from "axios";
-    import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
+  import { t } from "$lib/translations";
+  import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
   let createUserFrom = true;
   let transitionParamsRight = {
     x: 320,
@@ -75,14 +75,11 @@
     }
   }
   function validateEmail(email = "") {
-    // A basic email pattern matching
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
   }
 
-  // Validate Password
   function validatePassword(password = "") {
-    // Password should be at least 8 characters long and contain at least one digit and one special character
     const passwordPattern = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).{8,}$/;
     return passwordPattern.test(password);
   }
@@ -146,7 +143,7 @@
   }
 </script>
 
-<Button on:click={() => (createUserFrom = false)}>Create New User</Button>
+<Button on:click={() => (createUserFrom = false)}>{$t("common.createNewUser")}</Button>
 <Drawer
   placement="right"
   width={"2xl:w-1/4 xl:w-1/4 lg:w-2/4 sm:w-2/4 w-full"}
@@ -160,7 +157,7 @@
       id="drawer-label"
       class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
     >
-      <Icon icon="mdi:create" class="w-4 h-4 mr-2.5" />Create New User
+      <Icon icon="mdi:create" class="w-4 h-4 mr-2.5" />{$t("common.createNewUser")}
     </h5>
     <CloseButton
       on:click={() => (createUserFrom = true)}
@@ -178,7 +175,7 @@
           />
         {/if}
         <Label class="space-y-2 mb-2 col-span-3">
-          <span>Avatar</span>
+          <span>{$t("common.avatar")}</span>
           <Fileupload
             bind:value={user.avatar}
             on:change={handleFileInputChange}
@@ -188,7 +185,7 @@
       <div class="grid gap-4 mb-6 md:grid-cols-1">
         <div>
           <Label for="username" class="mb-2 capitalize"
-            >name<span class="text-red-600">*</span></Label
+            >{$t("common.name")}<span class="text-red-600">*</span></Label
           >
           <Input
             type="text"
@@ -203,7 +200,7 @@
         </div>
         <div>
           <Label for="phone" class="mb-2 capitalize"
-            >Phone number<span class="text-red-600">*</span></Label
+            >{$t("common.phone")}<span class="text-red-600">*</span></Label
           >
           <Input
             type="tel"
@@ -218,7 +215,7 @@
         </div>
         <div>
           <Label for="email" class="mb-2 capitalize"
-            >Email address<span class="text-red-600">*</span></Label
+            >{$t("common.email")}<span class="text-red-600">*</span></Label
           >
           <Input
             type="email"
@@ -233,7 +230,7 @@
         </div>
         <div>
           <Label for="address" class="mb-2 capitalize"
-            >address<span class="text-red-600">*</span></Label
+            >{$t("common.address")}<span class="text-red-600">*</span></Label
           >
           <textarea
             class="w-full rounded-lg bg-gray-50 dark:bg-gray-700 border-slate-300"
@@ -246,19 +243,19 @@
         </div>
         <div>
           <Label>
-            Role
+            {$t("common.role")}
             <Select class="mt-2" items={roles} bind:value={user.role} />
           </Label>
         </div>
         <div>
           <Label>
-            Gender
+            {$t("common.gender")}
             <Select class="mt-2" items={genders} bind:value={user.gender} />
           </Label>
         </div>
         <div>
           <Label for="birthDate" class="mb-2 capitalize"
-            >birthDate<span class="text-red-600">*</span></Label
+            >{$t("common.birthDate")}<span class="text-red-600">*</span></Label
           >
           <Input
             id="birthDate"
@@ -269,7 +266,7 @@
         </div>
         <div>
           <Label for="password" class="mb-2 capitalize"
-            >Password<span class="text-red-600">*</span></Label
+            >{$t("common.password")}<span class="text-red-600">*</span></Label
           >
           <Input
             type="password"
@@ -285,7 +282,7 @@
 
         <div>
           <Label for="confirm_password" class="mb-2 capitalize"
-            >Confirm password<span class="text-red-600">*</span></Label
+            >{$t("common.confirmPassword")}<span class="text-red-600">*</span></Label
           >
           <Input
             type="password"

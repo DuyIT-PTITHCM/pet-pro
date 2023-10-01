@@ -13,9 +13,9 @@
     import Icon from "@iconify/svelte";
     import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
     import moment from "moment";
-    import axios from "axios";
     import { isUserEdited } from "$lib/store/userManagement";
     import { toastErr } from "$lib/store/toastError";
+    import { t } from "$lib/translations";
 
     let genders = [
         { value: "male", name: "Male" },
@@ -128,7 +128,7 @@
             id="drawer-label"
             class="inline-flex items-center mb-4 text-base font-semibold text-gray-500 dark:text-gray-400"
         >
-            <Icon icon="mdi:create" class="w-4 h-4 mr-2.5" />Edit User {user.name}
+            <Icon icon="mdi:create" class="w-4 h-4 mr-2.5" />{$t("common.editUser")} {user.name}
         </h5>
         <CloseButton
             on:click={() => (editUserForm = true)}
@@ -152,7 +152,7 @@
                     />
                 {/if}
                 <Label class="space-y-2 mb-2 col-span-3">
-                    <span>Avatar</span>
+                    <span>{$t("common.avatar")}</span>
                     <Fileupload
                         bind:value={user.avatar}
                         on:change={handleFileInputChange}
@@ -162,7 +162,7 @@
             <div class="grid gap-4 mb-6 md:grid-cols-1">
                 <div>
                     <Label for="username" class="mb-2 capitalize"
-                        >name<span class="text-red-600">*</span></Label
+                        >{$t("common.name")}<span class="text-red-600">*</span></Label
                     >
                     <Input
                         type="text"
@@ -178,7 +178,7 @@
                 </div>
                 <div>
                     <Label for="address" class="mb-2 capitalize"
-                        >address<span class="text-red-600">*</span></Label
+                        >{$t("common.address")}<span class="text-red-600">*</span></Label
                     >
                     <textarea class="w-full rounded-lg bg-gray-50 dark:bg-gray-700 border-slate-300"
                         bind:value={user.information}
@@ -191,7 +191,7 @@
                 </div>
                 <div>
                     <Label for="phone" class="mb-2 capitalize"
-                        >Phone number<span class="text-red-600">*</span></Label
+                        >{$t("common.phone")}<span class="text-red-600">*</span></Label
                     >
                     <Input
                         type="tel"
@@ -207,7 +207,7 @@
                 </div>
                 <div>
                     <Label for="email" class="mb-2 capitalize"
-                        >Email address<span class="text-red-600">*</span></Label
+                        >{$t("common.email")}<span class="text-red-600">*</span></Label
                     >
                     <Input
                         type="email"
@@ -223,7 +223,7 @@
                 </div>
                 <div>
                     <Label>
-                        Role
+                        {$t("common.role")}
                         <Select
                             class="mt-2"
                             items={roles}
@@ -233,7 +233,7 @@
                 </div>
                 <div>
                     <Label>
-                        Gender
+                        {$t("common.gender")}
                         <Select
                             class="mt-2"
                             items={genders}
@@ -243,7 +243,7 @@
                 </div>
                 <div>
                     <Label for="birthDate" class="mb-2 capitalize"
-                        >birthDate<span class="text-red-600">*</span></Label
+                        >{$t("common.birthDate")}<span class="text-red-600">*</span></Label
                     >
                     <Input
                         id="birthDate"
