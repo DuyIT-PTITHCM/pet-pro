@@ -109,7 +109,6 @@
             toastErr.set(toasts);
         }
     }
-    let maxDate = new Date().toISOString().split("T")[0];
 </script>
 
 <Button outline color="blue" class="text-xl" on:click={() => getUser(userId)}

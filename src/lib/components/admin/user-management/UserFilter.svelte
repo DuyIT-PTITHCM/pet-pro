@@ -1,5 +1,10 @@
 <script>
-import { Button, Input, Label, Select } from "flowbite-svelte";
+    import { Button, Input, Label, Select } from "flowbite-svelte";
+    import { t } from "$lib/translations";
+
+
+    export let parentValue;
+    export let filter;
     let genders = [
         { value: "male", name: "Male" },
         { value: "female", name: "Female" },
@@ -12,14 +17,13 @@ import { Button, Input, Label, Select } from "flowbite-svelte";
         phone: null,
         name: null,
     };
-    function reset(){
+    function reset() {
         paramFilter.email = null;
         paramFilter.gender = null;
         paramFilter.name = null;
         paramFilter.phone = null;
     }
-    export let parentValue;
-    
+
     $: {
         parentValue = paramFilter;
     }
@@ -34,9 +38,11 @@ import { Button, Input, Label, Select } from "flowbite-svelte";
     }
 </script>
 
-<div class="grid 2xl:grid-cols-4 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-4">
+<div
+    class="grid 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-4 py-3"
+>
     <div class="w-full">
-        <Label for="name" class="mb-2 capitalize">Name</Label>
+        <Label for="name" class="mb-2 capitalize">{$t("common.name")}</Label>
         <Input
             type="text"
             id="name"
@@ -45,7 +51,7 @@ import { Button, Input, Label, Select } from "flowbite-svelte";
         />
     </div>
     <div class="w-full">
-        <Label for="email" class="mb-2 capitalize">Email address</Label>
+        <Label for="email" class="mb-2 capitalize">{$t("common.email")}</Label>
         <Input
             type="email"
             id="email"
@@ -54,7 +60,7 @@ import { Button, Input, Label, Select } from "flowbite-svelte";
         />
     </div>
     <div class="w-full">
-        <Label for="phone" class="mb-2 capitalize">Phone</Label>
+        <Label for="phone" class="mb-2 capitalize">{$t("common.phone")}</Label>
         <Input
             type="tel"
             id="phone"
@@ -64,9 +70,17 @@ import { Button, Input, Label, Select } from "flowbite-svelte";
     </div>
     <div class="w-full">
         <Label>
-            Gender
-            <Select class="gender-select mt-2" items={genders} bind:value={paramFilter.gender} />
+            {$t("common.gender")}
+            <Select
+                class="gender-select mt-2"
+                items={genders}
+                bind:value={paramFilter.gender}
+            />
         </Label>
     </div>
 </div>
-<Button outline class="mt-4 ml-4 float-right" on:click={reset}>RESET</Button>
+<div class="my-[10px] flex justify-end">
+    <Button class="text-black bg-transparent hover:bg-transparent"  on:click={filter}>Search</Button>
+    <Button class="ml-4 text-white bg-black hover:bg-bg-black" on:click={reset}>Reset</Button>
+</div>
+

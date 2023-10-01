@@ -63,7 +63,7 @@
     init();
 </script>
 
-<div class="header-manager bg-slate-100 dark:bg-slate-900 p-10 my-4 rounded-xl">
+<div class="header-manager bg-white dark:bg-slate-900 p-10 my-4 rounded-xl">
     <div class="flex items-center justify-between">
         <h1
             class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold"
@@ -81,12 +81,12 @@
         </div>
     </div>
     <div
-        class="bg-transparent {isFilter
+        class="bg-[#f8f8fa] p-3 {isFilter
             ? 'h-fit mt-5 rounded-xl overflow-hidden'
             : 'hidden'} transition-all"
     >
-        <UserFilter bind:parentValue={queryParams} />
-        <Button class="float-right mt-4" outline on:click={filter}>OKE</Button>
+        <UserFilter {filter} bind:parentValue={queryParams} />
+        <!-- <Button class="float-right mt-4" outline on:click={filter}>OKE</Button> -->
     </div>
 </div>
 <div>
