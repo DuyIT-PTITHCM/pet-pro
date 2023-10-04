@@ -10,7 +10,6 @@
     let host = "http://103.142.26.42";
 
     let product = data.data;
-    console.log(product)
     let imagesModel = false;
     let isViewedImage = false;
     let images = JSON.parse(product?.images);

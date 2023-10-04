@@ -2,7 +2,13 @@
     import Icon from "@iconify/svelte";
     import Products from "$lib/components/products/Products.svelte";
     import { HOST } from "$lib/Const.js";
+    import Blogs from "$lib/components/blogs/Blogs.svelte";
+    import { page } from "$app/stores";
+    import { description } from "$lib/store/meta";
+
     export let data;
+    let isShowDescription = (data.data.url == $page.params.url)
+    var types = ["product", "blog", "service"]
 </script>
 
 <svelte:head>
@@ -193,7 +199,7 @@
         <div class="">
             {#if data?.data.parent_id}
                 <div class="w-full">
-                    <h2
+                    <h1
                         class="uppercase text-3xl font-bold flex justify-center items-center p-3"
                     >
                         <Icon
@@ -203,9 +209,9 @@
                             class="text-primary-600"
                             icon="fluent-emoji-high-contrast:paw-prints"
                         />
-                    </h2>
-                    {#if data?.data.isShowDescription == true}
-                        <p>{data?.data.description}</p>
+                    </h1>
+                    {#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
+                        <h2 class="text-center text-2xl">{@html data?.data.description}</h2>
                     {/if}
                     <div class="flex justify-center items-center text-5xl">
                         <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
@@ -222,7 +228,7 @@
                             id={category.id}
                             class="dark:text-white uppercase text-xl font-bold flex items-center p-3"
                         >
-                            category {category.categoryName}
+                            {category.categoryName}
                         </h3>
                         <div
                             class="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4"
@@ -232,6 +238,9 @@
                     {/each}
                 </div>
             {:else}
+                {#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
+                <h1 class="text-center text-3xl my-10">{@html data?.data.description}</h1>
+                {/if}
                 {#each data?.data?.subMenus as submenu}
                     <div class="w-full dark:text-white mt-5">
                         <h2
@@ -245,9 +254,6 @@
                                 icon="fluent-emoji-high-contrast:paw-prints"
                             />
                         </h2>
-                        {#if submenu.isShowDescription == true}
-                            <p>{submenu.description}</p>
-                        {/if}
                         <div class="flex justify-center items-center text-5xl">
                             <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
                             <Icon
@@ -263,13 +269,22 @@
                                 id={category.id}
                                 class="dark:text-white uppercase text-xl font-bold flex items-center p-3"
                             >
-                                category {category.categoryName}
+                                {category.categoryName}
                             </h3>
-                            <div
-                                class="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4"
-                            >
-                                <Products products={category.products} />
-                            </div>
+                            {#if category.type == types[0]}
+                                <div class="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4" >
+                                    <Products products={category.products} />
+                                </div>
+                            {:else if category.type == types[1]}
+                                <div class="grid md:grid-cols-2 grid-cols-1 gap-4" >
+                                    <Blogs blogs={category.posts}/>
+                                </div>
+                            {:else if category.type == types[2]}
+                                <div class="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4" >
+                                    service
+                                </div>
+                            {/if}
+                                
                         {/each}
                     </div>
                 {/each}

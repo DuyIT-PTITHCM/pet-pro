@@ -35,7 +35,7 @@
             <Card class="min-w-full overflow-hidden" padding="none">
                 <CarouselCustom perPage={1}  duration={400}>
                     {#each res as path, i}
-                        <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded-xl w-full mb-4 max-h-[400px] min-h-[300px] object-cover" alt="{product?.name}" />
+                        <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded w-full mb-4 h-[350px] object-cover" alt="{product?.name}" />
                     {/each}
                 </CarouselCustom>
                 
