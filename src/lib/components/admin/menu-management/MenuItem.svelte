@@ -159,7 +159,7 @@
         <button id="type{menu.id}" class="text-xl">
             <Icon icon="{menu.type == 'product' ? 'fluent-emoji:cat' : menu.type == 'blog' ? 'openmoji:hacker-cat' : 'twemoji:guide-dog'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
         </button>
-        <Popover class="text-sm font-light " title="Description" translate="yes" triggeredBy="#type{menu.id}" trigger="click">
+        <Popover class="text-sm font-light " title="Type" translate="yes" triggeredBy="#type{menu.id}" trigger="click">
             <ul class="w-48 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600">
                 {#each types as type}
                     <li><Radio class="p-3" bind:group={menu.type} value={type.value}>{type.name}</Radio></li>
@@ -200,7 +200,7 @@
                 <Input defaultClass="max-w-[300px]" bind:value={subMenu.url}/>
                 <hr class="w-4 h-[4px] bg-cyan-400">
                 <Button color="dark" outline id="submenu{subMenu.id}" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
-                <Popover class="w-full text-sm font-light z-50" title="Description" translate="yes" triggeredBy="#submenu{subMenu.id}" trigger="click">
+                <Popover class="w-full text-sm font-light z-50" title="Description of {subMenu.name}" translate="yes" triggeredBy="#submenu{subMenu.id}" trigger="click">
                     <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={subMenu.description}/> -->
                     <Editor bind:text={subMenu.description}/>
                     <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:checked={subMenu.isShowDescription}>Show Description</Checkbox>
@@ -209,7 +209,7 @@
                 <button id="type{subMenu.id}" class="text-xl">
                     <Icon icon="{subMenu.type == 'product' ? 'fluent-emoji:cat' : subMenu.type == 'blog' ? 'openmoji:hacker-cat' : 'twemoji:guide-dog'}" class="hover:opacity-80 text-[40px] p-2.5 shadow-[inset_0_-2px_4px_rgba(0,0,0)] text-gray-900 dark:bg-gray-700 dark:text-white rounded-lg" />
                 </button>
-                <Popover class="text-sm font-light z-50" title="Description" translate="yes" triggeredBy="#type{subMenu.id}" trigger="click">
+                <Popover class="text-sm font-light z-50" title="Type" translate="yes" triggeredBy="#type{subMenu.id}" trigger="click">
                     <ul class="w-48 bg-white rounded-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-600 divide-y divide-gray-200 dark:divide-gray-600">
                         {#each types as type}
                             <li><Radio class="p-3" bind:group={subMenu.type} value={type.value}>{type.name}</Radio></li>
@@ -243,7 +243,7 @@
             <Input defaultClass="max-w-[300px]" placeholder="Input address..." required bind:value={newMenu.url}/>
             <hr class="w-4 h-[4px] bg-cyan-400">
             <Button color="dark" outline id="addsubmenu" class="text-xl"><Icon icon="material-symbols:description-rounded"/></Button>
-            <Popover class="w-full text-sm font-light " title="Description" translate="yes" triggeredBy="#addsubmenu" trigger="click">
+            <Popover class="w-full text-sm font-light " title="Description of {newMenu.name}" translate="yes" triggeredBy="#addsubmenu" trigger="click">
                 <!-- <Textarea rows="4" placeholder="Input your menu description..." bind:value={newMenu.description}/> -->
                 <Editor bind:text={newMenu.description}/>
                 <Checkbox class="cursor-pointer" aria-describedby="helper-checkbox-text" bind:checked={newMenu.isShowDescription}>Show Description</Checkbox>

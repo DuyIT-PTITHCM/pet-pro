@@ -4,7 +4,8 @@
     import { toastErr } from "$lib/store/toastError";
     import Editor from "@tinymce/tinymce-svelte";
 
-    export let text ="";
+    export let text = "";
+    text = text == null ? "" : text;
     export let id ="";
 
     const uploadFileService = RepositoryFactory.get("uploadRepository");
