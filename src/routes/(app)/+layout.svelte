@@ -3,6 +3,7 @@
     import "../../app.css";
     import Header from "$lib/components/header/Header.svelte";
     import Footer from "$lib/components/footer/Footer.svelte";
+    import Icon from "@iconify/svelte";
 
     export let data;
 </script>
@@ -31,11 +32,17 @@
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 </svelte:head> -->
+<div id="ontop"></div>
+<div class="min-h-screen flex flex-col">
 {#if data.menu.length > 0}
     <Header bind:menuProp={data.menu} />
 {/if}
-<main>
-    <slot />
-</main>
-<Footer />
-<Loading />
+    <main>
+        <slot />
+    </main>
+    <div class="mt-auto">
+        <Footer />
+    </div>
+    <Loading />
+</div>
+<a href="#ontop" class="p-4 bg-black bottom-0 right-0 fixed text-white rounded-full text-xl font-bold mb-3 mr-3 animate-spin"><Icon icon="bxs:up-arrow" /></a>

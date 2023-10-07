@@ -4,7 +4,7 @@
     import PostProductDetail from '$lib/components/products/PostProductDetail.svelte';
     import Products from '$lib/components/products/Products.svelte';
     import Icon from '@iconify/svelte';
-    import { Button, Modal, TabItem, Tabs } from 'flowbite-svelte';
+    import { Button, Hr, Modal, TabItem, Tabs } from 'flowbite-svelte';
 
     export let data;
     let host = "http://103.142.26.42";
@@ -56,36 +56,48 @@
                     src={!path
                         ? "/images/logo.png"
                         : `${host}` + "/" + path}
-                    class="rounded-xl  shadow-xl cursor-zoom-in { images.length < 3 ? 'w-full object-cover' : images.length == 3 ? 'w-full' : 'w-full object-contain mb-4'} {images.length == 3  && i==2 ? 'col-span-2' : '' }"
+                    class="rounded-xl cursor-zoom-in { images.length < 3 ? 'w-full object-cover' : images.length == 3 ? 'w-full' : 'w-full object-contain mb-4'} {images.length == 3  && i==2 ? 'col-span-2' : '' }"
                     alt="{product?.productName}"
                 />
                 {/each}
             </div>
-            <div class="md:border-l md:border-gray-400 w-full md:p-6 p-4">
-                <div class="">
-                    <h2 class="mb-4 text-xl font-bold">{product.productName}</h2>
-                    <!-- <p class="mb-4"><b>Origin</b>: {product.origin}</p> -->
-                    <p class="mb-4"> <b>Description:</b> <br> {@html product.description}</p>
-                    <div class="mb-4" id="note">{@html product.notes}</div>
-                    <div class="mb-4">
-                        <p class="text-right">
-                            {#if product.discount}
-                                <div class="">
-                                    <b class="text-2xl text-primary-600">{formatCurrency(product.price)}</b><br><br>
-                                    <span class="p-2 animate-pulse rounded-full bg-red-600 text-white font-bold">Discount {product.discount}%</span>
-                                    <del class="text-gray-800 dark:text-gray-200">{formatCurrency(product.price)}</del>
-                                </div>
-                            {:else}
-                                <b class="text-2xl text-primary-600 mt-4 mb-10">{formatCurrency(product.price)}</b><br>
-                            {/if}
-                        </p>
+            <div class="w-full h-full">
+                <div class="rounded-lg p-4 border h-full flex flex-col justify-between">
+                    <div>
+                        <h2 class="mb-4 text-xl font-bold">{product.productName}</h2>
+                        <Hr classHr="my-8 w-64 h-1" icon>
+                            <Icon icon="teenyicons:quote-solid" class="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                        </Hr>
+                        <!-- <p class="mb-4"><b>Origin</b>: {product.origin}</p> -->
+                        <p class="mb-4">{@html product.description}</p>
+                        <Hr classHr="my-8 w-64 h-1" icon><Icon icon="emojione-v1:note-pad" class="w-6 h-6 text-gray-700 dark:text-gray-300"/></Hr>
+                        <div class="mb-4" id="note">{@html product.notes}</div>
                     </div>
-                    <div class="flex justify-around w-full mt-[40px]">
-                        <Button class="px-4"><Icon icon="fluent:cart-24-filled" class="text-xl mr-1" />ADD TO CART</Button>
-                        <Button class="px-4"><Icon icon="icon-park-solid:buy" class="text-xl mr-1" />SHOP NOW</Button></div>
+                    <div>
+                        <Hr classHr="my-8 w-64 h-1" icon>
+                            <Icon icon="solar:tag-price-linear" class="w-6 h-6 text-gray-700 dark:text-gray-300" />
+                        </Hr>
+                        <div class="mb-4">
+                            <p class="text-right">
+                                {#if product.discount}
+                                    <div class="">
+                                        <b class="text-2xl text-primary-600">{formatCurrency(product.price)}</b><br><br>
+                                        <div class="flex justify-between items-center">
+                                            <span class="p-2 animate-pulse rounded-full bg-red-600 text-white font-bold">Discount {product.discount}%</span>
+                                            <del class="text-gray-800 dark:text-gray-200">{formatCurrency(product.price)}</del>
+                                        </div>
+                                    </div>
+                                {:else}
+                                    <b class="text-2xl text-primary-600 mt-4 mb-10">{formatCurrency(product.price)}</b><br>
+                                {/if}
+                            </p>
+                        </div>
+                        <div class="flex justify-between w-full mt-[40px]">
+                            <Button class="px-4"><Icon icon="fluent:cart-24-filled" class="text-xl mr-1" />ADD TO CART</Button>
+                            <Button class="px-4"><Icon icon="icon-park-solid:buy" class="text-xl mr-1" />SHOP NOW</Button>
+                        </div>
+                    </div>
                 </div>
-            
-                
             </div>
         </div>
 
