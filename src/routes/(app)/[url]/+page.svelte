@@ -8,7 +8,6 @@
     import Services from "$lib/components/services/Services.svelte";
 
     export let data;
-    console.log(data)
     let isShowDescription = (data.data.url == $page.params.url)
     var types = ["product", "blog", "service"]
 </script>
