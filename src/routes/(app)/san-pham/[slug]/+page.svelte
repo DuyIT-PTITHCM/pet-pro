@@ -1,5 +1,6 @@
 <script lang="ts">
     import { formatCurrency } from '$lib/Utils/accounting.js';
+    import { addCart } from '$lib/Utils/cartAction.js';
     import CarouselCustom from '$lib/components/carouselcus/CarouselCustom.svelte';
     import PostProductDetail from '$lib/components/products/PostProductDetail.svelte';
     import Products from '$lib/components/products/Products.svelte';
@@ -24,6 +25,9 @@
             isViewedImage = false;
         }, 1000);
         return isViewedImage;
+    }
+    async function addToCart(prod: any){
+        await addCart(prod);
     }
 </script>
 
@@ -93,7 +97,7 @@
                             </p>
                         </div>
                         <div class="flex justify-between w-full mt-[40px]">
-                            <Button class="px-4"><Icon icon="fluent:cart-24-filled" class="text-xl mr-1" />ADD TO CART</Button>
+                            <Button class="px-4" on:click={() => addToCart(product)}><Icon icon="fluent:cart-24-filled" class="text-xl mr-1" />ADD TO CART</Button>
                             <Button class="px-4"><Icon icon="icon-park-solid:buy" class="text-xl mr-1" />SHOP NOW</Button>
                         </div>
                     </div>

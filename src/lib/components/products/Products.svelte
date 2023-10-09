@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { Button, Card, CardPlaceholder, Carousel, Rating } from "flowbite-svelte";
+    import { Button, Card, CardPlaceholder } from "flowbite-svelte";
     import { formatCurrency } from "$lib/Utils/accounting";
     import Icon from "@iconify/svelte";
     import CarouselCustom from "../carouselcus/CarouselCustom.svelte";
     import { HOST } from "$lib/Const";
+    import { addCart } from "$lib/Utils/cartAction";
 
     export let products: any = null;
     let host = HOST;
@@ -17,6 +18,10 @@
     async function getProductImage(images: any) {
         images = await convertImageJsonToArray(images);
         return images;
+    }
+
+    async function addToCart(prod: any){
+        await addCart(prod);
     }
 </script>
 {#if products}
@@ -35,7 +40,7 @@
             <Card class="min-w-full overflow-hidden" padding="none">
                 <CarouselCustom perPage={1}  duration={400}>
                     {#each res as path, i}
-                        <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded w-full mb-4 h-[350px] object-cover" alt="{product?.name}" />
+                        <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded w-full mb-4 h-[350px] object-cover" alt="{product?.productName}" />
                     {/each}
                 </CarouselCustom>
                 
@@ -53,7 +58,7 @@
                         </div>
                         <div class="flex float-right">
                             <Button outline class="mr-1 text-2xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
-                            <Button outline class="text-2xl" href="/"><Icon icon="fa6-solid:cart-plus" /></Button>
+                            <Button outline class="text-2xl" on:click={() => addToCart(product)}><Icon icon="fa6-solid:cart-plus" /></Button>
                         </div>
                     </div>
                 </div>

@@ -14,13 +14,10 @@
   import { loadTranslations, t } from "$lib/translations";
   import { slide } from 'svelte/transition';
   import Icon from "@iconify/svelte";
-    import { page } from "$app/stores";
-
+  import { page } from "$app/stores";
+  import { cart } from "$lib/store/cart";
   export let menuProp: any[] = [];
-
-  let btnClass =
-    "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl p-2 mx-2";
-
+  let classBtn = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl px-4 sm:py-4 py-2";
   let menu: any[] = [];
 
   menu = menu.concat(menuProp);
@@ -29,11 +26,22 @@
   let heightHeader = 0;
   let toggle =false;
   let numSubmenu = 0;
-
+  let totalCartQuantity = 0;
   function showMobileSubmenu(id: number){
     numSubmenu == id ? numSubmenu = 0 : numSubmenu = id;
     return numSubmenu;
   }
+  async function getCart(){
+    let currentCart : any;
+    await cart.subscribe(value => {
+          currentCart = JSON.parse(value);
+    });
+    totalCartQuantity = currentCart.reduce(function (total, cartItem) {
+        return total + cartItem.quantity;
+    }, 0);
+    return totalCartQuantity;
+  }
+
 </script>
 
 <div class="w-full relative">
@@ -52,23 +60,23 @@
           >PetOne</span
         >
       </NavBrand>
-      <div class="flex items-center md:order-2">
-        <a href="/login" title="Login" class="hidden md:block">
-          <Icon icon="fluent-mdl2:signin" color="black" width="30" height="30" />
+      <div class="flex items-center lg:order-1">
+        <a href="/login" title="Login" class={classBtn}>
+          <Icon icon="mdi:user" class="scale-150"/>
         </a>
-        <a class="relative p-4" href="/gio-hang">
-          <Icon icon="mdi:cart" class="scale-150" />
-          <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2">10</span>
+        <a class="relative {classBtn}" href="/gio-hang">
+          <Icon icon="fluent:cart-20-filled" class="scale-150" />
+          <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2 text-base">{#await getCart() then res}{res}{/await}</span>
         </a>
-        <DarkMode {btnClass} />
+        <DarkMode btnClass={classBtn} />
         <NavHamburger
           on:click={toggle}
-          class1="w-full md:flex md:w-auto md:order-1"
+          class="w-full md:flex md:w-auto lg:order-1 {classBtn} m-0"
         />
       </div>
-      <NavUl {hidden} divClass="w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent">
+      <NavUl {hidden} divClass="w-full lg:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent dark:border-none dark:bg-transparent border-none">
         {#each menu as item, index}
-          <NavLi nonActiveClass="">
+          <NavLi>
             <div class="parent-menu relative w-full border-b-2 md:border-none">
               <div id="menu{item.id}" class="flex items-center relative">
                 <button class="cursor-pointer w-full px-5 py-3 z-10 flex-1 text-left { $page.params.url == item.url?  'dark:text-white text-primary-600' : ''}" 
@@ -87,7 +95,7 @@
                 {/if}
               </div>
               {#if item?.subMenus && item?.subMenus?.length > 0}
-                <Popover class="text-sm font-normal w-64 hidden md:block text-black" transition={slide} triggeredBy="#menu{item.id}">
+                <Popover placement="bottom" class="text-sm font-normal w-64 hidden md:block text-black" transition={slide} triggeredBy="#menu{item.id}">
                   {#each item.subMenus as sub}
                     <button class="block w-full p-4 { $page.params.url == sub.url ?  'dark:text-white text-primary-600 font-bold' : 'hover:text-primary-700 dark:text-slate-400 dark:hover:text-white'}"
                       on:click={() => {

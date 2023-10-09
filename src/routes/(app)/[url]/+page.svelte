@@ -289,7 +289,7 @@
                                     <Blogs blogs={category.posts}/>
                                 </div>
                             {:else if category.type == types[2]}
-                                <div class="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4" >
+                                <div class="grid xl:grid-cols-4 lg:grid-cols-2 grid-cols-1 gap-4" >
                                     <Services services={category.posts}/>
                                 </div>
                             {/if}
