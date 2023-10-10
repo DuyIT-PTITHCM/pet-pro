@@ -4,6 +4,7 @@
     import Header from "$lib/components/header/Header.svelte";
     import Footer from "$lib/components/footer/Footer.svelte";
     import Icon from "@iconify/svelte";
+    import ToastError from "$lib/components/common/ToastError.svelte";
 
     export let data;
 </script>
@@ -45,4 +46,5 @@
     </div>
     <Loading />
 </div>
-<a href="#ontop" class="p-4 bg-black bottom-0 right-0 fixed text-white rounded-full text-xl font-bold mb-3 mr-3 animate-spin"><Icon icon="bxs:up-arrow" /></a>
+<ToastError />
+<a href="#ontop" class="p-4 bg-black bottom-0 right-0 fixed text-white rounded-full text-xl font-bold mb-3 mr-3 animate-spin z-50"><Icon icon="bxs:up-arrow" /></a>
