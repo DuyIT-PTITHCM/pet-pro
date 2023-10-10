@@ -46,6 +46,13 @@ const config = ({
         await import('./en/post.json')
       ).default,
     },
+    {
+      locale: 'en',
+      key: 'cart',
+      loader: async () => (
+        await import('./en/cart.json')
+      ).default,
+    },
 
     {
       locale: 'vi',
@@ -88,6 +95,13 @@ const config = ({
       key: 'post',
       loader: async () => (
         await import('./vi/post.json')
+      ).default,
+    },
+    {
+      locale: 'vi',
+      key: 'cart',
+      loader: async () => (
+        await import('./vi/cart.json')
       ).default,
     },
   ],

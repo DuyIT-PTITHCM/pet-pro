@@ -1,5 +1,5 @@
 import { HOST } from "$lib/Const";
-import { cart } from "$lib/store/cart";
+import { cart, cartItemQuantity } from "$lib/store/cart";
 import { toastErr } from "$lib/store/toastError";
 import { getCookie, removeCookie, setCookie } from "./cookieUtils";
 interface Product {
@@ -27,7 +27,7 @@ export async function addCart(prod: any) {
         isSelect: false,
     }
     cart.subscribe(value => {
-        currentCart = JSON.parse(value);
+        if(value) currentCart = JSON.parse(value);
     });
     var matchProduct = currentCart.find((item) => item.id == product.id);
     if (matchProduct) {
@@ -59,10 +59,17 @@ export async function addCart(prod: any) {
             },
         ]);
     }
+    let totalCartQuantity = currentCart.reduce(function (total, cartItem) {
+        return total + cartItem.quantity;
+    }, 0);
+
     const cartsJSON = JSON.stringify(currentCart);
     removeCookie('cart');
     setCookie('cart', cartsJSON);
     cart.set(getCookie('cart'));
+
+    setCookie( 'cartQuantity' , totalCartQuantity)
+    cartItemQuantity.set(getCookie('cartQuantity'))
     return;
 }
 
@@ -71,4 +78,9 @@ export async function updateCart(prods: any) {
     removeCookie('cart');
     setCookie('cart', cartsJSON);
     cart.set(getCookie('cart'));
+    let totalCartQuantity = prods.reduce(function (total, cartItem) {
+        return total + cartItem.quantity;
+    }, 0);
+    setCookie( 'cartQuantity' , totalCartQuantity)
+    cartItemQuantity.set(getCookie('cartQuantity'))
 }

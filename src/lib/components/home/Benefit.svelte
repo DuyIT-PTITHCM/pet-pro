@@ -14,47 +14,29 @@
         
     </div>
     <div class="w-full h-screen flex items-center justify-center relative drop-shadow-xl">
-        <img src="/images/homepage/benefit.jpg" alt="benefit" class="benefit-image-1 animate-pulse h-3/4" >
-        <img src="/images/homepage/benefit2.jpg" alt="benefit" class="benefit-image-2 animate-pulse h-3/4" >
+        <img src="/images/homepage/benefit.jpg" alt="benefit" class="benefit-image-1 h-3/4" >
+        <img src="/images/homepage/benefit2.jpg" alt="benefit" class="benefit-image-2 h-3/4" >
         <div class="absolute w-full h-full bg-white dark:bg-black z-10 bg-opacity-30 dark:bg-opacity-40"></div>
     </div>
 </div>
 <style>
     .benefit-image-1{
-        animation: moving_1 ease 6s infinite;
         border-radius: 50%;
     }
     .benefit-image-2{
-        animation: moving_2 ease 6s infinite;
         border-radius: 50%;
         position: absolute;
+        animation: moving 3s infinite;
     }
-    @keyframes moving_1 {
+    @keyframes moving {
         0%{
-            transform: rotateY(0deg);
-            z-index: 1;
+            clip-path: circle(50.0% at 50% 50%);
         }
         50%{
-            transform: rotateY(180deg);
-            z-index: 0;
+            clip-path: circle(0% at 50% 50%);
         }
         100%{
-            transform: rotateY(0deg);
-            z-index: 1;
-        }
-    }
-    @keyframes moving_2 {
-        0%{
-            transform: rotateY(0deg);
-            z-index: 0;
-        }
-        50%{
-            transform: rotateY(180deg);
-            z-index: 1;
-        }
-        100%{
-            transform: rotateY(0deg);
-            z-index: 0;
+            clip-path: circle(50.0% at 50% 50%);
         }
     }
 </style>
