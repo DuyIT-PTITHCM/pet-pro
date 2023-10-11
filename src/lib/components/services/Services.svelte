@@ -2,24 +2,14 @@
     import { Button, CardPlaceholder } from "flowbite-svelte";
     import { HOST } from "$lib/Const";
     import { onMount } from "svelte";
-
-
     export let services: any = null;
     let host = HOST;
-    let showReadMore = Array(1).fill(false);
+    let imageWidth = 0;
     async function convertImageJsonToArray(json: any) {
         if (json) {
             return await JSON.parse(json);
         }
         return [];
-    }
-    function checkDescriptionHeight(id: number) {
-        var descriptionElement = document.getElementById(`service${id}`);
-        if (descriptionElement.scrollHeight > descriptionElement.clientHeight) {
-            showReadMore[id] = true;
-        } else {
-            showReadMore[id] = false;
-        }
     }
 </script>
 
@@ -31,22 +21,23 @@
             </div>
         {:then res}
             <div
-                class="service-box rounded-lg overflow-hidden hover:shadow-lg hover:brightness-105 dark:text-white relative shadow-lg"
+                class="service-box rounded-lg overflow-hidden dark:text-white relative" bind:clientWidth={imageWidth}
+                style="min-height: {imageWidth*60/100}px; max-height: 220px"
             >
                 <img
                     src={host + res[0]}
                     alt={service.title}
-                    class="w-full h-[300px] object-cover transition-all"
+                    class="w-full h-full object-cover"
+                    
                 />
+                <div class="service-box_overlay absolute w-full h-full top-0 left-0 bg-white dark:bg-black bg-opacity-60 dark:bg-opacity-40 transition-all"></div>
                 <div
-                    class="xl:p-10 p-2 absolute z-10 top-0 w-full h-full flex justify-center items-center flex-col bg-black bg-opacity-30 text-white"
+                    class="xl:p-4 p-2 absolute z-10 top-0 w-full h-full flex justify-center items-center flex-col dark:text-white"
                 >
-                    <h5>{service.title}</h5>
+                    <h5 class="md:text-xl mb-4 bg-white dark:bg-black bg-opacity-60 dark:bg-opacity-40 p-2 px-4 rounded-full text-center line-clamp-2">{service.title}</h5>
                     <div class="service-desc hidden">
                         <p
-                        class="line-clamp-3 overflow-ellipsis text-justify relative m-4"
-                        id="service{index}"
-                        use:onMount={checkDescriptionHeight(index)}
+                        class="line-clamp-3 overflow-ellipsis text-justify relative mb-4"
                         >
                             {service.description}
                         </p>
@@ -59,23 +50,21 @@
 {/if}
 
 <style>
-     .service-box img{
-        clip-path: circle(150% at 0 100%);
-
+     .service-box .service-box_overlay{
+        clip-path: circle(0% at 50% 0%);
         margin: 0;
         border-radius: 0;
      }
-    .service-box:hover img {
-        clip-path: circle(50.0% at 0 100%);
-        animation:  clip-path .6s;
+    .service-box:hover .service-box_overlay {
+        clip-path: circle(100% at 50% 100%);
+        animation:  clip-path 1s;
     }
     @keyframes hoverAnimate {
         from {
-            clip-path: polygon(100% 0, 100% 100%, 25% 85%, 100% 100%, 0 100%, 0% 60%, 0 0);
+            clip-path: polygon(100% 0, 18% 25%, 20% 83%, 100% 100%, 0 100%, 0% 60%, 0 0);
         }
         to{
-        clip-path: polygon(100% 0, 18% 25%, 20% 83%, 100% 100%, 0 100%, 0% 60%, 0 0);
-
+            clip-path: polygon(100% 0, 100% 100%, 25% 85%, 100% 100%, 0 100%, 0% 60%, 0 0);
         }
     }
     .service-box:hover>div>.service-desc{

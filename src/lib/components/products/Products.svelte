@@ -8,7 +8,7 @@
 
     export let products: any = null;
     let host = HOST;
-
+    let imageWidth = 0;
     async function convertImageJsonToArray(json: any) {
         if (json) {
             return await JSON.parse(json);
@@ -38,28 +38,34 @@
                 </div>
             {/if}
             <Card class="min-w-full overflow-hidden" padding="none">
-                <CarouselCustom perPage={1}  duration={400}>
-                    {#each res as path, i}
-                        <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="rounded w-full mb-4 h-[350px] object-cover" alt="{product?.productName}" />
-                    {/each}
-                </CarouselCustom>
-                
-                <div class="px-5 pb-5">
-                    <a href="/san-pham/{product.slug}">
-                        <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white py-4 hover:text-primary-600 dark:hover:text-primary-500">{product?.productName}</h5>
-                        <p class="tracking-tight text-gray-900 dark:text-white line-clamp-2 min-h-[50px] hover:text-primary-600 dark:hover:text-primary-500">{product.description}</p>
+                <div class="w-full overflow-hidden" style="height: {imageWidth*70/100}px;" bind:clientWidth={imageWidth}>
+                    {#if res.length > 1}
+                        <CarouselCustom perPage={1}  duration={400}>
+                            {#each res as path, i}
+                                <img src={!path ? "/images/logo.png" : `${host}` + "/" + path} class="w-full h-full object-cover" alt="{product?.productName}"/>
+                            {/each}
+                        </CarouselCustom>
+                    {:else}
+                        <img src={!res[0] ? "/images/logo.png" : `${host}` + "/" + res[0]} class="w-full h-full object-cover" alt="{product?.productName}" />
+                    {/if}
+                </div>
+
+                <div class="px-3 pb-3">
+                    <a href="/san-pham/{product.slug}" class="block min-h-[72px] pt-2">
+                        <h4 class="product-name mb-1 sm:text-base text-sm font-semibold line-clamp-2 text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-500">{product?.productName}</h4>
+                        <p class="sm:text-sm text-xs text-gray-900 dark:text-white line-clamp-1 hover:text-primary-600 dark:hover:text-primary-500">{product.description}</p>
                     </a>
-                    <div class="flex justify-between items-center mt-4">
-                        <div>
-                            <span class="text-xl font-bold text-primary-600 dark:text-white">{formatCurrency(product?.price)}</span>
-                            {#if product.discount>0}
-                            <br><del>{formatCurrency(product?.originprice)}</del>
-                            {/if}
-                        </div>
-                        <div class="flex float-right">
-                            <Button outline class="mr-1 text-2xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
-                            <Button outline class="text-2xl" on:click={() => addToCart(product)}><Icon icon="fa6-solid:cart-plus" /></Button>
-                        </div>
+                    <div class="flex justify-between my-3">
+                        {#if product.discount>0}
+                            <del>{formatCurrency(product?.originprice)}</del>
+                        {:else}
+                            <del></del>
+                        {/if}
+                        <span class="text-md font-bold text-primary-600 dark:text-white">{formatCurrency(product?.price)}</span>
+                    </div>                        
+                    <div class="flex justify-between">
+                        <Button outline class="text-xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
+                        <Button outline class="text-xl" on:click={() => addToCart(product)}><Icon icon="fa6-solid:cart-plus" /></Button>
                     </div>
                 </div>
             </Card>
@@ -67,3 +73,9 @@
         {/await}
     {/each}
 {/if}
+
+<style>
+    .product-name{
+        line-height: 1.2;
+    }
+</style>
