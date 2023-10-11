@@ -15,9 +15,9 @@
   import { slide } from 'svelte/transition';
   import Icon from "@iconify/svelte";
   import { page } from "$app/stores";
-  import { cart } from "$lib/store/cart";
+  import { cartItemQuantity } from "$lib/store/cart";
   export let menuProp: any[] = [];
-  let classBtn = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-xl px-4 sm:py-4 py-2";
+  let classBtn = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md text-xl px-4 sm:py-4 py-2";
   let menu: any[] = [];
 
   menu = menu.concat(menuProp);
@@ -26,20 +26,11 @@
   let heightHeader = 0;
   let toggle =false;
   let numSubmenu = 0;
-  let totalCartQuantity = 0;
+  let cartQuantity = 0;
+  cartItemQuantity.subscribe((value) => cartQuantity = value) ;
   function showMobileSubmenu(id: number){
     numSubmenu == id ? numSubmenu = 0 : numSubmenu = id;
     return numSubmenu;
-  }
-  async function getCart(){
-    let currentCart : any;
-    await cart.subscribe(value => {
-          currentCart = JSON.parse(value);
-    });
-    totalCartQuantity = currentCart.reduce(function (total, cartItem) {
-        return total + cartItem.quantity;
-    }, 0);
-    return totalCartQuantity;
   }
 
 </script>
@@ -60,21 +51,21 @@
           >PetOne</span
         >
       </NavBrand>
-      <div class="flex items-center lg:order-1">
+      <div class="flex items-center md:order-1 lg:order-2">
         <a href="/login" title="Login" class={classBtn}>
           <Icon icon="mdi:user" class="scale-150"/>
         </a>
         <a class="relative {classBtn}" href="/gio-hang">
           <Icon icon="fluent:cart-20-filled" class="scale-150" />
-          <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2 text-base">{#await getCart() then res}{res}{/await}</span>
+          <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2 text-base">{cartQuantity ? cartQuantity : 0}</span>
         </a>
         <DarkMode btnClass={classBtn} />
         <NavHamburger
           on:click={toggle}
-          class="w-full md:flex md:w-auto lg:order-1 {classBtn} m-0"
+          class="w-full md:hidden block {classBtn} m-0"
         />
       </div>
-      <NavUl {hidden} divClass="w-full lg:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent dark:border-none dark:bg-transparent border-none">
+      <NavUl {hidden} divClass="lg:order-1 md:order-2 w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent dark:border-none dark:bg-transparent border-none">
         {#each menu as item, index}
           <NavLi>
             <div class="parent-menu relative w-full border-b-2 md:border-none">
@@ -132,7 +123,7 @@
       icon="line-md:alert"
       class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
     />
-    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+    <h3 class="mb-5 text-md font-normal text-gray-500 dark:text-gray-400">
       Are you sure you want to Sign Out?
     </h3>
     <GradientButton color="red" class="mr-2" on:click={() => (isSignIn = false)}

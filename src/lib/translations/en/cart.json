@@ -1,0 +1,13 @@
+{
+    "cartHeader": "YOUR CART",
+    "cartHeaderEmpty": "IS EMPTY",
+    "policy": "Your cart items will not be held — please check out now to place an order.",
+    "quantity": "Quantity",
+    "total": "Total",
+    "orderDetails": "Order details",
+    "reciver": "Recipient name",
+    "phone": "Phone number",
+    "address": "Address",
+    "notes": "Notes",
+    "order": "order"
+}

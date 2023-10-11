@@ -3,12 +3,14 @@
     import { updateCart } from '$lib/Utils/cartAction';
     import { cart } from '$lib/store/cart';
     import Icon from '@iconify/svelte';
+    import { loadTranslations, t } from "$lib/translations";
     import { Checkbox, Input, Label, P, Button, Badge} from 'flowbite-svelte';
     let currentCart : any;
     let totalItem = 0, totalSelectItem = 0, totalCart = 0, totalOrder = 0;
     async function getCart(){
         await cart.subscribe(value => {
-            currentCart = JSON.parse(value);
+            if(value) currentCart = JSON.parse(value);
+            else currentCart = [];
         });
         var isAll = currentCart.find((item) => item.isSelect == false);
         if(!isAll){
@@ -86,7 +88,7 @@
     </div>
 {:then res} 
     <div class="cart-header flex items-center justify-center h-[360px] w-full text-white">
-        <h1 class="text-center">GIỎ HÀNG CỦA BẠN {#if !currentCart.length} <br> ĐANG TRỐNG {/if}</h1>
+        <h1 class="text-center uppercase">{$t("cart.cartHeader")} {#if !currentCart.length} <br> {$t("cart.cartHeaderEmpty")} {/if}</h1>
     </div>
     <div class="container m-auto mb-[100px] p-4">
         {#if !currentCart.length}
@@ -94,11 +96,11 @@
                 <img class="m-auto" src="/images/common/cat-empty-cart.png" alt="">
             </div>
         {:else}
-            <Badge class="md:text-lg text-sm my-4 p-2 text-center w-full" border>Các mặt hàng trong giỏ hàng của bạn không được bảo lưu — hãy kiểm tra ngay để đặt hàng.</Badge>
+            <Badge class="md:text-lg text-sm my-4 p-2 text-center w-full" border>{$t("cart.policy")}</Badge>
             <div class="flex xl:flex-row flex-col gap-3">
                 <div class="flex-1">
                     <div class="w-full flex justify-between md:text-lg text-base bg-slate-100 dark:bg-slate-900 dark:text-white px-2 py-4 rounded-lg mb-4">
-                        <p class="ml-2">Tổng: <b>{totalQuantity}</b> sản phẩm <br> Thành tiền: <b>{formatCurrency(totalCart)}</b></p>
+                        <p class="ml-2">{$t("cart.quantity")}: <b>{totalQuantity}</b><br>{$t("cart.total")}: <b>{formatCurrency(totalCart)}</b></p>
                         <Checkbox bind:checked={isChooseAll} on:change={() => chooseAllCart()} class="scale-125"/>
                     </div>
                     {#each currentCart as cart, index (index)}
@@ -140,28 +142,28 @@
                     {/each}
                 </div>
                 <div class="xl:w-[500px] w-full p-4 rounded-lg dark:text-white bg-slate-100 dark:bg-slate-900">
-                    <h3>Thông tin đơn hàng</h3>
+                    <h3 class="uppercase">{$t("cart.orderDetails")}</h3>
                     <div class="flex justify-between md:text-xl text-base py-4">
-                        <p>Số lượng: <span class="font-bold">{totalQuantityWillBuy}</span></p>
-                        <p>Tổng: <span class="font-bold">{formatCurrency(totalOrder)}</span></p>
+                        <p>{$t("cart.quantity")}: <span class="font-bold">{totalQuantityWillBuy}</span></p>
+                        <p>{$t("cart.total")}: <span class="font-bold">{formatCurrency(totalOrder)}</span></p>
                     </div>
                     <div class="mb-6">
-                        <Label for="receiver" class="block mb-2">Tên người nhận</Label>
+                        <Label for="receiver" class="block mb-2">{$t("cart.reciver")}</Label>
                         <Input id="receiver" placeholder="Elon Musk" />
                     </div>
                     <div class="mb-6">
-                        <Label for="phone" class="block mb-2">Số điện thoại</Label>
+                        <Label for="phone" class="block mb-2">{$t("cart.phone")}</Label>
                         <Input id="phone" placeholder="0000-000-000" />
                     </div>
                     <div class="mb-6">
-                        <Label for="address" class="block mb-2">Địa chỉ</Label>
+                        <Label for="address" class="block mb-2">{$t("cart.address")}</Label>
                         <Input id="address" placeholder="Địa chỉ nhận hàng mong muốn..." />
                     </div>
                     <div class="mb-6">
-                        <Label for="notes" class="block mb-2">Ghi chú</Label>
+                        <Label for="notes" class="block mb-2">{$t("cart.notes")}</Label>
                         <Input id="notes" placeholder="Ghi chú của bạn..." />
                     </div>
-                    <Button class="uppercase">đặt hàng</Button>
+                    <Button class="uppercase">{$t("cart.order")}</Button>
                 </div>
             </div>
         {/if}
