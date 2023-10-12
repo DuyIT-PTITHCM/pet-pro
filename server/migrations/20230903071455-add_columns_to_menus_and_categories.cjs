@@ -15,7 +15,7 @@ module.exports = {
       allowNull: false,
     });
     await queryInterface.addColumn('Menus', 'description', {
-      type: Sequelize.STRING,
+      type: Sequelize.TEXT,
       allowNull: true,
     });
     await queryInterface.addColumn('Menus', 'active', {
