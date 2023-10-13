@@ -5,6 +5,7 @@
 
     export let blogs: any = null;
     let host = HOST;
+    let serviceBoxWidth = 0;
     let blogImages: any;
     let showReadMore = Array(1).fill(false);
     async function convertImageJsonToArray(json: any) {
@@ -35,20 +36,20 @@
                 <CardPlaceholder size="lg" />
             </div>
         {:then res}
-            <div
-                class="flex rounded-lg overflow-hidden border hover:opacity-80 hover:shadow-lg dark:text-white"
+            <a href="/"
+                class="flex rounded-lg overflow-hidden border hover:shadow-lg dark:text-white max-h-[140px]" bind:clientWidth={serviceBoxWidth}
             >
-                <div class="w-[300px] bg-black overflow-hidden">
+                <div class="overflow-hidden" style="width: {serviceBoxWidth*30/100}px;">
                     <img
                     src={host + blogImages[0]}
                     alt={blog.title}
-                    class="w-[300px] h-[250px] object-cover hover:scale-105 transition-all"/>
+                    class="w-full h-full object-cover hover:scale-105 transition-all"/>
                 </div>
-                <div class="p-4 flex-1">
-                    <div class="flex flex-col justify-between h-full items-start">
-                        <h5>{blog.title}</h5>
+                <div class="md:p-4 p-3 flex-1">
+                    <div class="flex flex-col justify-between items-start">
+                        <h3 class="md:text-lg text-base font-semibold line-clamp-2">{blog.title}</h3>
                         <p
-                            class="line-clamp-4 overflow-ellipsis text-justify relative"
+                            class="md:text-base text-sm mt-1 line-clamp-2 text-justify relative"
                             id="blog{index}"
                             use:onMount={checkDescriptionHeight(index)}
                         >
@@ -62,10 +63,9 @@
                                 >
                                 {/if}
                         </p>
-                        <Button class="px-10">Xem thêm</Button>
                     </div>
                 </div>
-            </div>
+            </a>
         {/await}
     {/each}
 {/if}

@@ -82,8 +82,7 @@
     />
     <meta property="twitter:image" content={HOST + data?.data?.seo?.image} />
 </svelte:head>
-
-<div class="flex relative gap-4 m-4 clear-both mb-10">
+<div class="flex relative clear-both mb-10 mx-4 gap-4 m-auto">
     <div
         class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white lg:block hidden height-100vh border-r-4"
     >
@@ -198,10 +197,18 @@
     </div>
     <div class="w-full min-h-screen">
         <div class="">
-            {#if data?.data.parent_id}
+            {#if data?.data && data?.data.parent_id}
                 <div class="w-full">
+                    {#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
+                    <div class="flex items-center justify-center bg-no-repeat bg-cover bg-center h-[200px] w-full my-4 rounded-2xl" 
+                    style="background-image: url(https://c4.wallpaperflare.com/wallpaper/276/711/743/silhouette-of-hills-above-water-wallpaper-preview.jpg)">
+                        <p class="font-bold text-white md:text-xl text-lg text-center m-4">
+                            {@html data?.data.description}
+                        </p>
+                    </div>
+                    {/if}
                     <h1
-                        class="uppercase text-3xl font-bold flex justify-center items-center p-3"
+                        class="md:text-2xl text-xl uppercase font-bold flex justify-center items-center text-center dark:text-white"
                     >
                         <Icon
                             class="text-primary-600"
@@ -211,9 +218,6 @@
                             icon="fluent-emoji-high-contrast:paw-prints"
                         />
                     </h1>
-                    {#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
-                        <h2 class="text-center text-2xl dark:text-white">{@html data?.data.description}</h2>
-                    {/if}
                     <div class="flex justify-center items-center text-5xl">
                         <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
                         <Icon
@@ -224,78 +228,90 @@
                     </div>
                 </div>
                 <div class="grid grid-cols-1 gap-4">
-                    {#each data?.data?.categories as category}
-                        <h3
-                            id={category.id}
-                            class="dark:text-white uppercase text-xl font-bold flex items-center p-3"
-                        >
-                            {category.categoryName}
-                        </h3>
-                        {#if category.type == types[0]}
-                                <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-4" >
-                                    <Products products={category.products} />
-                                </div>
-                            {:else if category.type == types[1]}
-                                <div class="grid xl:grid-cols-2 grid-cols-1 gap-4" >
-                                    <Blogs blogs={category.posts}/>
-                                </div>
-                            {:else if category.type == types[2]}
-                                <div class="grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4" >
-                                    <Services services={category.posts}/>
-                                </div>
+                    {#if data?.data?.categories.length}
+                        {#each data?.data?.categories as category}
+                            {#if category.products.length || category.posts.length}
+                                <h3
+                                    id={category.id}
+                                    class="dark:text-white uppercase text-lg font-bold flex items-center"
+                                >
+                                    {category.categoryName}
+                                </h3>
+                                {#if category.type == types[0]}
+                                    <div class="grid 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-4" >
+                                        <Products products={category.products} />
+                                    </div>
+                                {:else if category.type == types[1]}
+                                    <div class="grid sm:grid-cols-2 grid-cols-1 gap-4" >
+                                        <Blogs blogs={category.posts}/>
+                                    </div>
+                                {:else if category.type == types[2]}
+                                    <div class="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4" >
+                                        <Services services={category.posts}/>
+                                    </div>
+                                {/if}
                             {/if}
-                    {/each}
+                        {/each}
+                    {/if}
                 </div>
             {:else}
                 {#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
-                <h1 class="text-center text-3xl my-10 dark:text-white">{@html data?.data.description}</h1>
+                    <div class="flex items-center justify-center bg-no-repeat bg-cover bg-center h-[200px] w-full my-4 rounded-2xl" 
+                    style="background-image: url(https://c4.wallpaperflare.com/wallpaper/276/711/743/silhouette-of-hills-above-water-wallpaper-preview.jpg)">
+                        <p class="font-bold text-white md:text-xl text-lg text-center m-4">
+                            {@html data?.data.description}
+                        </p>
+                    </div>
                 {/if}
                 {#each data?.data?.subMenus as submenu}
-                    <div class="w-full dark:text-white mt-5">
-                        <h2
-                            class="uppercase text-3xl font-bold flex justify-center items-center p-3"
-                        >
-                            <Icon
-                                class="text-primary-600"
-                                icon="fluent-emoji-high-contrast:paw-prints"
-                            /><span class="mx-4">{submenu.name}</span><Icon
-                                class="text-primary-600"
-                                icon="fluent-emoji-high-contrast:paw-prints"
-                            />
-                        </h2>
-                        <div class="flex justify-center items-center text-5xl">
-                            <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
-                            <Icon
-                                class="animate-bounce m-4"
-                                icon="fluent-emoji-flat:kissing-cat"
-                            />
-                            <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 gap-4">
-                        {#each submenu?.categories as category}
+                    {#if submenu?.categories.length}
+                        <div class="w-full dark:text-white mt-8">
                             <h3
-                                id={category.id}
-                                class="dark:text-white uppercase text-xl font-bold flex items-center p-3"
+                                class="md:text-2xl text-xl uppercase font-bold flex justify-center items-center text-center"
                             >
-                                {category.categoryName}
+                                <Icon
+                                    class="text-primary-600"
+                                    icon="fluent-emoji-high-contrast:paw-prints"
+                                /><span class="mx-4">{submenu.name}</span><Icon
+                                    class="text-primary-600"
+                                    icon="fluent-emoji-high-contrast:paw-prints"
+                                />
                             </h3>
-                            {#if category.type == types[0]}
-                                <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-4" >
-                                    <Products products={category.products} />
-                                </div>
-                            {:else if category.type == types[1]}
-                                <div class="grid 2xl:grid-cols-2 grid-cols-1 gap-4" >
-                                    <Blogs blogs={category.posts}/>
-                                </div>
-                            {:else if category.type == types[2]}
-                                <div class="grid xl:grid-cols-4 lg:grid-cols-2 grid-cols-1 gap-4" >
-                                    <Services services={category.posts}/>
-                                </div>
-                            {/if}
-                                
-                        {/each}
-                    </div>
+                            <div class="flex justify-center items-center text-5xl">
+                                <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
+                                <Icon
+                                    class="animate-bounce m-2"
+                                    icon="fluent-emoji-flat:kissing-cat"
+                                />
+                                <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 gap-4">
+                            {#each submenu?.categories as category}
+                                {#if category.products.length || category.posts.length}
+                                    <h3
+                                        id={category.id}
+                                        class="dark:text-white uppercase text-lg font-bold flex items-center"
+                                    >
+                                        {category.categoryName}
+                                    </h3>
+                                    {#if category.type == types[0]}
+                                        <div class="grid 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-4" >
+                                            <Products products={category.products} />
+                                        </div>
+                                    {:else if category.type == types[1]}
+                                        <div class="grid sm:grid-cols-2 grid-cols-1 gap-4" >
+                                            <Blogs blogs={category.posts}/>
+                                        </div>
+                                    {:else if category.type == types[2]}
+                                        <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4" >
+                                            <Services services={category.posts}/>
+                                        </div>
+                                    {/if}
+                                {/if}
+                            {/each}
+                        </div>
+                    {/if}
                 {/each}
             {/if}
         </div>
