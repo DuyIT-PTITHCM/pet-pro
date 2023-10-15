@@ -156,7 +156,7 @@ export const showPost = async (req) => {
 
         const blogReference = await models.Post.findAll({
             where: {
-                categoryId: post.category.id,
+                categoryId: post.categoryId,
             },
         });
 
