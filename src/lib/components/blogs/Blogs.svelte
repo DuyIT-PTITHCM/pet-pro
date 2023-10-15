@@ -37,7 +37,7 @@
                 <CardPlaceholder size="lg" />
             </div>
         {:then res}
-            <a href="/tin-tuc/{blog.slug}"
+            <a data-sveltekit-reload href="/tin-tuc/{blog.slug}"
                 class="flex overflow-hidden dark:text-white max-h-[140px] {isSmallBox ? 'py-4 hover:text-primary-500' : 'rounded-lg border hover:shadow-lg '} " bind:clientWidth={serviceBoxWidth}
             >
                 <div class="overflow-hidden" style="width: {serviceBoxWidth*30/100}px;">

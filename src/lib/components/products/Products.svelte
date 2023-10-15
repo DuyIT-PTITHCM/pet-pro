@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="px-3 pb-3">
-                    <a href="/san-pham/{product.slug}" class="block min-h-[72px] pt-2">
+                    <a data-sveltekit-reload href="/san-pham/{product.slug}" class="block min-h-[72px] pt-2">
                         <h4 class="product-name mb-1 sm:text-base text-sm font-semibold line-clamp-2 text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-500">{product?.productName}</h4>
                         <p class="sm:text-sm text-xs text-gray-900 dark:text-white line-clamp-1 hover:text-primary-600 dark:hover:text-primary-500">{product.description}</p>
                     </a>
