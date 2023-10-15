@@ -160,9 +160,13 @@ export const showPost = async (req) => {
             },
         });
 
-        post.blogReference = blogReference;
 
-        return post;
+        const postRes = {
+            ...post.toJSON(),
+            blogReference,
+        };
+
+        return postRes;
     } catch (error) {
         console.error(error);
         throw new Error("Error showing post");
