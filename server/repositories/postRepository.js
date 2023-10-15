@@ -160,7 +160,7 @@ export const showPost = async (req) => {
             },
         });
 
-        post.setAttributes(blogReference, blogReference);
+        post.blogReference = blogReference;
 
         return post;
     } catch (error) {
