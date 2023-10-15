@@ -47,15 +47,15 @@
       active: false,
     },
     {
-      name: "user managerment",
+      name: "user",
       url: "/admin/user-management",
       icon: "teenyicons:user-solid",
       active: false,
     },
     {
-      name: "menu managerment",
+      name: "menu",
       url: "/admin/menu-management",
-      icon: "eva:menu-2-outline",
+      icon: "ep:menu",
       active: false,
     },
     {
@@ -71,9 +71,9 @@
       active: false,
     },
     {
-      name: "products",
+      name: "product",
       url: "/admin/products",
-      icon: "ri:product-hunt-line",
+      icon: "solar:cat-bold",
       active: false,
     },
   ];

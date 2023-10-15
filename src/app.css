@@ -148,7 +148,9 @@
   font-size: 20px;
   line-height: 2;
 }
-
+.product-desc tr{
+  background-color: rgba(255, 255, 255, 0) !important;
+}
 @media (max-width: 640px) {
 
   .caption-left h1,

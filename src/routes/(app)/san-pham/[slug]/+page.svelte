@@ -75,7 +75,7 @@
                         <!-- <p class="mb-4"><b>Origin</b>: {product.origin}</p> -->
                         <p class="mb-4">{@html product.description}</p>
                         <Hr classHr="my-8 w-64 h-1" icon><Icon icon="emojione-v1:note-pad" class="w-6 h-6 text-gray-700 dark:text-gray-300"/></Hr>
-                        <div class="mb-4" id="note">{@html product.notes}</div>
+                        <div class="mb-4  product-desc" id="note">{@html product.notes}</div>
                     </div>
                     <div>
                         <Hr classHr="my-8 w-64 h-1" icon>
