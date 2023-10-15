@@ -4,15 +4,26 @@
     import { cart } from '$lib/store/cart';
     import Icon from '@iconify/svelte';
     import { loadTranslations, t } from "$lib/translations";
-    import { Checkbox, Input, Label, P, Button, Badge} from 'flowbite-svelte';
+    import { Checkbox, Input, Label, P, Button, Badge, Textarea} from 'flowbite-svelte';
     let currentCart : any;
     let totalItem = 0, totalSelectItem = 0, totalCart = 0, totalOrder = 0;
+    interface Product {
+        id: number,
+        name: string;
+        origin: string;
+        image: string;
+        url: string;
+        price: number;
+        quantity: number;
+        isSelect: boolean;
+    }
+
     async function getCart(){
         await cart.subscribe(value => {
             if(value) currentCart = JSON.parse(value);
             else currentCart = [];
         });
-        var isAll = currentCart.find((item) => item.isSelect == false);
+        var isAll = currentCart.find((item: Product) => item.isSelect == false);
         if(!isAll){
             isChooseAll = true;
         }
@@ -21,12 +32,12 @@
     }
     let isChooseAll = false;
     function chooseAllCart() {
-        currentCart = currentCart.map((item) => ({ ...item, isSelect : isChooseAll }));
+        currentCart = currentCart.map((item: Product) => ({ ...item, isSelect : isChooseAll }));
         updateCart(currentCart);
         handleCartChange();
     }
     function checkChooseAll() {
-        var isAll = currentCart.find((item) => item.isSelect == false);
+        var isAll = currentCart.find((item: Product) => item.isSelect == false);
         if(!isAll){
             isChooseAll = true;
         }
@@ -34,13 +45,13 @@
         handleCartChange();
     }
     function removeCartItem(id: number){
-        var itemRemove = currentCart.find((item) => item.id == id);
-        currentCart = currentCart.filter((item) => item != itemRemove);
+        var itemRemove = currentCart.find((item: Product) => item.id == id);
+        currentCart = currentCart.filter((item: Product) => item != itemRemove);
         updateCart(currentCart);
     }
 
     async function updateQty(id: number, action: boolean) {
-        const targetItem = currentCart.find((item) => item.id === id);
+        const targetItem = currentCart.find((item: Product) => item.id === id);
 
         // Nếu không tìm thấy đối tượng, không làm gì cả
         if (!targetItem) {
@@ -56,22 +67,22 @@
             targetItem.quantity--;
             }
         }
-        currentCart = currentCart.map((item) => (item.id === id ? targetItem : item));
+        currentCart = currentCart.map((item: Product) => (item.id === id ? targetItem : item));
         updateCart(currentCart);
         handleCartChange();
         return;
     }
     function handleCartChange(){
-        totalItem = currentCart.reduce(function (total, cartItem) {
+        totalItem = currentCart.reduce(function (total: number, cartItem: Product) {
             return total + cartItem.quantity;
         }, 0);
-        totalSelectItem = currentCart.reduce(function (total, cartItem) {
+        totalSelectItem = currentCart.reduce(function (total: number, cartItem: Product) {
             return total + (cartItem.isSelect ? cartItem.quantity : 0);
         }, 0);
-        totalOrder = currentCart.reduce(function (total, cartItem) {
+        totalOrder = currentCart.reduce(function (total: number, cartItem: Product) {
             return total + (cartItem.isSelect ? cartItem.quantity * cartItem.price : 0);
         }, 0);
-        totalCart = currentCart.reduce(function (total, cartItem) {
+        totalCart = currentCart.reduce(function (total: number, cartItem: Product) {
             return total + cartItem.quantity * cartItem.price;
         }, 0);
         return;
@@ -161,7 +172,7 @@
                     </div>
                     <div class="mb-6">
                         <Label for="notes" class="block mb-2">{$t("cart.notes")}</Label>
-                        <Input id="notes" placeholder="Ghi chú của bạn..." />
+                        <Textarea rows="4" id="notes" placeholder="Ghi chú của bạn..." class="max-h-[500px]"/>
                     </div>
                     <Button class="uppercase">{$t("cart.order")}</Button>
                 </div>
@@ -186,6 +197,6 @@
 
     /* Firefox */
     input[type=number] {
-    -moz-appearance: textfield;
+        -moz-appearance: textfield;
     }
 </style>

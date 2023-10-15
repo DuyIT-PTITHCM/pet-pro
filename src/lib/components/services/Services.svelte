@@ -1,7 +1,6 @@
 <script lang="ts">
     import { Button, CardPlaceholder } from "flowbite-svelte";
     import { HOST } from "$lib/Const";
-    import { onMount } from "svelte";
     export let services: any = null;
     let host = HOST;
     let imageWidth = 0;
@@ -42,7 +41,7 @@
                             {service.description}
                         </p>
                     </div>
-                    <Button href="/" color="primary">Xem thêm</Button>
+                    <Button href="/dich-vu/{service.slug}" color="primary">Xem thêm</Button>
                 </div>
             </div>
         {/await}

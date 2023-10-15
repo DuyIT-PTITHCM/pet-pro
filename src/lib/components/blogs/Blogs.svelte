@@ -4,6 +4,7 @@
     import { onMount } from "svelte";
 
     export let blogs: any = null;
+    export let isSmallBox = false;
     let host = HOST;
     let serviceBoxWidth = 0;
     let blogImages: any;
@@ -36,36 +37,38 @@
                 <CardPlaceholder size="lg" />
             </div>
         {:then res}
-            <a href="/"
-                class="flex rounded-lg overflow-hidden border hover:shadow-lg dark:text-white max-h-[140px]" bind:clientWidth={serviceBoxWidth}
+            <a href="/tin-tuc/{blog.slug}"
+                class="flex overflow-hidden dark:text-white max-h-[140px] {isSmallBox ? 'py-4 hover:text-primary-500' : 'rounded-lg border hover:shadow-lg '} " bind:clientWidth={serviceBoxWidth}
             >
                 <div class="overflow-hidden" style="width: {serviceBoxWidth*30/100}px;">
                     <img
-                    src={host + blogImages[0]}
+                    src={host + res[0]}
                     alt={blog.title}
                     class="w-full h-full object-cover hover:scale-105 transition-all"/>
                 </div>
-                <div class="md:p-4 p-3 flex-1">
+                <div class="{isSmallBox ? 'p-1' : 'md:p-4 p-3'} flex-1">
                     <div class="flex flex-col justify-between items-start">
-                        <h3 class="md:text-lg text-base font-semibold line-clamp-2">{blog.title}</h3>
+                        <h3 class="{isSmallBox ? 'text-base line-clamp-3 text-justify ' : 'md:text-lg text-base line-clamp-2'} font-semibold">{blog.title}</h3>
                         <p
-                            class="md:text-base text-sm mt-1 line-clamp-2 text-justify relative"
+                            class="{isSmallBox && 'hidden'} md:text-base text-sm mt-1 line-clamp-2 text-justify relative overflow-hidden"
                             id="blog{index}"
                             use:onMount={checkDescriptionHeight(index)}
                         >
                             <span>{blog.description}</span>
                             {#if showReadMore[index]}
-                                <a
-                                    href="/"
+                                <p
                                     class="absolute bg-white dark:bg-slate-800 z-20 bottom-0 right-0"
                                     >...<span class=" text-blue-500">Xem thêm</span
-                                    ></a
+                                    ></p
                                 >
-                                {/if}
+                            {/if}
                         </p>
                     </div>
                 </div>
             </a>
+            {#if isSmallBox}
+                <hr>
+            {/if}
         {/await}
     {/each}
 {/if}
