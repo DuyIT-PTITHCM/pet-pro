@@ -135,8 +135,9 @@ export const showPost = async (req) => {
     const slug = req.params.slug;
 
     try {
+        const whereCondition = id ? { id } : { slug };
         const post = await models.Post.findOne({
-            where: id ? { id } : { slug },
+            where: whereCondition,
             include: [
                 {
                     model: models.Seo,
@@ -153,12 +154,21 @@ export const showPost = async (req) => {
             throw new Error("Post not found");
         }
 
+        const blogReference = await models.Post.findAll({
+            where: {
+                categoryId: post.category.id,
+            },
+        });
+
+        post.setAttributes(blogReference, blogReference);
+
         return post;
     } catch (error) {
-        console.log(error);
+        console.error(error);
         throw new Error("Error showing post");
     }
 };
+
 
 export const deletePost = async (postId) => {
     try {
