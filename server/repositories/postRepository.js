@@ -43,6 +43,33 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
     }
 };
 
+export const getBlogLasted = async (filters = {}) => {
+    try {
+        const { type, ...otherFilters } = filters;
+
+        const categoryIds = await models.Categories.findAll({
+            attributes: ['id'],
+            where: { type },
+        });
+
+        const categoryIdList = categoryIds.map(category => category.id);
+
+        const posts = await models.Post.paginate({
+            where: {
+                categoryId: categoryIdList,
+                ...otherFilters
+            },
+            limit: 10,
+            order: [['createdAt', 'DESC']],
+        });
+
+        return posts;
+    } catch (error) {
+        console.error(error);
+        throw new Error("Error fetching posts");
+    }
+};
+
 
 export const createPost = async (postData) => {
     const { title, content, description, author, published_at, views, imageUrl, referenceId, reference, categoryId, slug } = postData;
