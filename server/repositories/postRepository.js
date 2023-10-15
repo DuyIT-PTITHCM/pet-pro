@@ -154,7 +154,7 @@ export const showPost = async (req) => {
             throw new Error("Post not found");
         }
 
-        const blogReference = await models.Post.findAll({
+        const reference = await models.Post.findAll({
             where: {
                 categoryId: post.categoryId,
             },
@@ -163,7 +163,7 @@ export const showPost = async (req) => {
 
         const postRes = {
             ...post.toJSON(),
-            blogReference,
+            reference,
         };
 
         return postRes;
