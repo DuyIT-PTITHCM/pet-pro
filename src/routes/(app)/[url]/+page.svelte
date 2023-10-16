@@ -6,7 +6,6 @@
     import { page } from "$app/stores";
     import { description } from "$lib/store/meta";
     import Services from "$lib/components/services/Services.svelte";
-    import HeaderPage from "$lib/components/common/HeaderPage.svelte";
 
     export let data;
     let isShowDescription = (data.data.url == $page.params.url)
@@ -83,9 +82,6 @@
     />
     <meta property="twitter:image" content={HOST + data?.data?.seo?.image} />
 </svelte:head>
-{#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
-    <HeaderPage title={data?.data.description} titleClass isBgOverlay/>
-{/if}
 <div class="flex relative clear-both mb-10 mx-4 gap-4 m-auto">
     <div
         class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white lg:block hidden height-100vh border-r-4"
