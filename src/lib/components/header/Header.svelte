@@ -55,9 +55,6 @@
         <a href="/login" title="Login" class={classBtn}>
           <Icon icon="mdi:user" class="scale-150"/>
         </a>
-        <!-- <a href="/profile" title="Login" class={classBtn}>
-          <Icon icon="mdi:user" class="scale-150 bg-pink-300"/>
-        </a> -->
         <a class="relative {classBtn}" href="/gio-hang">
           <Icon icon="fluent:cart-20-filled" class="scale-150" />
           <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2 text-base">{cartQuantity ? cartQuantity : 0}</span>
