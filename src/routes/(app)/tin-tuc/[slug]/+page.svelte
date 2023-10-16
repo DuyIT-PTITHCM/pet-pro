@@ -1,6 +1,6 @@
 <script lang="ts">
     import Blogs from '$lib/components/blogs/Blogs.svelte';
-    import Icon from '@iconify/svelte';
+    import HeaderPage from '$lib/components/common/HeaderPage.svelte';
 
     export let data;
     console.log(data)
@@ -35,17 +35,12 @@
     <meta name="twitter:image" content={blog?.seo?.image ? host + blog?.seo?.image: imageSeo} />
 </svelte:head>
 <!-- blog blog -->
+<HeaderPage title={blog.title} isShowTime author={blog?.author} date={blog?.updatedAt} image={host + images[0]} isBgOverlay/>
 <div class="container m-auto p-4">
     <div class="grid grid-cols-12 gap-4 dark:text-slate-50">
         <div class="xl:col-span-9 md:col-span-12 col-span-full">
             <div class="my-4">
-                <h1 class="lg:text-[38px] text-[28px]">{blog.title}</h1>
-                <hr class="mb-4 h-[2px] border-none bg-slate-300">
                 <p class="text-justify">{blog.description}</p>
-                <div class="font-bold">
-                    <p class="flex items-center"><Icon icon="fa6-solid:user-pen" class="mr-2 text-xl w-8"/> {blog?.author}</p>
-                    <p class="flex items-center"><Icon icon="svg-spinners:clock" class="mr-2 text-xl w-8"/> {blog?.updatedAt}</p>
-                </div>
             </div>
             <div class="grid xl:grid-cols-9 grid-cols-12 gap-3">
                 <div class="p-5 xl:col-span-3 md:col-span-4 col-span-full border rounded-lg">
@@ -60,7 +55,7 @@
             </div>
         </div>
         <div class="xl:col-span-3 col-span-full">
-            <div class="rounded-lg border">
+            <div class="rounded-lg xl:border">
                 <p class="text-center p-4 font-bold border-b-4">Bài viết liên quan</p>
                 <div class="">
                 <Blogs blogs={blog.reference} isSmallBox={true}/>

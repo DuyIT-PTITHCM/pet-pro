@@ -50,7 +50,7 @@
                     <div class="flex flex-col justify-between items-start">
                         <h3 class="{isSmallBox ? 'text-base line-clamp-3 text-justify ' : 'md:text-lg text-base line-clamp-2'} font-semibold">{blog.title}</h3>
                         <p
-                            class="{isSmallBox && 'hidden'} md:text-base text-sm mt-1 line-clamp-2 text-justify relative overflow-hidden"
+                            class="{isSmallBox && 'xl:hidden'} md:text-base text-sm mt-1 line-clamp-2 text-justify relative overflow-hidden"
                             id="blog{index}"
                             use:onMount={checkDescriptionHeight(index)}
                         >

@@ -6,6 +6,7 @@
     import { page } from "$app/stores";
     import { description } from "$lib/store/meta";
     import Services from "$lib/components/services/Services.svelte";
+    import HeaderPage from "$lib/components/common/HeaderPage.svelte";
 
     export let data;
     let isShowDescription = (data.data.url == $page.params.url)
@@ -82,6 +83,9 @@
     />
     <meta property="twitter:image" content={HOST + data?.data?.seo?.image} />
 </svelte:head>
+{#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
+    <HeaderPage title={data?.data.description} titleClass isBgOverlay/>
+{/if}
 <div class="flex relative clear-both mb-10 mx-4 gap-4 m-auto">
     <div
         class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white lg:block hidden height-100vh border-r-4"
@@ -199,14 +203,6 @@
         <div class="">
             {#if data?.data && data?.data.parent_id}
                 <div class="w-full">
-                    {#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
-                    <div class="flex items-center justify-center bg-no-repeat bg-cover bg-center h-[200px] w-full my-4 rounded-2xl" 
-                    style="background-image: url(https://c4.wallpaperflare.com/wallpaper/276/711/743/silhouette-of-hills-above-water-wallpaper-preview.jpg)">
-                        <p class="font-bold text-white md:text-xl text-lg text-center m-4">
-                            {@html data?.data.description}
-                        </p>
-                    </div>
-                    {/if}
                     <h1
                         class="md:text-2xl text-xl uppercase font-bold flex justify-center items-center text-center dark:text-white"
                     >
@@ -255,14 +251,6 @@
                     {/if}
                 </div>
             {:else}
-                {#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
-                    <div class="flex items-center justify-center bg-no-repeat bg-cover bg-center h-[200px] w-full my-4 rounded-2xl" 
-                    style="background-image: url(https://c4.wallpaperflare.com/wallpaper/276/711/743/silhouette-of-hills-above-water-wallpaper-preview.jpg)">
-                        <p class="font-bold text-white md:text-xl text-lg text-center m-4">
-                            {@html data?.data.description}
-                        </p>
-                    </div>
-                {/if}
                 {#each data?.data?.subMenus as submenu}
                     {#if submenu?.categories.length}
                         <div class="w-full dark:text-white mt-8">
