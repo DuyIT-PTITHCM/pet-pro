@@ -5,6 +5,7 @@
     import CarouselCustom from "../carouselcus/CarouselCustom.svelte";
     import { HOST } from "$lib/Const";
     import { addCart } from "$lib/Utils/cartAction";
+    import { goto } from "$app/navigation";
 
     export let products: any = null;
     let host = HOST;
@@ -20,8 +21,9 @@
         return images;
     }
 
-    async function addToCart(prod: any){
+    async function addToCart(prod: any, isShopNow = false){
         await addCart(prod);
+        goto("/gio-hang")
     }
 </script>
 {#if products}
@@ -34,7 +36,7 @@
         <div class="relative">
             {#if product.discount > 0}
                 <div class="absolute top-0 left-0 bg-red-500 text-white px-2 py-1 rounded-tr-md rounded-bl-2xl border-l-8 border-t-4 border-red-600 -ml-2 transform z-10 animate-bounce">
-                    {product.discount}% discount
+                    -{product.discount}%
                 </div>
             {/if}
             <Card class="min-w-full overflow-hidden" padding="none">
@@ -64,7 +66,7 @@
                         <span class="text-md font-bold text-primary-600 dark:text-white">{formatCurrency(product?.price)}</span>
                     </div>                        
                     <div class="flex justify-between">
-                        <Button outline class="text-xl" href="/"><Icon icon="solar:cart-3-bold" /></Button>
+                        <Button outline class="text-xl" on:click={() => addToCart(product, true)}><Icon icon="solar:cart-3-bold" /></Button>
                         <Button outline class="text-xl" on:click={() => addToCart(product)}><Icon icon="fa6-solid:cart-plus" /></Button>
                     </div>
                 </div>
