@@ -1,9 +1,8 @@
 <script lang="ts">
-    import Blogs from '$lib/components/blogs/Blogs.svelte';
     import HeaderPage from '$lib/components/common/HeaderPage.svelte';
+    import SideRefercence from '$lib/components/common/SideRefercence.svelte';
 
     export let data;
-    console.log(data)
     let host = "http://103.142.26.42";
 
     let blog = data.data;
@@ -55,11 +54,9 @@
             </div>
         </div>
         <div class="xl:col-span-3 col-span-full">
-            <div class="rounded-lg xl:border">
+            <div class="overflow-hidden rounded-lg xl:border">
                 <p class="text-center p-4 font-bold border-b-4">Bài viết liên quan</p>
-                <div class="">
-                <Blogs blogs={blog.reference} isSmallBox={true}/>
-                </div>
+                <SideRefercence originSlug="tin-tuc" data={blog.reference} isSmallBox={true}/>
             </div>
         </div>
     </div>

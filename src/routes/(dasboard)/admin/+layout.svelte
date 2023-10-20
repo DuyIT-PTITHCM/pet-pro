@@ -24,7 +24,7 @@
   import { me } from "$lib/store/userManagement";
   import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
   import { goto } from "$app/navigation";
-    import LanguageSelect from "$lib/components/LanguageSelect.svelte";
+  import LanguageSelect from "$lib/components/LanguageSelect.svelte";
 
   let hidden6 = true;
   let transitionParamsRight = {
@@ -86,8 +86,13 @@
   let sidebarWidth = 0;
 
   async function init() {
-    const userData = await userService.info();
-    me.set(userData?.data.data);
+    try {
+      const userData = await userService.info();
+      me.set(userData?.data.data);
+    } 
+    catch {
+      goto("/login")
+    }
   }
 
   init();

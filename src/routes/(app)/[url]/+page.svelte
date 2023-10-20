@@ -6,10 +6,26 @@
     import { page } from "$app/stores";
     import { description } from "$lib/store/meta";
     import Services from "$lib/components/services/Services.svelte";
+    import HeaderPage from "$lib/components/common/HeaderPage.svelte";
+    import { Button, CloseButton, Drawer } from "flowbite-svelte";
+    import { sineIn } from 'svelte/easing';
 
     export let data;
+    let isShowMenu = true;
+    let transitionParams = {
+        x: -320,
+        duration: 200,
+        easing: sineIn
+    };
     let isShowDescription = (data.data.url == $page.params.url)
     var types = ["product", "blog", "service"]
+    function headingColor(title: string){
+        const len = title.length;
+        const mid = Math.floor(len / 2);
+        const firstPart = title.slice(0, mid);
+        const secondPart = title.slice(mid);
+        return firstPart + '<span class="text-yellow-400">'+ secondPart +'</span>';
+    }
 </script>
 
 <svelte:head>
@@ -82,14 +98,30 @@
     />
     <meta property="twitter:image" content={HOST + data?.data?.seo?.image} />
 </svelte:head>
-<div class="flex relative clear-both mb-10 mx-4 gap-4 m-auto">
-    <div
-        class="sidebar-menu sticky top-0 left-0 uppercase w-[300px] dark:text-white lg:block hidden height-100vh border-r-4"
-    >
-        <div class="w-full rounded-lg text-sm">
+{#if (data?.data.isShowDescription == true) && isShowDescription == true && data?.data.description}
+    <HeaderPage title={data?.data.name} description={data?.data.description} isDescription={true} isShowTime={false} isBgOverlay/>
+{/if}
+<button on:click={() => (isShowMenu = false)} class="fixed top-1/2 left-0 text-2xl dark:bg-white dark:text-black rounded-r-3xl p-2 ml-[-10px] z-[1000] bg-primary-600 text-white {!isShowMenu && 'hidden'}">
+    <div class="show-menu-icon">
+        <Icon icon="icon-park-outline:right" />
+    </div>
+    <div class="opacity-0">
+        <Icon icon="icon-park-outline:right" />
+    </div>
+</button>
+
+<Drawer transitionType="fly" {transitionParams} bind:hidden={isShowMenu} id="sidebar1">
+    <div class="flex items-center">
+        <h5 id="drawer-label" class="inline-flex items-center mb-4 font-semibold text-gray-500 dark:text-gray-400 text-lg">
+            <Icon icon="material-symbols:menu" class="scale-125" /><span class="ml-2">Menu</span>
+        </h5>
+        <CloseButton on:click={() => (isShowMenu = true)} class="mb-4 dark:text-white" />
+      </div>
+    <div class="dark:text-white" >
+        <div class="text-sm">
             <ul class="list-none">
                 {#if data?.data.parent_id}
-                    <p class="text-center p-4 text-shadow-xs flex items-center gap-1 justify-center text-lg">
+                    <p class="uppercase text-center p-4 text-shadow-xs flex items-center gap-1 justify-center text-lg ">
                         <Icon
                             class="text-primary-600"
                             icon="fluent-emoji-high-contrast:paw-prints"
@@ -143,62 +175,38 @@
             </ul>
         </div>
         <div class="w-full rounded-lg mt-4 text-sm">
-            {#if data?.data.parent_id}
-                <p class="text-center p-4 text-shadow-xs flex items-center gap-1 justify-center text-lg">
-                    <Icon
-                        class="text-primary-600"
-                        icon="fluent-emoji-high-contrast:paw-prints"
+            <p class="uppercase text-center p-4 text-shadow-xs flex items-center gap-1 justify-center text-lg">
+                <Icon
+                    class="text-primary-600"
+                    icon="fluent-emoji-high-contrast:paw-prints"
+                />
+                categories
+                <Icon
+                    class="text-primary-600"
+                    icon="fluent-emoji-high-contrast:paw-prints"
+                />
+            </p>
+            <ul class="list-none">
+                {#each data?.data?.categories as category}
+                    <li class="menu-item">
+                        <a
+                            class="block p-4 hover:text-primary-600 transition-all rounded-lg"
+                            href="#{category.id}">{category.categoryName}</a
+                        >
+                        <hr
+                            class="line-hover h-[4px] bg-black transition-all"
                         />
-                        categories
-                        <Icon
-                        class="text-primary-600"
-                        icon="fluent-emoji-high-contrast:paw-prints"
-                    /></p>
-                <ul class="list-none">
-                    {#each data?.data?.categories as category}
-                        <li class="menu-item">
-                            <a
-                                class="block p-4 hover:text-primary-600 transition-all rounded-lg"
-                                href="#{category.id}">{category.categoryName}</a
-                            >
-                            <hr
-                                class="line-hover h-[4px] bg-black transition-all"
-                            />
-                        </li>
-                    {/each}
-                </ul>
-            {:else}
-                <p class="text-center p-4 text-shadow-xs flex items-center gap-1 justify-center text-lg">
-                    <Icon
-                        class="text-primary-600"
-                        icon="fluent-emoji-high-contrast:paw-prints"
-                    />
-                    categories
-                    <Icon
-                        class="text-primary-600"
-                        icon="fluent-emoji-high-contrast:paw-prints"
-                    />
-                </p>
-                <ul class="list-none">
-                    {#each data?.data?.categories as category}
-                        <li class="menu-item">
-                            <a
-                                class="block p-4 hover:text-primary-600 transition-all rounded-lg"
-                                href="#{category.id}">{category.categoryName}</a
-                            >
-                            <hr
-                                class="line-hover h-[4px] bg-black transition-all"
-                            />
-                        </li>
-                    {/each}
-                </ul>
-            {/if}
+                    </li>
+                {/each}
+            </ul>
         </div>
     </div>
+</Drawer>
+<div class="container relative m-auto">
     <div class="w-full min-h-screen">
         <div class="">
             {#if data?.data && data?.data.parent_id}
-                <div class="w-full">
+                <div class="w-full mt-[40px]">
                     <h1
                         class="md:text-2xl text-xl uppercase font-bold flex justify-center items-center text-center dark:text-white"
                     >
@@ -225,7 +233,7 @@
                             {#if category.products.length || category.posts.length}
                                 <h3
                                     id={category.id}
-                                    class="dark:text-white uppercase text-lg font-bold flex items-center"
+                                    class="dark:text-white uppercase text-lg font-bold flex items-center mt-[20px]"
                                 >
                                     {category.categoryName}
                                 </h3>
@@ -249,14 +257,14 @@
             {:else}
                 {#each data?.data?.subMenus as submenu}
                     {#if submenu?.categories.length}
-                        <div class="w-full dark:text-white mt-8">
+                        <div class="w-full dark:text-white mt-[40px]">
                             <h3
                                 class="md:text-2xl text-xl uppercase font-bold flex justify-center items-center text-center"
                             >
                                 <Icon
                                     class="text-primary-600"
                                     icon="fluent-emoji-high-contrast:paw-prints"
-                                /><span class="mx-4">{submenu.name}</span><Icon
+                                /><span class="mx-4">{@html headingColor(submenu.name)}</span><Icon
                                     class="text-primary-600"
                                     icon="fluent-emoji-high-contrast:paw-prints"
                                 />
@@ -270,12 +278,12 @@
                                 <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 gap-4 ">
                             {#each submenu?.categories as category}
                                 {#if category.products.length || category.posts.length}
                                     <h3
                                         id={category.id}
-                                        class="dark:text-white uppercase text-lg font-bold flex items-center"
+                                        class="dark:text-white uppercase text-lg font-bold flex items-center  mt-[20px]"
                                     >
                                         {category.categoryName}
                                     </h3>
@@ -311,14 +319,14 @@
         width: 100%;
         transition: width 0.5s;
     }
-    .sidebar-menu {
-        position: sticky;
-        top: 100px;
-        left: 0;
-        height: 100%;
-        border-radius: 8px;
+    @keyframes moveX {
+        0%   { margin-left: 0px;}
+        50%  { margin-left: 4px}
+        100% { margin-left: 0px;}
     }
-    .height-100vh{
-        height: 100vh;
+
+    .show-menu-icon {
+        position: absolute;
+        animation: moveX 1s infinite;
     }
 </style>

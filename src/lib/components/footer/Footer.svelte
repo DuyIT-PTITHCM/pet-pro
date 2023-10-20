@@ -2,20 +2,6 @@
     import Icon from '@iconify/svelte';
     import { Button, Modal } from 'flowbite-svelte'
     let defaultModal = false;
-    const menu = [
-        {
-        name: "home",
-        url: "/",
-        },
-        {
-        name: "about",
-        url: "/about",
-        },
-        {
-        name: "blog",
-        url: "/blog",
-        },
-    ];
     const social = [
         {
             name: "facebook",
@@ -121,7 +107,7 @@
 </script>
 
 
-<footer class="bg-fixed relative overflow-x-hidden" style="background-image: url('/images/homepage/bgne.jpg'); min-height: 400px;">
+<footer class="bg-fixed relative overflow-x-hidden mt-[100px]" style="background-image: url('/images/homepage/bgne.jpg'); min-height: 400px;">
     <div class="absolute w-full h-full animate-marquee bg-fixed bg-contain" style="background-image: url('/images/homepage/bgne.jpg');"></div>
     <div class="absolute w-full h-full animate-marquee2 bg-fixed bg-contain" style="background-image: url('/images/homepage/bgne.jpg');"></div>
     <!-- https://www.icegif.com/wp-content/uploads/2023/02/icegif-519.gif -->

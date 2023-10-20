@@ -9,6 +9,7 @@ interface Product {
     image: string;
     url: string;
     price: number;
+    quantityStock: number;
     quantity: number;
     isSelect: boolean;
 }
@@ -23,6 +24,7 @@ export async function addCart(prod: any) {
         image: HOST + image[0],
         url: prod.slug,
         price: prod.price,
+        quantityStock: prod.stockQuantity,
         quantity: 1,
         isSelect: false,
     }
@@ -32,14 +34,25 @@ export async function addCart(prod: any) {
     var matchProduct = currentCart.find((item) => item.id == product.id);
     if (matchProduct) {
         if(matchProduct.quantity < 20){
-            matchProduct.quantity += 1;
-            currentCart.map((item) => (item.id === matchProduct?.id ? matchProduct : item));
-            toastErr.set([
-                {
-                    message: "Add to cart success",
-                    type: "success",
-                },
-            ]);
+            if(matchProduct.quantity + 1 <= product.quantityStock)
+            {
+                matchProduct.quantity += 1;
+                currentCart.map((item) => (item.id === matchProduct?.id ? matchProduct : item));
+                toastErr.set([
+                    {
+                        message: "Add to cart success",
+                        type: "success",
+                    },
+                ]);
+            }
+            else{
+                toastErr.set([
+                    {
+                        message: "Can not add more product",
+                        type: "error",
+                    },
+                ]);
+            }
         }
         else{
             toastErr.set([
