@@ -1,24 +1,23 @@
 <script lang="ts">
-    export let post: any;
-    function getMenuHeading(){
-        var postContent = document.getElementById('postcontent')
-        var headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
-    }
+    import { formatDate } from "$lib/Utils/common";
+    import Icon from "@iconify/svelte";
+    import SideMenuHeading from "../common/SideMenuHeading.svelte";
 
-    function init(){
-        getMenuHeading()
-    }
+    export let post: any;
+    
 </script>
-<div class="md:grid md:grid-cols-12 gap-4 dark:text-slate-50">
-    <div class="p-2 md:col-span-3 border rounded-lg">
-        <div class="">
-            <h3 class="uppercase">{post?.title}</h3>
-            <p>Author: {post?.author}</p>
-            <p>Date: {post?.updatedAt}</p>
+<div class="md:grid md:grid-cols-12 gap-4 dark:text-slate-50 mt-[40px] px-3">
+    <div class="p-2 md:col-span-3 border rounded-lg dark:border-gray-600">
+        <div class="text-sm my-2">
+            <h3 class="uppercase sm:text-lg text-base">{post?.title}</h3>
+            <p class="flex items-centerpx-2 my-2"><Icon icon="fa6-solid:user-pen" class="mr-2 text-xl w-8"/> {post?.author}</p>
+            <p class="flex items-centerpx-2"><Icon icon="svg-spinners:clock" class="mr-2 text-xl w-8"/>{formatDate(post?.updatedAt)}</p>
         </div>
-        <div class="w-full h-9 bg-red-600 sticky top-[100px]"></div>
+        <div class="w-full sticky top-[70px] dark:border-gray-600 px-2">
+            <SideMenuHeading/>
+        </div>
     </div>
-    <div id="postcontent" class="post-container overflow-hidden md:col-span-9">
+    <div id="postcontent" class="post-container overflow-hidden md:col-span-9 sm:mt-0 mt-4 sm:text-base text-sm">
         {@html post?.content}
     </div>
 </div>
