@@ -21,7 +21,7 @@ export const index = async (req, res) => {
     }
 };
 
-export const lasted = async (res) => {
+export const lasted = async (req, res) => {
     let filters = {
         type: 'blog'
     };
@@ -33,7 +33,7 @@ export const lasted = async (res) => {
     }
 };
 
-export const lastedService = async (res, res) => {
+export const lastedService = async (req, res) => {
     let filters = {
         type: 'service'
     };
