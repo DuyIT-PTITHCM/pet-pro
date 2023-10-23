@@ -7,6 +7,13 @@
     import ToastError from "$lib/components/common/ToastError.svelte";
 
     export let data;
+
+    function onTop(){
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Thêm thuộc tính này để có hiệu ứng cuộn mượt
+        });
+    }
 </script>
 
 <!-- <svelte:head>
@@ -33,7 +40,6 @@
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 </svelte:head> -->
-<div id="ontop"></div>
 <div class="min-h-screen flex flex-col">
 {#if data.menu.length > 0}
     <Header bind:menuProp={data.menu} />
@@ -47,4 +53,4 @@
     <Loading />
 </div>
 <ToastError />
-<a href="#ontop" class="p-4 bg-black bottom-0 right-0 fixed text-white rounded-full text-xl font-bold mb-3 mr-3 animate-spin z-50"><Icon icon="bxs:up-arrow" /></a>
+<button class="transition-all p-4 bg-black bottom-0 right-0 fixed text-white rounded-full text-xl font-bold mb-3 mr-3 z-50" on:click={onTop}><Icon icon="bxs:up-arrow" /></button>
