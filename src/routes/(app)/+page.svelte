@@ -4,7 +4,6 @@
     import Benefit from "$lib/components/home/Benefit.svelte";
     import OurTeam from "$lib/components/home/OurTeam.svelte";
     import OurService from "$lib/components/home/OurService.svelte";
-    import BestSeller from "$lib/components/home/BestSeller.svelte";
 </script>
 
 <Banner/>
@@ -12,4 +11,3 @@
 <OurTeam/>
 <OurService/>
 <ClientSay/>
-<BestSeller/>

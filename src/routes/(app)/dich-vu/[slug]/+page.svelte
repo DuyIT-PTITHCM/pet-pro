@@ -67,3 +67,4 @@
         </div>
     </div>
 </div>
+<div class="mb-[80px]"></div>

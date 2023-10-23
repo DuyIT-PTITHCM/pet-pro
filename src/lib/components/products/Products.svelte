@@ -6,16 +6,12 @@
     import { HOST } from "$lib/Const";
     import { addCart } from "$lib/Utils/cartAction";
     import { goto } from "$app/navigation";
+    import { convertImageJsonToArray } from "$lib/Utils/common";
 
     export let products: any = null;
     let host = HOST;
     let imageWidth = 0;
-    async function convertImageJsonToArray(json: any) {
-        if (json) {
-            return await JSON.parse(json);
-        }
-        return [];
-    }
+
     async function getProductImage(images: any) {
         images = await convertImageJsonToArray(images);
         return images;
@@ -23,7 +19,7 @@
 
     async function addToCart(prod: any, isShopNow = false){
         await addCart(prod);
-        goto("/gio-hang")
+        if(isShopNow) goto("/gio-hang");
     }
 </script>
 {#if products}

@@ -309,7 +309,7 @@
         </div>
     </div>
 </div>
-
+<div class="mb-[80px]"></div>
 <style>
     .line-hover {
         width: 0;

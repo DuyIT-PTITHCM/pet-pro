@@ -133,3 +133,4 @@
         </div>
     {/if}  
 </div>
+<div class="mb-[80px]"></div>

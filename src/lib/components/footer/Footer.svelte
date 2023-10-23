@@ -107,14 +107,26 @@
 </script>
 
 
-<footer class="bg-fixed relative overflow-x-hidden mt-[100px]" style="background-image: url('/images/homepage/bgne.jpg'); min-height: 400px;">
-    <div class="absolute w-full h-full animate-marquee bg-fixed bg-contain" style="background-image: url('/images/homepage/bgne.jpg');"></div>
-    <div class="absolute w-full h-full animate-marquee2 bg-fixed bg-contain" style="background-image: url('/images/homepage/bgne.jpg');"></div>
+<footer class="relative overflow-x-hidden bg-slate-800">
+    <div class="absolute w-full h-full overflow-hidden">
+        <ul class="background">
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/1.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/signupbg.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/2.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/3.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/4.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/5.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/6.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/common/cat-bg.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/1.jpg" alt=""/></li>
+            <li><img class="w-full h-full object-cover" src="/images/home-panner/1.jpg" alt=""/></li>
+         </ul>
+    </div>
     <!-- https://www.icegif.com/wp-content/uploads/2023/02/icegif-519.gif -->
-    <div  class="z-10 relative bg-black bg-opacity-40" style="background-image: url('https://media.tenor.com/oBgN468I5QcAAAAi/scared-run.gif'); background-position: center; background-repeat: repeat; background-size: contain; width: inherit; height: inherit;">
-        <div class="flex items-center justify-center flex-col bg-opacity-30 bg-black relative w-full h-full">
-            <div class="footer-info mb-20 mt-10 grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 xl:w-4/5 md:w-4/5 sm:mx-4 gap-4">
-                <div class="bg-black bg-opacity-80 w-full rounded-lg p-5 xl:col-span-2 md:col-span-3 sm:col-span-1 grid grid-cols-1">
+    <div  class="z-10 relative">
+        <div class="flex items-center justify-center flex-col relative w-full h-full bg-black bg-opacity-60 ">
+            <div class="footer-info mb-20 mt-10 grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 xl:w-4/5 md:w-4/5 sm:mx-4 gap-4 ">
+                <div class="w-full rounded-lg p-5 xl:col-span-2 md:col-span-3 sm:col-span-1 grid grid-cols-1 ">
                     <div class="flex items-center">
                         <img src="/images/logo.png" alt="" 
                         class="2xl:w-32 xl:w-32 lg:w-28 md:w-28 sm:w-20 w-20">
@@ -130,7 +142,7 @@
                         </svelte:fragment>
                       </Modal>
                 </div>
-                <div class="bg-black bg-opacity-80 w-full rounded-lg sm:col-span-1">
+                <div class="w-full rounded-lg sm:col-span-1">
                     <ul class="text-white footer-list">
                         <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">service</ol>
                         {#each services as item}
@@ -138,7 +150,7 @@
                         {/each}
                     </ul>
                 </div>
-                <div class="bg-black bg-opacity-80 w-full rounded-lg">
+                <div class="w-full rounded-lg">
                     <ul class="text-white footer-list">
                         <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">company</ol>
                         {#each legal as item}
@@ -146,7 +158,7 @@
                         {/each}
                     </ul>
                 </div>
-                <div class="bg-black bg-opacity-80 w-full rounded-lg">
+                <div class="w-full rounded-lg">
                     <ul class="text-white footer-list">
                         <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">social</ol>
                         {#each social as item}
@@ -179,4 +191,104 @@
         transition: box-shadow .6s;
         font-weight: 600;
     }
+
+    /*  */
+    @keyframes animate {
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: .8;
+        border-radius: 50%;
+    }
+}
+
+.background {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.background li {
+    position: absolute;
+    overflow: hidden;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255);
+    animation: animate 20s linear infinite;
+}
+.background li:nth-child(0) {
+    left: 14%;
+    width: 254px;
+    height: 254px;
+    bottom: -254px;
+    animation-delay: 1s;
+}
+.background li:nth-child(1) {
+    left: 51%;
+    width: 164px;
+    height: 164px;
+    bottom: -164px;
+    animation-delay: 2s;
+}
+.background li:nth-child(2) {
+    left: 41%;
+    width: 140px;
+    height: 140px;
+    bottom: -140px;
+    animation-delay: 9s;
+}
+.background li:nth-child(3) {
+    left: 1%;
+    width: 167px;
+    height: 167px;
+    bottom: -167px;
+    animation-delay: 8s;
+}
+.background li:nth-child(4) {
+    left: 45%;
+    width: 107px;
+    height: 107px;
+    bottom: -107px;
+    animation-delay: 19s;
+}
+.background li:nth-child(5) {
+    left: 23%;
+    width: 140px;
+    height: 140px;
+    bottom: -140px;
+    animation-delay: 8s;
+}
+.background li:nth-child(6) {
+    left: 3%;
+    width: 131px;
+    height: 131px;
+    bottom: -131px;
+    animation-delay: 12s;
+}
+.background li:nth-child(7) {
+    left: 47%;
+    width: 202px;
+    height: 202px;
+    bottom: -202px;
+    animation-delay: 18s;
+}
+.background li:nth-child(8) {
+    left: 77%;
+    width: 145px;
+    height: 145px;
+    bottom: -145px;
+    animation-delay: 10s;
+}
+.background li:nth-child(9) {
+    left: 63%;
+    width: 244px;
+    height: 244px;
+    bottom: -244px;
+    animation-delay: 3s;
+}
 </style>

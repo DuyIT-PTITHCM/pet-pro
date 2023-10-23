@@ -180,6 +180,7 @@
         {/if}
     </div>
 {/await}
+<div class="mb-[80px]"></div>
 
 <style>
     .cart-header{
