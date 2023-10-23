@@ -17,7 +17,7 @@
   import { page } from "$app/stores";
   import { cartItemQuantity } from "$lib/store/cart";
   export let menuProp: any[] = [];
-  let classBtn = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md text-xl px-4 sm:py-4 py-2";
+  let classBtn = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-3 sm:py-3 py-2 text-2xl";
   let menu: any[] = [];
 
   menu = menu.concat(menuProp);
@@ -53,13 +53,14 @@
       </NavBrand>
       <div class="flex items-center md:order-1 lg:order-2">
         <a href="/login" title="Login" class={classBtn}>
-          <Icon icon="mdi:user" class="scale-150"/>
+          <Icon icon="mdi:user" />
         </a>
         <a class="relative {classBtn}" href="/gio-hang">
-          <Icon icon="fluent:cart-20-filled" class="scale-150" />
+          <Icon icon="fluent:cart-20-filled"  />
           <span class="absolute top-0 right-0 rounded-xl h-[23px] w-[23px] bg-primary-600 text-white flex justify-center items-center p-2 text-base">{cartQuantity ? cartQuantity : 0}</span>
         </a>
         <DarkMode btnClass={classBtn} />
+        <LanguageSelect btnClass={classBtn}/>
         <NavHamburger
           on:click={toggle}
           class="w-full md:hidden block {classBtn} m-0"
@@ -68,7 +69,7 @@
       <NavUl {hidden} divClass="lg:order-1 md:order-2 w-full md:block md:w-auto" ulClass="flex flex-col md:flex-row md:mt-0 md:text-sm md:font-medium bg-transparent dark:border-none dark:bg-transparent border-none">
         {#each menu as item, index}
           <NavLi>
-            <div class="parent-menu relative w-full border-b-2 md:border-none">
+            <div class="parent-menu relative w-full border-b-2 dark:border-gray-600 md:border-none">
               <div id="menu{item.id}" class="flex items-center relative">
                 <button class="cursor-pointer w-full px-5 py-3 z-10 flex-1 text-left { $page.params.url == item.url?  'dark:text-white text-primary-600' : ''}" 
                   on:click={() => {
@@ -112,7 +113,6 @@
             </div>
           </NavLi>
         {/each}
-        <LanguageSelect />
       </NavUl>
     </Navbar>
   </div>

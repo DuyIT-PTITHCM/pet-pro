@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { formatDate } from "$lib/Utils/common";
     import Icon from "@iconify/svelte";
     export let image = "/images/common/cat-bg.jpg";
     export let title = "PET ONE";
@@ -8,13 +9,6 @@
     export let author = "Pet One";
     export let isDescription = false;
     export let date = '';
-    function formatDate(inputDate: string){
-        const newDate = new Date(inputDate);
-        const day = newDate.getDate().toString().padStart(2, '0');
-        const month = (newDate.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based, so we add 1
-        const year = newDate.getFullYear();
-        return `${day}/${month}/${year}`;
-    }
 </script>
 <div class="w-full h-[360px] bg-fixed bg-no-repeat bg-cover bg-center" style="background-image: url({image});">
     <div class="{isBgOverlay && 'bg-title'} w-full h-full">

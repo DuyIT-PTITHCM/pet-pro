@@ -1,5 +1,6 @@
 <script lang="ts">
     import HeaderPage from '$lib/components/common/HeaderPage.svelte';
+    import SideMenuHeading from '$lib/components/common/SideMenuHeading.svelte';
     import SideRefercence from '$lib/components/common/SideRefercence.svelte';
 
     export let data;
@@ -42,14 +43,18 @@
                 <p class="text-justify">{blog.description}</p>
             </div>
             <div class="grid xl:grid-cols-9 grid-cols-12 gap-3">
-                <div class="p-5 xl:col-span-3 md:col-span-4 col-span-full border rounded-lg">
-                    <div class="w-full h-9 bg-red-600 sticky top-[100px]"></div>
+                <div class="px-5 xl:col-span-3 md:col-span-4 col-span-full border dark:border-gray-600 rounded-lg">
+                    <div class="w-full sticky top-[70px]">
+                        <SideMenuHeading/>
+                    </div>
                 </div>
                 <div class="post-container overflow-hidden xl:col-span-6 md:col-span-8 col-span-full text-justify">
                     {#if images[0]}
                         <img src="{host + images[0]}" alt="{blog.title}" class="w-full max-h-[500px] object-cover">
                     {/if}
-                    {@html blog?.content}
+                    <div id="postcontent" class="sm:text-base text-sm">
+                        {@html blog?.content}
+                    </div>
                 </div>
             </div>
         </div>
