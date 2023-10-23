@@ -40,7 +40,7 @@ export async function getHeading(menus: any, isNumber = false) {
                 heading.setAttribute("id", id)
                 menus.push({
                     id: id,
-                    value: heading.innerHTML
+                    value: heading.textContent
                 });
             });
         } else {
