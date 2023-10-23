@@ -33,7 +33,7 @@ export const lasted = async (res) => {
     }
 };
 
-export const lastedService = async (res) => {
+export const lastedService = async (res, res) => {
     let filters = {
         type: 'service'
     };
