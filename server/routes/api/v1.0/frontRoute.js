@@ -1,6 +1,6 @@
 import express from 'express';
 import { indexFront, show } from '../../../controllers/menusController.js';
-import { lasted, show as showPost } from '../../../controllers/postController.js';
+import { lasted, lastedService, show as showPost } from '../../../controllers/postController.js';
 import { getProductForFront, showProductFront } from '../../../controllers/productController.js';
 import { getProductValidation } from '../../../validations/productValidation.js';
 
@@ -12,6 +12,7 @@ router.get('/menu-detail/:url', show);
 router.get('/product/:slug', showProductFront);
 router.get('/blog/:slug', showPost);
 router.get('/blog-lasted', lasted);
+router.get('/service-lasted', lastedService);
 router.get('/service/:slug', showPost);
 router.get('/products', getProductValidation, getProductForFront);
 

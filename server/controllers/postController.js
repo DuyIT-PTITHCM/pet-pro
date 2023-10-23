@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import { coreResponse } from "../lib/coreResponse.js";
-import { createPost, getAllPosts, updatePost, deletePost, showPost, getBlogLasted } from "../repositories/postRepository.js";
+import { createPost, getAllPosts, updatePost, deletePost, showPost, getPostsLastedByType } from "../repositories/postRepository.js";
 
 const PER_PAGE = 10;
 export const index = async (req, res) => {
@@ -21,12 +21,24 @@ export const index = async (req, res) => {
     }
 };
 
-export const lasted = async (req, res) => {
+export const lasted = async (res) => {
     let filters = {
         type: 'blog'
     };
     try {
-        const data = await getBlogLasted(filters);
+        const data = await getPostsLastedByType(filters);
+        coreResponse(res, 200, "Success", data);
+    } catch (error) {
+        coreResponse(res, 500, "Error fetching posts from controller", error);
+    }
+};
+
+export const lastedService = async (res) => {
+    let filters = {
+        type: 'service'
+    };
+    try {
+        const data = await getPostsLastedByType(filters);
         coreResponse(res, 200, "Success", data);
     } catch (error) {
         coreResponse(res, 500, "Error fetching posts from controller", error);

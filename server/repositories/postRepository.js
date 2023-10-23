@@ -43,7 +43,7 @@ export const getAllPosts = async (page = 1, perPage = 10, filters = {}) => {
     }
 };
 
-export const getBlogLasted = async (filters = {}) => {
+export const getPostsLastedByType = async (filters = {}) => {
     try {
         const { type, ...otherFilters } = filters;
 
