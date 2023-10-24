@@ -38,7 +38,7 @@
         name="description"
         content={data?.data?.seo?.metaDescription
             ? data?.data?.seo?.metaDescription
-            : data?.data.name}
+            : data?.data.description}
     />
     <meta
         name="keywords"

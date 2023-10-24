@@ -37,7 +37,8 @@ export const getAllProductsForFront = async (filters = {}) => {
             order: [['createdAt', 'DESC']],
             where: {
                 ...filters
-            }
+            },
+            limit: 15
         });
 
         return data;
