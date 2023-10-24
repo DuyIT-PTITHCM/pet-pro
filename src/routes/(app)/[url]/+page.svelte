@@ -202,12 +202,12 @@
         </div>
     </div>
 </Drawer>
-<div class="container relative m-auto">
-    <div class="w-full min-h-screen">
+<div class="container relative m-auto px-2">
+    <div class="w-full">
         <div class="">
             {#if data?.data && data?.data.parent_id}
                 <div class="w-full mt-[40px]">
-                    <h1
+                    <!-- <h1
                         class="md:text-2xl text-xl uppercase font-bold flex justify-center items-center text-center dark:text-white"
                     >
                         <Icon
@@ -218,6 +218,7 @@
                             icon="fluent-emoji-high-contrast:paw-prints"
                         />
                     </h1>
+
                     <div class="flex justify-center items-center text-5xl">
                         <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
                         <Icon
@@ -225,7 +226,10 @@
                             icon="fluent-emoji-flat:kissing-cat"
                         />
                         <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
-                    </div>
+                    </div> -->
+                    <h2 class="md:text-2xl text-xl uppercase font-extrabold flex items-center">
+                        <span>{@html headingColor(data?.data.name)}</span>
+                    </h2>
                 </div>
                 <div class="grid grid-cols-1 gap-4">
                     {#if data?.data?.categories.length}
@@ -258,25 +262,27 @@
                 {#each data?.data?.subMenus as submenu}
                     {#if submenu?.categories.length}
                         <div class="w-full dark:text-white mt-[40px]">
-                            <h3
-                                class="md:text-2xl text-xl uppercase font-bold flex justify-center items-center text-center"
+                            <h2
+                                class="md:text-2xl text-xl uppercase font-extrabold flex items-center"
                             >
-                                <Icon
+                                <!-- <Icon
                                     class="text-primary-600"
                                     icon="fluent-emoji-high-contrast:paw-prints"
-                                /><span class="mx-4">{@html headingColor(submenu.name)}</span><Icon
+                                /> -->
+                                <span>{@html headingColor(submenu.name)}</span>
+                                <!-- <Icon
                                     class="text-primary-600"
                                     icon="fluent-emoji-high-contrast:paw-prints"
-                                />
-                            </h3>
-                            <div class="flex justify-center items-center text-5xl">
+                                /> -->
+                            </h2>
+                            <!-- <div class="flex justify-center items-center text-5xl">
                                 <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
                                 <Icon
                                     class="animate-bounce m-2"
                                     icon="fluent-emoji-flat:kissing-cat"
                                 />
                                 <hr class="w-20 h-1 bg-slate-600 dark:bg-white" />
-                            </div>
+                            </div> -->
                         </div>
                         <div class="grid grid-cols-1 gap-4 ">
                             {#each submenu?.categories as category}

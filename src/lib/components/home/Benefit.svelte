@@ -7,7 +7,7 @@
             <h2 class="2xl:text-6xl xl:text-6xl md:text-5xl sm:text-4xl text-3xl font-bold shadow-black mb-10 brightness-200 uppercase">{$t("homepage.benefit")}</h2>
             <div class="2xl:w-2/4 xl:w-2/4 md:w-4/5 sm:w-9/12 w-full 2xl:text-xl xl:text-xl md:text-xl sm:text-lg text-lg">
                 <p class="w-full">
-                    {$t("homepage.benefitDesc1")} <br><br> {$t("homepage.benefitDesc2")}
+                    {$t("homepage.benefitDesc1")}
                 </p>
             </div>
         </div>
