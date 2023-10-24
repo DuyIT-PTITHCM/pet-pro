@@ -80,7 +80,7 @@
         property="og:description"
         content={data?.data?.seo?.metaDescription
             ? data?.data?.seo?.metaDescription
-            : data?.data.name}
+            : data?.data.description}
     />
     <meta property="og:image" content={HOST + data?.data?.seo?.image} />
 
@@ -94,7 +94,7 @@
         property="twitter:description"
         content={data?.data?.seo?.metaDescription
             ? data?.data?.seo?.metaDescription
-            : data?.data.name}
+            : data?.data.description}
     />
     <meta property="twitter:image" content={HOST + data?.data?.seo?.image} />
 </svelte:head>
