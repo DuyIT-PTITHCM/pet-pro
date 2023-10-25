@@ -72,16 +72,16 @@ isDescription={true} isShowTime={false} isBgOverlay/>
         <OurService data={res?.servicesLasted}/>
     </div>
 </div>
-<HeaderPage title={"Our Services"} 
-description={"Pets bring us joy and happiness, and we have a responsibility to take good care of them."} 
+<HeaderPage title={"Our product"} 
+description={"Pet shops can be a great place to find everything you need to care for your pet."} 
 isDescription={true} isShowTime={false} isBgOverlay/>
 <div class="container m-auto my-[100px] px-2">
     <div class="grid 2xl:grid-cols-5 xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-4">
         <Products products={res?.bestSellingProduct}/>
     </div>
 </div>
-<HeaderPage title={"Our Services"} 
-description={"Pets bring us joy and happiness, and we have a responsibility to take good care of them."} 
+<HeaderPage title={"Latest blog"} 
+description={"How to feed, groom, and train your pet, as well as how to deal with common health problems."} 
 isDescription={true} isShowTime={false} isBgOverlay/>
 <div class="container m-auto my-[100px] px-2">
     <div class="grid sm:grid-cols-2 grid-cols-1 gap-4" >
