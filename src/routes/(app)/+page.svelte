@@ -68,7 +68,7 @@
 description={"Pets bring us joy and happiness, and we have a responsibility to take good care of them."} 
 isDescription={true} isShowTime={false} isBgOverlay/>
 <div class="container m-auto my-[100px] px-2 z-50">
-    <div class="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-2 gap-4">
+    <div class="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 grid-cols-1 gap-4">
         <OurService data={res?.servicesLasted}/>
     </div>
 </div>
