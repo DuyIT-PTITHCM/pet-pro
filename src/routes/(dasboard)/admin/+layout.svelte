@@ -76,6 +76,12 @@
       icon: "solar:cat-bold",
       active: false,
     },
+    {
+      name: "order",
+      url: "/admin/orders",
+      icon: "iconamoon:delivery-free-fill",
+      active: false,
+    },
   ];
   var isHide = true;
   var isFixedHeader = false;

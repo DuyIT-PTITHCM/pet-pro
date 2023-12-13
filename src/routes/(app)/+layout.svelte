@@ -1,13 +1,15 @@
-<script>
+<script lang="ts">
     import Loading from "$lib/components/common/Loading.svelte";
     import "../../app.css";
     import Header from "$lib/components/header/Header.svelte";
     import Footer from "$lib/components/footer/Footer.svelte";
     import Icon from "@iconify/svelte";
     import ToastError from "$lib/components/common/ToastError.svelte";
+    import { Popover } from "flowbite-svelte";
+    import Chat from "$lib/components/chat/Chat.svelte";
 
     export let data;
-
+    let placement   ;
     function onTop(){
         window.scrollTo({
             top: 0,
@@ -41,7 +43,7 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 </svelte:head> -->
 <div class="min-h-screen flex flex-col">
-{#if data.menu.length > 0}
+{#if data?.menu?.length > 0}
     <Header bind:menuProp={data.menu} />
 {/if}
     <main>
@@ -53,4 +55,13 @@
     <Loading />
 </div>
 <ToastError />
-<button class="transition-all p-4 bg-black bottom-0 right-0 fixed text-white rounded-full text-xl font-bold mb-3 mr-3 z-50" on:click={onTop}><Icon icon="bxs:up-arrow" /></button>
+<div class="fixed right-0 bottom-0 flex flex-col mr-2 text-2xl z-50">
+    <button class="transition-all p-3 bg-black text-white rounded-full mb-2 cursor-pointer" 
+    id="chatbox" on:mouseenter={() => (placement = 'left')}>
+        <Icon icon="ant-design:message-filled" rotate={3} />
+    </button>
+    <button class="transition-all p-3 bg-black text-white rounded-full mb-2" on:click={onTop}><Icon icon="bxs:up-arrow" /></button>
+</div>
+<Popover triggeredBy="#chatbox" {placement} trigger="click" class="w-[400px] h-[500px] text-sm font-light z-50">
+    <Chat/>
+</Popover>

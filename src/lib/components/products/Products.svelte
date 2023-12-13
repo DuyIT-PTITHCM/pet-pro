@@ -55,11 +55,11 @@
                     </a>
                     <div class="flex justify-between my-3">
                         {#if product.discount>0}
-                            <del>{formatCurrency(product?.originprice)}</del>
+                            <del>{formatCurrency(product?.price)}</del>
                         {:else}
                             <del></del>
                         {/if}
-                        <span class="text-md font-semibold text-amber-500">{formatCurrency(product?.price)}</span>
+                        <span class="text-md font-semibold text-amber-500">{formatCurrency(product?.price - product?.price*product.discount/100)}</span>
                     </div>                        
                     <div class="flex justify-between">
                         <Button color="light" class="text-xl" on:click={() => addToCart(product, true)}><Icon icon="solar:cart-3-bold" /></Button>

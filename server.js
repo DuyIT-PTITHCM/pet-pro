@@ -11,12 +11,14 @@ import productsRoute from './server/routes/api/v1.0/productsRoute.js';
 import uploadFileRoute from './server/routes/api/v1.0/uploadFileRoute.js';
 import seoRoute from './server/routes/api/v1.0/seoRoute.js';
 import frontRoute from './server/routes/api/v1.0/frontRoute.js';
+import orderRoute from './server/routes/api/v1.0/orderRoute.js';
+import dashboardRoute from './server/routes/api/v1.0/dashboardRoute.js';
 import verifyToken from './server/middleware/authMiddleware.js'
 import cors from 'cors';
 import cron from 'node-cron';
 import dailyJobDeleteImage from './server/cron/dailyJobDeleteImage.js';
 import verifyAdmin from './server/middleware/verifyAdmin.js';
-
+import paypal from 'paypal-rest-sdk';
 
 const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
@@ -31,6 +33,11 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'Ad1N5ku2mebVOBTxabynj8XJP2G5BtKR56M6j3aHC8YEMV7moQw07WtLswLwJscupjFlWHXy5V9dDriP',
+  'client_secret': 'EH7pDeaDaSimqoHLGlJxK8gZ70a4TJoOVfhNZLXp84oB0eYTHuD_t19igqesXJfcMkAW7fUtZMv9rWbp'
+});
 
 // router 
 app.use(V_1_0 + '/auth', authRoute);
@@ -42,7 +49,8 @@ app.use(V_1_0 + '/categories', verifyToken, verifyAdmin, categoriesRoute);
 app.use(V_1_0 + '/products', verifyToken, verifyAdmin, productsRoute);
 app.use(V_1_0 + '/seo', verifyToken, verifyAdmin, seoRoute);
 app.use(V_1_0 + '/front', frontRoute);
-
+app.use(V_1_0 + '/orders', orderRoute);
+app.use(V_1_0 + '/dashboard', dashboardRoute);
 // cron job 
 cron.schedule('0 0 * * *', dailyJobDeleteImage);
 

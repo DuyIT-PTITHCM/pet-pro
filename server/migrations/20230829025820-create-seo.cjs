@@ -18,6 +18,9 @@ module.exports = {
       keywords: {
         type: Sequelize.STRING
       },
+      image: {
+        type: Sequelize.STRING
+      },
       canonicalUrl: {
         type: Sequelize.STRING
       },

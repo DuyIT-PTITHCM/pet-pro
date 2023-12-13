@@ -164,6 +164,7 @@
       </label>
       <input
         bind:value={products.productName}
+        on:change={()=>{products.slug = products.productName.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')}}
         class="appearance-none dark:bg-gray-700 block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3 border-[#dcdde0]"
         id="grid-first-name"
         type="text"

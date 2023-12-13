@@ -33,7 +33,7 @@
         formData.append("file", file);
         try {
             axios
-                .post("http://103.142.26.42/api/v1.0/upload", formData)
+                .post(BASE_API + "/upload", formData)
                 .then((response) => {
                     user.avatar = response.data.data.path;
                 })

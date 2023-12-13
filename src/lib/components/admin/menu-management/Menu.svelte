@@ -37,6 +37,8 @@
         loadingState.set(true);
         const res = await menuService.get();
         menus = res.data.data;
+        console.log("hihi")
+        console.log(menus)
         loadingState.set(false);
         return menus;
     }

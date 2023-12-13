@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Success</title>
+  <style>
+    /* Your styles here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <img class="logo" src="https://static.vecteezy.com/system/resources/previews/009/551/676/non_2x/shy-dog-logo-illustration-depicting-shy-dog-suitable-for-pet-company-free-vector.jpg" alt="Logo" width="100px">
+        <a href="http://localhost:5173/" style="text-decoration: none;">PET ONE</a>
+      </div>
+      <h1>Order Success</h1>
+    </header>
+
+    <main>
+      <p>Dear <p style="font-weight: bold;">{customer}</p>,</p>
+      <p>Thank you for your order. Here are the details:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="padding: 4px;">Order Code</th>
+            <th style="padding: 4px; margin-right: 8px;">Reciver Name</th>
+            <th style="padding: 4px; margin-right: 8px;">Reciver Address</th>
+            <th style="padding: 4px; margin-right: 8px;">Reciver Email</th>
+            <th style="padding: 4px; margin-right: 8px;">Reciver Phone</th>
+            <th style="padding: 4px; margin-right: 8px;">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Use placeholders for dynamic values -->
+          <tr>
+            <td style="padding: 4px; margin-right: 8px;">{code}</td>
+            <td style="padding: 4px; margin-right: 8px;">{reciverName}</td>
+            <td style="padding: 4px; margin-right: 8px;">{reciverAddress}</td>
+            <td style="padding: 4px; margin-right: 8px;">{reciverEmail}</td>
+            <td style="padding: 4px; margin-right: 8px;">{reciverPhone}</td>
+            <td style="padding: 4px; margin-right: 8px;">{total}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>Thank you for choosing our services. If you have any questions or concerns, please contact us.</p>
+      <p>To view and follow your order go to {orderDetail}.</p>
+      <p>Best regards,<br>Pet One</p>
+    </main>
+
+    <footer>
+      <p>{thankYouMessage}</p>
+    </footer>
+  </div>
+</body>
+</html>

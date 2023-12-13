@@ -26,7 +26,7 @@
     .benefit-image-2{
         border-radius: 50%;
         position: absolute;
-        animation: moving 3s infinite;
+        animation: moving 10s infinite;
     }
     @keyframes moving {
         0%{

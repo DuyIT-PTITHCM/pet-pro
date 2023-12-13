@@ -47,7 +47,9 @@
             console.log(error);
         }
     }
-
+    function randomNumber() {
+        return Math.floor(Math.random() * 7) + 1;
+    }
     async function init(){
         await getData();
     }
@@ -64,15 +66,16 @@
 <div class="container m-auto my-[100px] px-2">
     <img src="https://siliconstack.com.au/wp-content/uploads/2019/09/Working-process.png" alt="">
 </div>
+<iframe class="w-full h-full" src="https://www.youtube.com/embed/7yLxxyzGiko?autoplay=1&mute=1&controls=0&loop=1&showinfo=0" title="Kittens walk with a tiny chicken" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 <HeaderPage title={"Our Services"} 
 description={"Pets bring us joy and happiness, and we have a responsibility to take good care of them."} 
-isDescription={true} isShowTime={false} isBgOverlay/>
+isDescription={true} isShowTime={false} isBgOverlay image="/images/home-panner/{randomNumber()}.jpg"/>
 <div class="container m-auto my-[100px] px-2 z-50">
     <div class="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-1 grid-cols-1 gap-4">
         <OurService data={res?.servicesLasted}/>
     </div>
 </div>
-<HeaderPage title={"Our product"} 
+<HeaderPage title={"Our product"}  image="/images/home-panner/{randomNumber()}.jpg"
 description={"Pet shops can be a great place to find everything you need to care for your pet."} 
 isDescription={true} isShowTime={false} isBgOverlay/>
 <div class="container m-auto my-[100px] px-2">
@@ -80,7 +83,7 @@ isDescription={true} isShowTime={false} isBgOverlay/>
         <Products products={res?.bestSellingProduct}/>
     </div>
 </div>
-<HeaderPage title={"Latest blog"} 
+<HeaderPage title={"Latest blog"} image="/images/home-panner/{randomNumber()}.jpg"
 description={"How to feed, groom, and train your pet, as well as how to deal with common health problems."} 
 isDescription={true} isShowTime={false} isBgOverlay/>
 <div class="container m-auto my-[100px] px-2">
@@ -88,6 +91,5 @@ isDescription={true} isShowTime={false} isBgOverlay/>
         <Blogs blogs={res?.blogsLasted}/>
     </div>
 </div>
-    
 {/await}
 <ClientSay/>

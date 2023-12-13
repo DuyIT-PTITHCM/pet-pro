@@ -5,6 +5,11 @@
     import Icon from '@iconify/svelte';
     import { loadTranslations, t } from "$lib/translations";
     import { Checkbox, Input, Label, P, Button, Badge, Textarea} from 'flowbite-svelte';
+    import axios from 'axios';
+    import { BASE_API } from '$lib/Const';
+    import { toastErr } from '$lib/store/toastError';
+    import { goto } from '$app/navigation';
+    import { removeCookie, setCookie } from '$lib/Utils/cookieUtils';
     let currentCart : any;
     let totalItem = 0, totalSelectItem = 0, totalCart = 0, totalOrder = 0;
     interface Product {
@@ -17,7 +22,14 @@
         quantity: number;
         isSelect: boolean;
     }
-
+    let orderInfor = {
+        reciverName: '',
+        reciverEmail: '',
+        reciverPhoneNumber: '',
+        reciverAddress: '',
+        reciverNote: '',
+        payment: 'hihi',
+    }
     async function getCart(){
         await cart.subscribe(value => {
             if(value) currentCart = JSON.parse(value);
@@ -28,7 +40,6 @@
             isChooseAll = true;
         }
         handleCartChange();
-        return currentCart;
     }
     let isChooseAll = false;
     function chooseAllCart() {
@@ -87,17 +98,74 @@
         }, 0);
         return;
     }
+    async function handleOrderSubmit(){
+        var cart = currentCart;
+        var selectedProduct = currentCart.filter((x: Product) => x.isSelect === true);
+        if (selectedProduct) {
+            var products = selectedProduct.map((product: Product) => ({ id: product.id, qty: product.quantity }));
+            var data = {
+                products: products,
+                orderInfo: orderInfor
+            }
+            try {
+                axios
+                    .post(BASE_API + "/orders", data)
+                    .then(async (response) => {
+                        if(orderInfor.payment == "Paypal"){
+                            goto(response.data.data)
+                        }
+                        else{
+                            removeCookie('cart');
+                            removeCookie('cartQuantity');
+                            getCart();
+                            const orderJSON = JSON.stringify(response.data.data);
+                            setCookie('orderValue', orderJSON);
+                            goto("/payment?shipcode=true");
+                        }
+                        toastErr.set([
+                            {
+                                message: "Order successfully",
+                                type: "success",
+                            },
+                        ]);
+                    })
+                    .catch((error) => {
+                        toastErr.set([
+                            {
+                                message: "Order failed" + error.message,
+                                type: "error",
+                            },
+                        ]);
+                    });
+            } catch (error) {
+                toastErr.set([
+                    {
+                        message: "Order failed: " + error.message,
+                        type: "error",
+                    },
+                ]);
+            }
+        } else {
+            toastErr.set([
+                {
+                    message: "Done have any product is selected",
+                    type: "error",
+                },
+            ]);
+        }
+    }
+
     $: totalQuantity = totalItem;
     $: totalQuantityWillBuy = totalSelectItem;
     $: totalOrder = totalOrder;
     $: totalCart = totalCart;
-
+    getCart();
 </script>
-{#await getCart()}
+{#if !currentCart}
     <div class="w-full h-screen flex justify-center items-center">
         <img class="m-auto" src="/images/common/cat-empty-cart.png" alt="">
     </div>
-{:then res} 
+{:else} 
     <div class="cart-header flex items-center justify-center h-[360px] w-full text-white">
         <h1 class="text-center uppercase">{$t("cart.cartHeader")} {#if !currentCart.length} <br> {$t("cart.cartHeaderEmpty")} {/if}</h1>
     </div>
@@ -160,26 +228,40 @@
                     </div>
                     <div class="mb-6">
                         <Label for="receiver" class="block mb-2">{$t("cart.reciver")}</Label>
-                        <Input id="receiver" placeholder="Elon Musk" />
+                        <Input id="receiver" placeholder="Elon Musk" bind:value={orderInfor.reciverName}/>
+                    </div>
+                    <div class="mb-6">
+                        <Label for="email" class="block mb-2">Email</Label>
+                        <Input id="email" placeholder="elonmusk@example.com" type="email" bind:value={orderInfor.reciverEmail}/>
                     </div>
                     <div class="mb-6">
                         <Label for="phone" class="block mb-2">{$t("cart.phone")}</Label>
-                        <Input id="phone" placeholder="0000-000-000" />
+                        <Input id="phone" placeholder="0000-000-000" bind:value={orderInfor.reciverPhoneNumber} />
                     </div>
                     <div class="mb-6">
                         <Label for="address" class="block mb-2">{$t("cart.address")}</Label>
-                        <Input id="address" placeholder="Địa chỉ nhận hàng mong muốn..." />
+                        <Input id="address" placeholder="Địa chỉ nhận hàng mong muốn..." bind:value={orderInfor.reciverAddress}/>
                     </div>
                     <div class="mb-6">
                         <Label for="notes" class="block mb-2">{$t("cart.notes")}</Label>
-                        <Textarea rows="4" id="notes" placeholder="Ghi chú của bạn..." class="max-h-[500px]"/>
+                        <Textarea rows="4" id="notes" placeholder="Ghi chú của bạn..." class="max-h-[500px]" bind:value={orderInfor.reciverNote}/>
                     </div>
-                    <Button class="uppercase">{$t("cart.order")}</Button>
+                    <div class="mb-6 flex justify-around">
+                        <Label for="shipcod" class="block mb-2">
+                            ship cod
+                            <input type="radio" name="payment" id="shipcod" checked on:change={() => orderInfor.payment = 'Ship_COD'}>
+                        </Label>
+                        <Label for="paypal" class="block mb-2">
+                            paypal
+                            <input type="radio" name="payment" id="paypal" on:change={() => orderInfor.payment = 'Paypal'}></Label>
+                        
+                    </div>
+                    <Button class="uppercase" on:click={handleOrderSubmit}>{$t("cart.order")}</Button>
                 </div>
             </div>
         {/if}
     </div>
-{/await}
+{/if}
 <div class="mb-[80px]"></div>
 
 <style>

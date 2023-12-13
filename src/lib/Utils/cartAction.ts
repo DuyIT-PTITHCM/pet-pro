@@ -33,7 +33,7 @@ export async function addCart(prod: any) {
     });
     var matchProduct = currentCart.find((item) => item.id == product.id);
     if (matchProduct) {
-        if(matchProduct.quantity < 20){
+        if(matchProduct.quantity <= product.quantityStock){
             if(matchProduct.quantity + 1 <= product.quantityStock)
             {
                 matchProduct.quantity += 1;
@@ -57,7 +57,7 @@ export async function addCart(prod: any) {
         else{
             toastErr.set([
                 {
-                    message: "Quantity can not over than 20",
+                    message: "Quantity can not over than " + product.quantityStock,
                     type: "error",
                 },
             ]);

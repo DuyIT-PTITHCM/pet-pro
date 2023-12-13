@@ -2,20 +2,19 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 
 dotenv.config();
-
 const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST, 
-  port: process.env.EMAIL_PORT,
+  host: 'smtp.gmail.com',
+  port: '465',
   secure: true,
   auth: {
-    user: process.env.EMAIL_USERNAME,
-    pass: process.env.EMAIL_PASSWORD,
-  },
+    user: '1924801030282@student.tdmu.edu.vn',
+    pass: '@Congacon123'
+  }
 });
 
 export const sendEmailService = (to, subject, html) => {
   const mailOptions = {
-    from: 'pet-pro@gmail.com',
+    from: '1924801030282@student.tdmu.edu.vn',
     to: to,
     subject: subject,
     html: html,

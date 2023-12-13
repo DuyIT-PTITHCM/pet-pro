@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { BASE_API, HOST } from '$lib/Const.js';
     import { formatCurrency } from '$lib/Utils/accounting.js';
     import { addCart } from '$lib/Utils/cartAction.js';
     import CarouselCustom from '$lib/components/carouselcus/CarouselCustom.svelte';
@@ -8,8 +9,7 @@
     import { Button, Hr, Modal } from 'flowbite-svelte';
 
     export let data;
-    let host = "http://103.142.26.42";
-
+    let host = HOST;
     let product = data.data;
     let imagesModel = false;
     let isViewedImage = false;

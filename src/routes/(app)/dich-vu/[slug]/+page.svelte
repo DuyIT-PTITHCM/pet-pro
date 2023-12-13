@@ -35,7 +35,7 @@
     <meta name="twitter:image" content={service?.seo?.image ? host + service?.seo?.image: imageSeo} />
 </svelte:head>
 <!-- service service -->
-<HeaderPage title={service.title} isShowTime author={service?.author} date={service?.updatedAt} image={host + images[0]} isBgOverlay/>
+<HeaderPage selected={service.slug} services={service.reference} isServicePicker title={service.title} isShowTime author={service?.author} date={service?.updatedAt} image={host + images[0]} isBgOverlay/>
 
 <div class="container m-auto p-4">
     <div class="grid grid-cols-12 gap-4 dark:text-slate-50">
@@ -50,9 +50,9 @@
                     </div>
                 </div>
                 <div class="post-container overflow-hidden xl:col-span-6 md:col-span-8 col-span-full text-justify">
-                    {#if images[0]}
+                    <!-- {#if images[0]}
                         <img src="{host + images[0]}" alt="{service.title}" class="w-full max-h-[500px] object-cover">
-                    {/if}
+                    {/if} -->
                     <div id="postcontent" class=" sm:text-base text-sm">
                         {@html service?.content}
                     </div>
