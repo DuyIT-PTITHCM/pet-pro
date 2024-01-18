@@ -82,7 +82,7 @@
                     </Hr>
                     <div class="mb-4">
                         <p class="text-right">
-                            {#if product.discount}
+                            {#if product.discount > 0}
                             <div class="flex justify-between">
                                 <div class="">
                                     <span class="px-4 py-2 animate-pulse rounded-full bg-red-600 text-white font-bold lg:text-base text-sm">-{product.discount}%</span>

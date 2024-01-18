@@ -70,7 +70,7 @@
     }
     async function editMenu(id = 0, name: string, url = null, description: string, isShow: boolean, parent_id = 0, active: boolean, type: string) {
         try {
-            isButtonDisabled = true;
+            //isButtonDisabled = true;
             const menuEdit = {
                 name: name,
                 url: url,
@@ -87,7 +87,7 @@
                     type: "success"
                 }
             ]);
-            disabledButton();
+            //disabledButton();
         } catch (error) {
             console.log("hi")
             const errors = error?.response?.data?.errors;
@@ -112,7 +112,6 @@
             isMenuEdited.set(true);
             
         } catch (error) {
-            console.log("hi")
             const errors = error?.response?.data?.errors;
             var toasts = errors?.map(element => {
                 return {
@@ -145,7 +144,7 @@
 <div class="border-l-4 border-cyan-400 my-4">
     <div class="flex items-center">
         <hr class="w-2 h-[4px] bg-cyan-400">
-        <Input defaultClass="max-w-[300px]" bind:value={menu.name}/>
+        <Input defaultClass="max-w-[300px]" bind:value={menu.name} on:change={()=>{menu.url = menu.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')}}/>
         <hr class="w-2 h-[4px] bg-cyan-400">
         <Input defaultClass="max-w-[300px]" bind:value={menu.url}/>
         <hr class="w-2 h-[4px] bg-cyan-400">
@@ -195,7 +194,7 @@
         <div class="flex items-center my-2">
             <div class="flex items-center">
                 <hr class="w-8 h-[4px] bg-cyan-400">
-                <Input defaultClass="max-w-[300px]" bind:value={subMenu.name}/>
+                <Input defaultClass="max-w-[300px]" bind:value={subMenu.name}  on:change={()=>{subMenu.url = subMenu.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')}}/>
                 <hr class="w-4 h-[4px] bg-cyan-400">
                 <Input defaultClass="max-w-[300px]" bind:value={subMenu.url}/>
                 <hr class="w-4 h-[4px] bg-cyan-400">
@@ -238,7 +237,7 @@
 
     <div class="{isShowAdd ? '' : 'hidden'} my-2">
         <div class="flex items-center my-2"><hr class="w-8 h-[4px] bg-cyan-400">
-            <Input defaultClass="max-w-[300px]" placeholder="Input name..." required bind:value={newMenu.name}/>
+            <Input defaultClass="max-w-[300px]" placeholder="Input name..." required bind:value={newMenu.name}  on:change={()=>{newMenu.url = newMenu.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')}}/>
             <hr class="w-4 h-[4px] bg-cyan-400">
             <Input defaultClass="max-w-[300px]" placeholder="Input address..." required bind:value={newMenu.url}/>
             <hr class="w-4 h-[4px] bg-cyan-400">

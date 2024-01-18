@@ -139,6 +139,8 @@
 	{#if dots}
 		<ul>
 			{#each { length: totalDots } as _, i}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 				<li on:click={() => go(i * currentPerPage)} class={isDotActive(currentIndex, i) ? "active" : ""} />
 			{/each}
 		</ul>

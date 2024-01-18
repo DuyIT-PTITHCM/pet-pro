@@ -401,7 +401,7 @@
       on:change={handleFileInputChange}
       class="w-24 py-[10px] bg-white"
     />
-    <div class="grid grid-cols-1 xl:grid-cols-4 gap-[10px] py-[20px]">
+    <div class="grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 gap-[10px] py-[20px]">
       {#each files as path}
         <div class="relative">
           <img

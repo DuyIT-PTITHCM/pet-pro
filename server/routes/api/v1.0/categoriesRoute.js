@@ -1,6 +1,7 @@
 import express from 'express';
 import {
     forceDeleteCategory,
+    getAllService,
     index,
     store,
     update,

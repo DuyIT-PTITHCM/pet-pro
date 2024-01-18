@@ -56,12 +56,12 @@
 </div>
 <ToastError />
 <div class="fixed right-0 bottom-0 flex flex-col mr-2 text-2xl z-50">
-    <button class="transition-all p-3 bg-black text-white rounded-full mb-2 cursor-pointer" 
+    <!-- <button class="transition-all p-3 bg-black text-white rounded-full mb-2 cursor-pointer" 
     id="chatbox" on:mouseenter={() => (placement = 'left')}>
         <Icon icon="ant-design:message-filled" rotate={3} />
-    </button>
+    </button> -->
     <button class="transition-all p-3 bg-black text-white rounded-full mb-2" on:click={onTop}><Icon icon="bxs:up-arrow" /></button>
 </div>
-<Popover triggeredBy="#chatbox" {placement} trigger="click" class="w-[400px] h-[500px] text-sm font-light z-50">
+<!-- <Popover triggeredBy="#chatbox" {placement} trigger="click" class="w-[400px] h-[500px] text-sm font-light z-50">
     <Chat/>
-</Popover>
+</Popover> -->

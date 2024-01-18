@@ -114,7 +114,7 @@ export const createOrder = async (newOrder, userid) => {
     }
     try {
         const htmlTemplate = checkTemplate('orderConfirm');
-        console.log(htmlTemplate)
+        // console.log(htmlTemplate)
 
         // Replace placeholders with actual values
         const html = htmlTemplate
@@ -127,7 +127,7 @@ export const createOrder = async (newOrder, userid) => {
             .replace('{total}', oderSuccess.total)
             .replace('{orderDetail}', 'http://localhost:5173/order/' + oderSuccess.code)
             .replace('{thankYouMessage}', "thanks");
-        console.log(html)
+        // console.log(html)
         console.log(oderSuccess.reciverEmail + "Order " + oderSuccess.code + " information")
         sendEmailService(oderSuccess.reciverEmail, "Order " + oderSuccess.code + " information", html);
     } catch (error) {
@@ -208,7 +208,7 @@ export const executePayment = async (req) => {
         "transactions": [{
             "amount": {
                 "currency": "USD",
-                "total": order.total
+                "total": convertVNDtoUSD(order.total)
             }
         }]
     };
@@ -260,7 +260,7 @@ async function paypalCreatePayment(items, total, orderId) {
             "name": element.productName,
             "sku": "001",
             "currency": "USD",
-            "price": element.price,
+            "price": convertVNDtoUSD(element.price),
             "quantity": element.quantity
         };
     });
@@ -279,17 +279,18 @@ async function paypalCreatePayment(items, total, orderId) {
             },
             amount: {
                 currency: "USD",
-                total: total
+                total: listItem.reduce((sum, element) => sum + element.price * element.quantity, 0)
             },
             description: "Pet one create payment for order " + orderId + " at " + Date.now().toString()
         }]
     };
     try {
+        console.log(create_payment_json.transactions[0].item_list)
+        console.log(create_payment_json.transactions[0].amount)
         return new Promise((resolve, reject) => {
             paypal.payment.create(create_payment_json, function (error, payment) {
                 if (error) {
-                    console.error("Error creating PayPal payment");
-                    console.error(error);
+                    console.log(error)
                     reject(error);
                 } else {
                     for (let i = 0; i < payment.links.length; i++) {
@@ -305,7 +306,11 @@ async function paypalCreatePayment(items, total, orderId) {
         });
     }
     catch (error) {
-        console.log(error)
         throw new Error(error);
     }
+}
+function convertVNDtoUSD(vndAmount) {
+    const exchangeRate = 24360;
+    const usdAmount =  Math.round(vndAmount / exchangeRate);
+    return usdAmount;
 }

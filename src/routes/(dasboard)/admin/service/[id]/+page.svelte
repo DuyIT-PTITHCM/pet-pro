@@ -75,7 +75,7 @@
 >
     <TabItem title="Edit {service?.title}" open>
         {#if service}
-            <CreateArticle bind:article={service} bind:queryParams />
+            <CreateArticle IsService bind:article={service} bind:queryParams />
         {/if}
     </TabItem>
     <TabItem title="Write Seo">

@@ -109,7 +109,7 @@
                 </button>
                 <div class="{parentAdd ? '' : 'hidden'}">
                     <form class="flex items-center"><hr class="w-4 h-[4px] bg-cyan-700">
-                        <Input defaultClass="max-w-[300px]" placeholder="Input name..." bind:value={newMenu.name}/>
+                        <Input defaultClass="max-w-[300px]" placeholder="Input name..." bind:value={newMenu.name} on:change={()=>{newMenu.url = newMenu.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-')}}/>
                         <hr class="w-4 h-[4px] bg-cyan-700">
                         <Input defaultClass="max-w-[300px]" placeholder="Input address..." bind:value={newMenu.url}/>
                         <hr class="w-4 h-[4px] bg-cyan-700">

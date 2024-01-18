@@ -1,6 +1,6 @@
 import { coreResponse } from "../lib/coreResponse.js";
 import { models } from "../models/index.js";
-import { createUser, getAllUsers, updateUser, showDetail } from "../repositories/userRepository.js";
+import { createUser, getAllUsers, updateUser, showDetail, profile } from "../repositories/userRepository.js";
 import { literal } from 'sequelize';
 import { validationResult } from 'express-validator';
 import { sendEmailService } from "../lib/nodemailerService.js";
@@ -12,6 +12,7 @@ export const index = async (req, res) => {
         const size = req.query.size || PER_PAGE;
 
         let filters = {
+            name: req.query.name,
             gender: req.query.gender,
             email: req.query.email,
             phone: req.query.phone
@@ -42,6 +43,15 @@ export const show = async (req, res) => {
     try {
         const userId = req.params.id;
         const user = await showDetail(userId);
+        coreResponse(res, 201, "User detail", user);
+    } catch (error) {
+        coreResponse(res, 500, "Error show user");
+    }
+};
+
+export const showProfile = async (req, res) => {
+    try {
+        const user = await profile(req.user);
         coreResponse(res, 201, "User detail", user);
     } catch (error) {
         coreResponse(res, 500, "Error show user");

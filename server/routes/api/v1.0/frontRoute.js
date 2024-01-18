@@ -4,6 +4,7 @@ import { lasted, lastedService, show as showPost } from '../../../controllers/po
 import { getProductForFront, showProductFront } from '../../../controllers/productController.js';
 import { getProductValidation } from '../../../validations/productValidation.js';
 import { orderDetail } from '../../../controllers/orderController.js';
+import { getAllService } from '../../../controllers/categoriesController.js';
 
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.get('/service-lasted', lastedService);
 router.get('/service/:slug', showPost);
 router.get('/products', getProductValidation, getProductForFront);
 router.get('/order/:code', orderDetail);
+router.get('/services', getAllService);
 
 export default router;

@@ -13,7 +13,7 @@
 
     let seo = seoData.seo;
     let file: any;
-    file = seo.image;
+    file = seo?.image;
 
     const uploadFileService = RepositoryFactory.get("uploadRepository");
 
@@ -263,7 +263,7 @@
         />
         {#if file}
             <div class="py-[20px]">
-                <div class="relative">
+                <div class="relative lg:md:w-2/4 xl:w-1/4">
                     <img
                         class="object-cover w-full h-[300px] rounded"
                         src={file}

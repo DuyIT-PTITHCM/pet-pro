@@ -5,7 +5,14 @@ import bcrypt from 'bcryptjs';
 export default (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
-      // define association here
+      User.hasMany(models.Order, {
+        foreignKey: 'userId',
+        as: 'orders',
+      });
+      User.hasMany(models.Pet, {
+        foreignKey: 'userId',
+        as: 'pets',
+      });
     }
   }
   User.init({
@@ -28,9 +35,9 @@ export default (sequelize, DataTypes) => {
     emailConfirm: DataTypes.BOOLEAN,
     phoneConfirm: DataTypes.BOOLEAN,
     role: DataTypes.ENUM('admin', 'employer', 'customer'),
-    createdAt: DataTypes.DATE,    
-    updatedAt: DataTypes.DATE, 
-    deletedAt: DataTypes.DATE   
+    createdAt: DataTypes.DATE,
+    updatedAt: DataTypes.DATE,
+    deletedAt: DataTypes.DATE
   }, {
     sequelize,
     modelName: 'users'

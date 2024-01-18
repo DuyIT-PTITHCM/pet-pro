@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import "../../../app.css";
   import Icon from "@iconify/svelte";
   import { page } from "$app/stores";
@@ -25,6 +25,7 @@
   import { RepositoryFactory } from "$lib/ClientService/RepositoryFactory";
   import { goto } from "$app/navigation";
   import LanguageSelect from "$lib/components/LanguageSelect.svelte";
+  import { setCookie } from "$lib/Utils/cookieUtils";
 
   let hidden6 = true;
   let transitionParamsRight = {
@@ -90,14 +91,18 @@
 
   let popupModal = false;
   let sidebarWidth = 0;
-
+  let user: any;
+  async function signOut() {
+    setCookie("access_token", null);
+    goto("/login");
+  }
   async function init() {
     try {
       const userData = await userService.info();
       me.set(userData?.data.data);
-    } 
-    catch {
-      goto("/login")
+      user = userData?.data.data;
+    } catch {
+      goto("/login");
     }
   }
 
@@ -144,15 +149,20 @@
       <LanguageSelect />
     </div>
     <div>
-      <Avatar id="avatar-menu" src={$me?.avatar} class="mr-4 cursor-pointer" />
-      <Dropdown placement="bottom" triggeredBy="#avatar-menu">
+      <div id="avatarmenu">
+        <Avatar
+          src={user?.avatar ? user.avatar + "" : ""}
+          class="mr-4 cursor-pointer"
+        />
+      </div>
+      <Dropdown placement="bottom" triggeredBy="#avatarmenu">
         <DropdownHeader>
-          <span class="block text-sm">{$me?.name}</span>
-          <span class="block truncate text-sm font-medium">{$me?.email}</span>
+          <span class="block text-sm">{user?.name}</span>
+          <span class="block truncate text-sm font-medium">{user?.email}</span>
         </DropdownHeader>
-        <DropdownItem href="/profile?userid={$me?.id}">Profile</DropdownItem>
+        <!-- <DropdownItem href="/profile?userid={$me?.id}">Profile</DropdownItem> -->
         <DropdownDivider />
-        <DropdownItem on:click={() => (popupModal = true)}
+        <DropdownItem on:click={() => popupModal = true}
           >Sign out</DropdownItem
         >
       </Dropdown>
@@ -165,7 +175,8 @@
           <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
             Are you sure you want to Sign Out?
           </h3>
-          <GradientButton color="red" class="mr-2">Yes, I'm sure</GradientButton
+          <GradientButton color="red" class="mr-2" on:click={()=>signOut()}
+            >Yes, I'm sure</GradientButton
           >
           <GradientButton color="teal">No, cancel</GradientButton>
         </div>
@@ -265,16 +276,16 @@
         {#each menu as item}
           <li class="2xl:block xl:block lg:block md:block sm:block hidden">
             <a
-              class="admin-sidebar__item {(($page.url.href.includes(item.url) && (item.url != '/admin')) || $page.url.pathname == item.url) ? "active-admin" : ""}"
+              class="admin-sidebar__item {($page.url.href.includes(item.url) &&
+                item.url != '/admin') ||
+              $page.url.pathname == item.url
+                ? 'active-admin'
+                : ''}"
               href=""
               on:click={(event) => {
                 event.preventDefault();
                 goto(item.url);
-              }}
-              ><Icon
-                class="text-3xl"
-                icon={item.icon}
-              /></a
+              }}><Icon class="text-3xl" icon={item.icon} /></a
             >
           </li>
         {/each}
@@ -282,16 +293,18 @@
         {#each menu as item}
           <li>
             <a
-              class="admin-sidebar__item min-w-max {(($page.url.href.includes(item.url) && (item.url != '/admin')) || $page.url.pathname == item.url) ? "active-admin" : ""}"
+              class="admin-sidebar__item min-w-max {($page.url.href.includes(
+                item.url,
+              ) &&
+                item.url != '/admin') ||
+              $page.url.pathname == item.url
+                ? 'active-admin'
+                : ''}"
               href=""
               on:click={(event) => {
                 event.preventDefault();
                 goto(item.url);
-              }}
-              ><Icon
-                class="text-3xl  mr-2"
-                icon={item.icon}
-              />{item.name}</a
+              }}><Icon class="text-3xl  mr-2" icon={item.icon} />{item.name}</a
             >
           </li>
         {/each}
@@ -317,7 +330,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid rgb(190, 190, 190);
+    /* border-bottom: 1px solid rgb(190, 190, 190); */
     z-index: 1000;
   }
   .admin-header-box {
@@ -329,7 +342,7 @@
   .admin-sidebar {
     max-width: 300px;
     min-height: 100vh;
-    border-right: 1px solid rgb(190, 190, 190);
+    /* border-right: 1px solid rgb(190, 190, 190); */
     position: relative;
     top: 0;
   }
@@ -384,7 +397,7 @@
       var(--gradient-2)
     );
   }
-  .active-admin{
+  .active-admin {
     background-color: gray;
     color: white;
     border-radius: 10px;

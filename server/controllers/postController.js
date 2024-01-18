@@ -1,6 +1,6 @@
 import { validationResult } from "express-validator";
 import { coreResponse } from "../lib/coreResponse.js";
-import { createPost, getAllPosts, updatePost, deletePost, showPost, getPostsLastedByType } from "../repositories/postRepository.js";
+import { createPost, getAllPosts, updatePost, deletePost, showPost, getPostsLastedByType, activePost } from "../repositories/postRepository.js";
 
 const PER_PAGE = 10;
 export const index = async (req, res) => {
@@ -91,3 +91,15 @@ export const forceDeletePost = async (req, res) => {
         coreResponse(res, 500, "Error deleting post", error);
     }
 };
+
+export const updateActive = async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const { isActive } = req.body;
+        const postDeleted = await activePost(postId, isActive);
+        coreResponse(res, 201, "Post deleted successfully", postDeleted);
+    } catch (error) {
+        coreResponse(res, 500, "Error deleting post", error);
+    }
+};
+

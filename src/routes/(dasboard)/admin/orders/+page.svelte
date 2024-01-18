@@ -105,25 +105,25 @@
         <h1
             class="dark:text-white 2xl:text-4xl xl:text-3xl lg:text-3xl md:text-lg sm:text-lg text-lg font-bold"
         >
-            {$t("products.productsManagement")}
+            Quản lý đơn hàng 
         </h1>
         <div class="flex gap-1">
-            <a
+            <!-- <a
                 href="./products/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >Filter</a
-            >
-            <a
+            > -->
+            <!-- <a
                 href="./products/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >{$t("products.createProduct")}</a
-            >
+            > -->
         </div>
     </div>
 </div>
 {#each dataOrders as item}
     <div
-        class="w-full flex gap-4 bg-slate-50 dark:bg-slate-900 p-4 rounded-md mb-4"
+        class="w-full flex gap-4 bg-slate-50 dark:bg-slate-900 dark:text-white p-4 rounded-md mb-4"
     >
         <div class="flex gap-4 w-1/2">
             <div class="w-full">
@@ -218,7 +218,7 @@
                 </ul>
             </div>
             <p class="font-bold mt-8">Chi tiết đơn hàng</p>
-            <table class="w-full bg-slate-100">
+            <table class="w-full bg-slate-100 dark:bg-slate-900">
                 {#each item.orderItems as orderItem}
                     <tr class="">
                         <td class="p-2">

@@ -105,3 +105,47 @@ export const isUniqueCategoryNameUpdate = async (categoryName, { req }) => {
     }
     return Promise.resolve();
 };
+export const getServices = async () => {
+    const data = await models.Categories.findAll({
+        include: [
+            {
+                model: models.Post,
+                as: 'posts',
+                attributes: { exclude: ['content', 'description'] },
+                where: {
+                    isActive: true // Điều kiện để lấy những posts có isActive = true
+                }
+            }
+        ],
+        where: {
+            type: 'service'
+        }
+    });
+    // const prices = await models.ServicePrice.findAll({
+    //     where: {
+    //         serviceId: post.id,
+    //     },
+    // })
+    const posts = data.flatMap(category => category.posts);
+    const result = await Promise.all(posts.map(async (post) => {
+        // Lấy giá cả từ bảng khác dựa trên điều kiện price.serviceId = post.id
+        const prices = await models.ServicePrice.findAll({
+          where: {
+            serviceId: post.id
+          },
+        });
+
+      
+        return {
+          id: post.id,
+          title: post.title,
+          prices: prices.map(price => ({
+            id: price.id,
+            serviceId: price.serviceId,
+            petWeight: price.petWeight,
+            price: price.price
+          }))
+        };
+      }));
+    return result;
+}

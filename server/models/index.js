@@ -8,6 +8,10 @@ import StorageModel from './storage.js';
 import SeoModel from './seo.js';
 import OrderModel from './order.js';
 import OrderItemModel from './orderItem.js';
+import CheckinCheckoutModel from './checkinCheckout.js';
+import ServicePriceModel from './servicePrice.js';
+import PetModel from './pet.js';
+import UseServiceModel from './useService.js';
 import dotenv from 'dotenv';
 dotenv.config(); 
 
@@ -32,6 +36,10 @@ const models = {
   Seo: SeoModel(sequelize, Sequelize),
   Order: OrderModel(sequelize, Sequelize),
   OrderItem: OrderItemModel(sequelize, Sequelize),
+  CheckInCheckOut: CheckinCheckoutModel(sequelize, Sequelize),
+  Pet : PetModel(sequelize, Sequelize),
+  ServicePrice: ServicePriceModel(sequelize, Sequelize),
+  UseService: UseServiceModel(sequelize, Sequelize),
   sequelize
 };
 

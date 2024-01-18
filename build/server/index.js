@@ -156,7 +156,7 @@ const options = {
   root: Root,
   service_worker: false,
   templates: {
-    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\n<html class="dark scroll-smooth hover:scroll-auto" lang="vn">\n	<head>\n		<meta charset="utf-8" />\n		<meta name="viewport" content="width=device-width" />\n		' + head + '\n	</head>\n	<body data-sveltekit-preload-data="hover" class="bg-slate-50 dark:bg-slate-800">\n		<div style="display: contents">' + body + "</div>\n	</body>\n</html>\n",
+    app: ({ head, body, assets: assets2, nonce, env }) => '<!DOCTYPE html>\r\n<html class="dark scroll-smooth hover:scroll-auto" lang="vn">\r\n	<head>\r\n		<meta charset="utf-8" />\r\n		<meta name="viewport" content="width=device-width" />\r\n		' + head + '\r\n	</head>\r\n	<body data-sveltekit-preload-data="hover" class="bg-slate-50 dark:bg-slate-800">\r\n		<div style="display: contents">' + body + "</div>\r\n	</body>\r\n</html>\r\n",
     error: ({ status, message }) => '<!DOCTYPE html>\n<html lang="en">\n	<head>\n		<meta charset="utf-8" />\n		<title>' + message + `</title>
 
 		<style>
@@ -218,7 +218,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "1r0gl2p"
+  version_hash: "l47k0g"
 };
 function get_hooks() {
   return import('./chunks/hooks.server-7c0cd223.js');
@@ -1437,6 +1437,7 @@ class ActionFailure {
 function exec(match, params, matchers) {
   const result = {};
   const values = match.slice(1);
+  const values_needing_match = values.filter((value) => value !== void 0);
   let buffered = 0;
   for (let i = 0; i < params.length; i += 1) {
     const param = params[i];
@@ -1455,6 +1456,9 @@ function exec(match, params, matchers) {
       const next_param = params[i + 1];
       const next_value = values[i + 1];
       if (next_param && !next_param.rest && next_param.optional && next_value && param.chained) {
+        buffered = 0;
+      }
+      if (!next_param && !next_value && Object.keys(result).length === values_needing_match.length) {
         buffered = 0;
       }
       continue;
@@ -1606,8 +1610,8 @@ async function render_endpoint(event, mod, state) {
     /** @type {import('types').HttpMethod} */
     event.request.method
   );
-  let handler = mod[method];
-  if (!handler && method === "HEAD") {
+  let handler = mod[method] || mod.fallback;
+  if (method === "HEAD" && mod.GET && !mod.HEAD) {
     handler = mod.GET;
   }
   if (!handler) {
@@ -1720,6 +1724,7 @@ function make_trackable(url, callback) {
   return tracked;
 }
 function disable_hash(url) {
+  allow_nodejs_console_log(url);
   Object.defineProperty(url, "hash", {
     get() {
       throw new Error(
@@ -1729,12 +1734,20 @@ function disable_hash(url) {
   });
 }
 function disable_search(url) {
+  allow_nodejs_console_log(url);
   for (const property of ["search", "searchParams"]) {
     Object.defineProperty(url, property, {
       get() {
         throw new Error(`Cannot access url.${property} on a page with prerendering enabled`);
       }
     });
+  }
+}
+function allow_nodejs_console_log(url) {
+  {
+    url[Symbol.for("nodejs.util.inspect.custom")] = (depth, opts, inspect) => {
+      return inspect(new URL(url), opts);
+    };
   }
 }
 const DATA_SUFFIX = "/__data.json";
@@ -1954,6 +1967,7 @@ function validate_depends(route_id, dep) {
   }
 }
 const INVALIDATED_PARAM = "x-sveltekit-invalidated";
+const TRAILING_SLASH_PARAM = "x-sveltekit-trailing-slash";
 async function load_server_data({
   event,
   state,
@@ -3037,6 +3051,14 @@ async function respond_with_error({
   error: error2,
   resolve_opts
 }) {
+  if (event.request.headers.get("x-sveltekit-error")) {
+    return static_error_page(
+      options2,
+      status,
+      /** @type {Error} */
+      error2.message
+    );
+  }
   const fetched = [];
   try {
     const branch = [];
@@ -3829,6 +3851,7 @@ const valid_server_exports = /* @__PURE__ */ new Set([
   "DELETE",
   "OPTIONS",
   "HEAD",
+  "fallback",
   "prerender",
   "trailingSlash",
   "config",
@@ -3874,7 +3897,8 @@ async function respond(request, options2, manifest, state) {
   let invalidated_data_nodes;
   if (is_data_request) {
     decoded = strip_data_suffix(decoded) || "/";
-    url.pathname = strip_data_suffix(url.pathname) || "/";
+    url.pathname = strip_data_suffix(url.pathname) + (url.searchParams.get(TRAILING_SLASH_PARAM) === "1" ? "/" : "") || "/";
+    url.searchParams.delete(TRAILING_SLASH_PARAM);
     invalidated_data_nodes = url.searchParams.get(INVALIDATED_PARAM)?.split("").map((node) => node === "1");
     url.searchParams.delete(INVALIDATED_PARAM);
   }
@@ -4178,6 +4202,13 @@ async function respond(request, options2, manifest, state) {
           }
         }
         return response;
+      }
+      if (state.error && event2.isSubRequest) {
+        return await fetch(request, {
+          headers: {
+            "x-sveltekit-error": "true"
+          }
+        });
       }
       if (state.error) {
         return text("Internal Server Error", {

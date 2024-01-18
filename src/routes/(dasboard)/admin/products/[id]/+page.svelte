@@ -134,7 +134,7 @@
                     </p>
                 </div>
             </div>
-            <div class="leading-8 flex flex-col items-center">
+            <div class="leading-8 flex flex-col items-center pr-6">
                 <b class="block dark:text-gray-300">{$t("common.images")}</b>
                 <div class="gap-4 md:columns-3 sm:columns-2 columns-1">
                     {#each convertImageJsonToArray(product?.images) as path, i}

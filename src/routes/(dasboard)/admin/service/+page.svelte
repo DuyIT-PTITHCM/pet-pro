@@ -10,6 +10,7 @@
         TableBodyRow,
         TableHead,
         TableHeadCell,
+        Toggle,
     } from "flowbite-svelte";
     import Pagination from "$lib/components/common/Pagination.svelte";
     import {
@@ -22,6 +23,7 @@
     import { convertImageJsonToArray } from "$lib/Utils/common";
     import { HOST } from "$lib/Const";
     import { t } from "$lib/translations";
+    import { toastErr } from "$lib/store/toastError";
 
     title.set("Service Management");
     description.set("Service Management System");
@@ -85,6 +87,25 @@
             }
         });
     }
+    async function stopService(id: number, isActive: boolean){
+        try {
+            const data = await articleService.put('active/'+id, {isActive : !isActive})
+            toastErr.set([
+                {
+                    message: "Active service success",
+                    type: "success",
+                },
+            ]);
+            return data;
+        } catch (error) {
+            toastErr.set([
+                {
+                    message: "Active service failed: " + error.message,
+                    type: "error",
+                },
+            ]);
+        }
+    }
     function init() {
         getService();
     }
@@ -100,11 +121,11 @@
             {$t("post.serviceManagement")}
         </h1>
         <div class="flex gap-1">
-            <a
+            <!-- <a
                 href="./service/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >Filter</a
-            >
+            > -->
             <a
                 href="./service/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -124,7 +145,7 @@
                 on:change={() => (isCheck = !isCheck)}
             /></TableHeadCell
         >
-        <TableHeadCell on:click={() => toggleSort("id")}>Id</TableHeadCell>
+        <!-- <TableHeadCell on:click={() => toggleSort("id")}>Id</TableHeadCell> -->
         <TableHeadCell on:click={() => toggleSort("title")}
             >{$t("common.name")}</TableHeadCell
         >
@@ -136,17 +157,18 @@
             >{$t("common.seo")}
         </TableHeadCell>
         <TableHeadCell>{$t("common.category")}</TableHeadCell>
+        <TableHeadCell>Active</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each sortedServices as item}
-            <TableBodyRow class="cursor-pointer" on:click={gotoDetail(item.id)}>
+            <TableBodyRow>
                 <TableBodyCell tdClass="w-3"
                     ><div class="flex justify-center">
                         <Checkbox checked={isCheck} value={item.id} />
                     </div></TableBodyCell
                 >
-                <TableBodyCell>{item.id}</TableBodyCell>
-                <TableBodyCell>{item.title}</TableBodyCell>
+                <!-- <TableBodyCell>{item.id}</TableBodyCell> -->
+                <TableBodyCell  class="cursor-pointer" on:click={()=>gotoDetail(item.id)}>{item.title}</TableBodyCell>
                 <TableBodyCell tdClass="min-w-[180px]">
                     <div class="grid grid-cols-4 gap-y-[4px] py-[2px]">
                         {#each convertImageJsonToArray(item.imageUrl) as path, i}
@@ -185,6 +207,9 @@
                     {/if}
                 </TableBodyCell>
                 <TableBodyCell>{item.category.categoryName}</TableBodyCell>
+                <TableBodyCell>
+                    <Toggle bind:checked={item.isActive} on:click={()=> {stopService(item.id, item.isActive)}}></Toggle>
+                </TableBodyCell>
             </TableBodyRow>
         {/each}
     </TableBody>

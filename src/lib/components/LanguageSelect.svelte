@@ -6,7 +6,7 @@
     import {setCookie , removeCookie, getCookie} from "$lib/Utils/cookieUtils";
     import { Button, Popover } from "flowbite-svelte";
     import Icon from "@iconify/svelte";
-    export let btnClass: string;
+    export let btnClass = '';
     // Danh sách các ngôn ngữ
     const languages = [
         { id: "en", name: "English", icon: "twemoji:flag-united-kingdom" },

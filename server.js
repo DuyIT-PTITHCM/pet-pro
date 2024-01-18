@@ -13,11 +13,16 @@ import seoRoute from './server/routes/api/v1.0/seoRoute.js';
 import frontRoute from './server/routes/api/v1.0/frontRoute.js';
 import orderRoute from './server/routes/api/v1.0/orderRoute.js';
 import dashboardRoute from './server/routes/api/v1.0/dashboardRoute.js';
-import verifyToken from './server/middleware/authMiddleware.js'
+import checkRoute from './server/routes/api/v1.0/checkRoute.js';
+import petsRoute from './server/routes/api/v1.0/petsRoute.js';
+import useServiceRoute from './server/routes/api/v1.0/useServiceRoute.js';
+import customerRoute from './server/routes/api/v1.0/customerRoute.js';
+import verifyToken from './server/middleware/authMiddleware.js';
 import cors from 'cors';
 import cron from 'node-cron';
 import dailyJobDeleteImage from './server/cron/dailyJobDeleteImage.js';
 import verifyAdmin from './server/middleware/verifyAdmin.js';
+import verifyEmployer from './server/middleware/verifyEmployer.js';
 import paypal from 'paypal-rest-sdk';
 
 const __filename = new URL(import.meta.url).pathname;
@@ -51,8 +56,15 @@ app.use(V_1_0 + '/seo', verifyToken, verifyAdmin, seoRoute);
 app.use(V_1_0 + '/front', frontRoute);
 app.use(V_1_0 + '/orders', orderRoute);
 app.use(V_1_0 + '/dashboard', dashboardRoute);
+app.use(V_1_0 + '/checkInOut', checkRoute);
+app.use(V_1_0 + '/uploadnoauth', uploadFileRoute);
+app.use(V_1_0 + '/pets', petsRoute);
+app.use(V_1_0 + '/use-services', useServiceRoute);
+app.use(V_1_0 + '/customer', verifyToken, customerRoute)
+
 // cron job 
-cron.schedule('0 0 * * *', dailyJobDeleteImage);
+// cron.schedule('0 0 * * *', dailyJobDeleteImage);
+cron.schedule('*/10 * * * *', dailyJobDeleteImage);
 
 //adapter front-end sveltekit
 app.use(handler);

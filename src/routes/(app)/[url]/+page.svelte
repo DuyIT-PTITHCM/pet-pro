@@ -250,7 +250,7 @@
                                         <Blogs blogs={category.posts}/>
                                     </div>
                                 {:else if category.type == types[2]}
-                                    <div class="grid xl:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-4" >
+                                    <div class="grid xl:grid-cols-2 md:grid-cols-2 sm:grid-cols-2 gap-4" >
                                         <Services services={category.posts}/>
                                     </div>
                                 {/if}
@@ -302,7 +302,7 @@
                                             <Blogs blogs={category.posts}/>
                                         </div>
                                     {:else if category.type == types[2]}
-                                        <div class="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 gap-4" >
+                                        <div class="grid 2xl:grid-cols-2 xl:grid-cols-2 md:grid-cols-3 sm:grid-cols-2 gap-4" >
                                             <Services services={category.posts}/>
                                         </div>
                                     {/if}

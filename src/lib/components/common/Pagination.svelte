@@ -1,9 +1,10 @@
 <script lang="ts">
     export let currentPage = 1;
     export let totalPages = 1;
-    export let onPageChange;
+    export let onPageChange: any;
 
-    function changePage(page) {
+    function changePage(page: number) {
+        console.log("change page " + page)
         if (page >= 1 && page <= totalPages) {
             currentPage = page;
             onPageChange(currentPage);
@@ -14,11 +15,9 @@
         const displayRange = 2;
         const start = Math.max(1, currentPage - displayRange);
         const end = Math.min(totalPages, currentPage + displayRange);
-
         return Array.from({ length: end - start + 1 }, (_, i) => start + i);
     }
 </script>
-
 {#if totalPages > 1}
     <div class="pagination flex justify-center items-center mt-10">
         <button

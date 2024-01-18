@@ -15,20 +15,21 @@ export const login = async (req, res) => {
                 email,
                 [Op.or]: [
                     { role: ROLE.admin },
-                    { role: ROLE.customer }
+                    { role: ROLE.customer },
+                    { role: ROLE.employee }
                 ]
 
             },
         });
 
         if (!user) {
-            return coreResponse(res, 401, 'Invalid credentials');
+            return coreResponse(res, 401, 'Invalid credentials user not found');
         }
 
         const isPasswordMatch = await user.comparePassword(password);
 
         if (!isPasswordMatch) {
-            return coreResponse(res, 401, 'Invalid credentials');
+            return coreResponse(res, 401, 'Invalid credentials pw');
         }
         const expiresIn = rememberMe ? '30d' : '7d';
         const token = createJWTToken(user.id, expiresIn);

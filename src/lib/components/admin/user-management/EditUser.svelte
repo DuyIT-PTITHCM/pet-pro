@@ -16,6 +16,7 @@
     import { isUserEdited } from "$lib/store/userManagement";
     import { toastErr } from "$lib/store/toastError";
     import { t } from "$lib/translations";
+    import { HOST } from "$lib/Const";
 
     let genders = [
         { value: "male", name: "Male" },
@@ -146,7 +147,7 @@
                 {:else}
                     <img
                         class="avt rounded-full h-24 w-24 object-cover"
-                        src={"http://103.142.26.42" + user.avatar}
+                        src={HOST + user.avatar}
                         alt="avatar"
                     />
                 {/if}

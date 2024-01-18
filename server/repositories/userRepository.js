@@ -164,5 +164,30 @@ export const showDetail = async (id) => {
     } catch (error) {
         throw new Error("Error showing user");
     }
+};
+
+export const profile = async (user) => {
+    try {
+        console.log("user profile")
+        console.log(user)
+        const userid = user.id;
+        return await models.User.findByPk(userid, {
+            attributes: { exclude: ['password'] },
+            include: [{
+                model: models.Pet,
+                as: 'pets',
+              },
+              {
+                model: models.Order,
+                as: 'orders',
+                include: [{
+                    model: models.OrderItem,
+                    as: 'orderItems',
+                  }]
+              }],
+        });
+    } catch (error) {
+        throw new Error("Error get user profile");
+    }
 
 };

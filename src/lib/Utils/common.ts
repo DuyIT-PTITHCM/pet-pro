@@ -1,3 +1,5 @@
+import { toastErr } from "$lib/store/toastError";
+import html2canvas from "html2canvas";
 import { onMount } from "svelte";
 
 export const convertImageJsonToArray = function (json: string) {
@@ -7,14 +9,24 @@ export const convertImageJsonToArray = function (json: string) {
     return [];
 }
 
-export function formatDate(inputDate: string){
+export function formatDate(inputDate: string) {
     const newDate = new Date(inputDate);
     const day = newDate.getDate().toString().padStart(2, '0');
     const month = (newDate.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based, so we add 1
     const year = newDate.getFullYear();
     return `${day}/${month}/${year}`;
 }
+export function formatDateWithTime(inputDate: string) {
+    const newDate = new Date(inputDate);
+    const day = newDate.getDate().toString().padStart(2, '0');
+    const month = (newDate.getMonth() + 1).toString().padStart(2, '0'); // Month is zero-based, so we add 1
+    const year = newDate.getFullYear();
+    const hours = newDate.getHours().toString().padStart(2, '0');
+    const minutes = newDate.getMinutes().toString().padStart(2, '0');
+    const seconds = newDate.getSeconds().toString().padStart(2, '0');
 
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
 export async function getHeading(menus: any, isNumber = false) {
     onMount(() => {
         const postContent = document.getElementById('postcontent');
@@ -48,4 +60,38 @@ export async function getHeading(menus: any, isNumber = false) {
         }
     });
     return menus;
+}
+
+//save checkin success
+export async function captureAndSave(id: string, imageName: string) {
+    // Lấy thẻ HTML cần chụp
+    try {
+        var today = new Date();
+        
+        const elementToCapture = document.getElementById(id);
+
+        const canvas = await html2canvas(elementToCapture, {
+            useCORS: true,
+        });
+
+        // Chuyển đổi canvas thành URL của hình ảnh
+        const imageDataURL = canvas.toDataURL("image/png");
+
+        // Tạo một đối tượng a để tải xuống hình ảnh
+        const downloadLink = document.createElement("a");
+        downloadLink.href = imageDataURL;
+        downloadLink.download = `${imageName}_${formatDateWithTime(today.toString())}.png`;
+        // Thực hiện bấm giả lập để tải xuống
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        return 1;
+    } catch (error: any) {
+        toastErr.set([
+            {
+                message: error.message,
+                type: "error",
+            },
+        ]);
+    }
 }

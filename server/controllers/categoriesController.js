@@ -5,6 +5,7 @@ import {
     getAllCategories,
     updateCategory,
     deleteCategory,
+    getServices,
 } from "../repositories/categoriesRepository.js";
 
 export const index = async (req, res) => {    
@@ -60,5 +61,15 @@ export const forceDeleteCategory = async (req, res) => {
         coreResponse(res, 201, "Category deleted successfully", categoryDeleted);
     } catch (error) {
         coreResponse(res, 500, "Error deleting category", error);
+    }
+};
+
+
+export const getAllService = async (req, res) => {
+    try {
+        const services = await getServices();
+        coreResponse(res, 200, "Get services successfull", services);
+    } catch (error) {
+        coreResponse(res, 500, "Error deleting service: " + error.message, error);
     }
 };

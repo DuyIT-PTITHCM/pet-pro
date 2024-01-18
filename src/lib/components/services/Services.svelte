@@ -56,7 +56,7 @@
      }
     .service-box:hover .service-box_overlay {
         clip-path: circle(100% at 50% 100%);
-        animation:  clip-path 1s;
+        animation:  clip-path 4s;
     }
     @keyframes hoverAnimate {
         from {

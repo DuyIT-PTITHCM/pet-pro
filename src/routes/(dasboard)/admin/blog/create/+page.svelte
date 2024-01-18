@@ -11,11 +11,12 @@
         views: 0,
         slug: null,
         categoryId: null,
-        imageUrl: ''
+        imageUrl: '',
+        isBlog: true,
     };
     let queryParams = {
         type: "blog",
     };
 </script>
 
-<CreateArticle bind:article  bind:queryParams/>
+<CreateArticle bind:article IsBlog  bind:queryParams/>

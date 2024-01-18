@@ -3,10 +3,11 @@
     import { convertImageJsonToArray } from "$lib/Utils/common";
     import Button from "../common/Button.svelte";
     export let data: any;
+    let services = data.slice(0, 8)
     let host = HOST;
 </script>
 
-{#each data as service}
+{#each services as service}
 <div class="ourservice-service h-72 rounded-lg overflow-hidden text-center flex items-center justify-center flex-col relative">
     <img class="w-full h-72 object-cover" src={host + convertImageJsonToArray(service.imageUrl)[0]} alt="">
     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center flex-col text-white">

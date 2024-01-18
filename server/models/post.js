@@ -67,6 +67,10 @@ export default (sequelize, DataTypes) => {
                     key: 'id',
                 },
             },
+            isActive: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true,
+            },
             createdAt: DataTypes.DATE,
             updatedAt: DataTypes.DATE,
         },

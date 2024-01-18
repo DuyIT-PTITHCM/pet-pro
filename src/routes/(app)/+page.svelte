@@ -8,6 +8,7 @@
     import Products from "$lib/components/products/Products.svelte";
     import Blogs from "$lib/components/blogs/Blogs.svelte";
     import HeaderPage from "$lib/components/common/HeaderPage.svelte";
+    import { loading } from "$lib/translations";
 
     async function getData(){
         try {
@@ -56,17 +57,16 @@
 
     init();
 </script>
-
+<svelte:head>
+    <title>PAWCAT</title>
+</svelte:head>
 <Banner/>
 <Benefit/>
 <OurTeam/>
 {#await getData()}
-    hhi
+    loading..
 {:then res}
-<div class="container m-auto my-[100px] px-2">
-    <img src="https://siliconstack.com.au/wp-content/uploads/2019/09/Working-process.png" alt="">
-</div>
-<iframe class="w-full h-full" src="https://www.youtube.com/embed/7yLxxyzGiko?autoplay=1&mute=1&controls=0&loop=1&showinfo=0" title="Kittens walk with a tiny chicken" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<img src="/images/homepage/homepageimage.png" alt="benefit" class="w-full h-[500px] object-contain" >
 <HeaderPage title={"Our Services"} 
 description={"Pets bring us joy and happiness, and we have a responsibility to take good care of them."} 
 isDescription={true} isShowTime={false} isBgOverlay image="/images/home-panner/{randomNumber()}.jpg"/>
@@ -92,4 +92,4 @@ isDescription={true} isShowTime={false} isBgOverlay/>
     </div>
 </div>
 {/await}
-<ClientSay/>
+<!-- <ClientSay/> -->

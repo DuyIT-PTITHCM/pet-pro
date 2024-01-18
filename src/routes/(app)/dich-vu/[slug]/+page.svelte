@@ -1,10 +1,11 @@
 <script lang="ts">
+    import { HOST } from '$lib/Const.js';
     import HeaderPage from '$lib/components/common/HeaderPage.svelte';
     import SideMenuHeading from '$lib/components/common/SideMenuHeading.svelte';
     import SideRefercence from '$lib/components/common/SideRefercence.svelte';
 
     export let data;
-    let host = "http://103.142.26.42";
+    let host = HOST;
 
     let service = data.data;
 
@@ -60,6 +61,34 @@
             </div>
         </div>
         <div class="xl:col-span-3 col-span-full">
+            <div class="bg-slate-100 dark:bg-slate-900 rounded-md w-full p-4 mt-2">
+                <table class="w-full">
+                    <tr>
+                        <th class="text-left">Cân nặng</th>
+                        <th class="text-left"><span class="ml-3">Giá dịch vụ</span></th>
+                    </tr>
+                    {#each service.prices as price, index}
+                        {#if index == 0}
+                            <tr class="border-b">
+                                <td class="py-2">Dưới {price.petWeight}kg</td>
+                                <td><span class="ml-3">{price.price.toLocaleString()}</span> vnd</td>
+                            </tr>
+                        {/if}
+                        <tr class="border-b">
+                            {#if service.prices[index + 1]}
+                                <td class="py-2"
+                                    >Từ {price.petWeight}kg đến {service.prices[index + 1].petWeight}kg
+                                </td>
+                                <td><span class="ml-3">{service.prices[index + 1].price.toLocaleString()} vnd</span></td>
+                            {:else}
+                                <td  class="py-2" colspan="2">
+                                    Trên {price.petWeight}kg liên hệ cửa hàng.
+                                </td>
+                            {/if}
+                        </tr>
+                    {/each}
+                </table>
+            </div>
             <div class="rounded-lg border dark:border-gray-600 overflow-hidden">
                 <p class="text-center p-4 font-bold border-b-4 dark:border-gray-600">Các dịch vụ khác</p>
                 <SideRefercence isSmallBox data={service.reference} originSlug="dich-vu"/>

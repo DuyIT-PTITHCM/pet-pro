@@ -23,6 +23,7 @@
         email: "",
         password: "",
         confirmPassword: "",
+        information:""
     };
     let selectedImage = "";
     let file;
@@ -33,7 +34,7 @@
         formData.append("file", file);
         try {
             axios
-                .post(BASE_API + "/upload", formData)
+                .post(BASE_API + "/uploadnoauth", formData)
                 .then((response) => {
                     user.avatar = response.data.data.path;
                 })
@@ -46,6 +47,7 @@
                     ]);
                 });
         } catch (error) {
+            console.log(error)
             toastErr.set([
                 {
                     message: "File upload failed",
@@ -135,7 +137,7 @@
     <form
         class="2xl:w-1/4 xl:w-1/4 md:w-2/4 w-11/12 bg-slate-100 dark:bg-slate-900 relative p-[20px] rounded-lg z-10"
     >
-        <!-- <div class="flex items-center justify-center text-center flex-col">
+        <div class="flex items-center justify-center text-center flex-col">
             {#if selectedImage}
                 <img
                     class="avt rounded-full h-100 w-100 object-cover"
@@ -150,7 +152,8 @@
                     on:change={handleFileInputChange}
                 />
             </Label>
-        </div> -->
+        </div>
+        
         <div class="grid gap-4 mb-6 md:grid-cols-1">
             <div>
                 <Label for="username" class="mb-2"
@@ -198,6 +201,18 @@
                     >{#if messageEmail && user.email === ""}{messageEmail}{/if}</Helper
                 >
             </div>
+            <div>
+                <Label for="address" class="mb-2"
+                    >Address<span class="text-red-600">*</span></Label
+                >
+                <Input
+                    type="text"
+                    id="address"
+                    placeholder="HCM city"
+                    bind:value={user.information}
+                />
+            </div>
+            
             <div>
                 <Label for="password" class="mb-2"
                     >Password<span class="text-red-600">*</span></Label

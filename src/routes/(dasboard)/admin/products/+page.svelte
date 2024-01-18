@@ -4,7 +4,9 @@
     import { title, description } from "$lib/store/meta";
     import { t } from "$lib/translations";
     import {
+        Button,
         Checkbox,
+        Modal,
         Table,
         TableBody,
         TableBodyCell,
@@ -23,6 +25,7 @@
     import { goto } from "$app/navigation";
     import { convertImageJsonToArray } from "$lib/Utils/common";
     import { HOST } from "$lib/Const";
+    import { toastErr } from "$lib/store/toastError";
 
     title.set("Producs Management");
     description.set("Producs Management System");
@@ -37,6 +40,8 @@
     let queryParams = {
         page: 1,
     };
+    let deleteId = 0;
+    let deleteModal = false;
 
     async function handlePageChange(page) {
         queryParams.page = page;
@@ -58,8 +63,28 @@
         queryParams = queryParamsToObject(queryFilter);
         products = await productService.get(queryParams);
 
-        dataProductFromApi = products.data.data.docs;
+        dataProductFromApi = products.data.data.docs.slice(0, 8);
         loadingState.set(false);
+    }
+
+    async function deleteProduct(id: number) {
+        try {
+            await productService.delete(id);
+            toastErr.set([
+                {
+                    message: "Delete product success",
+                    type: "success",
+                },
+            ]);
+            await getProduct();
+        } catch (error) {
+            toastErr.set([
+                {
+                    message: error.message,
+                    type: "error",
+                },
+            ]);
+        }
     }
 
     function gotoDetail(id: Number) {
@@ -101,11 +126,11 @@
             {$t("products.productsManagement")}
         </h1>
         <div class="flex gap-1">
-            <a
+            <!-- <a
                 href="./products/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                 >Filter</a
-            >
+            > -->
             <a
                 href="./products/create"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -116,7 +141,7 @@
 </div>
 
 <!-- table  -->
-<Table hoverable={true} divClass="rounded-xl overflow-x-scroll">
+<Table hoverable={true} divClass="rounded-xl">
     <TableHead>
         <TableHeadCell
             ><Checkbox
@@ -124,49 +149,46 @@
                 on:change={() => (isCheck = !isCheck)}
             /></TableHeadCell
         >
-        <TableHeadCell class="text-center" on:click={() => toggleSort("id")}
+        <!-- <TableHeadCell class="text-center" on:click={() => toggleSort("id")}
             >Id</TableHeadCell
-        >
-        <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("productName")}
+        > -->
+        <TableHeadCell on:click={() => toggleSort("productName")}
             >{$t("common.name")}</TableHeadCell
         >
-        <TableHeadCell class="text-center">{$t("common.images")}</TableHeadCell>
-        <TableHeadCell
-            class="text-center"
-            on:click={() => toggleSort("originalPrice")}
+        <TableHeadCell>{$t("common.images")}</TableHeadCell>
+        <TableHeadCell on:click={() => toggleSort("originalPrice")}
             >{$t("common.originalPrice")}</TableHeadCell
         >
-        <TableHeadCell class="text-center" on:click={() => toggleSort("price")}
+        <TableHeadCell on:click={() => toggleSort("price")}
             >{$t("common.price")}</TableHeadCell
         >
-        <TableHeadCell class="text-center" on:click={() => toggleSort("origin")}
+        <TableHeadCell on:click={() => toggleSort("origin")}
             >{$t("common.post")}</TableHeadCell
         >
-        <TableHeadCell class="text-center" on:click={() => toggleSort("slug")}>
+        <TableHeadCell on:click={() => toggleSort("slug")}>
             {$t("common.slug")}
         </TableHeadCell>
-        <TableHeadCell class="text-center" on:click={() => toggleSort("status")}
+        <TableHeadCell on:click={() => toggleSort("status")}
             >{$t("common.seo")}
         </TableHeadCell>
-        <TableHeadCell class="text-center"
-            >{$t("common.category")}</TableHeadCell
-        >
+        <TableHeadCell>{$t("common.category")}</TableHeadCell>
+        <TableHeadCell>Action</TableHeadCell>
     </TableHead>
     <TableBody>
         {#each sortedProducts as item}
-            <TableBodyRow
-                class="cursor-pointer"
-                on:click={() => gotoDetail(item.id)}
-            >
+            <TableBodyRow>
                 <TableBodyCell tdClass="w-3"
                     ><div class="flex justify-center">
                         <Checkbox checked={isCheck} value={item.id} />
                     </div></TableBodyCell
                 >
-                <TableBodyCell>{item.id}</TableBodyCell>
-                <TableBodyCell>{item.productName}</TableBodyCell>
+                <!-- <TableBodyCell>{item.id}</TableBodyCell> -->
+                <TableBodyCell
+                    tdClass="px-6 py-4 font-medium"
+                    class="cursor-pointer"
+                    on:click={() => gotoDetail(item.id)}
+                    >{item.productName}</TableBodyCell
+                >
                 <TableBodyCell tdClass="min-w-[180px]">
                     <div class="grid grid-cols-4 gap-y-[4px] py-[2px]">
                         {#each convertImageJsonToArray(item.images) as path, i}
@@ -205,7 +227,7 @@
                         />
                     {/if}
                 </TableBodyCell>
-                <TableBodyCell>{item.slug}</TableBodyCell>
+                <TableBodyCell tdClass="px-6 py-4 font-medium">{item.slug}</TableBodyCell>
                 <TableBodyCell>
                     {#if item.seo}
                         <Icon
@@ -224,7 +246,13 @@
                     {/if}
                 </TableBodyCell>
                 <TableBodyCell>{item.category.categoryName}</TableBodyCell>
+                <TableBodyCell
+                    ><button on:click={() => {deleteModal = true; deleteId = item.id}}
+                        ><Icon icon="fluent:delete-12-filled" class="text-gray-400 w-8 h-8 dark:text-gray-200" /></button
+                    ></TableBodyCell
+                >
             </TableBodyRow>
+            
         {/each}
     </TableBody>
 </Table>
@@ -235,3 +263,23 @@
         onPageChange={handlePageChange}
     />
 {/if}
+<Modal bind:open={deleteModal} size="xs" autoclose>
+    <div class="text-center">
+        <Icon
+            icon="uiw:warning"
+            class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+        />
+        <h3
+            class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400"
+        >
+            Are you sure you want to delete this product?
+        </h3>
+        <Button
+            color="red"
+            class="me-2"
+            on:click={() => deleteProduct(deleteId)}
+            >Yes, I'm sure</Button
+        >
+        <Button color="alternative">No, cancel</Button>
+    </div>
+</Modal>

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { HOST } from '$lib/Const.js';
     import HeaderPage from '$lib/components/common/HeaderPage.svelte';
     import SideMenuHeading from '$lib/components/common/SideMenuHeading.svelte';
     import SideRefercence from '$lib/components/common/SideRefercence.svelte';
@@ -35,7 +36,7 @@
     <meta name="twitter:image" content={blog?.seo?.image ? host + blog?.seo?.image: imageSeo} />
 </svelte:head>
 <!-- blog blog -->
-<HeaderPage title={blog.title} isShowTime author={blog?.author} date={blog?.updatedAt} image={host + images[0]} isBgOverlay/>
+<HeaderPage title={blog.title} isShowTime author={blog?.author} date={blog?.updatedAt} image={HOST + images[0]} isBgOverlay/>
 <div class="container m-auto p-4">
     <div class="grid grid-cols-12 gap-4 dark:text-slate-50">
         <div class="xl:col-span-9 md:col-span-12 col-span-full">
@@ -50,7 +51,7 @@
                 </div>
                 <div class="post-container overflow-hidden xl:col-span-6 md:col-span-8 col-span-full text-justify">
                     {#if images[0]}
-                        <img src="{host + images[0]}" alt="{blog.title}" class="w-full max-h-[500px] object-cover">
+                        <img src="{HOST + images[0]}" alt="{blog.title}" class="w-full max-h-[500px] object-cover">
                     {/if}
                     <div id="postcontent" class="sm:text-base text-sm">
                         {@html blog?.content}

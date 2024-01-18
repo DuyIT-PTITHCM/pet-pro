@@ -5,12 +5,12 @@
     const social = [
         {
             name: "facebook",
-            url: "/",
+            url: "https://www.facebook.com/tri1890?locale=vi_VN",
             image: 'line-md:facebook'
         },
         {
             name: "youtube",
-            url: "/",
+            url: "https://www.youtube.com/",
             image: 'ant-design:youtube-filled'
         },
         {
@@ -142,14 +142,14 @@
                         </svelte:fragment>
                       </Modal>
                 </div>
-                <div class="w-full rounded-lg sm:col-span-1">
+                <!-- <div class="w-full rounded-lg sm:col-span-1">
                     <ul class="text-white footer-list">
                         <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">service</ol>
                         {#each services as item}
                             <li><a href={item.url}>{item.name}</a></li>
                         {/each}
                     </ul>
-                </div>
+                </div> -->
                 <div class="w-full rounded-lg">
                     <ul class="text-white footer-list">
                         <ol class="border-b-2 border-white border-opacity-30 rounded-lg py-2 px-6 uppercase text-xl font-semibold">company</ol>

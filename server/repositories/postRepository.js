@@ -72,7 +72,7 @@ export const getPostsLastedByType = async (filters = {}) => {
 
 
 export const createPost = async (postData) => {
-    const { title, content, description, author, published_at, views, imageUrl, referenceId, reference, categoryId, slug } = postData;
+    const { title, content, description, author, published_at, views, imageUrl, referenceId, reference, categoryId, slug, prices } = postData;
 
     let transaction;
     try {
@@ -107,6 +107,20 @@ export const createPost = async (postData) => {
             default:
                 break;
         }
+        if (prices) {
+            const pricelist = prices.map(item => {
+                const updatedItem = { ...item };
+                updatedItem.serviceId = newPost.id;
+                return updatedItem;
+            });
+            console.log("pricelist")
+            console.log(pricelist)
+
+            const newPrices = await models.ServicePrice.bulkCreate(pricelist)
+            console.log("newPrices")
+            console.log(newPrices)
+
+        }
         await transaction.commit();
         return newPost;
     } catch (error) {
@@ -119,7 +133,7 @@ export const createPost = async (postData) => {
 };
 
 export const updatePost = async (postId, postData) => {
-    const { title, content, description, author, published_at, views, imageUrl, categoryId, slug, seoId } = postData;
+    const { title, content, description, author, published_at, views, imageUrl, categoryId, slug, seoId, prices } = postData;
 
     let transaction;
     try {
@@ -146,14 +160,38 @@ export const updatePost = async (postId, postData) => {
         post.views = views;
         post.imageUrl = imageUrl;
         await post.save({ transaction });
+        let addPrices = prices.filter(price => price.id === 0);
+        const updatedAddPrices = addPrices.map(item => {
+            const updatedItem = { ...item };
+            updatedItem.serviceId = post.id;
+            return updatedItem;
+        });
+        const updatePrice = prices.filter(price => price.serviceId !== -1 && price.id > 0);
+        const deletePrices = prices.filter(price => price.serviceId === -1);
 
+        await models.ServicePrice.bulkCreate(updatedAddPrices)
+
+        await models.ServicePrice.bulkCreate(
+            updatePrice,
+            {
+                updateOnDuplicate: ['petWeight', 'price'], // Các trường cần cập nhật
+                returning: true, // Trả về bản ghi sau khi cập nhật
+            }
+          )
+        const idsToDelete = deletePrices.map(item => item.id);
+        await models.ServicePrice.destroy({
+            where: {
+                id: idsToDelete,
+            },
+        });
         await transaction.commit();
         return post;
     } catch (error) {
         if (transaction) {
             await transaction.rollback();
         }
-        throw new Error("Error updating post");
+        console.log(error)
+        throw new Error("Error updating post: ");
     }
 };
 
@@ -180,7 +218,11 @@ export const showPost = async (req) => {
         if (!post) {
             throw new Error("Post not found");
         }
-
+        const prices = await models.ServicePrice.findAll({
+            where: {
+                serviceId: post.id,
+            },
+        })
         const reference = await models.Post.findAll({
             where: {
                 categoryId: post.categoryId,
@@ -191,6 +233,7 @@ export const showPost = async (req) => {
         const postRes = {
             ...post.toJSON(),
             reference,
+            prices,
         };
 
         return postRes;
@@ -272,4 +315,20 @@ export const isUniqueSlugUpdate = async (slug, { req }) => {
         return Promise.reject('Slug already exists');
     }
     return Promise.resolve();
+};
+
+
+export const activePost = async (postId, isActive) => {
+    try {
+        const post = await models.Post.findByPk(postId);
+        await post.update({
+            isActive: isActive,
+        });
+        if (!post) {
+            throw new Error('Post not found');
+        }
+        return post;
+    } catch (error) {
+        throw new Error("Error deleting post");
+    }
 };

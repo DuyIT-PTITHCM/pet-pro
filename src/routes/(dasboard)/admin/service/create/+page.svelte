@@ -11,11 +11,12 @@
         views: 0,
         slug: null,
         categoryId: null,
-        imageUrl: ''
+        prices: [],
+        imageUrl: '',
     };
     let queryParams = {
         type: "service",
     };
 </script>
 
-<CreateArticle bind:article  bind:queryParams/>
+<CreateArticle IsService bind:article  bind:queryParams/>

@@ -31,7 +31,7 @@
 </script>
 
 {#if blogs}
-    {#each blogs as blog, index}
+    {#each blogs.slice(0,6) as blog, index}
         {#await getImage(blog.imageUrl)}
             <div class="w-full">
                 <ImagePlaceholder />
